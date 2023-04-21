@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{project}}</h2>
+{{d1}}-{{d2}}
+<table>
+<table border="2">
+  <tr>
+    <th  style="text-align: center;">Role</th>
+    {% for y,m in month_tuples %}
+      <th  style="text-align: center;  padding: 5px;">
+        <a href="#" title="Изменить столбец">
+        {{y}}<br>{{m}}
+        </a>
+      </th>
+   {% endfor %}
+
+  </tr>
+  {% for row in data %}
+    <tr>
+      {% for cell in row %}
+        <td  style="text-align: center; padding: 5px;">{{ cell }}</td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
+
+</table>
+{% endblock %}

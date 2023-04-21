@@ -1,0 +1,18 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  {% bootstrap_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <main class="container mt-5">
+    {% block content %}{% endblock %}
+  </main>
+  {% bootstrap_javascript %}
+</body>
+</html>

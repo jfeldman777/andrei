@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Проекты</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Начало</th>
+      <th>Окончание</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in projects %}
+      <tr><td>{{ p.title }}
+
+         ( <a href="{% url 'load' id=p.id %}"> надо</a> / <a href="#">есть</a>
+          )</td>
+        <td>{{ p.start_date }}</td>
+        <td>{{ p.end_date }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+{% endblock %}

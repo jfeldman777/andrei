@@ -1,0 +1,14 @@
+.navbar-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar-nav .nav-item {
+  margin-right: 1rem;
+}
+
+table td, table th {
+  text-align: center;
+  padding: 5px;
+}
