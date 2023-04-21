@@ -8,3 +8,10 @@ admin.site.register(Role)
 admin.site.register(Project)
 admin.site.register(Load)
 admin.site.register(Task)
+
+from .models import UserProfile
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user','role')
+
+admin.site.register(UserProfile, UserProfileAdmin)
