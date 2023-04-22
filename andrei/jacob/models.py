@@ -14,6 +14,7 @@ class Project(models.Model):
     title = models.CharField(max_length=30)
     start_date = models.DateField()
     end_date = models.DateField()
+    people = models.ManyToManyField(User)
 
     def __str__(self):
         return self.title

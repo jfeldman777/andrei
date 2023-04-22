@@ -12,9 +12,9 @@
   <tbody>
     {% for p in people %}
       <tr>
+        <td>{{ p.role }}</td>
         <td>{{ p.user.last_name }}</td>
         <td>{{ p.user.first_name }}</td>
-        <td>{{ p.role }}</td>
       </tr>
     {% endfor %}
   </tbody>

@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'jacob',
     'bootstrap4',
+    'jacob.templatetags',
+
 ]
 
 MIDDLEWARE = [

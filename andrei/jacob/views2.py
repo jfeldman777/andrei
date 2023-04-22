@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.forms import formset_factory
-from .models import Load, Role, Project
+from .models import Load, Role, Project, UserProfile
 from .forms import LoadForm
 
 def load2(request, prj, y, m):
@@ -33,3 +33,26 @@ def load2(request, prj, y, m):
     context = {"formset": formset, "project": project, "month": f"{y}-{m}"}
     return render(request, "load2.html", context)
 
+###########################################
+def one2prj(request):
+    people = UserProfile.objects.all().order_by('role', 'user')
+    projects = Project.objects.all().order_by('start_date')
+    one = []
+    for person in people:
+        one.append(person.user.last_name)
+        for project in projects:
+            ps = list(project.people.all())
+            print(ps)
+            if person.user in ps:
+                one.append('1')
+            else:
+                one.append('0')
+        mypeople = UserProfile.objects.all().order_by('role', 'user')
+
+    return render(request,"one2prj.html",{'people':people, 'projects':projects, "one":one},)
+
+def one2role(request):
+    roles = Role.objects.all()
+    people = UserProfile.objects.all().order_by('role','user')
+
+    return render(request,"one2role.html",{'roles':roles,'people':people},)
