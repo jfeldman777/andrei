@@ -44,9 +44,9 @@ def one2prj(request):
             ps = list(project.people.all())
             print(ps)
             if person.user in ps:
-                one.append('1')
+                one.append(1)
             else:
-                one.append('0')
+                one.append(0)
         mypeople = UserProfile.objects.all().order_by('role', 'user')
 
     return render(request,"one2prj.html",{'people':people, 'projects':projects, "one":one},)

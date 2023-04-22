@@ -15,8 +15,13 @@
   <tr>
     {% for x in one %}
     {% if x|isnumeric %}
-          <td   style="text-align: center;  padding: 5px;">{{ x }}</td>
+      {% if x > 0 %}
+          <td   style="font-size: 20px; text-align: center;  padding: 5px;">*</td>
       {% else %}
+    <td   style="font-size: 20px;  text-align: center;  padding: 5px;">-</td>
+      {% endif %}
+    {% else %}
+
     </tr>
     <tr>
       <td   style="text-align: center;  padding: 5px;">{{ x }}</td>
