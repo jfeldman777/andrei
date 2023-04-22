@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Люди</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Фамилия</th>
+      <th>Имя</th>
+      <th>Роль</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in people %}
+      <tr>
+        <td>{{ p.user.last_name }}</td>
+        <td>{{ p.user.first_name }}</td>
+        <td>{{ p.role }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+{% endblock %}

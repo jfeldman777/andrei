@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.shortcuts import render
-from .models import Project, UserProfile, Load
-
+from .models import Project, UserProfile, Load, Role
+import datetime
 def index(request):
     return render(request, 'index.html')
 
@@ -13,15 +12,9 @@ def tasks(request):
     form = None
     return render(request, 'tasks.html',{form:form})
 
-def load1(request,id):
-        tab = Load.objects.get(project=id).order_by('role', 'month')
-        context = {'tab': tab}
-        return render(request, 'load.html', context)
-
 def projects(request):
     projects = Project.objects.all()
     return render(request, 'projects.html', {'projects': projects})
-
 def load(request, id):
     # Get all the items for the given ID and sort by role and month
     project = Project.objects.get(id=id)
@@ -44,8 +37,8 @@ def load(request, id):
 
 
 
-    items = Load.objects.filter(id=id).order_by('role', 'month')
-
+    items = Load.objects.filter(project=id).order_by('role', 'month')
+    print(items)
     # Create a dictionary to store the items by role and month
     items_by_role_and_month = {}
 
@@ -65,22 +58,25 @@ def load(request, id):
 
     # Create a list of the unique months in the data set
     months = sorted(set([item.month for item in items]))
-
+    print(months)
     # Create a list of roles and their associated items for each month
     data = []
     for role, items_for_role in items_by_role_and_month.items():
         row = [role]
-        for month in months:
+        for y,m in month_tuples:
+            month = datetime.date(y,m,15)
             item = items_for_role.get(month)
             if item:
                 row.append(item.load)
             else:
-                row.append('')
+                row.append(0)
         data.append(row)
+    print(data)
 
     # Pass the data to the template
     context = {'data': data, 'months': months,
                'd1':d1,'d2':d2,
                'project':project, 'month_tuples': month_tuples}
     return render(request, 'load.html', context)
+
 

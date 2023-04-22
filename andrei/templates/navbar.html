@@ -11,6 +11,11 @@
       <li class="nav-item {% if request.resolver_match.url_name == 'people' %}active{% endif %}">
         <a class="nav-link" href="{% url 'people' %}">Люди</a>
       </li>
+      <li class="nav-item {% if request.resolver_match.url_name == 'one2prj' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'people' %}">люди в проектах</a>
+      </li>
+            <li class="nav-item {% if request.resolver_match.url_name == 'one2role' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'people' %}">люди в ролях</a>
       </li>
     </ul>
   </div>

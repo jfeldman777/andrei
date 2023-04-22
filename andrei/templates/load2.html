@@ -1,5 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Описание системы</h1>
+ресурсы, необходимые в месяце - {{ month}}
+  <h1>{{ project }} </h1>
+  <form method="post">
+
+    {{ formset.management_form }}
+    {% csrf_token %}
+    <button type="submit">Сохранить изменения</button>
+    <table>
+      {% for form in formset %}
+        <tr>
+          <td>{{ form.project }}</td>
+          <td>{{ form.month }}</td>
+          <td>{{ form.role }}</td>
+           <td>{{ form.label }}</td>
+          <td>{{ form.load }}</td>
+        </tr>
+      {% endfor %}
+
+    </table>
+    <button type="submit">Сохранить изменения</button>
+
+
+  </form>
 {% endblock %}
