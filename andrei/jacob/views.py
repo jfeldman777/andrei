@@ -38,7 +38,6 @@ def load(request, id):
 
 
     items = Load.objects.filter(project=id).order_by('role', 'month')
-    print(items)
     # Create a dictionary to store the items by role and month
     items_by_role_and_month = {}
 
@@ -58,7 +57,6 @@ def load(request, id):
 
     # Create a list of the unique months in the data set
     months = sorted(set([item.month for item in items]))
-    print(months)
     # Create a list of roles and their associated items for each month
     data = []
     for role, items_for_role in items_by_role_and_month.items():
@@ -71,7 +69,6 @@ def load(request, id):
             else:
                 row.append(0)
         data.append(row)
-    print(data)
 
     # Pass the data to the template
     context = {'data': data, 'months': months,

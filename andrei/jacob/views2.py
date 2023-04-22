@@ -18,7 +18,6 @@ def load2(request, prj, y, m):
         formset = LoadFormSet(request.POST)
         if formset.is_valid():
             for form in formset:
-                print(form.fields)
                 role_id = form.cleaned_data["role"]
                 load = form.cleaned_data["load"]
                 Load.objects.update_or_create(
@@ -28,7 +27,6 @@ def load2(request, prj, y, m):
             print(formset.errors)
         return redirect("load", prj)
     else:
-        print(initial_data)
         formset = LoadFormSet(initial=initial_data)
     context = {"formset": formset, "project": project, "month": f"{y}-{m}"}
     return render(request, "load2.html", context)
@@ -42,7 +40,6 @@ def one2prj(request):
         one.append(person.user.last_name)
         for project in projects:
             ps = list(project.people.all())
-            print(ps)
             if person.user in ps:
                 one.append(1)
             else:
