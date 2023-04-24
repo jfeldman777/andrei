@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
-
+{% load custom_filters %}
 {% block content %}
-<a href="/res/{{project.id}}">посмотреть как распределены ресурсы</a>
+<a href="/load/{{project.id}}">посмотреть потребные ресурсы</a>
 <h2>{{project}}</h2>
 {{d1}}-{{d2}}
+
+<a href="/resp/{{project.id}}">посмотреть распределенные ресурсы детально</a>
 <table>
 <table border="2">
   <tr>
@@ -22,7 +24,9 @@
   {% for row in data %}
     <tr>
       {% for cell in row %}
-        <td  style="text-align: center; padding: 5px;">{{ cell }}</td>
+        <td  style="text-align: center; padding: 5px;">
+        {{cell}}
+        </td>
       {% endfor %}
     </tr>
   {% endfor %}

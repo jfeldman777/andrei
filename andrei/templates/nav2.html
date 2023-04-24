@@ -11,14 +11,28 @@
       <li class="nav-item {% if request.resolver_match.url_name == 'people' %}active{% endif %}">
         <a class="nav-link" href="{% url 'people' %}">Люди</a>
       </li>
-      <li class="nav-item {% if request.resolver_match.url_name == 'one2prj' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'one2prj' %}">Задачи</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Проекты
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item
+          {% if request.resolver_match.url_name == 'one2prj' %}active{% endif %}"
+             href="{% url 'one2prj' %}">Потребные ресурсы</a>
+          <a class="dropdown-item
+          {% if request.resolver_match.url_name == 'one2role' %}active{% endif %}"
+             href="{% url 'one2role' %}">Назначенные ресурсы</a>
+        </div>
       </li>
-            <li class="nav-item {% if request.resolver_match.url_name == 'one2role' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'one2role' %}">Роли</a>
-      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/admin/">Админ</a>
       </li>
     </ul>
-  </div>a
+  </div>
+          <script>
+  $(document).ready(function(){
+    $('.dropdown-toggle').dropdown()
+  });
+</script>
 </nav>

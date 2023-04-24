@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<a href="/load/{{project.id}}">посмотреть потребные ресурсы</a>
+<h2>{{project}}</h2>
+{{d1}}-{{d2}}
+<a href="/res/{{project.id}}">посмотреть распределенные ресурсы крупно</a>
+<table>
+<table border="2">
+  <tr>
+    <th  style="text-align: center;">Роль</th>
+        <th  style="text-align: center;">Исполнитель</th>
+    {% for y,m in month_tuples %}
+      <th  style="text-align: center;  padding: 5px;">
+        {{y}}<br>{{m}}
+      </th>
+   {% endfor %}
+
+  </tr>
+  {% for row in data %}
+    <tr>
+              {% for cell in row %}
+             {% if cell|isObject  %}
+                <td style="text-align: center; padding: 5px;background-color:yellow">
+                    <a href="/upd/{{cell.link}}"> {{ cell.load }} </a>
+                               </td>
+            {% else %}
+                <td style="text-align: center; padding: 5px; ">{{ cell }}</td>
+            {% endif %}
+
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

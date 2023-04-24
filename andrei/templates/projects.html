@@ -13,7 +13,7 @@
     {% for p in projects %}
       <tr><td>{{ p.title }}
 
-         ( <a href="{% url 'load' id=p.id %}"> надо</a> / <a href="#">есть</a>
+         ( <a href="{% url 'load' id=p.id %}"> надо</a> / <a href="{% url 'res' id=p.id %}">есть</a>
           )</td>
         <td>{{ p.start_date }}</td>
         <td>{{ p.end_date }}</td>

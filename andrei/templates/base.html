@@ -7,12 +7,15 @@
   <title>{% block title %}{% endblock %}</title>
   {% bootstrap_css %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
   {% include 'navbar.html' %}
   <main class="container mt-5">
     {% block content %}{% endblock %}
   </main>
+    {% include 'navbar.html' %}
   {% bootstrap_javascript %}
 </body>
 </html>

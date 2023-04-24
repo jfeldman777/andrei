@@ -1,0 +1,12 @@
+<!-- update_float.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h3>Загрузка</h3>
+<h4>{{project}}:{{person}}:{{month}}</h4>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+  </form>
+{% endblock %}
