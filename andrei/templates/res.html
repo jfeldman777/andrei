@@ -12,11 +12,11 @@
     <th  style="text-align: center;">Роль</th>
     {% for y,m in month_tuples %}
       <th  style="text-align: center;  padding: 5px;">
-        <a href=
-           "{% url 'load2' prj=project.id  y=y m=m %}"
-           title="Изменить столбец">
+<!--        <a href=-->
+<!--           "{% url 'load2' prj=project.id  y=y m=m %}"-->
+<!--           title="Изменить столбец">-->
         {{y}}<br>{{m}}
-        </a>
+<!--        </a>-->
       </th>
    {% endfor %}
 

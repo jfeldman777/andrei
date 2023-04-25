@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<a href="/res/{{project.id}}">посмотреть как распределены ресурсы</a>
+<h2>{{project}}</h2>
+{{d1}}-{{d2}}
+<table>
+<table border="2">
+  <tr>
+    <th  style="text-align: center;">Роль</th>
+    {% for y,m in month_tuples %}
+      <th  style="text-align: center;  padding: 5px;">
+<!--        <a href=-->
+<!--           "{% url 'load2' prj=project.id  y=y m=m %}"-->
+<!--           title="Изменить столбец">-->
+        {{y}}<br>{{m}}
+<!--        </a>-->
+      </th>
+   {% endfor %}
+
+  </tr>
+  {% for row in data %}
+    <tr>
+      {% for cell in row %}
+        {% if forloop.counter|gt:1 %}
+        <td class="good" key="{{forloop.counter}}.{{forloop.parentloop.counter}}"
+            style="text-align: center; padding: 3px;">{{ cell }}
+          </td>
+      {% else %}
+      <td class="bad" style="text-align: center; padding: 3px; ">{{ cell }}</td>
+      {% endif %}
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
+
+</table>
+<form id="myForm" action="/load4/" method="POST">
+
+    {% csrf_token %}
+  <input type = hidden name="id" value='{{project_id}}'>
+    <button type="submit">Сохранить изменения</button>
+  </form>
+<script>
+  // Add click event listener to each table cell
+$('td.good').click(function() {
+var p = $(this).attr("key");
+  var originalValue = $(this).text();
+  $(this).html('<input type="text" value="' + originalValue + '">');
+  $('td input').focusout(function() {
+    // Get the new value entered by the user
+    var newValue = $(this).val();
+    $(this).parent().text(newValue+'@');
+
+var myForm = $("#myForm");
+
+ var newInput = $("<input>");
+    newInput.attr("type", "hidden");
+    newInput.attr("name", p);
+    newInput.attr("value",newValue );
+
+    // append the new input element to the form
+    myForm.append(newInput);
+
+
+
+  });
+});
+
+</script>
+
+{% endblock %}
+

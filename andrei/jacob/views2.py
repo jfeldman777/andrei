@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,reverse
-from django.forms import formset_factory
+from django.forms import formset_factory, Form
 from .models import Load, Role, Project, UserProfile, Task
 from .forms import LoadForm, CellForm
 
@@ -15,7 +15,7 @@ def load2(request, prj, y, m):
             x['load']=loads[0].load
         initial_data.append(x)
 
-    print(initial_data)
+
     LoadFormSet = formset_factory(LoadForm, extra=0)
     if request.method == "POST":
         formset = LoadFormSet(request.POST)
@@ -24,7 +24,7 @@ def load2(request, prj, y, m):
                 role_id = form.cleaned_data["role"]
                 load = form.cleaned_data["load"]
                 Load.objects.update_or_create(
-                    role_id=role_id, project=project, month=f"{y}-{m}-15", defaults={"load": load}
+                    role=role_id, project=project, month=f"{y}-{m}-15", defaults={"load": load}
                 )
         else:
             print(formset.errors)
@@ -43,11 +43,10 @@ def one2prj(request):
         one.append(person.user.last_name)
         for project in projects:
             ps = list(project.people.all())
-            if person.user in ps:
+            if person in ps:
                 one.append(1)
             else:
                 one.append(0)
-        mypeople = UserProfile.objects.all().order_by('role', 'user')
 
     return render(request,"one2prj.html",{'people':people, 'projects':projects, "one":one},)
 
@@ -129,3 +128,18 @@ def upd(request, project_id, person_id, year, month):
 
     return render(request, 'upd.html', {'form': form,'project':project,'person':person,
                                         'month':f"{month}-{year}"})
+from django.shortcuts import render
+from .forms import TableCellForm, table_to_formset
+
+def table_formset_view(request):
+    table = []
+    # Replace with your own method of obtaining table data
+    formset = table_to_formset(table)
+    if request.method == 'POST':
+        formset = TableCellForm(request.POST)
+        if formset.is_valid():
+            # Handle form submission
+            pass
+    return render(request, 'table_formset.html', {'formset': formset})
+
+

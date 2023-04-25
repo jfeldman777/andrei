@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Project, UserProfile, Load, Role, Task
-import datetime
+import datetime,math
+
+from django.forms import Form
 def index(request):
     return render(request, 'index.html')
 
@@ -37,9 +39,9 @@ def load(request, id):
 
     # Pass the data to the template
     context = {'data': data, 'months': months,
-               'd1':d1,'d2':d2,
+               'd1':d1,'d2':d2,"project_id":id,
                'project':project, 'month_tuples': month_tuples}
-    return render(request, 'load.html', context)
+    return render(request, 'load3.html', context)
 
 
 def res(request, id):
@@ -85,7 +87,7 @@ def res(request, id):
                     except:
                         pass
                     n+=1
-            dif = [num[i]-sum[i] for i in range(n)]
+            dif = [round(num[i]-sum[i],2) for i in range(n)]
             for i in range(n):
                 dat[i+1]=(f"{num[i]} - {sum[i]} = {dif[i]}")
         data.append(dat)
@@ -150,10 +152,10 @@ def resp(request, id):
 
             data.append(dat)
 
-        dif = [num[i]-sum[i] for i in range(N)  ]
+        dif = [round(num[i]-sum[i],2) for i in range(N)  ]
         dat = []
         dat.append(r)
-        dat.append('РАЗНОСТЬ')
+        dat.append('ДЕЛЬТА')
         k = 0
         for m in months:
             dat.append(dif[k])
@@ -164,6 +166,12 @@ def resp(request, id):
                'project':project, 'month_tuples': month_tuples}
     return render(request, 'resp.html', context)
 
+
+def ymt(id):
+    project = Project.objects.get(id=id)
+    d1 = project.start_date
+    d2 = project.end_date
+    return ym_tuples(d1,d2)
 def ym_tuples(d1,d2):
     y1, m1 = d1.year, d1.month
     y2, m2 = d2.year, d2.month
@@ -224,3 +232,34 @@ def person_role(prj):
 
     return L
 
+def ajax(request):
+    id = 1
+    roles = list(Role.objects.all().order_by('id'))
+    # if this is a POST request we need to process the form data
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            #id = form.cleaned_data["id"]
+            id = int(request.POST.get('id'))
+            project = Project.objects.get(id=id)
+            ymtx = ymt(id)
+            for k,v in request.POST.items():
+                print(k,v)
+                if '.' in k:
+                    ki,kj=k.split('.')
+                    ii = int(ki)-2
+                    jj = int(kj)-1
+                    y,m = ymtx[ii]
+                    obj,created = Load.objects.update_or_create(
+                        role=roles[jj],
+                        project=project,
+                        month=f"{y}-{m}-15",
+                        load = int(v)
+                    )
+                    print(f"{y}-{m}-15",ii,jj,created,obj)
+        else:
+            print(form.errors)
+
+    return redirect("load",id)

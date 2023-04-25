@@ -22,7 +22,9 @@
               {% for cell in row %}
              {% if cell|isObject  %}
                 <td style="text-align: center; padding: 5px;background-color:yellow">
-                    <a href="/upd/{{cell.link}}"> {{ cell.load }} </a>
+<!--                    <a href="/upd/{{cell.link}}"> -->
+                        {{ cell.load }}
+<!--                    </a>-->
                                </td>
             {% else %}
                 <td style="text-align: center; padding: 5px; ">{{ cell }}</td>

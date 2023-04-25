@@ -22,5 +22,20 @@ class UpdateFloatForm(forms.Form):
     month = forms.IntegerField(widget=forms.HiddenInput())
     load = forms.FloatField(label='занятость в проекте')
 
+from django import forms
+from django.forms import formset_factory
+
+class TableCellForm(forms.Form):
+    cell_value = forms.FloatField()
+
+def table_to_formset(table):
+    formset = formset_factory(TableCellForm, extra=0)
+    rows = table.find_all('tr')
+    data = []
+    for row in rows:
+        cells = row.find_all('td')
+        for cell in cells:
+            data.append({'cell_value': cell.text})
+    return formset(initial=data)
 
 

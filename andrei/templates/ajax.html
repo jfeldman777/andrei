@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table id="user-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td><span class="editable" data-field="name" data-id="{{ user.id }}">{{ user.name }}</span></td>
+            <td><span class="editable" data-field="email" data-id="{{ user.id }}">{{ user.email }}</span></td>
+            <td><span class="editable" data-field="phone" data-id="{{ user.id }}">{{ user.phone }}</span></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+// Add click event listener to each table cell
+$('td').click(function() {
+  // Get the original text value
+  var originalValue = $(this).text();
+
+  // Replace the text with an input field containing the original text value
+  $(this).html('<input type="text" value="' + originalValue + '">');
+
+  // Add event listener to the input field to detect when the user has finished editing
+  $('td input').focusout(function() {
+    // Get the new value entered by the user
+    var newValue = $(this).val();
+
+    // Send an AJAX request to the server to update the corresponding data
+    $.ajax({
+      url: '/update-data',
+      method: 'POST',
+      data: { 'id': $(this).parent().attr('id'), 'value': newValue },
+      success: function(response) {
+        // Display a success message to the user
+        alert('Data updated successfully!');
+      },
+      error: function() {
+        // Display an error message to the user
+        alert('Error updating data!');
+      }
+    });
+
+    // Replace the input field with the new value
+    $(this).parent().text(newValue);
+  });
+});
+
+
+
+
+
+    // Handle editing of table cells
+    document.querySelectorAll('.editable').forEach(function(cell) {
+        cell.addEventListener('click', function() {
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.value = cell.textContent;
+            cell.textContent = '';
+            cell.appendChild(input);
+            input.focus();
+            input.addEventListener('blur', function() {
+                cell.textContent = input.value;
+                saveData(cell.dataset.id, cell.dataset.field, input.value);
+            });
+        });
+    });
+
+    // Send AJAX request to save data
+    function saveData(id, field, value) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/save_data/');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('Data saved successfully');
+            } else {
+                console.log('Error saving data');
+            }
+        };
+        xhr.send(JSON.stringify({
+            'id': id,
+            'field': field,
+            'value': value,
+        }));
+    }
+</script>
+
+
+
+{% endblock %}
+
