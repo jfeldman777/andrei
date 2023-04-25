@@ -47,6 +47,11 @@ $('td.good').click(function() {
 var p = $(this).attr("key");
   var originalValue = $(this).text();
   $(this).html('<input type="text" value="' + originalValue + '">');
+
+  $(this).click(function(){
+
+  $(this).html(originalValue);
+  })
   $('td input').focusout(function() {
     // Get the new value entered by the user
     var newValue = $(this).val();
