@@ -21,18 +21,48 @@
     <tr>
               {% for cell in row %}
              {% if cell|isObject  %}
-                <td style="text-align: center; padding: 5px;background-color:yellow">
-<!--                    <a href="/upd/{{cell.link}}"> -->
+                <td class="good" key="{{cell.link}}"
+                    style="text-align: center; padding: 5px;background-color:yellow">
                         {{ cell.load }}
-<!--                    </a>-->
                                </td>
             {% else %}
-                <td style="text-align: center; padding: 5px; ">{{ cell }}</td>
+                <td class="bad" style="text-align: center; padding: 5px; ">{{ cell }}</td>
             {% endif %}
 
       {% endfor %}
     </tr>
   {% endfor %}
 </table>
+<form id="myForm" action="/load5/" method="POST">
 
+    {% csrf_token %}
+  <input type = hidden name="id" value='{{project_id}}'>
+    <button type="submit">Сохранить изменения</button>
+  </form>
+
+    <script>
+
+$('td.good').click(function() {
+console.log(1);
+  var p = $(this).attr("key");
+  var originalValue = $(this).text();
+  $(this).html('<input type="text" value="' + originalValue + '">');
+console.log(2);
+  $(this).click(function(){
+  $(this).html(originalValue);
+  })
+
+  $('td input').focusout(function() {
+    var newValue = $(this).val();
+    $(this).parent().text(newValue+'@');
+var myForm = $("#myForm");
+ var newInput = $("<input>");
+    newInput.attr("type", "hidden");
+    newInput.attr("name", p);
+    newInput.attr("value",newValue );
+    myForm.append(newInput);
+  });
+});
+
+</script>
 {% endblock %}

@@ -117,6 +117,8 @@ def resp(request, id):
     tt = task_prj_person_month(id, months)
     data = []
 
+    iy = -1
+
     for r in roles:
         dat = []
         num = [0]*N
@@ -136,14 +138,17 @@ def resp(request, id):
             n+=1
         data.append(dat)
         for p in experts[r]:
+            iy+=1
             dat=[]
 
             dat.append(r)
             dat.append(p.user.last_name)
             n = 0
+            ix=-1
             for m in months:
+                ix+=1
                 try:
-                    t = {'load':tt[p][m],'link':f"{id}/{p.id}/{m.year}/{m.month}"}
+                    t = {'load':tt[p][m],'link':f"{ix}.{p.id}"}
                     dat.append(t)
                     sum[n]+=tt[p][m]
                 except:
@@ -162,7 +167,7 @@ def resp(request, id):
             k+=1
         data.append(dat)
     context = {'data': data, 'months': months,
-               'd1':d1,'d2':d2,
+               'd1':d1,'d2':d2,"project_id":id,
                'project':project, 'month_tuples': month_tuples}
     return render(request, 'resp.html', context)
 
@@ -215,23 +220,30 @@ def task_prj_person_month(prj,ms):
             for m in ms:
                 try:
                     t = Task.objects.get(project=prj,person = p,month = m)
+                    print(prj,p,m)
                     res[p][m]=t.load
                 except:
                     res[p][m] = 0
-
+        print(res)
         return res
 
 
 def person_role(prj):
     people = Project.objects.get(id=prj).people.all()
     L = {}
-    roles = Role.objects.all()
+    roles = Role.objects.all().order_by('id')
     for r in roles:
-        users = UserProfile.objects.filter(id__in=people, role=r)
+        users = UserProfile.objects.filter(id__in=people, role=r).order_by('user')
         L[r] = users
-
     return L
-
+def person_sorted(prj):
+    people = Project.objects.get(id=prj).people.all()
+    L = []
+    roles = Role.objects.all().order_by('id')
+    for r in roles:
+        users = list(UserProfile.objects.filter(id__in=people, role=r).order_by('user'))
+        L+=users
+    return L
 def ajax(request):
     id = 1
     roles = list(Role.objects.all().order_by('id'))
@@ -263,3 +275,41 @@ def ajax(request):
             print(form.errors)
 
     return redirect("load",id)
+
+def ajax2(request):
+    id = 1
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            sid = request.POST.get('id')
+            id = int(sid)
+            project = Project.objects.get(id=id)
+            people = person_sorted(id)
+            ymtx = ymt(id)
+            for k,v in request.POST.items():
+                if '.' in k:
+                    ki,kj=k.split('.')
+                    ix = int(ki)
+                    iy = int(kj)
+                    up=UserProfile.objects.get(id=iy)
+                    y,m = ymtx[ix]
+                    updateORcreate(up,project,f"{y}-{m}-15",float(v))
+        else:
+            print(form.errors)
+
+    return redirect("resp",id)
+
+def updateORcreate(p, pj, m, l):
+    try:
+        instance = Task.objects.get(person=p,project=pj, month=m)
+    except Task.DoesNotExist:
+        instance = None
+
+    if instance:
+        instance.load = l
+        instance.save()
+    else:
+        # If the instance does not exist, create a new one
+        instance = Task.objects.create(person=p, project=pj, month=m, load=l)

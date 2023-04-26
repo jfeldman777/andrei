@@ -1,11 +1,14 @@
+<!DOCTYPE html>
 {% load static %}
 {% load bootstrap4 %}
 
-<!DOCTYPE html>
 <html>
 <head>
   <title>{% block title %}{% endblock %}</title>
   {% bootstrap_css %}
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+
   <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.3.1/js/bootstrap.min.js"></script>

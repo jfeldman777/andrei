@@ -2,6 +2,7 @@ from django.urls import path
 from . import views, views2
 
 urlpatterns = [
+    path('load5/', views.ajax2, name='ajax2'),
     path('load4/', views.ajax, name='ajax'),
 
     path('upd/<int:project_id>/<int:person_id>/<int:year>/<int:month>/', views2.upd, name='upd'),
