@@ -10,11 +10,7 @@
     <th  style="text-align: center;">Роль</th>
     {% for y,m in month_tuples %}
       <th  style="text-align: center;  padding: 5px;">
-<!--        <a href=-->
-<!--           "{% url 'load2' prj=project.id  y=y m=m %}"-->
-<!--           title="Изменить столбец">-->
         {{y}}<br>{{m}}
-<!--        </a>-->
       </th>
    {% endfor %}
 
@@ -22,13 +18,17 @@
   {% for row in data %}
     <tr>
       {% for cell in row %}
-        {% if forloop.counter|gt:1 %}
-        <td class="good" key="{{forloop.counter}}.{{forloop.parentloop.counter}}"
-            style="text-align: center; padding: 3px;">{{ cell }}
-          </td>
-      {% else %}
-      <td class="bad" style="text-align: center; padding: 3px; ">{{ cell }}</td>
-      {% endif %}
+
+                   {% if cell|isObject  %}
+                <td class="good" key="{{cell.link}}"
+                    style="text-align: center; padding: 5px;background-color:yellow">
+                        {{ cell.load }}
+                               </td>
+            {% else %}
+                <td class="bad" style="text-align: center; padding: 5px; ">{{ cell }}</td>
+            {% endif %}
+
+
       {% endfor %}
     </tr>
   {% endfor %}
