@@ -28,6 +28,9 @@ def isNotRole(value):
 #         return False
 #     return True
 
+@register.filter
+def isBool(value):
+    return type(value)==bool
 
 @register.filter
 def isObject(value):

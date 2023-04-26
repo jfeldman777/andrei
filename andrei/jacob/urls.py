@@ -6,7 +6,7 @@ urlpatterns = [
     path('load4/', views3.ajax, name='ajax'),
     #
     # path('upd/<int:project_id>/<int:person_id>/<int:year>/<int:month>/', views2.upd, name='upd'),
-    path('projects', views.projects, name='projects'),
+    path('projects', views3.projects, name='projects'),
 
     path('res/<int:id>/', views3.res, name='res'),
     path('resp/<int:id>/', views3.resp, name='resp'),

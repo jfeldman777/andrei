@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+
+  <h2>Проекты</h2>
+<table border="2" style="text-align: center;  padding: 3px;">
+  <thead>
+<th>Руководитель</th>
+      <th>Название</th>
+      <th>Начало</th>
+      <th>Окончание</th>
+      <th>Длительность<br>(месяцев)</th>
+                  {% for y,m in months %}
+          <th>{{y}}<br>{{m}}</th>
+          {% endfor %}
+
+  </thead>
+  <tbody>
+
+    {% for row in matrix %}
+    <tr>
+        {% for cell in row %}
+        {% if cell|isBool %}
+          <td class="{% if cell %}true{% else %}false{% endif %}">
+              {% if cell %}*{% else %}-{% endif %}
+          </td>
+      {% else %}
+
+      <td>
+          {{cell}}
+      </td>
+
+
+      {% endif %}
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

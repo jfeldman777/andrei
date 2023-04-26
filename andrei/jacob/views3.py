@@ -312,3 +312,52 @@ def updateORcreateL(project,role, m, l):
     else:
         # If the instance does not exist, create a new one
         instance = Load.objects.create(project=project, role=role, month=m, load=l)
+
+def projects(request):
+    projects = Project.objects.all().order_by('start_date')
+    dmin = projects[0].start_date
+    prj2 = list(Project.objects.all().order_by('end_date'))
+    dmax = prj2[-1].end_date
+    months = (dmax.year - dmin.year) * 12 + dmax.month - dmin.month
+    ms = [i for i in range(months)]
+
+    dmin = dmin.replace(day=1)  # Set day to 15
+    dmax = dmax.replace(day=30)  # Set day to 15
+    tuples = ym_tuples(dmin,dmax)
+
+    data = []
+    for p in projects:
+        mb = mon_bool(dmin,dmax,p.start_date,p.end_date)
+        data.append(pref(p)+[dif(p.start_date,p.end_date)]+mon_bool(dmin,dmax,p.start_date,p.end_date))
+    return render(request, 'table.html', {'projects': projects,"months":tuples,"matrix":data})
+
+
+def dif(d1,d2):
+    return (d2.year-d1.year)*12+d2.month-d1.month+1
+def mon_bool(dmin,dmax,dstart,dend):
+    L = []
+    d = dmin.replace(day=15)
+    d2 = dmax.replace(day=15)
+    d3 = dstart.replace(day=15)
+    d4 = dend.replace(day=15)
+    while d <= d2:
+        b = (d3 <= d <= d4)
+        L.append(b)
+        d = inc(d)
+    return L
+
+def inc(d):
+    y,m = d.year,d.month
+    m += 1
+    if m > 12:
+        m = 1
+        y += 1
+    return datetime.date(y,m,15)
+
+def pref(p):
+    L = []
+    L.append(p.general.user.last_name)
+    L.append(p.title)
+    L.append(p.start_date)
+    L.append(p.end_date)
+    return L

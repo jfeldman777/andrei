@@ -22,7 +22,8 @@ class Project(models.Model):
     title = models.CharField(max_length=30)
     start_date = models.DateField()
     end_date = models.DateField()
-    people = models.ManyToManyField(UserProfile)
+    people = models.ManyToManyField(UserProfile, related_name='they')
+    general = models.ForeignKey(to=UserProfile,on_delete=models.CASCADE,related_name='he',default=1)
 
     def __str__(self):
         return self.title
