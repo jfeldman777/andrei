@@ -357,7 +357,9 @@ def inc(d):
 def pref(p):
     L = []
     L.append(p.general.user.last_name)
-    L.append(p.title)
+
+    L.append({"title":p.title,"link":p.id})
+
     L.append(p.start_date)
     L.append(p.end_date)
     return L

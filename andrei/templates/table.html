@@ -26,12 +26,15 @@
               {% if cell %}*{% else %}-{% endif %}
           </td>
       {% else %}
-
-      <td>
+        <td>
+{% if cell|isObject %}
+            <a href="/load/{{cell.link}}">
+          {{cell.title}}
+            </a>
+        {% else %}
           {{cell}}
-      </td>
-
-
+{% endif %}
+   </td>
       {% endif %}
         {% endfor %}
       </tr>
