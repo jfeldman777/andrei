@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
   <h2>Люди</h2>
-<table class="table">
+<table border = 2  style="text-align: center;  padding: 5px;">
   <thead>
-    <tr>
+    <tr style="text-align: center;  padding: 5px;">
       <th>Фамилия</th>
       <th>Имя</th>
       <th>Роль</th>
@@ -12,9 +12,9 @@
   <tbody>
     {% for p in people %}
       <tr>
-        <td>{{ p.role }}</td>
-        <td>{{ p.user.last_name }}</td>
-        <td>{{ p.user.first_name }}</td>
+        <td style="text-align: center;  padding: 3px;">{{ p.role }}</td>
+        <td style="text-align: center;  padding: 3px;">{{ p.user.last_name }}</td>
+        <td style="text-align: center;  padding: 3px;">{{ p.user.first_name }}</td>
       </tr>
     {% endfor %}
   </tbody>

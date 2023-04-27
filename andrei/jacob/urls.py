@@ -17,6 +17,8 @@ urlpatterns = [
 
     path('one2prj/', views.one2prj, name='one2prj'),
     path('one2role/', views.one2role, name='one2role'),
-    path('people', views.people, name='people'),
+
+    path('ost/', views.ostatok, name='ost'),
+    path('people/', views.people, name='people'),
     path('', views.index, name='index'),
 ]

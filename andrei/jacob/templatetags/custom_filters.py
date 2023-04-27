@@ -29,6 +29,13 @@ def isNotRole(value):
 #     return True
 
 @register.filter
+def zero(value):
+    return value == 0
+@register.filter
+def negative(value):
+    return value < 0
+
+@register.filter
 def isBool(value):
     return type(value)==bool
 

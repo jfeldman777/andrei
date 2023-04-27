@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-  <h2>доступность сотрудников максимальная</h2>
-<a href="/ost/">доступность остаточная</a>
+  <h2>доступность сотрудников остаточная</h2>
+<a href="/people/">доступность максимальная</a>
 <table border="2"  >
   <thead>
     <tr >
@@ -21,15 +21,17 @@
     {% for p in data %}
       <tr >
         {% for cell in p %}
-            {% if cell|isObject %}
-          <td style="text-align: center;  padding: 3px;" title="загрузка = {{cell.t}}">
-{{cell.d}}*
-          </td>
-        {% else %}
-        <td style="text-align: center;  padding: 3px;">{{ cell }}</td>
-           {% endif %}
-        {% endfor %}
+        <td style="text-align: center;  padding: 3px;
+  {% if cell|isnumeric and cell|negative %}
+  background-color:red
+  {% endif %}
+    {% if cell|isnumeric and cell|zero %}
+  background-color:yellow
+  {% endif %}
 
+
+">{{ cell }}</td>
+        {% endfor %}
       </tr>
     {% endfor %}
   </tbody>
