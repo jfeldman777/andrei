@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-<a href="/load/{{project.id}}">посмотреть потребные ресурсы</a>
+= Утвержденные загрузки = <a href="/res/{{project.id}}">Балансировка ресурсов</a> =
+<a href="/load/{{project.id}}">Профиль загрузки</a> =<br>
+
 <h2>{{project}}</h2>
-{{d1}}-{{d2}}
+{{d1}}-{{d2}}<br><a href="/load/{{project.id}}">посмотреть потребные ресурсы</a>
 <a href="/res/{{project.id}}">посмотреть распределенные ресурсы крупно</a>
 <table>
 <table border="2">

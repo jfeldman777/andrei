@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-
+= Портфель =
   <h2>Проекты</h2>
 <table border="2" >
   <thead >
@@ -28,7 +28,7 @@
       {% else %}
         <td style="text-align: center;  padding: 3px;">
 {% if cell|isObject %}
-            <a href="/load/{{cell.link}}">
+            <a href="/load/{{cell.link}}" title="посмотреть профиль загрузки">
           {{cell.title}}
             </a>
         {% else %}

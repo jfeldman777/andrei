@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-<a href="/res/{{project.id}}">посмотреть как распределены ресурсы</a>
-<h2>{{project}}</h2>
-{{d1}}-{{d2}}
+= Профиль загрузки
+= <a href="/resp/{{project.id}}">Утвержденные загрузки</a> =
+<a href="/res/{{project.id}}">Балансировка ресурсов</a> =
+<br>
 
+<h2>{{project}}</h2>
+{{d1}}-{{d2}}<br>
+<a href="/res/{{project.id}}">посмотреть как распределены ресурсы</a>
 <table border="2">
   <tr>
     <th  style="text-align: center;  padding: 3px;"">Роль</th>
