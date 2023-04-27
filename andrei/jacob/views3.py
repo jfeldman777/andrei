@@ -130,7 +130,7 @@ def resp(request, id):
             n = 0
             for ms in mss:
                 try:
-                    t = {'load':tt[p][ms],'link':f"{p}.{ms}"}
+                    t = {'load':tt[p][ms],'link':f"{p.id}.{ms}"}
                     dat.append(t)
                     sum[n]+=tt[p][ms]
                 except:
@@ -269,16 +269,11 @@ def ajax2(request):
             sid = request.POST.get('id')
             id = int(sid)
             project = Project.objects.get(id=id)
-            people = person_sorted(id)
-            ymtx = ymt(id)
             for k,v in request.POST.items():
                 if '.' in k:
-                    ki,kj=k.split('.')
-                    ix = int(ki)
-                    iy = int(kj)
-                    role=Role.objects.get(id=ix)
-                    y,m = ymtx[iy]
-                    updateORcreate(role,project,f"{y}-{m}-15",float(v))
+                    p,ms=k.split('.')
+                    person = UserProfile.objects.get(id=p)
+                    updateORcreate(person,project,ms,float(v))
         else:
             print(form.errors)
 
