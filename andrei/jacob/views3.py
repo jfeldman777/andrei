@@ -39,12 +39,12 @@ def res(request, id):
     d2 = project.end_date
     month_tuples = ym_tuples(d1,d2)
     items = load_role_month(id)
-
-    months = ym2mm(month_tuples)
+    mss = ymts(id) #str format
+    months = ym2mm(month_tuples) #datetime format
     experts = person_role(id)
 ##################################
     data = []
-    tt = task_prj_person_month(id, months)
+    tt = task_prj_person_month(id, mss)
     roles = Role.objects.all().order_by('id')
     N = len(month_tuples)
     for r in roles:
@@ -52,11 +52,10 @@ def res(request, id):
         num = [0]*N
         sum = [0]*N
         n = 0
-        for y,m in month_tuples:
-            month = datetime.date(y,m,15)
+
+        for ms in mss:
             try:
-                item = items[r][month]
-                num[n] = item.load
+                num[n] = items[r][ms]
             except:
                 num[n] = 0
 
@@ -67,7 +66,7 @@ def res(request, id):
 
             for p in experts[r]:
                 n = 0
-                for m in months:
+                for m in mss:
                     try:
                         sum[n]+=tt[p][m]
                     except:
@@ -86,20 +85,21 @@ def res(request, id):
     return render(request, 'res.html', context)
 
 def resp(request, id):
-    # Get all the items for the given ID and sort by role and month
     project = Project.objects.get(id=id)
-    experts = {}
     roles = Role.objects.all().order_by('id')
-
     d1 = project.start_date
     d2 = project.end_date
-    month_tuples = ym_tuples(d1,d2)
+    month_tuples = ym_tuples(d1, d2)
     items = load_role_month(id)
-    months = ym2mm(month_tuples)
-    # Create a dictionary to store the items by role and month
+    mss = ymts(id)  # str format
+    months = ym2mm(month_tuples)  # datetime format
     experts = person_role(id)
+
     N = len(months)
-    tt = task_prj_person_month(id, months)
+    tt = task_prj_person_month(id, mss)
+    print(tt)
+    print(mss)
+
     data = []
 
     iy = -1
@@ -111,31 +111,28 @@ def resp(request, id):
         dat.append(r)
         dat.append('ПОТРЕБНОСТЬ')
         n = 0
-        for y,m in month_tuples:
-            month = datetime.date(y,m,15)
+
+
+        for ms in mss:
             try:
-                item = items[r][month]
-                dat.append(item.load)
-                num[n]=item.load
+                load = items[r][ms]
+                dat.append(load)
+                num[n]=load
             except:
                 dat.append(0)
                 num.append(0)
             n+=1
         data.append(dat)
         for p in experts[r]:
-            iy+=1
             dat=[]
-
             dat.append(r)
             dat.append(p.user.last_name)
             n = 0
-            ix=-1
-            for m in months:
-                ix+=1
+            for ms in mss:
                 try:
-                    t = {'load':tt[p][m],'link':f"{ix}.{p.id}"}
+                    t = {'load':tt[p][ms],'link':f"{p}.{ms}"}
                     dat.append(t)
-                    sum[n]+=tt[p][m]
+                    sum[n]+=tt[p][ms]
                 except:
                     dat.append(0)
                 n+=1
@@ -195,7 +192,7 @@ def load_role_month(prj):
 
         # Add the item to the dictionary for this role and month
         items[r][s] = l.load
-
+    print(items)
     return  items
 
 def ym2mm(tuples):
@@ -211,6 +208,7 @@ def task_prj_person_month(prj,ms):
         res = {}
         for p in people:
             res[p]={}
+            print(999,ms)
             for m in ms:
                 try:
                     t = Task.objects.get(project=prj,person = p,month = m)

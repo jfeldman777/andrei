@@ -1,0 +1,24 @@
+<script>
+$('td.good').click(function() {
+
+  var p = $(this).attr("key");
+  var originalValue = $(this).text();
+  $(this).html('<input type="text" value="' + originalValue + '">');
+
+  $(this).click(function(){
+  $(this).html(originalValue);
+  })
+
+  $('td input').focusout(function() {
+    var newValue = $(this).val();
+    $(this).parent().text(newValue+'@');
+var myForm = $("#myForm");
+ var newInput = $("<input>");
+    newInput.attr("type", "hidden");
+    newInput.attr("name", p);
+    newInput.attr("value",newValue );
+    myForm.append(newInput);
+  });
+});
+
+</script>
