@@ -1,20 +1,28 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 {% block content %}
-  <h2>Люди</h2>
-<table class="table">
+  <h2>доступность сотрудников максимальная</h2>
+<a href="/ost/">доступность остаточная</a>
+<table border="2"  >
   <thead>
-    <tr>
-      <th>Фамилия</th>
-      <th>Имя</th>
-      <th>Роль</th>
+    <tr >
+      {% for t in t12 %}
+      <th style="text-align: center;  padding: 5px;">
+        {% if t|isObject %}
+        {{t.year}}<br>{{t.month}}
+        {% else %}
+        {{t}}
+        {% endif %}
+      </th>
+      {% endfor%}
     </tr>
   </thead>
   <tbody>
-    {% for p in people %}
-      <tr>
-        <td>{{ p.user.last_name }}</td>
-        <td>{{ p.user.first_name }}</td>
-        <td>{{ p.role }}</td>
+    {% for p in data %}
+      <tr >
+        {% for cell in p %}
+        <td style="text-align: center;  padding: 3px;">{{ cell }}</td>
+        {% endfor %}
       </tr>
     {% endfor %}
   </tbody>

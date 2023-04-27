@@ -1,25 +1,53 @@
-from django.shortcuts import render,redirect
-from .models import Project, UserProfile, Load, Role, Task
-import datetime,math
+from datetime import datetime
+from .views3 import inc
 
-from django.forms import Form
+from django.shortcuts import render
+from .models import Load, Role, Project, UserProfile, Less
+
+
+
 def index(request):
     return render(request, 'index.html')
 
+def t12ym():
+   L = []
+   d1 = datetime.now()
+   for i in range(12):
+       L.append({"year":d1.year,"month":d1.month})
+       d1 = inc(d1)
+       print(d1)
+   return L
+
+def inside(d,d1,d2):
+    print(d,d1,d2)
+    b = (d1.year,d1.month) <= (d.year,d.month) <= (d2.year,d2.month)
+    print(b)
+    return b
+
+def correct(data,l,n):
+    d1 = datetime.now().date()
+    dn = data[n]
+    for i in range(12):
+        if inside(d1,l.start_date,l.end_date):
+            dn[i+3]=l.load
+        d1 = inc(d1)
+    return data
+
 def people(request):
-    people = UserProfile.objects.all()
-    return render(request, 'people.html', {'people': people})
+    people = UserProfile.objects.all().order_by("role")
+    t12 = ['Роль','Фамилия','Имя']+t12ym()
+    data = [([p.role,p.user.last_name,p.user.first_name]+[1]*12) for p in people]
+    n = 0
+    for p in people:
+        less = Less.objects.all().filter(person = p)
+        print(less)
+        for l in less:
+            data = correct(data,l,n)
+        n+=1
 
-# def tasks(request):
-#     form = None
-#     return render(request, 'tasks.html',{form:form})
+    return render(request, 'people.html', {'people': people,"t12":t12,"data":data})
 
 
-
-from django.shortcuts import render,redirect,reverse
-from django.forms import formset_factory, Form
-from .models import Load, Role, Project, UserProfile, Task
-from .forms import LoadForm, CellForm
 
 def one2prj(request):
     people = UserProfile.objects.all().order_by('role', 'user')

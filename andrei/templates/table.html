@@ -4,29 +4,29 @@
 {% block content %}
 
   <h2>Проекты</h2>
-<table border="2" style="text-align: center;  padding: 3px;">
-  <thead>
-<th>Руководитель</th>
-      <th>Название</th>
-      <th>Начало</th>
-      <th>Окончание</th>
-      <th>Длительность<br>(месяцев)</th>
+<table border="2" >
+  <thead >
+<th style="text-align: center;  padding: 5px;">РП</th>
+      <th style="text-align: center;  padding: 5px;">Название</th>
+      <th style="text-align: center;  padding: 5px;">Начало</th>
+      <th style="text-align: center;  padding: 5px;">Окончание</th>
+      <th style="text-align: center;  padding: 5px;">Длит<br>(мес)</th>
                   {% for y,m in months %}
-          <th>{{y}}<br>{{m}}</th>
+          <th style="text-align: center;  padding: 5px;">{{y}}<br>{{m}}</th>
           {% endfor %}
 
   </thead>
   <tbody>
 
     {% for row in matrix %}
-    <tr>
+    <tr style="text-align: center;  padding: 5px;">
         {% for cell in row %}
         {% if cell|isBool %}
           <td class="{% if cell %}true{% else %}false{% endif %}">
               {% if cell %}*{% else %}-{% endif %}
           </td>
       {% else %}
-        <td>
+        <td style="text-align: center;  padding: 3px;">
 {% if cell|isObject %}
             <a href="/load/{{cell.link}}">
           {{cell.title}}
