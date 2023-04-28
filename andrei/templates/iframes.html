@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Web Page</title>
+  <script>
+var boundary = document.getElementById("boundary");
+var iframe1 = document.getElementById("iframe1");
+var iframe2 = document.getElementById("iframe2");
+
+boundary.addEventListener("dragstart", function(event) {
+  event.dataTransfer.setData("text/plain", "boundary");
+});
+
+boundary.addEventListener("dragover", function(event) {
+  event.preventDefault();
+});
+
+boundary.addEventListener("drop", function(event) {
+  event.preventDefault();
+  var boundaryPosition = event.clientX - iframe1.getBoundingClientRect().left;
+  iframe1.style.width = boundaryPosition + "px";
+  iframe2.style.width = iframe1.offsetWidth + "px";
+});
+
+  </script>
+  </head>
+  <body>
+    <h1>Страница главного начальника</h1>
+
+
+    <iframe id="iframe1" src="/prjlist" width="500" height="300"></iframe>
+
+        <iframe id="iframe3" src="/otdlist" width="500" height="300"></iframe><br>
+<div id="boundary" draggable="true"></div>
+        <iframe id="iframe2"  src="/myprj" width="500" height="300"></iframe>
+
+        <iframe id="t11" src="/home" width="500" height="300"></iframe>
+
+
+    <p>And here's some more content.</p>
+  </body>
+</html>

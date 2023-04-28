@@ -2,6 +2,14 @@ from django.urls import path
 from . import views, views2,views3
 
 urlpatterns = [
+    path('home/', views.home, name='home'),
+
+    path('prjlist/', views.prjlist, name='prjlist'),
+    path('otdlist/', views.otdlist, name='otdlist'),
+    path('myprj/', views.myprj, name='myprj'),
+    path('myotd/<int:id>/', views.myotd, name='myotd'),
+
+
     path('load5/', views3.ajax2, name='ajax2'),
     path('load4/', views3.ajax, name='ajax'),
     #
@@ -20,5 +28,7 @@ urlpatterns = [
 
     path('ost/', views.ostatok, name='ost'),
     path('people/', views.people, name='people'),
+
+
     path('', views.index, name='index'),
 ]

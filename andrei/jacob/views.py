@@ -1,13 +1,120 @@
 from datetime import datetime
-from .views3 import inc
+from .views3 import inc,projects
+from .models import Role
+# from .views3 import inc_n
 
 from django.shortcuts import render
 from .models import Load, Role, Project, UserProfile, Less, Task
+def home(request):
+    return render(request, 'index.html')
+
+def myotd(request,id):
+    mss=t12ym()
+
+    t12 = ['Фамилия'] + mss
+    data = []
+    dat = []
+    num = [1] * 12
+    sum = [0] * 12
+    sum2 = [0] * 12
+
+    d1 = datetime.now().date()
+    role = Role.objects.get(id=id)
+    experts = UserProfile.objects.filter(role=id).order_by('id')
+    mss = t12ym()
+    for person in experts:
+        user = UserProfile.objects.get(id=person.id).user
+        dat = [user.last_name]
+        num = [1] * 12
+        sum = [0] * 12
+        sum2 = [0] * 12
+        less = Less.objects.filter(person=person).order_by('id')
+        for l in less:
+            print(l)
+            d = d1
+            for i in range(12):
+                if inside(d, l.start_date, l.end_date):
+                    num[i] = l.load
+                    print(l.load, i)
+                d = inc(d)
+        for i in range(12):
+            sum[i] += num[i]
+        i = 0
+        for m in mss:
+            d = datetime(year=m['year'], month=m['month'], day=15)
+            tasks = Task.objects.filter(person=person, month=d)
+
+            for task in tasks:
+                t = task.load
+                sum2[i] += t
+            i += 1
+            num = [1] * 12
+
+        dat+=[{'plus':sum[i],'minus':sum2[i]} for i in range(12)]
+        data.append(dat)
+    context = {'data': data, 't12': t12,'role_id':id,'role':role,}
+
+
+    return render(request, 'index11.html',context)
+
+
+def myprj(request):
+    return render(request, 'index10.html')
+def otdlist(request):
+    roles = Role.objects.all().order_by('id')
+    people = UserProfile.objects.all().order_by('role')
+    mss=t12ym()
+
+    t12 = ['Роль'] + mss
+    data = []
+    d1 = datetime.now().date()
+    d2 = inc_n(d1,12)
+    for r in roles:
+        dat = []
+        num = [1] * 12
+        sum = [0] * 12
+        sum2 = [0] * 12
+        dat.append({'title':r,'link':r.id})
+        n = 0
+        print(r)
+        experts = UserProfile.objects.filter(role=r)
+        for person in experts:
+            less = Less.objects.filter(person = person).order_by('id')
+            for l in less:
+                print(l)
+                d = d1
+                for i in range(12):
+                    if inside(d,l.start_date,l.end_date):
+                        num[i]=l.load
+                        print(l.load, i)
+                    d = inc(d)
+            for i in range(12):
+                sum[i]+=num[i]
+            i=0
+            for m in mss:
+                d = datetime(year=m['year'],month=m['month'],day=15)
+                tasks = Task.objects.filter(person=person,month=d)
+
+                for task in tasks:
+                    t = task.load
+                    sum2[i]+=t
+                i+=1
+            num = [1] * 12
+
+        dat+=[{'plus':sum[i],'minus':sum2[i]} for i in range(12)]
+
+        data.append(dat)
+    context = {'data': data, 't12': t12,}
+    return render(request,'otdlist.html',context)
+
+def prjlist(request):
+    return projects(request)
+
 
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'iframes.html')
 
 def t12ym():
    L = []

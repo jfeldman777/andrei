@@ -1,8 +1,7 @@
 {% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-  <h2>доступность сотрудников максимальная</h2>
-<a href="/ost/">доступность остаточная</a>
+{{role}}
 <table border="2"  >
   <thead>
     <tr >
@@ -11,7 +10,7 @@
         {% if t|isObject %}
         {{t.year}}<br>{{t.month}}
         {% else %}
-        {{t}}
+         {{t}}
         {% endif %}
       </th>
       {% endfor%}
@@ -21,13 +20,15 @@
     {% for p in data %}
       <tr >
         {% for cell in p %}
-            {% if cell|isObject %}
-          <td style="text-align: center;  padding: 3px;" title="загрузка = {{cell.t}}">
-{{cell.d}}*
+          {% if forloop.first %}
+          <td>
+             {{cell}}
           </td>
-        {% else %}
-        <td style="text-align: center;  padding: 3px;">{{ cell }}</td>
-           {% endif %}
+
+          {% else %}
+        <td style="text-align: center;  padding: 3px;">
+            {{ cell.plus }}({{cell.minus}})</td>
+              {% endif %}
         {% endfor %}
 
       </tr>
