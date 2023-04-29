@@ -6,7 +6,7 @@ from .models import Role
 from django.shortcuts import render
 from .models import Load, Role, Project, UserProfile, Less, Task
 def home(request):
-    return render(request, 'index.html')
+    return render(request, 'index01.html')
 
 def myotd(request,id):
     mss=t12ym()
@@ -59,7 +59,7 @@ def myotd(request,id):
 
 
 def myprj(request):
-    return render(request, 'index10.html')
+    return render(request, 'left.html')
 def otdlist(request):
     roles = Role.objects.all().order_by('id')
     people = UserProfile.objects.all().order_by('role')
@@ -111,9 +111,16 @@ def prjlist(request):
     return projects(request)
 
 
-
-
 def index(request):
+    return render(request, 'iframes.html')
+
+def frames(request,p,r):
+    return render(request, 'iframes.html')
+
+def left(request,p):
+    return render(request, 'iframes.html')
+
+def right(request,r):
     return render(request, 'iframes.html')
 
 def t12ym():

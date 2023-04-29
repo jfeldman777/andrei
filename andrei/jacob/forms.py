@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import formset_factory
-from .models import Role
+from .models import Role,Project
 
 class LoadForm(forms.Form):
    role = forms.IntegerField(widget=forms.HiddenInput())
@@ -37,5 +37,17 @@ def table_to_formset(table):
         for cell in cells:
             data.append({'cell_value': cell.text})
     return formset(initial=data)
+
+from django import forms
+
+class EntryForm(forms.Form):
+    projects = forms.ModelChoiceField(label='Проекты', required=False,
+                    queryset=Project.objects.all(), empty_label='Все проекты')
+    roles = forms.ModelChoiceField(label='Роли',
+        queryset=Role.objects.all(), empty_label='Все роли', required=False)
+    # submit = forms.CharField(widget=forms.HiddenInput(), initial='submit')
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
 
 
