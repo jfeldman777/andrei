@@ -2,11 +2,11 @@
 {% load custom_filters %}
 {% block content %}
 {{role}}
-<table border="2"  >
+<table border="2">
   <thead>
     <tr >
       {% for t in t12 %}
-      <th style="text-align: center;  padding: 5px;">
+      <th style="text-align: center;">
         {% if t|isObject %}
         {{t.year}}<br>{{t.month}}
         {% else %}
@@ -23,7 +23,7 @@
 
              {% if forloop.first %}
                         <td class="bad"
-                         style="text-align: center; padding: 5px; ">
+                         style="text-align: center; ">
                             <a href="#"
   onclick=" var iframe2 = window.parent.document.getElementById('iframe4');
 iframe2.src = 'mytask/{{cell.link}}';
@@ -35,8 +35,8 @@ iframe2.src = 'mytask/{{cell.link}}';
 
 
           {% else %}
-        <td style="text-align: center;  padding: 3px;">
-            {{ cell.plus }}({{cell.minus}})</td>
+        <td style="text-align: center;">
+            {{cell}}</td>>
               {% endif %}
         {% endfor %}
 

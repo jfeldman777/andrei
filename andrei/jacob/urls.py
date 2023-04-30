@@ -23,7 +23,9 @@ urlpatterns = [
 
     # path('res_all/', views3.res_all, name='res_all'),
     path('res/<int:id>/', views3.res, name='res'),
-    path('resp/<int:id>/', views3.resp, name='resp'),
+    path('res01/<int:id>/', views3.res01, name='res01'),
+    path('res10/<int:id>/', views3.res10, name='res10'),
+    # path('resp/<int:id>/', views3.resp, name='resp'),
     path('res_jr/<int:prj>/<int:r>/', views3.res_jr, name='res_jr'),
     path('load/<int:id>/', views3.load, name='load'),
 

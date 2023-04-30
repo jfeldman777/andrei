@@ -7,7 +7,7 @@
   <thead>
     <tr >
       {% for t in t12 %}
-      <th style="text-align: center;  padding: 5px;">
+      <th style="text-align: center;  ">
         {% if t|isObject %}
         {{t.year}}<br>{{t.month}}
         {% else %}
@@ -23,7 +23,7 @@
         {% for cell in p %}
           {% if forloop.first %}
 
-       <td style="text-align: center;  padding: 3px;">
+       <td style="text-align: center; ">
            <a href="#"
 
   onclick=" var iframe4 = window.parent.document.getElementById('iframe4');
@@ -32,8 +32,8 @@ iframe4.src = 'myotd/{{cell.link}}';">
           </a> </td>
 
           {% else %}
-        <td style="text-align: center;  padding: 3px;">
-            {{ cell.plus }}({{cell.minus}})</td>
+        <td style="text-align: center;">
+            {{cell}}</td>
               {% endif %}
         {% endfor %}
 

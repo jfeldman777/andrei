@@ -1,19 +1,19 @@
 {% extends 'base1.html' %}
 {% load custom_filters %}
-{% block content %}<h3>балансировка ресурсов</h3>
-<h4>ПРОЕКТ {{project}}</h4>
+{% block content %}
+<h3>{{project}}</h3>
 
 <table border="2">
   <tr>
-    <th  style="text-align: center;">Ресурс</th> <th  style="text-align: center;">-</th>
+    <th  style="text-align: center;">Ресурс</th>
     {% for x in data0 %}
-      <th  style="text-align: center; ">
+      <th  style="text-align: center; padding: 5px;">
 
         {{x.year}}
       </th>
    {% endfor %}
 </tr><tr>
-    <th  style="text-align: center;">-</th> <th  style="text-align: center;">-</th>
+    <th  style="text-align: center;">-</th>
     {% for x in data0 %}
       <th  style="text-align: center; ">
 
@@ -26,21 +26,27 @@
     <tr style="text-align: center;">
               {% for cell in row %}
              {% if forloop.first %}
-                        <td class="bad"
-                         style="text-align: center;  ">
-                            {{ cell.title }}
+    <td class="bad"
+                         style="text-align: center;">
+
+                            <!--a href="#"
+  onclick=" var iframe2 = window.parent.document.getElementById('iframe2');
+iframe2.src = 'res_jr/{{cell.link}}';"--->
+                   {{ cell.title }}
+
+                        </td>
+
+
             {% else %}
-{% if cell|isnumeric and cell|positive %}
+    {% if cell|positive %}
                         <td class="good"
                          style="text-align: center;
       background-color:yellow;">{% else %}
-
-
                 <td class="good"
-                    style="text-align: center; background-color:white">{% endif %}
+                    style="text-align: center; background-color:white">
+        {% endif %}
                         {{ cell }}
                                </td>
-
             {% endif %}
 
       {% endfor %}
@@ -50,5 +56,5 @@
 </table>
 
 </table>
-(((res)))
+(((res01)))
 {% endblock %}

@@ -8,9 +8,10 @@ from .models import Load, Role, Project, UserProfile, Less, Task
 def myotd(request,id):
     mss=t12ym()
 
-    t12 = ['Фамилия'] + mss
+    t12 = ['Фамилия','-'] + mss
     data = []
-    dat = []
+    dat1 = []
+    dat2=[]
     num = [1] * 12
     sum = [0] * 12
     sum2 = [0] * 12
@@ -21,7 +22,8 @@ def myotd(request,id):
     mss = t12ym()
     for person in experts:
         user = UserProfile.objects.get(id=person.id).user
-        dat = [{"title":user.last_name,"link":person.id}]
+        dat1 = [{"title":user.last_name,"link":person.id},'доступно']
+        dat2 = [{"title": user.last_name, "link": person.id},'занято']
         num = [1] * 12
         sum = [0] * 12
         sum2 = [0] * 12
@@ -47,8 +49,11 @@ def myotd(request,id):
             i += 1
             num = [1] * 12
 
-        dat+=[{'plus':sum[i],'minus':sum2[i]} for i in range(12)]
-        data.append(dat)
+        dat1 += [sum[i] for i in range(12)]
+        dat2 += [sum2[i] for i in range(12)]
+
+        data.append(dat1)
+        data.append(dat2)
     context = {'data': data, 't12': t12,'role_id':id,'role':role,}
 
 
@@ -71,16 +76,20 @@ def otdlist(request):
     people = UserProfile.objects.all().order_by('role')
     mss=t12ym()
 
-    t12 = ['Роль'] + mss
+    t12 = ['Роль','='] + mss
     data = []
     d1 = datetime.now().date()
     d2 = inc_n(d1,12)
     for r in roles:
         dat = []
+        dat2 = []
         num = [1] * 12
         sum = [0] * 12
         sum2 = [0] * 12
         dat.append({'title':r,'link':r.id})
+        dat2.append({'title': r, 'link': r.id})
+        dat.append('доступно')
+        dat2.append('занято')
         n = 0
         print(r)
         experts = UserProfile.objects.filter(role=r)
@@ -107,9 +116,10 @@ def otdlist(request):
                 i+=1
             num = [1] * 12
 
-        dat+=[{'plus':sum[i],'minus':sum2[i]} for i in range(12)]
-
+        dat+=[sum[i] for i in range(12)]
+        dat2 += [sum2[i] for i in range(12)]
         data.append(dat)
+        data.append(dat2)
     context = {'data': data, 't12': t12,}
     return render(request,'otdlist.html',context)
 

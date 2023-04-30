@@ -5,12 +5,22 @@
 
 <table border="2">
   <tr>
-    <th  style="text-align: center;  padding: 3px;">Роль</th>
-    {% for y,m in month_tuples %}
-      <th  style="text-align: center;  padding: 5px;">
-        {{y}}<br>{{m}}
+    <th  style="text-align: center;">Роль</th>
+    {% for x in data0 %}
+      <th  style="text-align: center; ">
+
+        {{x.year}}
       </th>
    {% endfor %}
+</tr><tr>
+    <th  style="text-align: center;">Роль</th>
+    {% for x in data0 %}
+      <th  style="text-align: center;">
+
+     {{x.month}}
+      </th>
+   {% endfor %}
+  </tr>
 
   </tr>
   {% for row in data %}
@@ -26,7 +36,7 @@ iframe2.src = 'res_jr/{{cell.link}}';
                 </td>
         {% else %}
         <td class="good" key="{{cell.link}}"
-                    style="text-align: center; padding: 5px;background-color:yellow">
+                    style="text-align: center; background-color:yellow">
                         {{ cell.load }}
                                </td>
             {% endif %}

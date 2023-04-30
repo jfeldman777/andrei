@@ -27,6 +27,9 @@ def isNotRole(value):
 #     if type(value) == str or float or int:
 #         return False
 #     return True
+@register.filter
+def positive(value):
+    return float(value) > 0
 
 @register.filter
 def zero(value):
