@@ -3,14 +3,14 @@ from . import views, views2,views3,v
 
 urlpatterns = [
     # path('home/', views.home, name='home'),
-    # path('load5/', views2.ajax2, name='ajax2'),
-    # path('load4/', views2.ajax, name='ajax'),
+    path('ajax2/', views2.ajax2, name='ajax2'),
+    path('ajax/', views2.ajax, name='ajax'),
     #     # path('myprj/<int:id>/', views.myprj, name='myprj'),
     # path('upd/<int:project_id>/<int:person_id>/<int:year>/<int:month>/', views2.upd, name='upd'),
     # path('homeleft/', views.homeleft, name='homeleft'),
     # path('homeright/', views.homeright, name='homeright'),
     #
-    # path('load2/<int:prj>/<int:y>/<int:m>/', views2.load2, name='load2'),
+    # path('load2/<iFnt:prj>/<int:y>/<int:m>/', views2.load2, name='load2'),
 
     # path('res2/<int:prj>/<int:role>/<int:y>/<int:m>/', views2.res2, name='res2'),  path('prjlist/', views.prjlist, name='prjlist'),
     path('otdlist/', views.otdlist, name='otdlist'),
@@ -21,7 +21,7 @@ urlpatterns = [
 
     path('projects', views3.projects, name='projects'),
 
-    path('res_all/', views3.res_all, name='res_all'),
+    # path('res_all/', views3.res_all, name='res_all'),
     path('res/<int:id>/', views3.res, name='res'),
     path('resp/<int:id>/', views3.resp, name='resp'),
     path('res_jr/<int:prj>/<int:r>/', views3.res_jr, name='res_jr'),

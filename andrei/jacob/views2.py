@@ -77,7 +77,9 @@ def ajax(request):
                     ri = int(ki)
                     role = Role.objects.get(id=ri)
                     l = float(v)
+                    print(project,role,m,l)
                     updateORcreateL(project,role,m,l)
+
         else:
             print(form.errors)
 
@@ -95,13 +97,13 @@ def ajax2(request):
             project = Project.objects.get(id=id)
             for k,v in request.POST.items():
                 if '.' in k:
-                    p,ms=k.split('.')
+                    p,ms,r=k.split('.')
                     person = UserProfile.objects.get(id=p)
-                    updateORcreate(person,project,ms,float(v))
+                    updateORcreate(person,id,ms,float(v))
         else:
             print(form.errors)
 
-    return redirect("resp",id)
+    return redirect("res_jr",id,r)
 
 def people(request):
     people = UserProfile.objects.all().order_by("role")

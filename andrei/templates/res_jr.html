@@ -20,13 +20,26 @@
   {% for row in data %}
     <tr>
               {% for cell in row %}
-        <td style="text-align: center; padding: 5px; ">{{ cell }}</td>
+        {% if forloop.first %}
+            <td style="text-align: center; padding: 5px; ">{{ cell }}</td>
+        {% else %}
+
+                <td class="good" key="{{cell.link}}"
+                    style="text-align: center; padding: 5px;background-color:yellow">
+                        {{ cell.load }}
+                               </td>
+        {% endif %}
       {% endfor %}
     </tr>
   {% endfor %}
     </tbody>
 </table>
+<form id="myForm" action="/ajax2/" method="POST">
 
+    {% csrf_token %}
+  <input type = hidden name="id" value='{{project.id}}'>
+    <button type="submit">Сохранить изменения</button>
+  </form>
 (((res_jr)))
     {% include 'script.html' %}
 {% endblock %}

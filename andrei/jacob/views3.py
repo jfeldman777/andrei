@@ -45,7 +45,8 @@ def load(request, id):
     # Create a list of roles and their associated items for each month
     data = []
     for role in roles:
-        row = [role]
+        row = [{"link":f"{id}/{role.id}","title":role}]
+        print(row)
         for ms in mss:
             try:
                 load = items[role][ms]
@@ -124,8 +125,11 @@ def res_jr(request, prj,r):
                 load = task.load
             except:
                 load = 0
+
+            x = {"link": f"{e.id}.{d}.{r}", "load": load}
+            dat.append(x)
+
             d = inc(d)
-            dat.append(load)
     data.append(dat)
     context = {'data': data,"dat1":dat1,"dat2":dat2,"role":role,"project":project}
 
@@ -184,77 +188,77 @@ def res(request, id):
                'd1':d1,'d2':d2,
                'project':project, 'month_tuples': month_tuples, "experts":experts}
     return render(request, 'res.html', context)
-
-def res_all(request):
-    roles = Role.objects.all().order_by('id')
-    d1 = datetime.now().date()
-    d2 = inc_n(d1,12)
-
-    month_tuples = ym_tuples(d1, d2)
-    # items = load_role_month(id)
-    # mss = ymts(id)  # str format
-    # months = ym2mm(month_tuples)  # datetime format
-    # experts = person_role(id)
-
-    experts = UserProfile.objects.all()
-
-    # N = len(months)
-    # print(tt)
-    # print(mss)
-
-    data = []
-    for e in experts:
-        dat = []
-        num = [0] * 12
-        sum = [0] * 12
-        dat.append(e.user.last_name)
-        n = 0
-
-
-    tasks = Task.objects.filter(person=e)
-    for t in tasks:
-
-
-
-        for ms in mss:
-            try:
-                load = items[r][ms]
-                dat.append(load)
-                num[n] = load
-            except:
-                dat.append(0)
-                num.append(0)
-            n += 1
-        data.append(dat)
-        for p in experts[r]:
-            dat = []
-            dat.append(r)
-            dat.append(p.user.last_name)
-            n = 0
-            for ms in mss:
-                try:
-                    t = {'load': tt[p][ms], 'link': f"{p.id}.{ms}"}
-                    dat.append(t)
-                    sum[n] += tt[p][ms]
-                except:
-                    dat.append(0)
-                n += 1
-
-            data.append(dat)
-
-        dif = [round(num[i] - sum[i], 2) for i in range(N)]
-        dat = []
-        dat.append(r)
-        dat.append('ДЕЛЬТА')
-        k = 0
-        for m in months:
-            dat.append(dif[k])
-            k += 1
-        data.append(dat)
-    context = {'data': data, 'months': months,
-               'd1': d1, 'd2': d2, "project_id": id,
-               'project': project, 'month_tuples': month_tuples}
-    return render(request, 'resp.html', context)
+#
+# def res_all(request):
+#     roles = Role.objects.all().order_by('id')
+#     d1 = datetime.now().date()
+#     d2 = inc_n(d1,12)
+#
+#     month_tuples = ym_tuples(d1, d2)
+#     # items = load_role_month(id)
+#     # mss = ymts(id)  # str format
+#     # months = ym2mm(month_tuples)  # datetime format
+#     # experts = person_role(id)
+#
+#     experts = UserProfile.objects.all()
+#
+#     # N = len(months)
+#     # print(tt)
+#     # print(mss)
+#
+#     data = []
+#     for e in experts:
+#         dat = []
+#         num = [0] * 12
+#         sum = [0] * 12
+#         dat.append(e.user.last_name)
+#         n = 0
+#
+#
+#     tasks = Task.objects.filter(person=e)
+#     for t in tasks:
+#
+#
+#
+#         for ms in mss:
+#             try:
+#                 load = items[r][ms]
+#                 dat.append(load)
+#                 num[n] = load
+#             except:
+#                 dat.append(0)
+#                 num.append(0)
+#             n += 1
+#         data.append(dat)
+#         for p in experts[r]:
+#             dat = []
+#             dat.append(r)
+#             dat.append(p.user.last_name)
+#             n = 0
+#             for ms in mss:
+#                 try:
+#                     t = {'load': tt[p][ms], 'link': f"{p.id}.{ms}"}
+#                     dat.append(t)
+#                     sum[n] += tt[p][ms]
+#                 except:
+#                     dat.append(0)
+#                 n += 1
+#
+#             data.append(dat)
+#
+#         dif = [round(num[i] - sum[i], 2) for i in range(N)]
+#         dat = []
+#         dat.append(r)
+#         dat.append('ДЕЛЬТА')
+#         k = 0
+#         for m in months:
+#             dat.append(dif[k])
+#             k += 1
+#         data.append(dat)
+#     context = {'data': data, 'months': months,
+#                'd1': d1, 'd2': d2, "project_id": id,
+#                'project': project, 'month_tuples': month_tuples}
+#     return render(request, 'resp.html', context)
 
 def resp(request, id):
     project = Project.objects.get(id=id)
@@ -434,7 +438,8 @@ def updateORcreate(p, pj, m, l):
         instance.save()
     else:
         # If the instance does not exist, create a new one
-        instance = Task.objects.create(person=p, project=pj, month=m, load=l)
+        project = Project.objects.get(id=pj)
+        instance = Task.objects.create(person=p, project=project, month=m, load=l)
 
 def updateORcreateL(project,role, m, l):
 

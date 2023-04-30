@@ -17,8 +17,11 @@
     <tr>
       {% for cell in row %}
                    {% if forloop.first  %}<td>
-                                  <a>
-                              {{ cell }}
+            <a href="#"
+  onclick=" var iframe2 = window.parent.document.getElementById('iframe2');
+iframe2.src = 'res_jr/{{cell.link}}';
+">
+                                  {{ cell.title }}
                           </a>
                 </td>
         {% else %}
@@ -33,7 +36,7 @@
 </table>
 
 </table>
-<form id="myForm" action="/load4/" method="POST">
+<form id="myForm" action="/ajax/" method="POST">
 
     {% csrf_token %}
   <input type = hidden name="id" value='{{project_id}}'>
