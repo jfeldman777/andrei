@@ -5,7 +5,7 @@
 
 <table border="2">
   <tr>
-    <th  style="text-align: center;  padding: 3px;"">Роль</th>
+    <th  style="text-align: center;  padding: 3px;">Роль</th>
     {% for y,m in month_tuples %}
       <th  style="text-align: center;  padding: 5px;">
         {{y}}<br>{{m}}
@@ -16,23 +16,17 @@
   {% for row in data %}
     <tr>
       {% for cell in row %}
-
-                   {% if cell|isObject  %}
-                <td class="good" key="{{cell.link}}"
-                    style="text-align: center; padding: 5px;background-color:yellow">
-                        {{ cell.load }}
-                               </td>
-            {% else %}
-
-                <td class="bad" style="text-align: center; padding: 5px; ">
-
-                          <a href="#">
+                   {% if forloop.first  %}<td>
+                                  <a>
                               {{ cell }}
                           </a>
                 </td>
+        {% else %}
+        <td class="good" key="{{cell.link}}"
+                    style="text-align: center; padding: 5px;background-color:yellow">
+                        {{ cell.load }}
+                               </td>
             {% endif %}
-
-
       {% endfor %}
     </tr>
   {% endfor %}
@@ -45,6 +39,8 @@
   <input type = hidden name="id" value='{{project_id}}'>
     <button type="submit">Сохранить изменения</button>
   </form>
+
+(((load)))
     {% include 'script.html' %}
 
 {% endblock %}

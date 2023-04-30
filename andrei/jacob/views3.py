@@ -1,10 +1,39 @@
 from .models import Project, UserProfile, Load, Role, Task
-import datetime,math
+import datetime
 
 from django.shortcuts import render,redirect,reverse
 from django.forms import formset_factory, Form
 from .models import Load, Role, Project, UserProfile, Task
 #################################################
+
+def inc_n(d,n):
+    for i in range(n):
+        d = inc(d)
+    return d
+
+def mon_bar():
+    dat = []
+    d = datetime.date.today().replace(day=15)
+    for i in range(12):
+        dat.append({"year":d.year,"month":d.month})
+        d = inc(d)
+
+    return dat
+
+
+def projects(request):
+    projects = Project.objects.all().order_by('start_date')
+    dmin = datetime.date.today().replace(day=15)
+    dmax = inc_n(dmin,12)
+    tuples = ym_tuples(dmin,dmax)
+
+    data = []
+    for p in projects:
+        mb = mon_bool(dmin,dmax,p.start_date,p.end_date)
+        data.append(pref(p)+[dif(p.start_date,p.end_date)]+mon_bool(dmin,dmax,p.start_date,p.end_date))
+    return render(request, 'prjlist.html', {'projects': projects,"months":tuples,"matrix":data})
+
+
 def load(request, id):
     roles = Role.objects.all().order_by('id')
     project = Project.objects.get(id=id)
@@ -31,7 +60,76 @@ def load(request, id):
     context = {'data': data,
                'd1':d1,'d2':d2,"project_id":id, 'month_tuples': month_tuples,
                'project':project}
-    return render(request, 'load3.html', context)
+    return render(request, 'load.html', context)
+
+def mytask(request, id):
+    person = UserProfile.objects.get(id=id)
+    tasks = Task.objects.filter(person=id)
+    d1 = datetime.date.today().replace(day=15)
+    dat1=mon_bar()
+
+    data = []
+    projects = Project.objects.all()
+    for project in projects:
+        dat = [project]
+        d = datetime.date.today().replace(day=15)
+        for i in range(12):
+            try:
+                task = Task.objects.get(person=id, project=project, month=d)
+                print(person, project, d, task)
+                t = task.load
+            except:
+                t=0
+
+            dat.append(t)
+            d = inc(d)
+        data.append(dat)
+
+    context = {'dat1': dat1,'data':data,
+              "person":person
+              }
+    return render(request, 'mytask.html', context)
+
+def res_jr(request, prj,r):
+    project = Project.objects.get(id=prj)
+    role = Role.objects.get(id=r)
+    d1 = datetime.date.today().replace(day=15)
+    experts = UserProfile.objects.filter(role=r)
+    N = 12
+    num = [0] * N
+    n=0
+
+
+    dat1=mon_bar()
+    print(99,dat1)
+    dat2 = ['ПОТРЕБНОСТЬ']
+    d = datetime.date.today().replace(day=15)
+    for n in range(12):
+        try:
+            task = Load.objects.get(project=prj,month=d)
+            t = task.load
+        except:
+            t = 0
+        num[n]=t
+        d = inc(d)
+        dat2.append(t)
+    data=[]
+    n=0
+    for e in experts:
+        dat = [e.user.last_name]
+        d = datetime.date.today().replace(day=15)
+        for n in range(12):
+            try:
+                task = Task.objects.get(person=e,month=d)
+                load = task.load
+            except:
+                load = 0
+            d = inc(d)
+            dat.append(load)
+    data.append(dat)
+    context = {'data': data,"dat1":dat1,"dat2":dat2,"role":role,"project":project}
+
+    return render(request, 'res_jr.html', context)
 
 def res(request, id):
     project = Project.objects.get(id=id)
@@ -48,7 +146,10 @@ def res(request, id):
     roles = Role.objects.all().order_by('id')
     N = len(month_tuples)
     for r in roles:
-        dat = [r]+[0]*N
+        dat = [{"link":f"{id}/{r.id}","title":r.title}]+[0]*N
+
+        print(id,load)
+
         num = [0]*N
         sum = [0]*N
         n = 0
@@ -74,7 +175,7 @@ def res(request, id):
                     n+=1
             dif = [round(num[i]-sum[i],2) for i in range(n)]
             for i in range(n):
-                dat[i+1]=(f"{num[i]} - {sum[i]} = {dif[i]}")
+                dat[i+1]=f"{num[i]}({sum[i]})"# = {dif[i]}")
         data.append(dat)
 
 
@@ -83,6 +184,77 @@ def res(request, id):
                'd1':d1,'d2':d2,
                'project':project, 'month_tuples': month_tuples, "experts":experts}
     return render(request, 'res.html', context)
+
+def res_all(request):
+    roles = Role.objects.all().order_by('id')
+    d1 = datetime.now().date()
+    d2 = inc_n(d1,12)
+
+    month_tuples = ym_tuples(d1, d2)
+    # items = load_role_month(id)
+    # mss = ymts(id)  # str format
+    # months = ym2mm(month_tuples)  # datetime format
+    # experts = person_role(id)
+
+    experts = UserProfile.objects.all()
+
+    # N = len(months)
+    # print(tt)
+    # print(mss)
+
+    data = []
+    for e in experts:
+        dat = []
+        num = [0] * 12
+        sum = [0] * 12
+        dat.append(e.user.last_name)
+        n = 0
+
+
+    tasks = Task.objects.filter(person=e)
+    for t in tasks:
+
+
+
+        for ms in mss:
+            try:
+                load = items[r][ms]
+                dat.append(load)
+                num[n] = load
+            except:
+                dat.append(0)
+                num.append(0)
+            n += 1
+        data.append(dat)
+        for p in experts[r]:
+            dat = []
+            dat.append(r)
+            dat.append(p.user.last_name)
+            n = 0
+            for ms in mss:
+                try:
+                    t = {'load': tt[p][ms], 'link': f"{p.id}.{ms}"}
+                    dat.append(t)
+                    sum[n] += tt[p][ms]
+                except:
+                    dat.append(0)
+                n += 1
+
+            data.append(dat)
+
+        dif = [round(num[i] - sum[i], 2) for i in range(N)]
+        dat = []
+        dat.append(r)
+        dat.append('ДЕЛЬТА')
+        k = 0
+        for m in months:
+            dat.append(dif[k])
+            k += 1
+        data.append(dat)
+    context = {'data': data, 'months': months,
+               'd1': d1, 'd2': d2, "project_id": id,
+               'project': project, 'month_tuples': month_tuples}
+    return render(request, 'resp.html', context)
 
 def resp(request, id):
     project = Project.objects.get(id=id)
@@ -179,6 +351,20 @@ def d2s(d):
     m = d.month
     s = f"{y}-{m}-15"
     return s
+
+
+def res_j(person,prj,p):
+    items = {}
+    L = Task.objects.filter(project=prj, person = p)
+    for l in L:
+        m = l.month
+        r = l.role
+        s = d2s(m)
+
+        # Add the item to the dictionary for this role and month
+        items[r][s] = l.load
+
+    return items
 def load_role_month(prj):
     items = {}
     L = Load.objects.filter(project=prj).order_by('role', 'month')
@@ -235,49 +421,7 @@ def person_sorted(prj):
         users = list(UserProfile.objects.filter(id__in=people, role=r).order_by('user'))
         L+=users
     return L
-def ajax(request):
-    id = 1
-    roles = list(Role.objects.all().order_by('id'))
-    # if this is a POST request we need to process the form data
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            #id = form.cleaned_data["id"]
-            id = int(request.POST.get('id'))
-            project = Project.objects.get(id=id)
-            for k,v in request.POST.items():
-                if '.' in k:
-                    ki,m=k.split('.')
-                    ri = int(ki)
-                    role = Role.objects.get(id=ri)
-                    l = float(v)
-                    updateORcreateL(project,role,m,l)
-        else:
-            print(form.errors)
 
-    return redirect("load",id)
-
-def ajax2(request):
-    id = 1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            sid = request.POST.get('id')
-            id = int(sid)
-            project = Project.objects.get(id=id)
-            for k,v in request.POST.items():
-                if '.' in k:
-                    p,ms=k.split('.')
-                    person = UserProfile.objects.get(id=p)
-                    updateORcreate(person,project,ms,float(v))
-        else:
-            print(form.errors)
-
-    return redirect("resp",id)
 
 def updateORcreate(p, pj, m, l):
     try:
@@ -305,24 +449,6 @@ def updateORcreateL(project,role, m, l):
     else:
         # If the instance does not exist, create a new one
         instance = Load.objects.create(project=project, role=role, month=m, load=l)
-
-def projects(request):
-    projects = Project.objects.all().order_by('start_date')
-    dmin = projects[0].start_date
-    prj2 = list(Project.objects.all().order_by('end_date'))
-    dmax = prj2[-1].end_date
-    months = (dmax.year - dmin.year) * 12 + dmax.month - dmin.month
-    ms = [i for i in range(months)]
-
-    dmin = dmin.replace(day=1)  # Set day to 15
-    dmax = dmax.replace(day=30)  # Set day to 15
-    tuples = ym_tuples(dmin,dmax)
-
-    data = []
-    for p in projects:
-        mb = mon_bool(dmin,dmax,p.start_date,p.end_date)
-        data.append(pref(p)+[dif(p.start_date,p.end_date)]+mon_bool(dmin,dmax,p.start_date,p.end_date))
-    return render(request, 'table.html', {'projects': projects,"months":tuples,"matrix":data})
 
 
 def dif(d1,d2):

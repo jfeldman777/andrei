@@ -1,16 +1,10 @@
 from datetime import datetime
 from .views3 import inc,projects
 from .models import Role
-# from .views3 import inc_n
+
 
 from django.shortcuts import render
 from .models import Load, Role, Project, UserProfile, Less, Task
-def homeleft(request):
-    return render(request, 'homeleft.html')
-
-def homeright(request):
-    return render(request, 'homeright.html')
-
 def myotd(request,id):
     mss=t12ym()
 
@@ -27,7 +21,7 @@ def myotd(request,id):
     mss = t12ym()
     for person in experts:
         user = UserProfile.objects.get(id=person.id).user
-        dat = [user.last_name]
+        dat = [{"title":user.last_name,"link":person.id}]
         num = [1] * 12
         sum = [0] * 12
         sum2 = [0] * 12
@@ -59,12 +53,17 @@ def myotd(request,id):
 
 
     return render(request, 'myotd.html',context)
-def homeleft(request):
-    return render(request, 'homeleft.html')
+# def homeleft(request):
+#     return render(request, 'homeleft.html')
+#
+# def homeright(request):
+#     return render(request, 'homeright.html')
 
-def homeright(request):
-    return render(request, 'homeright.html')
+def details(request):
+    return render(request, 'details.html')
 
+def myprj(request,pid):
+    return render(request, 'left.html')
 def myprj2(request):
     return render(request, 'left.html')
 def otdlist(request):
@@ -117,9 +116,9 @@ def otdlist(request):
 def prjlist(request):
     return projects(request)
 
-
-def index(request):
-    return render(request, 'frames42.html')
+#
+# def index(request):
+#     return render(request, 'frames42.html')
 
 
 
@@ -146,51 +145,39 @@ def correct(data,l,n):
         d1 = inc(d1)
     return data
 
-def people(request):
-    people = UserProfile.objects.all().order_by("role")
-    t12 = ['Роль','Фамилия','Имя']+t12ym()
-    data = [([p.role,p.user.last_name,p.user.first_name]+[1]*12) for p in people]
-    data1 = [([0,0,0]+[1]*12) for p in people]
-    n = 0
-    for p in people:
-        less = Less.objects.all().filter(person = p)
-        for l in less:
-            data = correct(data,l,n)
-        n+=1
-
-    k = 0
-    for p in people:
-        d = datetime.now().date()
-        sum = 0
-        for i in range(12):
-            t = tasks(p.id,d)
-            d = inc(d)
-            if(t>0):
-
-                data[k][i+3]={"d":data[k][i+3],"t":t}
-        print(k, i,data[k][i+3] )
-        k+=1
-    return render(request, 'people.html', {'people': people,"t12":t12,"data":data})
 
 def inc_n(d,n):
     for i in range(n):
         d = inc(d)
     return d
 
-def tasks(person,d):
-    res = 0
-    tasks = Task.objects.all().filter(person=person,month = d)
-    for t in tasks:
-        res += t.load
-    return res
+def tasks(person):
+    d1 = datetime.date.today().replace(day=15)
 
-def dost(person,ms):
-    d1 = datetime.date(ms)
-    less = Less.objects.all().filter(person=person).order_by("id")
-    for l in less:
-        if inside(d1, l.start_date, l.end_date):
-            res = l.load
-    pass
+    ms = [0]*12
+    d = d1
+    for i in range(12):
+        tasks = Task.objects.all().filter(person=person,month = d)
+        for t in tasks:
+            ms[i] += t.load
+        d = inc(d)
+
+    return ms
+
+def dost(person):
+    d1 = datetime.date.today().replace(day=15)
+    d2 = inc_n(d1,12)
+    ms = [1]*12
+    d = d1
+    i = 0
+    while d <= d2:
+        less = Less.objects.filter(person=person).order_by("id")
+        for l in less:
+            if inside(d, l.start_date, l.end_date):
+                ms[i] = l.load
+        i+=1
+        d = inc(d)
+    return ms
 
 
 def ost(person,ms):

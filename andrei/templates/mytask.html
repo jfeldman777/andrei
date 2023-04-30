@@ -1,0 +1,31 @@
+{% extends 'base1.html' %}
+{% load custom_filters %}
+{% block content %}
+{{person.user.last_name}}
+<table border="2"  >
+  <thead>
+    <tr >
+        <th>
+            Проекты
+        </th>
+      {% for t in dat1 %}
+      <th style="text-align: center;  padding: 5px;">{{t.year}}<br>{{t.month}}
+      </th>
+      {% endfor%}
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in data %}
+      <tr style="text-align: center;  padding: 5px;">
+        {% for cell in p %}<td>
+          {{cell}}</td>
+{% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+(((mytask)))
+
+
+
+{% endblock %}

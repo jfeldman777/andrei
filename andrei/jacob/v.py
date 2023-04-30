@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import EntryForm
 from .models import Project,Role
-from .views import index
+
 
 def entry(request):#Входной лист
     p = None

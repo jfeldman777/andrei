@@ -2,38 +2,12 @@
 <html>
   <head>
     <title>My Web Page</title>
-  <script>
-var boundary = document.getElementById("boundary");
-var iframe1 = document.getElementById("iframe1");
-var iframe2 = document.getElementById("iframe2");
 
-boundary.addEventListener("dragstart", function(event) {
-  event.dataTransfer.setData("text/plain", "boundary");
-});
-
-boundary.addEventListener("dragover", function(event) {
-  event.preventDefault();
-});
-
-boundary.addEventListener("drop", function(event) {
-  event.preventDefault();
-  var boundaryPosition = event.clientX - iframe1.getBoundingClientRect().left;
-  iframe1.style.width = boundaryPosition + "px";
-  iframe2.style.width = iframe1.offsetWidth + "px";
-});
-
-  </script>
   </head>
   <body><a href="/">На первую страницу</a>
     <h3>Страница начальника отдела</h3>
-
-
-
-
         <iframe id="iframe3" src="/myotd/{{id}}" width="900" height="300"></iframe><br>
-        <iframe id="t11" src="/home" width="900" height="300"></iframe>
+        <iframe id="iframe4" src="/details" width="900" height="300"></iframe>
 
-
-    <p>And here's some more content.</p>
   </body>
 </html>

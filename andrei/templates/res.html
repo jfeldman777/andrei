@@ -1,16 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-= Балансировка ресурсов
-= <a href="/resp/{{project.id}}">Утвержденные загрузки</a> =
-<a href="/load/{{project.id}}">Профиль загрузки </a> =
-<br>
-
-<h2>{{project}}</h2>
+<h3>{{project}}</h3>
 {{d1}}-{{d2}}<br>
-
-<a href="/resp/{{project.id}}">посмотреть распределенные ресурсы детально</a>
-  <a href="/load/{{project.id}}">посмотреть потребные ресурсы</a>
 <table>
 <table border="2">
   <tr>
@@ -23,16 +15,36 @@
    {% endfor %}
 
   </tr>
-  {% for row in data %}
+
+ {% for row in data %}
     <tr>
-      {% for cell in row %}
-        <td  style="text-align: center; padding: 5px;">
-        {{cell}}
-        </td>
+              {% for cell in row %}
+             {% if forloop.first %}
+                        <td class="bad"
+                         style="text-align: center; padding: 5px; ">
+                            <a href="#"
+  onclick=" var iframe2 = window.parent.document.getElementById('iframe2');
+iframe2.src = 'res_jr/{{cell.link}}';">
+                            {{ cell.title }}
+                            </a>
+                        </td>
+
+
+
+            {% else %}
+
+                <td class="good"
+                    "style="text-align: center; padding: 5px;background-color:yellow">
+                        {{ cell }}
+                               </td>
+            {% endif %}
+
       {% endfor %}
     </tr>
   {% endfor %}
+
 </table>
 
 </table>
+(((res)))
 {% endblock %}
