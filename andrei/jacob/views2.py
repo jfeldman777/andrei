@@ -53,16 +53,20 @@ def ajax2(request):
         if form.is_valid():
             sid = request.POST.get('id')
             id = int(sid)
+            sr = request.POST.get('r')
+            r = int(sr)
             project = Project.objects.get(id=id)
+            role =Role.objects.get(id=r)
             for k,v in request.POST.items():
-                if '.' in k:
-                    p,ms,r=k.split('.')
-                    person = UserProfile.objects.get(id=p)
-                    updateORcreate(person,id,ms,float(v))
+                print(77,k,v)
+                try:
+                    updateORcreateL(id,r,k,float(v))
+                except:
+                    pass
         else:
             print(form.errors)
 
-    return redirect("res_jr",id,r)
+    return redirect("res01",id,r)
 
 def people(request):
     people = UserProfile.objects.all().order_by("role")

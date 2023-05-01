@@ -22,9 +22,9 @@ urlpatterns = [
     path('projects', views3.projects, name='projects'),
 
     # path('res_all/', views3.res_all, name='res_all'),
-    path('res/<int:id>/', views3.res, name='res'),
-    path('res01/<int:id>/', views3.res01, name='res01'),
-    path('res10/<int:id>/', views3.res10, name='res10'),
+    path('res/<int:id>/<int:r>/', views3.res, name='res'),
+    path('res01/<int:id>/<int:r>/', views3.res01, name='res01'),
+    path('res10/<int:id>/<int:r>/', views3.res10, name='res10'),
     # path('resp/<int:id>/', views3.resp, name='resp'),
     path('res_jr/<int:prj>/<int:r>/', views3.res_jr, name='res_jr'),
     path('load/<int:id>/', views3.load, name='load'),
@@ -33,6 +33,7 @@ urlpatterns = [
     path('one2prj/', views.one2prj, name='one2prj'),
     path('one2role/', views.one2role, name='one2role'),
 
+    path('ostr/<int:r>/', views.ostr, name='ostr'),
     path('ost/', views.ostatok, name='ost'),
     path('people/', views2.people, name='people'),
 

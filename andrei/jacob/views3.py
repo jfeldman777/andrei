@@ -140,7 +140,7 @@ def res_jr(request, prj,r):
 
     return render(request, 'res_jr.html', context)
 
-def res(request, id):
+def res(request, id,r):
 
      project = Project.objects.get(id=id)
 
@@ -150,51 +150,50 @@ def res(request, id):
      data0 =mon_bar()
      data=[]
 
-     roles = Role.objects.all().order_by('id')
+     role = Role.objects.get(id=r)
 
-     for r in roles:
-         a = {"link":f"{id}/{r.id}","title":r.title}
-         dat1 = [a,'Потребность']+[0]*12
-         dat3 = [a,'Аутсорс']+[0]*12
-         dat5 = [a,'Дельта']+[0]*12
-         dat2 = [a,'Поставка']+[0]*12
-         dat4 = [a,'Вакансии']+[0]*12
+     a = {"link":f"{id}/{r}","title":role.title}
+     dat1 = [a,'Потребность']+[0]*12
+     dat3 = [a,'Аутсорс']+[0]*12
+     dat5 = [a,'Дельта']+[0]*12
+     dat2 = [a,'Поставка']+[0]*12
+     dat4 = [a,'Вакансии']+[0]*12
 
-         # print(id,load)
+     # print(id,load)
 
-         num = [0]*12
-         sum = [0]*12
-         n = 0
-         d = datetime.date.today().replace(day=15)
+     num = [0]*12
+     sum = [0]*12
+     n = 0
+     d = datetime.date.today().replace(day=15)
 
-         for i in range(12):
+     for i in range(12):
+         try:
+             L = Load.objects.get(project=id, role=r, month=d)
+             num[i] = L.load
+         except:
+             num[i] = 0
+         dat1[i + 2] = f"{num[i]}"  # = {dif[i]}")
+
+         experts = UserProfile.objects.filter(role=r)
+         for p in experts:
              try:
-                 L = Load.objects.get(project=id, role=r, month=d)
-                 num[i] = L.load
+                 task = Task.objects.get(person=p, project=id, month=d)
+                 sum[i] += task.load
              except:
-                 num[i] = 0
-             dat1[i + 2] = f"{num[i]}"  # = {dif[i]}")
-
-             experts = UserProfile.objects.filter(role=r)
-             for p in experts:
-                 try:
-                     task = Task.objects.get(person=p, project=id, month=d)
-                     sum[i] += task.load
-                 except:
-                     pass
-             d = inc(d)
-             dat2[i + 2] = f"{sum[i]}"
+                 pass
+         d = inc(d)
+         dat2[i + 2] = f"{sum[i]}"
 
 
 
 
-             dif = round(num[i]-sum[i],2)
-             dat5[i + 2] = f"{dif}"
-         data.append(dat1)
-         data.append(dat2)
-         data.append(dat3)
-         data.append(dat4)
-         data.append(dat5)
+         dif = round(num[i]-sum[i],2)
+         dat5[i + 2] = f"{dif}"
+     data.append(dat1)
+     data.append(dat2)
+     data.append(dat3)
+     data.append(dat4)
+     data.append(dat5)
 
 
 
@@ -457,20 +456,25 @@ def updateORcreate(p, pj, m, l):
         project = Project.objects.get(id=pj)
         instance = Task.objects.create(person=p, project=project, month=m, load=l)
 
-def updateORcreateL(project,role, m, l):
-    print(666)
+def updateORcreateL(p,r, m, l):
+    print(666,p,r, m, l)
+    role = Role.objects.get(id=r)
+    project = Project.objects.get(id=p)
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
+        print(667)
     except Load.DoesNotExist:
         instance = None
 
     if instance:
         instance.load = l
         instance.save()
+
+        print(669)
     else:
         # If the instance does not exist, create a new one
         instance = Load.objects.create(project=project, role=role, month=m, load=l)
-
+        print(699)
 
 def dif(d1,d2):
     return (d2.year-d1.year)*12+d2.month-d1.month+1
@@ -504,36 +508,35 @@ def pref(p):
     L.append(p.end_date)
     return L
 
-def res01(request, id):
+def res01(request, id,r):
      project = Project.objects.get(id=id)
      d1 = project.start_date
  ##################################
      data0 =mon_bar()
      data=[]
 
-     roles = Role.objects.all().order_by('id')
+     role = Role.objects.get(id=r)
 
-     for r in roles:
-         a = {"link":f"{id}/{r.id}","title":r.title}
-         dat2 = [a]+[0]*12
-         num = [0]*12
-         d = datetime.date.today().replace(day=15)
-         for i in range(12):
-             try:
-                 L = Load.objects.get(project=id, role=r, month=d)
-                 num[i]=L.load
-             except:
-                 num[i]=0
-
-             d = inc(d)
-         data.append(dat2)
+     a = {"link":f"{id}.{r}","title":role.title}
+     dat2 = [a]+[0]*12
+     num = [0]*12
+     d = datetime.date.today().replace(day=15)
+     for i in range(12):
+         try:
+             L = Load.objects.get(project=id, role=r, month=d)
+             num[i]=L.load
+         except:
+             num[i]=0
+         dat2[i+1] = {"link":f"{d}","load":num[i]}
+         d = inc(d)
+     data.append(dat2)
      context = {'data': data,
-               "data0":data0,
+               "data0":data0,"project_id":id,"r":r,
                 'project':'Профиль загрузки (потребность)', }
      return render(request, 'res01.html', context)
 
 
-def res10(request, id):
+def res10(request, id,r):
 
      project = Project.objects.get(id=id)
 
@@ -541,31 +544,27 @@ def res10(request, id):
      data0 =mon_bar()
      data=[]
 
-     roles = Role.objects.all().order_by('id')
-     for r in roles:
-         a = {"link":f"{id}/{r.id}","title":r.title}
+     role = Role.objects.get(id=r)
 
-         dat2 = [a]+[0]*12
-         sum = [0]*12
-         n = 0
-         d = datetime.date.today().replace(day=15)
-         for i in range(12):
-             experts = UserProfile.objects.filter(role=r)
-             for p in experts:
-                 try:
-                     print(99,p,id,d)
-                     task = Task.objects.get(person = p,project=id, month=d)
-                     sum[i]+=task.load
-                     print(88,task.load)
-                 except:
-                     pass
-             d = inc(d)
-             dat2[i+1]=f"{sum[i]}"
+     a = {"link":f"{id}/{r}","title":role.title}
 
-         data.append(dat2)
+     dat2 = [a]+[0]*12
+     sum = [0]*12
+     n = 0
+     d = datetime.date.today().replace(day=15)
+     for i in range(12):
+         experts = UserProfile.objects.filter(role=r)
+         for p in experts:
+             try:
 
-
-
+                 task = Task.objects.get(person = p,project=id, month=d)
+                 sum[i]+=task.load
+                 print(88,task.load)
+             except:
+                 pass
+         d = inc(d)
+         dat2[i+1]=f"{sum[i]}"
+     data.append(dat2)
 
      context = {'data': data,
                 "data0":data0,

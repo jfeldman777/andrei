@@ -6,13 +6,14 @@ from .models import Project,Role
 def entry(request):#Входной лист
     p = None
     r = None
+    project = '?'
     if request.method == 'POST':
         form = EntryForm(request.POST)
         if form.is_valid():
-            projects = form.cleaned_data['projects']
+            project = form.cleaned_data['projects']
             roles = form.cleaned_data['roles']
-            if projects:
-                p = Project.objects.get(title=projects)
+            if project:
+                p = Project.objects.get(title=project)
             if roles:
                 r = Role.objects.get(title=roles)
 
@@ -22,12 +23,12 @@ def entry(request):#Входной лист
                 return right(request,r.id)
             if r == None:
                 return left(request,p.id)
-            return frames42(request,p.id,r.id)
+            return frames42(request,p.id,r.id,project)
     else:
         form = EntryForm()
-    return render(request, 'entry.html', {'form': form})
-def frames42(request,pid,rid):#балансировка проекта (обного) и ресурса (одного)
-    return render(request, 'frames42.html',{"pid":pid,"rid":rid})
+    return render(request, 'entry.html', {'form': form,"project":project})
+def frames42(request,pid,rid,project):#балансировка проекта (обного) и ресурса (одного)
+    return render(request, 'frames42.html',{"pid":pid,"rid":rid,"project":project})
 def frames40(request):#Балансировка всех проектов и всех ресурсов
     return render(request, 'frames40.html')
 def left(request,pid):#конкретный проект

@@ -1,7 +1,7 @@
 {% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-<h3>{{project}}</h3>
+
 
 <table border="2">
   <tr>
@@ -37,15 +37,19 @@ iframe2.src = 'res_jr/{{cell.link}}';"--->
                         </td>
 
 
+
+
+
+
             {% else %}
-    {% if cell|positive %}
-                        <td class="good"
+    {% if cell.load|positive %}
+                        <td class="good"  key="{{cell.link}}"
                          style="text-align: center;
       background-color:yellow;">{% else %}
-                <td class="good"
+                <td class="good"  key="{{cell.link}}"
                     style="text-align: center; background-color:white">
         {% endif %}
-                        {{ cell }}
+                        {{ cell.load }}
                                </td>
             {% endif %}
 
@@ -54,7 +58,13 @@ iframe2.src = 'res_jr/{{cell.link}}';"--->
   {% endfor %}
 
 </table>
+<form id="myForm" action="/ajax2/" method="POST">
+    {% csrf_token %}
+  <input type = hidden name="id" value='{{project_id}}'>
+     <input type = hidden name="r" value='{{r}}'>
+    <button type="submit">Сохранить изменения</button>
+  </form>
 
-</table>
+    {% include 'script.html' %}
 (((res01)))
 {% endblock %}
