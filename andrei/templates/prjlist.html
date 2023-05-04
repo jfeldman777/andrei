@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-Проекты
+<style>
+
+    td.true {
+      background-color: yellow;
+    }
+    td.false {
+      background-color: white;
+    }</style>
 <table border="2" >
-  <thead >
+    <tr><td colspan="13">Проекты</td></tr>
 <th style="text-align: center; ">РП</th>
       <th style="text-align: center;  padding: 5px;">Название</th>
       <th style="text-align: center;  padding: 5px;">Начало</th>
@@ -28,7 +34,7 @@
         <td style="text-align: center; ">
 {% if cell|isObject %}
             <a href="#"
-  onclick=" var iframe2 = window.parent.document.getElementById('iframe2');
+  onclick=" var iframe2 = window.parent.document.АgetElementById('iframe2');
 iframe2.src = 'load/{{cell.link}}';
 ">
              {{cell.title}}
@@ -43,5 +49,5 @@ iframe2.src = 'load/{{cell.link}}';
     {% endfor %}
     </tbody>
   </table>
-(((prjlist)))
+
 {% endblock %}

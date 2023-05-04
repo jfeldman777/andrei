@@ -1,19 +1,29 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
 
-
 <table border="2">
+        <tr><td colspan="4">Профиль  загрузки (потребность)</td><td colspan=5>
+       {{project}}</td><td colspan="4"> {{role}}</td></tr>
   <tr>
-    <th  style="text-align: center;">Ресурс</th>
+    <th  style="text-align: center;">
+<form id="myForm" action="/ajax2/" method="POST">
+    {% csrf_token %}
+  <input type = hidden name="id" value='{{project_id}}'>
+     <input type = hidden name="r" value='{{r}}'>
+    <button type="submit">Сохранить</button>
+  </form>
+    </th>
     {% for x in data0 %}
-      <th  style="text-align: center; padding: 5px;">
+      <th  style="text-align: center;">
 
         {{x.year}}
       </th>
    {% endfor %}
 </tr><tr>
-    <th  style="text-align: center;">-</th>
+    <th  style="text-align: center;">
+Особые требования
+    </th>
     {% for x in data0 %}
       <th  style="text-align: center; ">
 
@@ -30,24 +40,19 @@
                          style="text-align: center;">
 
                             <!--a href="#"
-  onclick=" var iframe2 = window.parent.document.getElementById('iframe2');
+  onclick=" var iframe2 = window.parent.document.А('iframe2');
 iframe2.src = 'res_jr/{{cell.link}}';"--->
                    {{ cell.title }}
 
                         </td>
 
-
-
-
-
-
             {% else %}
     {% if cell.load|positive %}
-                        <td class="good"  key="{{cell.link}}"
+                        <td class="good" key="{{cell.link}}"
                          style="text-align: center;
       background-color:yellow;">{% else %}
                 <td class="good"  key="{{cell.link}}"
-                    style="text-align: center; background-color:white">
+                    style="text-align: center; background-color:magenta;">
         {% endif %}
                         {{ cell.load }}
                                </td>
@@ -58,13 +63,6 @@ iframe2.src = 'res_jr/{{cell.link}}';"--->
   {% endfor %}
 
 </table>
-<form id="myForm" action="/ajax2/" method="POST">
-    {% csrf_token %}
-  <input type = hidden name="id" value='{{project_id}}'>
-     <input type = hidden name="r" value='{{r}}'>
-    <button type="submit">Сохранить изменения</button>
-  </form>
+{% include 'script.html'  %}
 
-    {% include 'script.html' %}
-(((res01)))
 {% endblock %}

@@ -11,15 +11,6 @@ def inc_n(d,n):
         d = inc(d)
     return d
 
-def mon_bar():
-    dat = []
-    d = datetime.date.today().replace(day=15)
-    for i in range(12):
-        dat.append({"year":d.year,"month":d.month})
-        d = inc(d)
-
-    return dat
-
 
 def projects(request):
     projects = Project.objects.all().order_by('start_date')
@@ -140,67 +131,6 @@ def res_jr(request, prj,r):
 
     return render(request, 'res_jr.html', context)
 
-def res(request, id,r):
-
-     project = Project.objects.get(id=id)
-
-
-     experts =  person_role(id)
- ##################################
-     data0 =mon_bar()
-     data=[]
-
-     role = Role.objects.get(id=r)
-
-     a = {"link":f"{id}/{r}","title":role.title}
-     dat1 = [a,'Потребность']+[0]*12
-     dat3 = [a,'Аутсорс']+[0]*12
-     dat5 = [a,'Дельта']+[0]*12
-     dat2 = [a,'Поставка']+[0]*12
-     dat4 = [a,'Вакансии']+[0]*12
-
-     # print(id,load)
-
-     num = [0]*12
-     sum = [0]*12
-     n = 0
-     d = datetime.date.today().replace(day=15)
-
-     for i in range(12):
-         try:
-             L = Load.objects.get(project=id, role=r, month=d)
-             num[i] = L.load
-         except:
-             num[i] = 0
-         dat1[i + 2] = f"{num[i]}"  # = {dif[i]}")
-
-         experts = UserProfile.objects.filter(role=r)
-         for p in experts:
-             try:
-                 task = Task.objects.get(person=p, project=id, month=d)
-                 sum[i] += task.load
-             except:
-                 pass
-         d = inc(d)
-         dat2[i + 2] = f"{sum[i]}"
-
-
-
-
-         dif = round(num[i]-sum[i],2)
-         dat5[i + 2] = f"{dif}"
-     data.append(dat1)
-     data.append(dat2)
-     data.append(dat3)
-     data.append(dat4)
-     data.append(dat5)
-
-
-
-     context = {'data': data,
-              "data0":data0,
-                'project':project,  "experts":experts}
-     return render(request, 'res.html', context)
 #
 # def res_all(request):
 #     roles = Role.objects.all().order_by('id')
@@ -489,7 +419,6 @@ def mon_bool(dmin,dmax,dstart,dend):
         L.append(b)
         d = inc(d)
     return L
-
 def inc(d):
     y,m = d.year,d.month
     m += 1
@@ -497,6 +426,7 @@ def inc(d):
         m = 1
         y += 1
     return datetime.date(y,m,15)
+
 
 def pref(p):
     L = []
@@ -507,66 +437,3 @@ def pref(p):
     L.append(p.start_date)
     L.append(p.end_date)
     return L
-
-def res01(request, id,r):
-     project = Project.objects.get(id=id)
-     d1 = project.start_date
- ##################################
-     data0 =mon_bar()
-     data=[]
-
-     role = Role.objects.get(id=r)
-
-     a = {"link":f"{id}.{r}","title":role.title}
-     dat2 = [a]+[0]*12
-     num = [0]*12
-     d = datetime.date.today().replace(day=15)
-     for i in range(12):
-         try:
-             L = Load.objects.get(project=id, role=r, month=d)
-             num[i]=L.load
-         except:
-             num[i]=0
-         dat2[i+1] = {"link":f"{d}","load":num[i]}
-         d = inc(d)
-     data.append(dat2)
-     context = {'data': data,
-               "data0":data0,"project_id":id,"r":r,
-                'project':'Профиль загрузки (потребность)', }
-     return render(request, 'res01.html', context)
-
-
-def res10(request, id,r):
-
-     project = Project.objects.get(id=id)
-
- ##################################
-     data0 =mon_bar()
-     data=[]
-
-     role = Role.objects.get(id=r)
-
-     a = {"link":f"{id}/{r}","title":role.title}
-
-     dat2 = [a]+[0]*12
-     sum = [0]*12
-     n = 0
-     d = datetime.date.today().replace(day=15)
-     for i in range(12):
-         experts = UserProfile.objects.filter(role=r)
-         for p in experts:
-             try:
-
-                 task = Task.objects.get(person = p,project=id, month=d)
-                 sum[i]+=task.load
-                 print(88,task.load)
-             except:
-                 pass
-         d = inc(d)
-         dat2[i+1]=f"{sum[i]}"
-     data.append(dat2)
-
-     context = {'data': data,
-                "data0":data0,
-                'project':'Утвержденные загрузки (поставка)'}
-     return render(request, 'res10.html', context)

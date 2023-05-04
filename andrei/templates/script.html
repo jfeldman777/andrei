@@ -3,7 +3,7 @@ $('td.good').click(function() {
 
   var p = $(this).attr("key");
   var originalValue = $(this).text();
-  $(this).html('<input type="text" value="' + originalValue + '">');
+  $(this).html('<input type="text" size="2" maxlength="2" value="' + $.trim(originalValue) + '">');
 
   $(this).click(function(){
   $(this).html(originalValue);
@@ -18,8 +18,7 @@ var myForm = $("#myForm");
     newInput.attr("name", p);
     newInput.attr("value",newValue );
     myForm.append(newInput);
-    alert(p);
-    alert(newValue);
+
 
   });
 });

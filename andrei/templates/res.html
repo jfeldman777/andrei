@@ -1,11 +1,11 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-
-
 <table border="2">
+    <tr><td colspan="4">Балансировка ресурсов</td><td colspan=5>
+       {{project}}</td><td colspan="4"> {{role}}</td></tr>
   <tr>
-    <th  style="text-align: center;">Ресурс</th> <th  style="text-align: center;">-</th>
+    <th  style="text-align: center;">Ресурс</th>
     {% for x in data0 %}
       <th  style="text-align: center; ">
 
@@ -13,7 +13,7 @@
       </th>
    {% endfor %}
 </tr><tr>
-    <th  style="text-align: center;">-</th> <th  style="text-align: center;">-</th>
+   <th  style="text-align: center;">-</th>
     {% for x in data0 %}
       <th  style="text-align: center; ">
 
@@ -49,6 +49,5 @@
 
 </table>
 
-</table>
-(((res)))
+
 {% endblock %}

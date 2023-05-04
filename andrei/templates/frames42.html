@@ -1,27 +1,91 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>My Web Page</title>
+{% extends 'base.html' %}
+{% load custom_filters %}
 
-  </head>
-  <body><b>ПРОЕКТ {{project}}</b>
-  <a href="/">На первую страницу</a><br>
-<table><tr><td>Балансировка ресурсов<br/>
-    <iframe id="iframe1" src="/res/{{pid}}/{{rid}}" width="600" height="300"></iframe>
-</td><td>Профиль  загрузки (потребность)<br>
-    <iframe id="iframe2" src="/res01/{{pid}}/{{rid}}" width="600" height="300"></iframe>
-</td></tr><tr><td>Утвержденные загрузки (поставка)<br>
-    <iframe id="iframe3" src="/res10/{{pid}}/{{rid}}" width="600" height="300"></iframe>
+{% block content %}
 
-<!--        <iframe id="iframe3" src="/myotd/{{rid}}" width="600" height="300"></iframe><br>-->
-<!--<div id="boundary" draggable="true"></div>-->
-<!--        <iframe id="iframe2"  src="/details" width="600" height="300"></iframe>-->
+<style>
+.parent {
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height:800px;
 
-<!--        <iframe id="iframe4" src="/details" width="600" height="300"></iframe>-->
-</td><td>Ресурсные пулы<br>
-   <iframe id="iframe4" src="/ostr/{{rid}}" width="600" height="300"></iframe>
-    </td></tr>
-</table>
+}
+.child0 {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width:100%;
+  height: 300px;
+  border: none;
+}
+.child1 {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  border: none;
+}
 
-  </body>
-</html>
+.child2 {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  border: none;
+}
+
+.child3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  border: none;
+}
+
+.child4 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  border: none;
+}
+
+
+</style>
+
+<div class="parent">
+    <iframe src="/entry/" class="child0"></iframe>
+
+  <iframe id="iframe1" src="/res/{{pid}}/{{rid}}" class="child1"></iframe>
+
+     <iframe id="iframe2"  src="/res01/{{pid}}/{{rid}}" class="child2"></iframe>
+
+             <iframe id="iframe3" src="/res10/{{pid}}/{{rid}}"
+ class="child3"></iframe>
+
+    <iframe id="iframe4" src="/ostr/{{pid}}/{{rid}}"
+class="child4"></iframe>
+</div>
+
+<!--<table border="2" width="100%" >-->
+
+<!--    <tr ><td>Балансировка ресурсов<br/>ПРОЕКТ {{project}}>>>РЕСУРС {{role}}-->
+<!--    <iframe id="iframe1" src="/res/{{pid}}/{{rid}}" width="100%" ></iframe>-->
+<!--</td>-->
+<!--<td>Профиль  загрузки (потребность)<br>ПРОЕКТ {{project}}>>>РЕСУРС {{role}}-->
+<!--    <iframe id="iframe2" src="/res01/{{pid}}/{{rid}}" width="100%" ></iframe>-->
+<!--</td></tr>-->
+<!-- <tr><td>Утвержденные загрузки (поставка)<br>ПРОЕКТ {{project}}>>>РЕСУРС {{role}}-->
+<!--    <iframe id="iframe3" src="/res10/{{pid}}/{{rid}}" width="100%" ></iframe>-->
+<!--</td><td>Ресурсные пулы<br>ПРОЕКТ {{project}}>>>РЕСУРС {{role}}-->
+<!--   <iframe id="iframe4" src="/ostr/{{rid}}" width="100%" ></iframe>-->
+<!--    </td></tr>-->
+<!--</table>-->
+
+{% endblock %}

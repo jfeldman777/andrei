@@ -1,9 +1,11 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
 {% block content %}
-  <form method="POST" target="_top">
+
+<form method="POST" target="_top">
     {% csrf_token %}
         {{ form }}
         <button type="submit">Выбрать перспективу</button>
   </form>
-<div style="position:absolute;top:5;right:20;"><a href="/" target="_top">Домой</a></div>
-
 {% endblock %}

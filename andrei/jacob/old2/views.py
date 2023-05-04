@@ -194,47 +194,6 @@ def ost(person,ms):
     return dost(person,ms)-tasks(person,ms)
 
 
-def correctOst(data,l,n):
-    d1 = datetime.now().date()
-    dn = data[n]
-    for i in range(12):
-        if inside(d1,l.month,l.month):
-            dn[i+3]-=l.load
-        d1 = inc(d1)
-    return data
-def ostr(request,r):
-    people = UserProfile.objects.filter(role=r)
-    t12 = ['Роль','Фамилия','Имя']+t12ym()
-    data = [([p.role,p.user.last_name,p.user.first_name]+[1]*12) for p in people]
-    n = 0
-    for p in people:
-        less = Less.objects.all().filter(person = p)
-        for l in less:
-            data = correct(data,l,n)
-
-        tasks = Task.objects.all().filter(person=p)
-        for t in tasks:
-            data = correctOst(data,t,n)
-        n+=1
-
-    return render(request, 'ost.html', {'ost': people,"t12":t12,"data":data})
-def ostatok(request):
-    people = UserProfile.objects.all()
-    t12 = ['Роль','Фамилия','Имя']+t12ym()
-    data = [([p.role,p.user.last_name,p.user.first_name]+[1]*12) for p in people]
-    n = 0
-    for p in people:
-        less = Less.objects.all().filter(person = p)
-        for l in less:
-            data = correct(data,l,n)
-
-        tasks = Task.objects.all().filter(person=p)
-        for t in tasks:
-            data = correctOst(data,t,n)
-        n+=1
-
-    return render(request, 'ost.html', {'ost': people,"t12":t12,"data":data})
-
 def one2prj(request):
     people = UserProfile.objects.all().order_by('role', 'user')
     projects = Project.objects.all().order_by('start_date')

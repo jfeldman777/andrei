@@ -1,8 +1,16 @@
 from django.shortcuts import render
 from .forms import EntryForm
 from .models import Project,Role
+from .vv import frames40,frames42
 
 
+
+
+def left(request,pid):#конкретный проект
+    return render(request, 'leftframe.html',{'id':pid})
+
+def right(request,rid):#конкретный ресурс
+    return render(request, 'rightframe.html',{'id':rid})
 def entry(request):#Входной лист
     p = None
     r = None
@@ -27,12 +35,3 @@ def entry(request):#Входной лист
     else:
         form = EntryForm()
     return render(request, 'entry.html', {'form': form,"project":project})
-def frames42(request,pid,rid,project):#балансировка проекта (обного) и ресурса (одного)
-    return render(request, 'frames42.html',{"pid":pid,"rid":rid,"project":project})
-def frames40(request):#Балансировка всех проектов и всех ресурсов
-    return render(request, 'frames40.html')
-def left(request,pid):#конкретный проект
-    return render(request, 'leftframe.html',{'id':pid})
-
-def right(request,rid):#конкретный ресурс
-    return render(request, 'rightframe.html',{'id':rid})

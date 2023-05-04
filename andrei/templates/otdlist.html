@@ -1,10 +1,9 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-доступность сотрудников (занятость)
 
 <table border="2"  >
-  <thead>
+ <tr><td colspan="13">доступность сотрудников и их занятость</td></tr>
     <tr >
       {% for t in t12 %}
       <th style="text-align: center;  ">
@@ -16,20 +15,21 @@
       </th>
       {% endfor%}
     </tr>
-  </thead>
-  <tbody>
+
+
     {% for p in data %}
       <tr >
         {% for cell in p %}
           {% if forloop.first %}
 
        <td style="text-align: center; ">
-           <a href="#"
+<!--           <a href="#"-->
 
-  onclick=" var iframe4 = window.parent.document.getElementById('iframe4');
-iframe4.src = 'myotd/{{cell.link}}';">
+<!--  onclick=" var iframe4 = window.parent.document.getElementById('iframe4');-->
+<!--iframe4.src = 'myotd/{{cell.link}}';">-->
              {{cell.title}}
-          </a> </td>
+<!--          </a> -->
+       </td>
 
           {% else %}
         <td style="text-align: center;">
@@ -39,10 +39,9 @@ iframe4.src = 'myotd/{{cell.link}}';">
 
       </tr>
     {% endfor %}
-  </tbody>
+
 </table>
 
-(((otdlist)))
 
 
 {% endblock %}

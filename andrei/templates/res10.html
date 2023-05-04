@@ -1,22 +1,41 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
 
-
+<style>
+    table {
+  position: absolute;
+  top: 0;
+  right: 0;
+    }
+  </style>
 <table border="2">
+        <tr><td colspan="4">Утвержденные загрузки (поставка)</td><td colspan=5>
+       {{project}}</td><td colspan="4"> {{role}}</td></tr>
   <tr>
-    <th  style="text-align: center;">Ресурс</th>
-    {% for x in data0 %}
-      <th  style="text-align: center; padding: 5px;">
 
+      <th  style="text-align: center;">
+                    <form id="myForm" action="/ajax2/" method="POST">
+    {% csrf_token %}
+  <input type = hidden name="id" value='{{project_id}}'>
+     <input type = hidden name="r" value='{{r}}'>
+    <button type="submit">Сохранить</button>
+                    </form>
+
+    </th>
+
+    {% for x in data0 %}
+      <th  style="text-align: center;">
         {{x.year}}
       </th>
    {% endfor %}
-</tr><tr>
-        <th  style="text-align: center;">-</th>
-        {% for x in data0 %}
-      <th  style="text-align: center; padding: 5px;">
+</tr>
+<tr>
 
+
+    <th  style="text-align: center;">Особые требования</th>
+        {% for x in data0 %}
+    <th  style="text-align: center; ">
      {{x.month}}
       </th>
    {% endfor %}
@@ -28,28 +47,26 @@
              {% if forloop.first %}
                         <td class="bad"
                          style="text-align: center;  ">
-                            <!--a href="#"
-  onclick=" var iframe2 = window.parent.document.getElementById('iframe2');
-iframe2.src = 'res_jr/{{cell.link}}';"--->
+
                             {{ cell.title }}
-                            <!--/a-->
+
                         </td>
 
 
 
             {% else %}
+
 {% if cell|isnumeric and cell|positive %}
                         <td class="good"
                          style="text-align: center;
-      background-color:yellow;">{% else %}
-
-
+      background-color:yellow;">
+                            {% else %}
                 <td class="good"
                     style="text-align: center; background-color:white">
         {% endif %}
                         {{ cell }}
                                </td>
-            {% endif %}
+        {% endif %}
 
       {% endfor %}
     </tr>
@@ -57,6 +74,6 @@ iframe2.src = 'res_jr/{{cell.link}}';"--->
 
 </table>
 
-</table>
-(((res10)))
+    {% include 'script.html' %}
+
 {% endblock %}

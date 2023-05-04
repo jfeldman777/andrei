@@ -1,11 +1,15 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 {% load custom_filters %}
-{% block content %}Свободные ресурсы
+{% block content %}
+
+
 <table border="2"  >
-  <thead>
+      <tr><td colspan="4">Ресурсные пулы</td><td colspan=5>
+       {{project}}</td><td colspan="4"> {{role}}</td></tr>
+
     <tr >
       {% for t in t12 %}
-      <th style="text-align: center;  padding: 5px;">
+      <th style="text-align: center; ">
         {% if t|isObject %}
         {{t.year}}<br>{{t.month}}
         {% else %}
@@ -14,7 +18,7 @@
       </th>
       {% endfor%}
     </tr>
-  </thead>
+
   <tbody>
     {% for p in data %}
       <tr >
@@ -34,7 +38,6 @@
     {% endfor %}
   </tbody>
 </table>
-(((ost)))
 
 
 
