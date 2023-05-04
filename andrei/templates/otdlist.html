@@ -6,10 +6,12 @@
  <tr><td colspan="13">доступность сотрудников и их занятость</td></tr>
     <tr >
       {% for t in t12 %}
-      <th style="text-align: center;  ">
+
         {% if t|isObject %}
+          <th style="text-align: center;  ">
         {{t.year}}<br>{{t.month}}
         {% else %}
+          <th style="text-align: center;  " colspan="2">
          {{t}}
         {% endif %}
       </th>

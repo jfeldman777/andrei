@@ -51,10 +51,7 @@ def ostr(request,id,r):
     return render(request, 'ost.html', {'ost': people,"t12":t12,"data":data,"project":project,
                                           "role":role})
 def res(request, id,r):
-
      project = Project.objects.get(id=id)
-
-
      experts = UserProfile.objects.all()
  ##################################
      data0 =mon_bar()
@@ -839,7 +836,7 @@ def otdlist(request):
     people = UserProfile.objects.all().order_by('role')
     mss=t12ym()
 
-    t12 = ['Роль','='] + mss
+    t12 = ['Роль'] + mss
     data = []
     d1 = date.today()
     d2 = inc_n(d1,12)
