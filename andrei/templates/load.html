@@ -13,7 +13,13 @@
       </th>
    {% endfor %}
 </tr><tr>
-    <th  style="text-align: center;">Роль</th>
+    <th  style="text-align: center;">
+    <form id="myForm" action="/ajax/" method="POST">
+    {% csrf_token %}
+  <input type = hidden name="id" value='{{project_id}}'>
+    <button type="submit">Сохранить </button>
+  </form>
+    </th>
     {% for x in data0 %}
       <th  style="text-align: center;">
 
@@ -46,12 +52,7 @@ iframe2.src = 'res_jr/{{cell.link}}';
 </table>
 
 </table>
-<form id="myForm" action="/ajax/" method="POST">
 
-    {% csrf_token %}
-  <input type = hidden name="id" value='{{project_id}}'>
-    <button type="submit">Сохранить изменения</button>
-  </form>
 
 
     {% include 'script.html' %}

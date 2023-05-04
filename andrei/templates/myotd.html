@@ -6,10 +6,12 @@
   <thead>
     <tr >
       {% for t in t12 %}
-      <th style="text-align: center;">
+
         {% if t|isObject %}
+          <th style="text-align: center;">
         {{t.year}}<br>{{t.month}}
         {% else %}
+                <th style="text-align: center;" colspan="2">
          {{t}}
         {% endif %}
       </th>
@@ -24,19 +26,19 @@
              {% if forloop.first %}
                         <td class="bad"
                          style="text-align: center; ">
-                            <a href="#"
-  onclick=" var iframe2 = window.parent.document.getElementById('iframe4');
-iframe2.src = 'mytask/{{cell.link}}';
+<!--                            <a href="#"-->
+<!--  onclick=" var iframe2 = window.parent.document.getElementById('iframe4');-->
+<!--iframe2.src = 'mytask/{{cell.link}}';-->
 
-">
+<!--">-->
                             {{ cell.title }}
-                            </a>
+<!--                            </a>-->
                         </td>
 
 
           {% else %}
         <td style="text-align: center;">
-            {{cell}}</td>>
+            {{cell}}</td>
               {% endif %}
         {% endfor %}
 

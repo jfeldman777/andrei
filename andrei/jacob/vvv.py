@@ -271,30 +271,31 @@ def load(request, id):
     project = Project.objects.get(id=id)
     d1 = project.start_date
     d2 = project.end_date
-    month_tuples = ym_tuples(d1, d2)
-    items = load_role_month(id)
-    mss = ymts(id)
+
     # Create a list of roles and their associated items for each month
     data = []
+
     for role in roles:
-        row = [{"link":f"{id}/{role.id}","title":role}]
+        row = [role]
 
         #for ms in mss:
         d = datetime.date.today().replace(day=15)
         for i in range(12):
+
             try:
                 tt = Load.objects.get(project=project,role=role,month=d)
                 t=tt.load
             except:
                 t=0
-            x = {"link":f"{role.id}.{d}","load":t}
+
+            x = {"link": f"{role.id}.{d}", "load": t}
             row.append(x)
             d = inc(d)
         data.append(row)
 
     # Pass the data to the template
     context = {'data': data,'data0': data0,
-               'd1':d1,'d2':d2,"project_id":id, 'month_tuples': month_tuples,
+               'd1':d1,'d2':d2,"project_id":id,
                'project':project}
 
     return render(request, 'load.html', context)
@@ -694,15 +695,14 @@ def ajax(request):
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
         if form.is_valid():
-            #id = form.cleaned_data["id"]
             id = int(request.POST.get('id'))
-            r = int(request.POST.get('r'))
             project = Project.objects.get(id=id)
-            role = Role.objects.get(id=r)
             for k,v in request.POST.items():
-                    print(k,999,v)
-                    l = float(v)
-                    updateORcreateL(project,role,k,l)
+                    if '.' in k:
+                        r,d = k.split('.')
+                        role = Role.objects.get(id=r)
+                        l = float(v)
+                        updateORcreateL(project,role,d,l)
 
         else:
             print(form.errors)
@@ -771,7 +771,7 @@ from .models import Load, Role, Project, UserProfile, Less, Task
 def myotd(request,id):
     mss=t12ym()
 
-    t12 = ['Ресурс','-'] + mss
+    t12 = ['Ресурс'] + mss
     data = []
     dat1 = []
     dat2=[]
@@ -821,11 +821,11 @@ def myotd(request,id):
 
 
     return render(request, 'myotd.html',context)
-# def homeleft(request):
-#     return render(request, 'homeleft.html')
-#
-# def homeright(request):
-#     return render(request, 'homeright.html')
+def left(request):
+    return render(request, 'frames2left.html')
+
+def right(request):
+    return render(request, 'frames2right.html')
 
 def details(request):
     return render(request, 'details.html')
