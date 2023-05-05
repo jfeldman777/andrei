@@ -10,7 +10,7 @@ def correct(data,l,n):
     d1 = datetime.date.today()
     dn = data[n]
     for i in range(12):
-        if inside(d1,l.start_date,l.end_date):
+        if d1==l.start_date:
             dn[i+3]=l.load
         d1 = inc(d1)
     return data
@@ -103,6 +103,11 @@ def res(request, id,r):
                 'project':project,  "experts":experts}
      return render(request, 'res.html', context)
 def index(request):
+    less = Less.objects.all()
+    print(len(less))
+    x = Less.objects.filter(person=6,start_date='2023-06-15')
+    print(len(x))
+
     return render(request,'index.html',{})
 
 def page_balances(request):
@@ -129,7 +134,7 @@ def page_balances(request):
             if r == None:
                 # return left(request,p.id)
                 pass
-            return render(request, 't/frames42.html',
+            return render(request, 'frames42.html',
                        {"pid": p.id, "rid": r.id, "project": project,"role":roles})
     else:
         form = EntryForm()
@@ -229,7 +234,7 @@ def inside(d,d1,d2):
 
 def frames42(request, pid, rid, project):  # ������������ ������� (������) � ������� (������)
         return render(request, 'frames42.html', {"pid": pid, "rid": rid, "project": project})
-		
+
 from .models import Project, UserProfile, Load, Role, Task
 import datetime
 
@@ -253,8 +258,8 @@ def projects(request):
 
     data = []
     for p in projects:
-        mb = mon_bool(dmin,dmax,p.start_date,p.end_date)
-        data.append(pref(p)+[dif(p.start_date,p.end_date)]+mon_bool(dmin,dmax,p.start_date,p.end_date))
+        mb = mon_bool(dmin,dmax,p.start_date)
+        data.append(pref(p)+[dif(p.start_date)]+mon_bool(dmin,dmax,p.start_date))
     return render(request, 'prjlist.html', {'projects': projects,"months":tuples,"matrix":data})
 
 
@@ -263,7 +268,6 @@ def load(request, id):
     roles = Role.objects.all().order_by('id')
     project = Project.objects.get(id=id)
     d1 = project.start_date
-    d2 = project.end_date
 
     # Create a list of roles and their associated items for each month
     data = []
@@ -439,7 +443,7 @@ def res_jr(request, prj,r):
 #     project = Project.objects.get(id=id)
 #     roles = Role.objects.all().order_by('id')
 #     d1 = project.start_date
-#     d2 = project.end_date
+#
 #     month_tuples = ym_tuples(d1, d2)
 #     items = load_role_month(id)
 #     mss = ymts(id)  # str format
@@ -510,7 +514,6 @@ def ymts(id):
 def ymt(id):
     project = Project.objects.get(id=id)
     d1 = project.start_date
-    d2 = project.end_date
     return ym_tuples(d1,d2)
 def ym_tuples(d1,d2):
     y1, m1 = d1.year, d1.month
@@ -599,7 +602,23 @@ def person_role(prj):
 #         users = list(UserProfile.objects.filter(id__in=people, role=r).order_by('user'))
 #         L+=users
 #     return L
+def updateORcreateLess(p, d, l):
+    print(p,d,l,888)
+    person = UserProfile.objects.get(id=p)
+    try:
+        instance = Less.objects.get(person=person, start_date=d)
+    except:
+        instance = None
 
+    if instance:
+        print(789)
+        instance.load = l
+        instance.save()
+    else:
+        # If the instance does not exist, create a new one
+        print(5,person,d,l)
+        instance = Less.objects.create(person=person, start_date=d, load=l)
+        print(6)
 
 def updateORcreate(p, pj, d, l):
     print(159,p,pj,d,l)
@@ -618,6 +637,8 @@ def updateORcreate(p, pj, d, l):
         # If the instance does not exist, create a new one
         instance = Task.objects.create(person=p, project=pj, month=d, load=l)
         print(5)
+
+
 def updateORcreateL(project,role, m, l):
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
@@ -663,7 +684,7 @@ def pref(p):
     L.append({"title":p.title,"link":p.id})
 
     L.append(p.start_date)
-    L.append(p.end_date)
+
     return L
 from django.shortcuts import render,redirect,reverse
 from django.forms import formset_factory, Form
@@ -714,13 +735,13 @@ def jax2(request):
         form = Form(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            print(998)
+
             sid = request.POST.get('id')
             id = int(sid)
             sr = request.POST.get('r')
             r = int(sr)
             project = Project.objects.get(id=id)
-            print(996)
+
             for k,v in request.POST.items():
               if '.' in k:
                 print(995,k)
@@ -737,6 +758,28 @@ def jax2(request):
             print(form.errors)
 
     return redirect("res10",id,r)
+def jax3(request):
+    print(88)
+    id = 1
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            sr = request.POST.get('r')
+            r = int(sr)
+            for k,v in request.POST.items():
+              if '.' in k:
+                p,d=k.split('.')
+                try:
+                    l = float(v)
+                    updateORcreateLess(p,d,l)
+                except:
+                    pass
+        else:
+            print(form.errors)
+
+    return myotd1(request,r)
 
 def people(request):
     people = UserProfile.objects.all().order_by("role")
@@ -763,71 +806,115 @@ def people(request):
 
         k+=1
     return render(request, 'people.html', {'people': people,"t12":t12,"data":data})
-	
+
 from datetime import date
 from .models import Role
 
 
 from django.shortcuts import render
 from .models import Load, Role, Project, UserProfile, Less, Task
-def myotd(request,id):
+
+def myotd1(request,r):
+    context = myotd(request,r)
+    return render(request, 'myotd1.html',context)
+
+def myotd2(request,r):
+    print(88)
+    context = myotd(request,r)
+    return render(request, 'myotd2.html',context)
+
+def myotd3(request,r):
+    print(77)
+    context = myotd(request,r)
+    return render(request, 'myotd3.html',context)
+
+def myotd(request,r):
     mss=t12ym()
 
     t12 = ['Ресурс'] + mss
     data = []
-    dat1 = []
-    dat2=[]
+    data1 = []
+    data2=[]
+    data3=[]
     num = [1] * 12
     sum = [0] * 12
     sum2 = [0] * 12
 
-    d1 = date.today()
-    role = Role.objects.get(id=id)
-    experts = UserProfile.objects.filter(role=id).order_by('id')
+    d1 = date.today().replace(day=15)
+    role = Role.objects.get(id=r)
+    experts = UserProfile.objects.filter(role=r)
     mss = t12ym()
     for person in experts:
         user = UserProfile.objects.get(id=person.id).user
-        dat1 = [{"title":user.last_name,"link":person.id},'Доступность']
-        dat2 = [{"title": user.last_name, "link": person.id},'Занятость']
+        dat1=[]
+        dat2 = [{"title": user.last_name, "link": person.id}]
+        dat3 = [{"title": user.last_name, "link": person.id}]
+
         num = [1] * 12
         sum = [0] * 12
         sum2 = [0] * 12
-        less = Less.objects.filter(person=person).order_by('id')
-        for l in less:
 
-            d = d1
-            for i in range(12):
-                if inside(d, l.start_date, l.end_date):
+        dat1 = [1]*12
+        d1 = date.today().replace(day=15)
+        for i in range(12):
+            dat1[i] = {"link":f"{person.id}.{d1}","load":1}
+            try:
+                print(314,person,d1)
+                less = Less.objects.filter(person=person,start_date=d1)
+                for l in less:
+                    print(315)
                     num[i] = l.load
-
-                d = inc(d)
+                    print(316)
+                    dat1[i] = {"link":f"{person.id}.{d1}","load":l.load}
+                    print(317)
+            except:
+                pass
+            d1 = inc(d1)
         for i in range(12):
             sum[i] += num[i]
         i = 0
+        d = date.today().replace(day=15)
         for m in mss:
-            d = date(year=m['year'], month=m['month'], day=15)
+
             tasks = Task.objects.filter(person=person, month=d)
 
             for task in tasks:
                 t = task.load
                 sum2[i] += t
             i += 1
+            d = inc(d)
             num = [1] * 12
 
-        dat1 += [sum[i] for i in range(12)]
+        dat1 = [{"title":user.last_name,"link":person.id}]+dat1
         dat2 += [sum2[i] for i in range(12)]
+        dat3 += [sum[i]-sum2[i] for i in range(12)]
 
-        data.append(dat1)
-        data.append(dat2)
-    context = {'data': data, 't12': t12,'role_id':id,'role':role,}
+        data1.append(dat1)
+        data2.append(dat2)
+        data3.append(dat3)
+    context = {
+        'data1': data1,
+        'data2': data2,
+        'data3': data3, "r":r,
+               't12': t12,'role_id':r,'role':role,}
+    print("hello")
+    return context
 
 
-    return render(request, 'myotd.html',context)
+
+
 def left(request):
     return render(request, 'frames2left.html')
 
 def right(request):
     return render(request, 'frames2right.html')
+
+    # return render(request, 'frames1res1.html',context)
+
+def res11(request,r):
+    return render(request, 'frames1res1.html', {"r":r})
+
+
 
 def details(request):
     return render(request, 'details.html')
@@ -857,6 +944,7 @@ def otd_context(request):
         num = [1] * 12
         sum = [0] * 12
         sum2 = [0] * 12
+
         dat.append({'title':r,'link':r.id})
         dat2.append({'title': r, 'link': r.id})
         dat3.append({'title': r, 'link': r.id})
@@ -869,7 +957,7 @@ def otd_context(request):
 
                 d = d1
                 for i in range(12):
-                    if inside(d,l.start_date,l.end_date):
+                    if d==l.start_date:
                         num[i]=l.load
 
                     d = inc(d)
@@ -918,7 +1006,7 @@ def correct(data,l,n):
     d1 = date.today()
     dn = data[n]
     for i in range(12):
-        if inside(d1,l.start_date,l.end_date):
+        if d1==l.start_date:
             dn[i+3]=l.load
         d1 = inc(d1)
     return data
@@ -951,7 +1039,7 @@ def dost(person):
     while d <= d2:
         less = Less.objects.filter(person=person).order_by("id")
         for l in less:
-            if inside(d, l.start_date, l.end_date):
+            if d==l.start_date:
                 ms[i] = l.load
         i+=1
         d = inc(d)
@@ -982,7 +1070,7 @@ def one2role(request):
     people = UserProfile.objects.all().order_by('role','user')
 
     return render(request,"one2role.html",{'roles':roles,'people':people},)
-	
+
 from django.shortcuts import render
 from .forms import EntryForm
 from .models import Project,Role
@@ -1012,7 +1100,7 @@ def entry(request):#������� ����
             if p== None and r == None:
                 return frames40(request)
             if p == None:
-                return right(request,r.id)
+                return res11(request,r.id)
             if r == None:
                 return left(request,p.id)
             return frames42(request,p.id,r.id,project)

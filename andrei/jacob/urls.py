@@ -3,8 +3,10 @@ from . import vvv
 
 urlpatterns = [
     # path('home/', views.home, name='home'),
+        path('jax3/', vvv.jax3, name='jax3'),
     path('jax2/', vvv.jax2, name='jax2'),
     path('ajax/', vvv.ajax, name='ajax'),
+    path('res11/<int:r>/', vvv.res11, name='res11'),
 
     #path('page_projects/', vvv.index, name='page_projects'),
     #path('page_resources/', vvv.index, name='page_resources'),
@@ -21,8 +23,10 @@ urlpatterns = [
 
 
      path('mytask/<int:id>/', vvv.mytask, name='mytask'),
-
-    path('myotd/<int:id>/', vvv.myotd, name='myotd'),
+    path('myotd1/<int:r>/', vvv.myotd1, name='myotd1'),
+        path('myotd2/<int:r>/', vvv.myotd2, name='myotd2'),
+    path('myotd3/<int:r>/', vvv.myotd3, name='myotd3'),
+    # path('myotd3tabs/<int:r>/', vvv.myotd3tabs, name='myotd3tabs'),
 
     path('prjlist/', vvv.projects, name='projects'),
 

@@ -62,7 +62,7 @@ $('td.good').click(function() {
 
 
   var originalValue = $(this).text();
-  $(this).html('<input type="text" size="2" maxlength="2" value="' + $.trim(originalValue) + '">');
+  $(this).html('<input type="text" size="4" maxlength="4" value="' + $.trim(originalValue) + '">');
 
   $(this).click(function(){
   $(this).html(originalValue);
