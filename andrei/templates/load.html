@@ -33,12 +33,12 @@
     <tr>
       {% for cell in row %}
                    {% if forloop.first  %}<td>
-            <a href="#"
-  onclick=" var iframe2 = window.parent.document.getElementById('iframe2');
-iframe2.src = 'res_jr/{{cell.link}}';
-">
+<!--            <a href="#"-->
+<!--  onclick=" var iframe2 = window.parent.document.getElementById('iframe2');-->
+<!--iframe2.src = 'res_jr/{{cell.link}}';-->
+<!--">-->
                                   {{ cell.title }}
-                          </a>
+<!--                          </a>-->
                 </td>
         {% else %}
         <td class="good" key="{{cell.link}}"

@@ -7,12 +7,7 @@
        {{project}}</td><td colspan="4"> {{role}}</td></tr>
   <tr>
     <th  style="text-align: center;">
-<form id="myForm" action="/ajax2/" method="POST">
-    {% csrf_token %}
-  <input type = hidden name="id" value='{{project_id}}'>
-     <input type = hidden name="r" value='{{r}}'>
-    <button type="submit">Сохранить</button>
-  </form>
+год
     </th>
     {% for x in data0 %}
       <th  style="text-align: center;">
@@ -22,7 +17,7 @@
    {% endfor %}
 </tr><tr>
     <th  style="text-align: center;">
-Особые требования
+
     </th>
     {% for x in data0 %}
       <th  style="text-align: center; ">
@@ -34,35 +29,60 @@
 
  {% for row in data %}
     <tr style="text-align: center;">
+        <td>
+        <form name="f01" action="/ajax/" method="POST">
+    {% csrf_token %}
+  <input type = hidden name="id" value='{{project_id}}'>
+     <input type = hidden name="r" value='{{r}}'>
+    <button type="submit">Сохранить</button>
+        </form></td>
               {% for cell in row %}
-             {% if forloop.first %}
-    <td class="bad"
-                         style="text-align: center;">
 
-                            <!--a href="#"
-  onclick=" var iframe2 = window.parent.document.А('iframe2');
-iframe2.src = 'res_jr/{{cell.link}}';"--->
-                   {{ cell.title }}
-
-                        </td>
-
-            {% else %}
     {% if cell.load|positive %}
-                        <td class="good" key="{{cell.link}}"
+                        <td class="good" key="{{cell.link}}" form="f01"
                          style="text-align: center;
       background-color:yellow;">{% else %}
-                <td class="good"  key="{{cell.link}}"
+                <td class="good"  key="{{cell.link}}" form="f01"
                     style="text-align: center; background-color:magenta;">
         {% endif %}
                         {{ cell.load }}
                                </td>
-            {% endif %}
 
       {% endfor %}
     </tr>
   {% endfor %}
 
 </table>
-{% include 'script.html'  %}
+<script>
+$('td.good').click(function() {
+
+  var p = $(this).attr("key");
+  var formName = $(this).attr("form");
+
+
+
+  var originalValue = $(this).text();
+  $(this).html('<input type="text" size="2" maxlength="2" value="' + $.trim(originalValue) + '">');
+
+  $(this).click(function(){
+  $(this).html(originalValue);
+  })
+
+  $('td input').focusout(function() {
+    var newValue = $(this).val();
+    $(this).parent().text(newValue+'@');
+var myForm = $('[name='+formName+']')
+
+ var newInput = $("<input>");
+    newInput.attr("type", "hidden");
+    newInput.attr("name", p);
+    newInput.attr("value",newValue );
+    myForm.append(newInput);
+
+
+  });
+});
+
+</script>
 
 {% endblock %}

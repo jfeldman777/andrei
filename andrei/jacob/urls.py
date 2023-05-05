@@ -3,7 +3,7 @@ from . import vvv
 
 urlpatterns = [
     # path('home/', views.home, name='home'),
-    path('ajax2/', vvv.ajax2, name='ajax2'),
+    path('jax2/', vvv.jax2, name='jax2'),
     path('ajax/', vvv.ajax, name='ajax'),
 
     #path('page_projects/', vvv.index, name='page_projects'),
@@ -11,19 +11,20 @@ urlpatterns = [
     path('page_balances/', vvv.page_balances, name='page_balances'),
     #     # path('myprj/<int:id>/', views.myprj, name='myprj'),
     # path('upd/<int:project_id>/<int:person_id>/<int:year>/<int:month>/', views2.upd, name='upd'),
-    # path('homeleft/', views.homeleft, name='homeleft'),
-    # path('homeright/', views.homeright, name='homeright'),
+    path('frames1prj/', vvv.frames1prj, name='frames1prj'),
+    path('frames1res/', vvv.frames1res, name='frames1res'),
     #
     # path('load2/<iFnt:prj>/<int:y>/<int:m>/', views2.load2, name='load2'),
 
     # path('res2/<int:prj>/<int:role>/<int:y>/<int:m>/', views2.res2, name='res2'),  path('prjlist/', views.prjlist, name='prjlist'),
-    path('otdlist/', vvv.otdlist, name='otdlist'),
+    path('otdlist/<int:i>/', vvv.otdlist, name='otdlist'),
+
 
      path('mytask/<int:id>/', vvv.mytask, name='mytask'),
 
     path('myotd/<int:id>/', vvv.myotd, name='myotd'),
 
-    path('projects', vvv.projects, name='projects'),
+    path('prjlist/', vvv.projects, name='projects'),
 
     # path('res_all/', views3.res_all, name='res_all'),
     path('res/<int:id>/<int:r>/', vvv.res, name='res'),

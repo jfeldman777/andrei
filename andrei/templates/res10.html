@@ -14,15 +14,14 @@
        {{project}}</td><td colspan="4"> {{role}}</td></tr>
   <tr>
 
-      <th  style="text-align: center;">
-                    <form id="myForm" action="/ajax2/" method="POST">
+      <td style="text-align: center;">
+                    <form name="myForm" id='f10' action="/jax2/" method="POST">
     {% csrf_token %}
   <input type = hidden name="id" value='{{project_id}}'>
-     <input type = hidden name="r" value='{{r}}'>
-    <button type="submit">Сохранить</button>
+     <input type = hidden name="r" value='{{r}}'><button type="submit" >Сохранить</button>
                     </form>
 
-    </th>
+    </td>
 
     {% for x in data0 %}
       <th  style="text-align: center;">
@@ -33,7 +32,7 @@
 <tr>
 
 
-    <th  style="text-align: center;">Особые требования</th>
+    <th  style="text-align: center;">ФИО исполнителя</th>
         {% for x in data0 %}
     <th  style="text-align: center; ">
      {{x.month}}
@@ -48,7 +47,7 @@
                         <td class="bad"
                          style="text-align: center;  ">
 
-                            {{ cell.title }}
+                            {{ cell.user.last_name }}
 
                         </td>
 
@@ -57,14 +56,14 @@
             {% else %}
 
 {% if cell|isnumeric and cell|positive %}
-                        <td class="good"
+                        <td class="good"  key="{{cell.link}}"
                          style="text-align: center;
       background-color:yellow;">
                             {% else %}
-                <td class="good"
+                <td class="good"  key="{{cell.link}}"
                     style="text-align: center; background-color:white">
         {% endif %}
-                        {{ cell }}
+                        {{ cell.load }}
                                </td>
         {% endif %}
 
@@ -74,6 +73,6 @@
 
 </table>
 
-    {% include 'script.html' %}
+{% include 'script.html' %}
 
 {% endblock %}

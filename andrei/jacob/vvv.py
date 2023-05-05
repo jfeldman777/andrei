@@ -147,7 +147,7 @@ def res01(request, id,r):
      role = Role.objects.get(id=r)
 
 
-     dat2 = ['']+[0]*12
+     dat2 = [0]*12
      num = [0]*12
      d = date.today().replace(day=15)
      for i in range(12):
@@ -156,7 +156,7 @@ def res01(request, id,r):
              num[i]=L.load
          except:
              num[i]=0
-         dat2[i+1] = {"link":f"{d}","load":num[i]}
+         dat2[i] = {"link":f"{d}","load":num[i]}
          d = inc(d)
      data.append(dat2)
      context = {'data': data,
@@ -175,28 +175,24 @@ def res10(request, id,r):
 
      role = Role.objects.get(id=r)
 
-
-
-     dat2 = ['']+[0]*12
-     sum = [0]*12
      n = 0
      d = date.today().replace(day=15)
-     for i in range(12):
-         experts = UserProfile.objects.filter(role=r)
-         for p in experts:
+     experts = UserProfile.objects.filter(role=r)
+     for p in experts:
+         sum = [0] * 12
+         dat2 = [p] + [0] * 12
+         for i in range(12):
              try:
-
                  task = Task.objects.get(person = p,project=id, month=d)
-                 sum[i]+=task.load
-
+                 sum[i]=task.load
              except:
                  pass
-         d = inc(d)
-         dat2[i+1]=f"{sum[i]}"
-     data.append(dat2)
+             dat2[i+1] = {"link": f"{p.id}.{d}", "load": sum[i]}
+             d = inc(d)
+         data.append(dat2)
 
      context = {'data': data,
-                "data0":data0,"role":role,
+                 "data0":data0,"role":role,"project_id":id,"r":r,
                 'project':project}
      return render(request, 'res10.html', context)
 
@@ -605,31 +601,33 @@ def person_role(prj):
 #     return L
 
 
-def updateORcreate(p, pj, m, l):
+def updateORcreate(p, pj, d, l):
+    print(159,p,pj,d,l)
     try:
-        instance = Task.objects.get(person=p,project=pj, month=m)
+        print(1)
+        instance = Task.objects.get(person=p,project=pj, month=d)
     except Task.DoesNotExist:
         instance = None
-
+        print(2)
     if instance:
+        print(3)
         instance.load = l
         instance.save()
     else:
+        print(4)
         # If the instance does not exist, create a new one
-        project = Project.objects.get(id=pj)
-        instance = Task.objects.create(person=p, project=project, month=m, load=l)
-
+        instance = Task.objects.create(person=p, project=pj, month=d, load=l)
+        print(5)
 def updateORcreateL(project,role, m, l):
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
-        print(77)
     except Load.DoesNotExist:
         instance = None
 
     if instance:
         instance.load = l
         instance.save()
-        print(55)
+
 
     else:
         # If the instance does not exist, create a new one
@@ -684,9 +682,9 @@ from django.shortcuts import render
 from .forms import TableCellForm, table_to_formset
 
 def ajax(request):
-    print(99)
+
     id = 1
-    roles = list(Role.objects.all().order_by('id'))
+    r=1
     # if this is a POST request we need to process the form data
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
@@ -694,19 +692,21 @@ def ajax(request):
         if form.is_valid():
             id = int(request.POST.get('id'))
             project = Project.objects.get(id=id)
-            for k,v in request.POST.items():
-                    if '.' in k:
-                        r,d = k.split('.')
-                        role = Role.objects.get(id=r)
-                        l = float(v)
-                        updateORcreateL(project,role,d,l)
+            sr = int(request.POST.get('r'))
+            r=int(sr)
+            role = Role.objects.get(id=r)
+            for d,v in request.POST.items():
+                if '-' in d:
+                    l = float(v)
+                    updateORcreateL(project,role,d,l)
+
 
         else:
             print(form.errors)
 
-    return redirect("load",id)
+    return res01(request,id,r)
 
-def ajax2(request):
+def jax2(request):
     print(88)
     id = 1
     if request.method == "POST":
@@ -714,24 +714,29 @@ def ajax2(request):
         form = Form(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            print(998)
             sid = request.POST.get('id')
             id = int(sid)
             sr = request.POST.get('r')
             r = int(sr)
             project = Project.objects.get(id=id)
-            role =Role.objects.get(id=r)
-
-
+            print(996)
             for k,v in request.POST.items():
-                print(k,777,v)
+              if '.' in k:
+                print(995,k)
+                p,d=k.split('.')
+                print(994,p,d)
                 try:
-                    updateORcreateL(project,role,k,float(v))
+                    print(78,p,d)
+                    person=UserProfile.objects.get(id=p)
+                    l = float(v)
+                    updateORcreate(person,project,d,l)
                 except:
                     pass
         else:
             print(form.errors)
 
-    return redirect("res01",id,r)
+    return redirect("res10",id,r)
 
 def people(request):
     people = UserProfile.objects.all().order_by("role")
@@ -827,29 +832,34 @@ def right(request):
 def details(request):
     return render(request, 'details.html')
 
-def myprj(request,pid):
-    return render(request, 'left.html')
-def myprj2(request):
-    return render(request, 'left.html')
-def otdlist(request):
+def frames1prj(request):
+    return render(request, 'frames1prj.html')
+def frames1res(request):
+    return render(request, 'frames1res.html')
+
+def otdlist(request,i):
+    context = otd_context(request)
+    return render(request,f"otdlist{i}.html",context)
+def otd_context(request):
     roles = Role.objects.all().order_by('id')
     people = UserProfile.objects.all().order_by('role')
     mss=t12ym()
 
     t12 = ['Роль'] + mss
     data = []
+    data2 = []
+    data3 = []
     d1 = date.today()
-    d2 = inc_n(d1,12)
     for r in roles:
         dat = []
         dat2 = []
+        dat3 = []
         num = [1] * 12
         sum = [0] * 12
         sum2 = [0] * 12
         dat.append({'title':r,'link':r.id})
         dat2.append({'title': r, 'link': r.id})
-        dat.append('Доступно')
-        dat2.append('Занято')
+        dat3.append({'title': r, 'link': r.id})
         n = 0
 
         experts = UserProfile.objects.filter(role=r)
@@ -878,10 +888,13 @@ def otdlist(request):
 
         dat+=[sum[i] for i in range(12)]
         dat2 += [sum2[i] for i in range(12)]
+        dat3 += [sum[i]-sum2[i] for i in range(12)]
         data.append(dat)
-        data.append(dat2)
-    context = {'data': data, 't12': t12,}
-    return render(request,'otdlist.html',context)
+        data2.append(dat2)
+        data3.append(dat3)
+    context = {'data': data,'data2': data2,'data3': data3,
+               't12': t12,}
+    return context
 
 def prjlist(request):
     return projects(request)
