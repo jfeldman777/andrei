@@ -258,10 +258,65 @@ def projects(request):
 
     data = []
     for p in projects:
-        mb = mon_bool(dmin,dmax,p.start_date)
-        data.append(pref(p)+[dif(p.start_date)]+mon_bool(dmin,dmax,p.start_date))
-    return render(request, 'prjlist.html', {'projects': projects,"months":tuples,"matrix":data})
+        mb = mon_bool(dmin,dmax,p.start_date,p.end_date)
+        data.append(pref(p)+[dif(p.start_date,p.end_date)]+mon_bool(dmin,dmax,p.start_date,p.end_date))
+    return render(request, 'prjlist.html', {'prjects': projects,"months":tuples,"matrix":data})
+def otd_context(request):
+    roles = Role.objects.all().order_by('id')
+    people = UserProfile.objects.all()
+    mss=t12ym()
 
+    t12 = ['Роль'] + mss
+    data = []
+    data2 = []
+    data3 = []
+    d1 = date.today()
+    for r in roles:
+        dat = []
+        dat2 = []
+        dat3 = []
+        num = [1] * 12
+        sum = [0] * 12
+        sum2 = [0] * 12
+
+        dat.append({'title':r,'link':r.id})
+        dat2.append({'title': r, 'link': r.id})
+        dat3.append({'title': r, 'link': r.id})
+        n = 0
+
+        experts = UserProfile.objects.filter(role=r)
+        for person in experts:
+            less = Less.objects.filter(person = person).order_by('id')
+            for l in less:
+
+                d = d1
+                for i in range(12):
+                    if d==l.start_date:
+                        num[i]=l.load
+
+                    d = inc(d)
+            for i in range(12):
+                sum[i]+=num[i]
+            i=0
+            for m in mss:
+                d = date(year=m['year'],month=m['month'],day=15)
+                tasks = Task.objects.filter(person=person,month=d)
+
+                for task in tasks:
+                    t = task.load
+                    sum2[i]+=t
+                i+=1
+            num = [1] * 12
+
+        dat+=[sum[i] for i in range(12)]
+        dat2 += [sum2[i] for i in range(12)]
+        dat3 += [sum[i]-sum2[i] for i in range(12)]
+        data.append(dat)
+        data2.append(dat2)
+        data3.append(dat3)
+    context = {'data': data,'data2': data2,'data3': data3,
+               't12': t12,}
+    return context
 
 def load(request, id):
     data0 = mon_bar()
@@ -276,7 +331,7 @@ def load(request, id):
         row = [role]
 
         #for ms in mss:
-        d = datetime.date.today().replace(day=15)
+        d = date.today().replace(day=15)
         for i in range(12):
 
             try:
@@ -292,7 +347,7 @@ def load(request, id):
 
     # Pass the data to the template
     context = {'data': data,'data0': data0,
-               'd1':d1,'d2':d2,"project_id":id,
+               'd1':d1,"project_id":id,
                'project':project}
 
     return render(request, 'load.html', context)
@@ -640,6 +695,7 @@ def updateORcreate(p, pj, d, l):
 
 
 def updateORcreateL(project,role, m, l):
+    print(878)
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
     except Load.DoesNotExist:
@@ -651,8 +707,9 @@ def updateORcreateL(project,role, m, l):
 
 
     else:
-        # If the instance does not exist, create a new one
+        print(317)
         instance = Load.objects.create(project=project, role=role, month=m, load=l)
+        print(318)
 
 def dif(d1,d2):
     return (d2.year-d1.year)*12+d2.month-d1.month+1
@@ -701,7 +758,31 @@ import datetime
 
 from django.shortcuts import render
 from .forms import TableCellForm, table_to_formset
+def ajax0(request):
+    print(1024)
+    id = 1
+    r=1
+    # if this is a POST request we need to process the form data
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        if form.is_valid():
+            id = int(request.POST.get('id'))
+            project = Project.objects.get(id=id)
+            for k,v in request.POST.items():
+                print(k,v,500)
+                if '.' in k:
+                    print(567)
+                    r,d = k.split('.')
+                    l = float(v)
+                    role = Role.objects.get(id=r)
+                    updateORcreateL(project,role,d,l)
+                    print(568)
 
+        else:
+            print(form.errors)
+
+    return load(request,id)
 def ajax(request):
 
     id = 1
@@ -927,62 +1008,7 @@ def frames1res(request):
 def otdlist(request,i):
     context = otd_context(request)
     return render(request,f"otdlist{i}.html",context)
-def otd_context(request):
-    roles = Role.objects.all().order_by('id')
-    people = UserProfile.objects.all().order_by('role')
-    mss=t12ym()
 
-    t12 = ['Роль'] + mss
-    data = []
-    data2 = []
-    data3 = []
-    d1 = date.today()
-    for r in roles:
-        dat = []
-        dat2 = []
-        dat3 = []
-        num = [1] * 12
-        sum = [0] * 12
-        sum2 = [0] * 12
-
-        dat.append({'title':r,'link':r.id})
-        dat2.append({'title': r, 'link': r.id})
-        dat3.append({'title': r, 'link': r.id})
-        n = 0
-
-        experts = UserProfile.objects.filter(role=r)
-        for person in experts:
-            less = Less.objects.filter(person = person).order_by('id')
-            for l in less:
-
-                d = d1
-                for i in range(12):
-                    if d==l.start_date:
-                        num[i]=l.load
-
-                    d = inc(d)
-            for i in range(12):
-                sum[i]+=num[i]
-            i=0
-            for m in mss:
-                d = date(year=m['year'],month=m['month'],day=15)
-                tasks = Task.objects.filter(person=person,month=d)
-
-                for task in tasks:
-                    t = task.load
-                    sum2[i]+=t
-                i+=1
-            num = [1] * 12
-
-        dat+=[sum[i] for i in range(12)]
-        dat2 += [sum2[i] for i in range(12)]
-        dat3 += [sum[i]-sum2[i] for i in range(12)]
-        data.append(dat)
-        data2.append(dat2)
-        data3.append(dat3)
-    context = {'data': data,'data2': data2,'data3': data3,
-               't12': t12,}
-    return context
 
 def prjlist(request):
     return projects(request)

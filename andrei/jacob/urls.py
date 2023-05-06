@@ -6,6 +6,8 @@ urlpatterns = [
         path('jax3/', vvv.jax3, name='jax3'),
     path('jax2/', vvv.jax2, name='jax2'),
     path('ajax/', vvv.ajax, name='ajax'),
+
+    path('ajax0/', vvv.ajax0, name='ajax0'),
     path('res11/<int:r>/', vvv.res11, name='res11'),
 
     #path('page_projects/', vvv.index, name='page_projects'),

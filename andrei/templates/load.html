@@ -14,7 +14,7 @@
    {% endfor %}
 </tr><tr>
     <th  style="text-align: center;">
-    <form id="myForm" action="/ajax/" method="POST">
+    <form id="f" action="/ajax0/" method="POST">
     {% csrf_token %}
   <input type = hidden name="id" value='{{project_id}}'>
     <button type="submit">Сохранить </button>
@@ -28,7 +28,6 @@
    {% endfor %}
   </tr>
 
-  </tr>
   {% for row in data %}
     <tr>
       {% for cell in row %}
@@ -55,7 +54,24 @@
 
 
 
-    {% include 'script.html' %}
+<script>
+$('td.good').click(function() {
+  var p = $(this).attr("key");
+  var originalValue = $(this).text();
+  $(this).html('<input type="text" size="4" maxlength="4" value="' + $.trim(originalValue) + '">');
+  $(this).click(function(){
+  $(this).html(originalValue);
+  })
+  $('td input').focusout(function() {
+    var newValue = $(this).val();
+    $(this).parent().text(newValue+'@');
+
+ var form =  document.getElementById("f");
+    var input = document.createElement('input');
+    input.type = 'hidden';    input.name = p;    input.value = newValue;
+   form.appendChild(input);
+  });
+});
+</script>
 
 {% endblock %}
-
