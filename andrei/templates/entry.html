@@ -1,9 +1,9 @@
-{% block content %}
+{% block content %}<div style="background-color: yellow;">
   <form method="POST" target="_top">
     {% csrf_token %}
         {{ form }}
         <button type="submit">Выбрать перспективу</button>
   </form>
 <div style="position:absolute;top:5;right:20;"><a href="/" target="_top">Домой</a></div>
-
+</div>
 {% endblock %}

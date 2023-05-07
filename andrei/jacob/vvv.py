@@ -250,7 +250,7 @@ def inc_n(d,n):
 
 
 def projects(request):
-    projects = Project.objects.all().order_by('start_date')
+    projects = Project.objects.all().order_by('general','start_date')
     dmin = date.today()
     dmin=dmin.replace(day=15)
     dmax = inc_n(dmin,12)

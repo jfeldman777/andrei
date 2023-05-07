@@ -2,10 +2,11 @@
 {% load custom_filters %}
 
 {% block content %}
-
+<div style="background-color: yellow;">
 <form method="POST" target="_top">
     {% csrf_token %}
         {{ form }}
         <button type="submit">Выбрать перспективу</button>
   </form>
+  </div>
 {% endblock %}
