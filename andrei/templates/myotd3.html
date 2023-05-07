@@ -37,8 +37,15 @@
 
 
           {% else %}
-        <td style="text-align: center;">
-            {{cell}}</td>
+
+          {% if cell|negative %}
+        <td style="text-align: center; background-color:pink;">
+          {% else %}
+          <td style="text-align: center;">
+            {% endif %}
+            {{cell}}
+
+          </td>
               {% endif %}
         {% endfor %}
 

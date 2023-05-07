@@ -30,19 +30,31 @@
                          style="text-align: center;  ">
                             {{ cell.title }}
             {% else %}
-{% if cell|isnumeric and cell|positive %}
-                        <td class="good"
-                         style="text-align: center;
-      background-color:yellow;">{% else %}
 
+{% if cell|isnumeric %}
+{% if cell|positive %}
+<td class="good"
+ style="text-align: center;
+      background-color:yellow;  ">
 
-                <td class="good"
-                    style="text-align: center; background-color:white">{% endif %}
+      {% else %}
+{% if cell|negative %}
+<td class="good"
+ style="text-align: center;
+
+                background-color:pink; ">
+{% else %}
+<td class="good"
+ style="text-align: center;
+                background-color:white;">
+{% endif %}
+            {% endif %}
+
                         {{ cell }}
                                </td>
 
+{% endif %}
             {% endif %}
-
       {% endfor %}
     </tr>
   {% endfor %}

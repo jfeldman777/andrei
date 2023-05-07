@@ -40,8 +40,15 @@
 <!--                          </a>-->
                 </td>
         {% else %}
+        {% if cell.load|positive %}
         <td class="good" key="{{cell.link}}"
-                    style="text-align: center; background-color:yellow">
+                    style="text-align: center; background-color:yellow;">
+
+{% else %}
+                    <td class="good" key="{{cell.link}}"
+                                style="text-align: center; background-color:white;">
+
+                                {% endif %}
                         {{ cell.load }}
                                </td>
             {% endif %}

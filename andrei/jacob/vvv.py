@@ -741,7 +741,7 @@ def pref(p):
     L.append({"title":p.title,"link":p.id})
 
     L.append(p.start_date)
-
+    L.append(p.end_date)
     return L
 from django.shortcuts import render,redirect,reverse
 from django.forms import formset_factory, Form
