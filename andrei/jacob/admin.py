@@ -13,7 +13,7 @@ admin.site.register(Less)
 from .models import UserProfile
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user','role')
+    list_display = ('user','fio','role')
     # ordering=['user.last_name']
 
 admin.site.register(UserProfile, UserProfileAdmin)

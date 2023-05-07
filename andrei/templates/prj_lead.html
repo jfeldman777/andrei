@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+
+
+<table border="2"  >
+      <tr><td>Руководители проектов</td><td>проекты</td>
+      </tr>
+
+      <tr >
+        {% for cell in data %}
+        <td style="text-align: center; ">
+
+          {{ cell.name }}
+
+        </td>
+        <td style="text-align: center; ">
+          <a href="/left/{{cell.project_id}}">
+          {{ cell.project }}
+</a>
+        </td>
+      </tr>
+        {% endfor %}
+</table>
+
+<a href="/" target="_top">Домой</a>
+
+{% endblock %}

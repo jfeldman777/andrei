@@ -10,6 +10,7 @@ class Role(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.ForeignKey(to=Role,on_delete=models.CASCADE)
+    fio = models.CharField(max_length=30, default='?')
 
     def __str__(self):
         return self.user.username

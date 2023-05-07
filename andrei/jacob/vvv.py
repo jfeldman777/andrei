@@ -1,11 +1,35 @@
-from .forms import EntryForm
-from django.shortcuts import render
 from .models import Role,Project,Load,UserProfile,Task,Less
+from .forms import EntryForm
+import datetime
+from django.shortcuts import render,redirect,reverse
+from django.forms import Form
+from .models import Load, Role, Project, UserProfile, Task
+def prj_lead(request):
+    projects = Project.objects.all().order_by ('general')
+    data = []
+    for p in projects:
+        x = {"project_id":p.id,
+            "project":p.title,
+        "name":p.general.fio}
+        data.append(x)
+    context = {"data":data}
+    return render(request,'prj_lead.html',context)
+
+def res_lead(request):
+    roles = Role.objects.all().order_by ('general')
+    data = []
+    for p in roles:
+        u = UserProfile.objects.get(user=p.general)
+        x = {"project_id":p.id,
+            "project":p.title,
+        "name":u.fio}
+        data.append(x)
+    context = {"data":data}
+    return render(request,'res_lead.html',context)
 
 def frames40(request):#������������ ���� �������� � ���� ��������
     return render(request, 'frames40.html')
 
-import datetime
 def correct(data,l,n):
     d1 = datetime.date.today()
     dn = data[n]
@@ -104,43 +128,43 @@ def res(request, id,r):
      return render(request, 'res.html', context)
 def index(request):
     less = Less.objects.all()
-    print(len(less))
+
     x = Less.objects.filter(person=6,start_date='2023-06-15')
-    print(len(x))
+
 
     return render(request,'index.html',{})
-
-def page_balances(request):
-    p = None
-    r = None
-    roles="?"
-    project = '?'
-    if request.method == 'POST':
-        form = EntryForm(request.POST)
-        if form.is_valid():
-            project = form.cleaned_data['projects']
-            roles = form.cleaned_data['roles']
-            if project:
-                p = Project.objects.get(title=project)
-            if roles:
-                r = Role.objects.get(title=roles)
-
-            if p== None and r == None:
-
-                return frames40(request)
-            if p == None:
-
-                return right(request,r.id)
-            if r == None:
-                # return left(request,p.id)
-                pass
-            return render(request, 'frames42.html',
-                       {"pid": p.id, "rid": r.id, "project": project,"role":roles})
-    else:
-        form = EntryForm()
-    return render(request, 't/page_balances.html',
-                  {'form': form,"project":project,"role":roles})
-
+#
+# def page_balances(request):
+#     p = None
+#     r = None
+#     roles="?"
+#     project = '?'
+#     if request.method == 'POST':
+#         form = EntryForm(request.POST)
+#         if form.is_valid():
+#             project = form.cleaned_data['projects']
+#             roles = form.cleaned_data['roles']
+#             if project:
+#                 p = Project.objects.get(title=project)
+#             if roles:
+#                 r = Role.objects.get(title=roles)
+#
+#             if p== None and r == None:
+#
+#                 return frames40(request)
+#             if p == None:
+#
+#                 return right(request,r.id)
+#             if r == None:
+#                 # return left(request,p.id)
+#                 pass
+#             return render(request, 'frames42.html',
+#                        {"pid": p.id, "rid": r.id, "project": project,"role":roles})
+#     else:
+#         form = EntryForm()
+#     return render(request, 't/page_balances.html',
+#                   {'form': form,"project":project,"role":roles})
+#
 
 def res01(request, id,r):
      project = Project.objects.get(id=id)
@@ -212,35 +236,13 @@ def correctOst(data,l,n):
         d1 = inc(d1)
     return data
 
-# def ostatok(request):
-#     people = UserProfile.objects.all()
-#     t12 = ['�������','���']+mon_bar()
-#     data = [([p.role,p.user.last_name,p.user.first_name]+[1]*12) for p in people]
-#     n = 0
-#     for p in people:
-#         less = Less.objects.all().filter(person = p)
-#         for l in less:
-#             data = correct(data,l,n)
-#
-#         tasks = Task.objects.all().filter(person=p)
-#         for t in tasks:
-#             data = correctOst(data,t,n)
-#         n+=1
-#
-#     return render(request, 'ost.html', {'ost': people,"t12":t12,"data":data,"role":role,})
-
 def inside(d,d1,d2):
     b = (d1.year,d1.month) <= (d.year,d.month) <= (d2.year,d2.month)
 
 def frames42(request, pid, rid, project):  # ������������ ������� (������) � ������� (������)
         return render(request, 'frames42.html', {"pid": pid, "rid": rid, "project": project})
 
-from .models import Project, UserProfile, Load, Role, Task
-import datetime
 
-from django.shortcuts import render,redirect,reverse
-from django.forms import formset_factory, Form
-from .models import Load, Role, Project, UserProfile, Task
 #################################################
 
 def inc_n(d,n):
@@ -423,145 +425,6 @@ def res_jr(request, prj,r):
 
     return render(request, 'res_jr.html', context)
 
-#
-# def res_all(request):
-#     roles = Role.objects.all().order_by('id')
-#     d1 = datetime.now().date()
-#     d2 = inc_n(d1,12)
-#
-#     month_tuples = ym_tuples(d1, d2)
-#     # items = load_role_month(id)
-#     # mss = ymts(id)  # str format
-#     # months = ym2mm(month_tuples)  # datetime format
-#     # experts = person_role(id)
-#
-#     experts = UserProfile.objects.all()
-#
-#     # N = len(months)
-
-#
-#     data = []
-#     for e in experts:
-#         dat = []
-#         num = [0] * 12
-#         sum = [0] * 12
-#         dat.append(e.user.last_name)
-#         n = 0
-#
-#
-#     tasks = Task.objects.filter(person=e)
-#     for t in tasks:
-#
-#
-#
-#         for ms in mss:
-#             try:
-#                 load = items[r][ms]
-#                 dat.append(load)
-#                 num[n] = load
-#             except:
-#                 dat.append(0)
-#                 num.append(0)
-#             n += 1
-#         data.append(dat)
-#         for p in experts[r]:
-#             dat = []
-#             dat.append(r)
-#             dat.append(p.user.last_name)
-#             n = 0
-#             for ms in mss:
-#                 try:
-#                     t = {'load': tt[p][ms], 'link': f"{p.id}.{ms}"}
-#                     dat.append(t)
-#                     sum[n] += tt[p][ms]
-#                 except:
-#                     dat.append(0)
-#                 n += 1
-#
-#             data.append(dat)
-#
-#         dif = [round(num[i] - sum[i], 2) for i in range(N)]
-#         dat = []
-#         dat.append(r)
-#         dat.append('������')
-#         k = 0
-#         for m in months:
-#             dat.append(dif[k])
-#             k += 1
-#         data.append(dat)
-#     context = {'data': data, 'months': months,
-#                'd1': d1, 'd2': d2, "project_id": id,
-#                'project': project, 'month_tuples': month_tuples}
-#     return render(request, 'resp.html', context)
-#
-# def resp(request, id):
-#     project = Project.objects.get(id=id)
-#     roles = Role.objects.all().order_by('id')
-#     d1 = project.start_date
-#
-#     month_tuples = ym_tuples(d1, d2)
-#     items = load_role_month(id)
-#     mss = ymts(id)  # str format
-#     months = ym2mm(month_tuples)  # datetime format
-#     experts = person_role(id)
-#
-#     N = len(months)
-#     tt = task_prj_person_month(id, mss)
-
-#
-#     data = []
-#
-#     iy = -1
-#
-#     for r in roles:
-#         dat = []
-#         num = [0]*N
-#         sum = [0]*N
-#         dat.append(r)
-#         dat.append('�����������')
-#         n = 0
-#
-#
-#         for ms in mss:
-#             try:
-#                 load = items[r][ms]
-#                 dat.append(load)
-#                 num[n]=load
-#             except:
-#                 dat.append(0)
-#                 num.append(0)
-#             n+=1
-#         data.append(dat)
-#         for p in experts[r]:
-#             dat=[]
-#             dat.append(r)
-#             dat.append(p.user.last_name)
-#             n = 0
-#             for ms in mss:
-#                 try:
-#                     t = {'load':tt[p][ms],'link':f"{p.id}.{ms}"}
-#                     dat.append(t)
-#                     sum[n]+=tt[p][ms]
-#                 except:
-#                     dat.append(0)
-#                 n+=1
-#
-#             data.append(dat)
-#
-#         dif = [round(num[i]-sum[i],2) for i in range(N)  ]
-#         dat = []
-#         dat.append(r)
-#         dat.append('������')
-#         k = 0
-#         for m in months:
-#             dat.append(dif[k])
-#             k+=1
-#         data.append(dat)
-#     context = {'data': data, 'months': months,
-#                'd1':d1,'d2':d2,"project_id":id,
-#                'project':project, 'month_tuples': month_tuples}
-#     return render(request, 'resp.html', context)
-
 def ymts(id):
     tt = ymt(id)
     ls = [f"{y}-{m}-15" for y,m in tt]
@@ -649,16 +512,9 @@ def person_role(prj):
         users = UserProfile.objects.filter(id__in=people, role=r).order_by('user')
         L[r] = users
     return L
-# def person_sorted(prj):
-#     people = Project.objects.get(id=prj).people.all()
-#     L = []
-#     roles = Role.objects.all().order_by('id')
-#     for r in roles:
-#         users = list(UserProfile.objects.filter(id__in=people, role=r).order_by('user'))
-#         L+=users
-#     return L
+
 def updateORcreateLess(p, d, l):
-    print(p,d,l,888)
+
     person = UserProfile.objects.get(id=p)
     try:
         instance = Less.objects.get(person=person, start_date=d)
@@ -666,36 +522,36 @@ def updateORcreateLess(p, d, l):
         instance = None
 
     if instance:
-        print(789)
+
         instance.load = l
         instance.save()
     else:
         # If the instance does not exist, create a new one
-        print(5,person,d,l)
+
         instance = Less.objects.create(person=person, start_date=d, load=l)
-        print(6)
+
 
 def updateORcreate(p, pj, d, l):
-    print(159,p,pj,d,l)
+
     try:
-        print(1)
+
         instance = Task.objects.get(person=p,project=pj, month=d)
     except Task.DoesNotExist:
         instance = None
-        print(2)
+
     if instance:
-        print(3)
+
         instance.load = l
         instance.save()
     else:
-        print(4)
+
         # If the instance does not exist, create a new one
         instance = Task.objects.create(person=p, project=pj, month=d, load=l)
-        print(5)
+
 
 
 def updateORcreateL(project,role, m, l):
-    print(878)
+
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
     except Load.DoesNotExist:
@@ -707,9 +563,9 @@ def updateORcreateL(project,role, m, l):
 
 
     else:
-        print(317)
+
         instance = Load.objects.create(project=project, role=role, month=m, load=l)
-        print(318)
+
 
 def dif(d1,d2):
     return (d2.year-d1.year)*12+d2.month-d1.month+1
@@ -736,30 +592,19 @@ def inc(d):
 
 def pref(p):
     L = []
-    L.append(p.general.user.last_name)
+    L.append(p.general.fio)
 
     L.append({"title":p.title,"link":p.id})
 
     L.append(p.start_date)
     L.append(p.end_date)
     return L
-from django.shortcuts import render,redirect,reverse
-from django.forms import formset_factory, Form
-from .models import Load, Role, Project, UserProfile, Task
-from .forms import LoadForm, CellForm
+
 ######################################################################
 
 
-# views.py
-from django.shortcuts import render, redirect
-from .forms import UpdateFloatForm
-from .models import Task
-import datetime
-
-from django.shortcuts import render
-from .forms import TableCellForm, table_to_formset
 def ajax0(request):
-    print(1024)
+
     id = 1
     r=1
     # if this is a POST request we need to process the form data
@@ -770,14 +615,14 @@ def ajax0(request):
             id = int(request.POST.get('id'))
             project = Project.objects.get(id=id)
             for k,v in request.POST.items():
-                print(k,v,500)
+
                 if '.' in k:
-                    print(567)
+
                     r,d = k.split('.')
                     l = float(v)
                     role = Role.objects.get(id=r)
                     updateORcreateL(project,role,d,l)
-                    print(568)
+
 
         else:
             print(form.errors)
@@ -809,7 +654,7 @@ def ajax(request):
     return res01(request,id,r)
 
 def jax2(request):
-    print(88)
+
     id = 1
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
@@ -825,11 +670,11 @@ def jax2(request):
 
             for k,v in request.POST.items():
               if '.' in k:
-                print(995,k)
+
                 p,d=k.split('.')
-                print(994,p,d)
+
                 try:
-                    print(78,p,d)
+
                     person=UserProfile.objects.get(id=p)
                     l = float(v)
                     updateORcreate(person,project,d,l)
@@ -840,7 +685,7 @@ def jax2(request):
 
     return redirect("res10",id,r)
 def jax3(request):
-    print(88)
+
     id = 1
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
@@ -900,19 +745,19 @@ def myotd1(request,r):
     return render(request, 'myotd1.html',context)
 
 def myotd2(request,r):
-    print(88)
+
     context = myotd(request,r)
     return render(request, 'myotd2.html',context)
 
 def myotd3(request,r):
-    print(77)
+
     context = myotd(request,r)
     return render(request, 'myotd3.html',context)
 
 def myotd(request,r):
     mss=t12ym()
 
-    t12 = ['Ресурс'] + mss
+    t12 = ['ФИО'] + mss
     data = []
     data1 = []
     data2=[]
@@ -926,10 +771,10 @@ def myotd(request,r):
     experts = UserProfile.objects.filter(role=r)
     mss = t12ym()
     for person in experts:
-        user = UserProfile.objects.get(id=person.id).user
+        user = UserProfile.objects.get(id=person.id)
         dat1=[]
-        dat2 = [{"title": user.last_name, "link": person.id}]
-        dat3 = [{"title": user.last_name, "link": person.id}]
+        dat2 = [{"title": user.fio, "link": person.id}]
+        dat3 = [{"title": user.fio, "link": person.id}]
 
         num = [1] * 12
         sum = [0] * 12
@@ -940,14 +785,14 @@ def myotd(request,r):
         for i in range(12):
             dat1[i] = {"link":f"{person.id}.{d1}","load":1}
             try:
-                print(314,person,d1)
+
                 less = Less.objects.filter(person=person,start_date=d1)
                 for l in less:
-                    print(315)
+
                     num[i] = l.load
-                    print(316)
+
                     dat1[i] = {"link":f"{person.id}.{d1}","load":l.load}
-                    print(317)
+
             except:
                 pass
             d1 = inc(d1)
@@ -966,7 +811,7 @@ def myotd(request,r):
             d = inc(d)
             num = [1] * 12
 
-        dat1 = [{"title":user.last_name,"link":person.id}]+dat1
+        dat1 = [{"title":user.fio,"link":person.id}]+dat1
         dat2 += [sum2[i] for i in range(12)]
         dat3 += [sum[i]-sum2[i] for i in range(12)]
 
@@ -978,14 +823,14 @@ def myotd(request,r):
         'data2': data2,
         'data3': data3, "r":r,
                't12': t12,'role_id':r,'role':role,}
-    print("hello")
+
     return context
 
 
 
-
-def left(request):
-    return render(request, 'frames2left.html')
+#
+# def left(request):
+#     return render(request, 'frames2left.html')
 
 def right(request):
     return render(request, 'frames2right.html')
@@ -1097,15 +942,11 @@ def one2role(request):
 
     return render(request,"one2role.html",{'roles':roles,'people':people},)
 
-from django.shortcuts import render
-from .forms import EntryForm
-from .models import Project,Role
 
 
 
-
-def left(request,pid):#���������� ������
-    return render(request, 'frames2left.html',{'id':pid})
+def left(request,id):#���������� ������
+    return render(request, 'frames2left.html',{'id':id})
 
 def right(request,rid):#���������� ������
     return render(request, 'frames2right.html',{'id':rid})
