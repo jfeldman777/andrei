@@ -1,3 +1,4 @@
+
 <script>
 $('td.good').click(function() {
 
@@ -13,28 +14,20 @@ $('td.good').click(function() {
     var newValue = $(this).val();
     $(this).parent().text(newValue+'@');
 
- // var myForm = $("#myForm");
-
-//  var newInput = $("<input>");
-//     newInput.attr("type", "hidden");
-//     newInput.attr("name", p);
-//     newInput.attr("value",newValue );
-    //myForm.append(newInput);
-addHiddenInput("f10", p, newValue);
-
-  });
-});
-
-function addHiddenInput(formId, name, value) {
-    // Get the form element using the formId parameter
-    var form = document.getElementById(formId);
+    var form = document.getElementById("f10");
 
     // Create a new hidden input element
     var input = document.createElement('input');
+
     input.type = 'hidden';
-    input.name = name;
-    input.value = value;
+    input.name = p;
+
+    input.value = newValue;
 
     // Add the new input element to the form
-    form.appendChild(input);}
+    form.appendChild(input);
+
+
+});
+});
 </script>

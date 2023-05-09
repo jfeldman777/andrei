@@ -39,7 +39,10 @@ urlpatterns = [
 
     path('right', vvv.right, name='right'),
     path('entry/', vvv.entry, name='entry'),
-    path('a3/', vvv.a3, name='a3'),
-    path('a1/', vvv.a1, name='a1'),
-    path('', vvv.a2, name='a2'),
+    path('a3/<int:j>', vvv.a3, name='a3'),
+    path('save2/', vvv.save2, name='save2'),
+    path('a00/', vvv.a00, name='a00'),
+    path('a2/<int:r>/', vvv.a2, name='a2'),
+    path('a1/<int:j>/<int:r>/', vvv.a1, name='a1'),
+    path('', vvv.a0, name='a0'),
 ]

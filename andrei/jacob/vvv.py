@@ -1,4 +1,3 @@
-
 from .models import Role,Project,Load,UserProfile,Task,Less
 from .forms import EntryForm
 import datetime
@@ -6,6 +5,35 @@ from django.shortcuts import render,redirect,reverse
 from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 
+def a0(request):
+    p = None
+    r = None
+    project = '?'
+    if request.method == 'POST':
+        form = EntryForm(request.POST)
+        if form.is_valid():
+            project = form.cleaned_data['projects']
+            roles = form.cleaned_data['roles']
+            if project:
+                p = Project.objects.get(title=project)
+            if roles:
+                r = Role.objects.get(title=roles)
+
+            if p== None and r == None:
+                return a00(request)
+            if r==None:
+                return a3(request,p.id)
+            if p==None:
+                return a2(request,r.id)
+
+            return a1(request,p.id,r.id)
+
+    form = EntryForm()
+    return render(request,'a0.html', {'form': form})
+
+
+def a00(request):
+    return render(request,'a00.html')
 def zero(name):
         sum = [name]+[0]*12
         return sum
@@ -78,15 +106,13 @@ def test1(request,id):
     context = {'id':id}
     return render(request,'test1.html',context)
 
-def a1(request):
+def a1(request,j,r):
     moon12 = moon();
     dem13 = []
     sup13e = []
     sup13 = []
     dif13 = []
 
-    j = 1
-    r = 2
     project = Project.objects.get(id=j)
     role = Role.objects.get(id=r)
     dem = demand(project,role)
@@ -97,7 +123,14 @@ def a1(request):
     for person in people:
 
         sup = supply(project,person)
-        sup13e0 = [person.fio]+sup
+        sup2 = [0]*12
+
+        d = date.today().replace(day=15)
+        for i in range(12):
+            sup2[i]={"link":f"{person.id}.{d.year}-{d.month}-15","val":sup[i]}
+            d = inc(d)
+
+        sup13e0 = [{"val":person.fio}]+sup2
         for i in range(12):
             supp[i]+=sup[i]
 
@@ -108,7 +141,7 @@ def a1(request):
 
     delta = ['Дельта']+[0]*12
     for i in range(12):
-        delta[i+1] = supp[i]-dem[i]
+        delta[i+1] = round(supp[i]-dem[i],2)
 
     moon12["del13"] = delta
 
@@ -129,17 +162,19 @@ def a1(request):
     moon12["role"] = role
 
     moon12["project"] = project
+    moon12["id"] = j
+    moon12["r"] = r
     return render(request,'a1.html',moon12)
 
 
-def a3(request):
+def a3(request,j):
     moon12 = moon();
     dem14 = []
     dem13L = []
     sup = []
     dem13R=[]
     dif14 = []
-    j = 2
+
     project = Project.objects.get(id=j)
     roles = Role.objects.all()
     # supp = [0]*12
@@ -190,7 +225,7 @@ def a3(request):
         dem13L.append([-1]+zv)#####################
 
         for i in range(12):
-            delta[i+1] = supp[i+2]-dem[i+2]
+            delta[i+1] = round(supp[i+2]-dem[i+2],2)
 
         dem13L.append([-1]+delta)############################
 
@@ -205,14 +240,14 @@ def a3(request):
     moon12["project"] = project
     return render(request,'a3.html',moon12)
 
-def a2(request):
+def a2(request,r):
     moon12 = moon();
     dem14 = []
     dem13L = []
     sup = []
     dem13R=[]
     dif14 = []
-    r = 2
+
     projects = Project.objects.all()
     role = Role.objects.get(id=r)
     people = UserProfile.objects.filter(role=role)
@@ -229,30 +264,37 @@ def a2(request):
     zo = zero('Аутсорс')
     zv = zero('Вакансии')
 
+
     for project in projects:
 
         pz = [project.title]
         dem = [project.title]+['Потребность']+demand(project,role)#----------------
         dem1 = [project.title]+demand(project,role)#----------------------------
-        dem13R.append(dem1)#-------------------------------------------------
+
+        dem2=[{"val":project.title}]+[0]*12
+
+        d = date.today().replace(day=15)
+        for i in range(12):
+            dem2[i+1]={"link":f"{project.id}.{d.year}-{d.month}-15","val":dem1[i+1]}
+            d = inc(d)
+
+        dem13R.append(dem2)#--------
+
+
+        #-----------------------------------------
         delta = ['Дельта']+[0]*12
-
-
-
         p9 = project.title
-
-
         supp = [-1,'Поставка']+[0]*12
         p100 = project.title
-
+        supp100=[p100]
         for person in people:
             sup = supply(project,person)
-            sup100=[p100,person.fio]+sup
-            p100=-1
-            for i in range(12):
-                supp[i+2]+=sup[i]
-            sup14.append(sup100)
+            sup=[p100,person.fio]+sup
 
+            # p100=-1
+            # for i in range(12):
+            #     supp100[i+1]+=sup[i]
+            # supp100=[person.fio]+supp100
 
         dem13L.append(dem)##########################################
         dem13L.append(supp)###############--
@@ -260,10 +302,10 @@ def a2(request):
         dem13L.append([-1]+zv)#####################
 
         for i in range(12):
-            delta[i+1] = supp[i+2]-dem[i+2]
+            delta[i+1] = round(supp[i+2]-dem[i+2],2)
 
 
-        #print(supp)
+        sup14.append(sup)
         dem13L.append([-1]+delta)############################
     px = role.title#######################
     for person in people:
@@ -278,7 +320,7 @@ def a2(request):
 
     moon12["dif14"] = dif14########################################
     moon12["role"] = role
-
+    moon12["r"]=role.id
     moon12["project"] = project
     return render(request,'a2.html',moon12)
 
@@ -421,10 +463,14 @@ def index(request):
             if roles:
                 r = Role.objects.get(title=roles)
 
-            if p== None or r == None:
+            if p== None and r == None:
                 return index(request)
+            if r==None:
+                return a3(request,p.id)
+            if p==None:
+                return a2(request,r.id)
 
-            return frames42(request,p.id,r.id)
+            return a1(request,p.id,r.id)
     else:
         form = EntryForm()
     return render(request,'a0.html', {'form': form,"project":project})
@@ -812,8 +858,10 @@ def person_role(prj):
         L[r] = users
     return L
 
-def updateORcreateLess(p, d, l):
-
+def updateORcreateLess(p, m, v):
+    print(p,d,v)
+    d = date(m)
+    l = float(v)
     person = UserProfile.objects.get(id=p)
     try:
         instance = Less.objects.get(person=person, start_date=d)
@@ -849,22 +897,24 @@ def updateORcreate(p, pj, d, l):
 
 
 
-def updateORcreateL(project,role, m, l):
+def updateORcreateL(project,role, d, v):
+    m = datetime.datetime.strptime(d, "%Y-%m-%d").date()
 
+    print(1998)
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
-    except Load.DoesNotExist:
+    except:
         instance = None
-
+    print(299)
     if instance:
-        instance.load = l
+        instance.load = float(v)
         instance.save()
 
-
+        print(499)
     else:
-
-        instance = Load.objects.create(project=project, role=role, month=m, load=l)
-
+        x = float(v)
+        instance = Load.objects.create(project=project, role=role, month=m, load=x)
+        print(699)
 
 def dif(d1,d2):
     return (d2.year-d1.year)*12+d2.month-d1.month+1
@@ -903,30 +953,35 @@ def pref(p):
 
 
 def ajax0(request):
-
+    print(990)
     id = 1
     r=1
     # if this is a POST request we need to process the form data
     if request.method == "POST":
+        print(991)
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
         if form.is_valid():
+            print(992)
             id = int(request.POST.get('id'))
             project = Project.objects.get(id=id)
+            r = int(request.POST.get('r'))
+            role = Role.objects.get(id=r)
+            print(993)
             for k,v in request.POST.items():
+                print(k,v)
+                if '-' in k:
+                    d = k
 
-                if '.' in k:
-
-                    r,d = k.split('.')
-                    l = float(v)
-                    role = Role.objects.get(id=r)
-                    updateORcreateL(project,role,d,l)
+                    print(995,d,v)
+                    updateORcreateL(project,role,d,v)
 
 
         else:
             print(form.errors)
 
-    return load(request,id)
+    return a1(request,id,r)
+
 def ajax(request):
 
     id = 1
@@ -982,7 +1037,7 @@ def jax2(request):
         else:
             print(form.errors)
 
-    return redirect("res10",id,r)
+    return redirect("a1",id,r)
 def jax3(request):
 
     id = 1
@@ -1005,6 +1060,31 @@ def jax3(request):
             print(form.errors)
 
     return myotd1(request,r)
+def save2(request):
+
+    id = 1
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            sr = request.POST.get('r')
+            r = int(sr)
+            role=Role.objects.get(id=r)
+
+            for k,v in request.POST.items():
+                print(k,v)
+                if '.' in k:
+                    p,d=k.split('.')
+                    try:
+                        project = Project.objects.get(id=p)
+                        updateORcreateL(project,role,d,v)
+                    except:
+                        pass
+        else:
+            print(form.errors)
+
+    return a2(request,r)
 
 def people(request):
     people = UserProfile.objects.all().order_by("role")
@@ -1266,12 +1346,12 @@ def entry(request):#������� ����
                 r = Role.objects.get(title=roles)
 
             if p== None and r == None:
-                return index(request)
+                return a00(request)
             if p == None:
-                return res11(request,r.id)
+                return a2(request,r.id)
             if r == None:
-                return left(request,p.id)
-            return frames42(request,p.id,r.id)
+                return a3(request,p.id)
+            return a1(request,p.id,r.id)
     else:
         form = EntryForm()
     return render(request, 'entry.html', {'form': form,"project":project})

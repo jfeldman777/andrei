@@ -3,7 +3,12 @@
 {% block content %}
 
 <table border=2 width=100%>
-<tr><td colspan=2><h1>{{project}} - {{role}}</h1><td></tr>
+<tr><td colspan=2><h1><a href="a3/{{project.id}}">{{project}}</a> -
+<a href="a2/{{role.id}}">
+  {{role}}</a>
+</h1>
+<a href="/">домой</a>
+<td></tr>
   <tr style="text-align:center;"><td  width=50%>
     <table border=2 style="position:relative;top=0;"  width=100% >
         <tr><td colspan=13>Балансировка<td></tr><tr><td rowspan=2>---
@@ -50,10 +55,23 @@
 {% for tt in sup13e %}
 <tr>
 {% for t in tt %}
-<td>{{t}}</td>{% endfor %}
+<td class="good" key="{{t.link}}">
+
+  {{t.val}}
+
+</td>{% endfor %}
 </tr>
 {% endfor %}
+<tr><td colspan=13 >
+  <form id="f10" action="/jax2/" method="POST">
+  {% csrf_token %}
+<input type = hidden name="id" value='{{id}}'>
+<input type = hidden name="r" value='{{r}}'>
+  <button type="submit" >Сохранить изменения</button>
+</form>
+{%  include 'script.html'  %}
 
+</td></tr>
         </table>
       </td>
       <td  width=50%>
@@ -73,4 +91,5 @@
     </tr>
   </table>
     {% include 'js.html' %}
+    <!-- {% include 'script.html' %} -->
 {% endblock %}
