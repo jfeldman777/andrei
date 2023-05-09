@@ -36,7 +36,10 @@ def zero(value):
     return value == 0
 @register.filter
 def negative(value):
-    return float(value) < 0
+    try:
+        return float(value) < 0
+    except:
+        return False
 
 @register.filter
 def isBool(value):

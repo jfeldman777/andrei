@@ -2,6 +2,7 @@ from django.urls import path
 from . import vvv
 
 urlpatterns = [
+    path('test1/<int:id>/', vvv.test1, name='test1'),
     path('left/<int:id>/', vvv.left, name='left'),
     path('prj_lead/', vvv.prj_lead, name='prj_lead'),
     path('res_lead/', vvv.res_lead, name='res_lead'),
@@ -38,5 +39,7 @@ urlpatterns = [
 
     path('right', vvv.right, name='right'),
     path('entry/', vvv.entry, name='entry'),
-    path('', vvv.index, name='index'),
+    path('a3/', vvv.a3, name='a3'),
+    path('a1/', vvv.a1, name='a1'),
+    path('', vvv.a2, name='a2'),
 ]

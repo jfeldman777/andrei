@@ -17,7 +17,7 @@
     <form id="f" action="/ajax0/" method="POST">
     {% csrf_token %}
   <input type = hidden name="id" value='{{project_id}}'>
-    <button type="submit">Сохранить </button>
+    <button type="submit">Сохранить 2</button>
   </form>
     </th>
     {% for x in data0 %}
@@ -41,11 +41,11 @@
                 </td>
         {% else %}
         {% if cell.load|positive %}
-        <td class="good" key="{{cell.link}}"
-                    style="text-align: center; background-color:yellow;">
+        <td class="good" key="{{cell.link}}" width = "45"
+                    style="text-align: center; background-color:#EEEEFF;">
 
 {% else %}
-                    <td class="good" key="{{cell.link}}"
+                    <td class="good" key="{{cell.link}}" width = "45"
                                 style="text-align: center; background-color:white;">
 
                                 {% endif %}
@@ -65,7 +65,7 @@
 $('td.good').click(function() {
   var p = $(this).attr("key");
   var originalValue = $(this).text();
-  $(this).html('<input type="text" size="4" maxlength="4" value="' + $.trim(originalValue) + '">');
+  $(this).html('<input type="text" size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
   $(this).click(function(){
   $(this).html(originalValue);
   })

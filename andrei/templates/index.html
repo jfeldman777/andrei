@@ -21,17 +21,17 @@
 }
 .child1 {
   position: absolute;
-  top: 30px;
+  top: 0px;
   left: 0;
   width: 100%;
   height:30px;
   border: none;
-  background-color: yellow;
+  background-color: #EEEEFF;
 }
 
 .child2 {
   position: absolute;
-  top: 60px;
+  top: 30px;
   right: 0;
   width: 100%;
   height: 95%;
@@ -42,9 +42,7 @@
 </style>
 
 <div class="parent">
-    <iframe src="{% static 'a2.html'%}" class="child0"></iframe>
-
-  <iframe id="iframe1" src="/entry/"  class="child1"></iframe>
+    <iframe id="iframe1" src="/entry/"  class="child1"></iframe>
 
      <iframe id="iframe2"  src="{% static 'txt.html'%}" class="child2"></iframe>
 

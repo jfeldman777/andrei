@@ -37,7 +37,8 @@
 
 
           {% else %}
-        <td style="text-align: center; " class="good"  key="{{cell.link}}" >
+        <td style="text-align: center; " class="good"  key="{{cell.link}}" width = "45"
+        >
             {{cell.load}}</td>
               {% endif %}
         {% endfor %}
@@ -48,7 +49,7 @@
     <form name="myForm" id='f10' action="/jax3/" method="POST">
     {% csrf_token %}
    <input type = hidden name="r" value='{{role.id}}'>
-    <button type="submit" >Сохранить изменения</button>
+    <button type="submit" >Сохранить 1</button>
     </form>
     </td></tr>
 

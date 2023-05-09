@@ -18,7 +18,7 @@
                     <form name="myForm" id='f10' action="/jax2/" method="POST">
     {% csrf_token %}
   <input type = hidden name="id" value='{{project_id}}'>
-     <input type = hidden name="r" value='{{r}}'><button type="submit" >Сохранить</button>
+     <input type = hidden name="r" value='{{r}}'><button type="submit" >Сохранить 4</button>
                     </form>
 
     </td>
@@ -56,12 +56,12 @@
             {% else %}
 
 {% if cell.load|isnumeric %} {% if cell.load|positive %}
-                        <td class="good"  key="{{cell.link}}"
+                        <td class="good"  key="{{cell.link}}" width = "40"
                          style="text-align: center;
-      background-color:yellow;">
+      background-color:#EEEEFF;">
                             {% else %}
 
-                <td class="good"  key="{{cell.link}}"
+                <td class="good"  key="{{cell.link}}" width = "40"
                     style="text-align: center; background-color:white">
         {% endif %}
                         {{ cell.load }}

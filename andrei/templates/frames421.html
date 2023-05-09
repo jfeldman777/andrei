@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+
+
+<table width = 100%>
+<tr width = 100%>
+<td><table border="2" width="50%">
+      <tr width="50%"><td colspan="4">Балансировка ресурсов</td><td colspan=5>
+         {{project}}</td><td colspan="4"> {{role}}</td></tr>
+    <tr>
+      <th  style="text-align: center;">Ресурс</th>
+      {% for x in data0 %}
+        <th  style="text-align: center; ">
+
+          {{x.year}}
+        </th>
+     {% endfor %}
+  </tr><tr>
+     <th  style="text-align: center;">-</th>
+      {% for x in data0 %}
+        <th  style="text-align: center; ">
+
+       {{x.month}}
+        </th>
+     {% endfor %}
+    </tr>
+
+   {% for row in data %}
+      <tr style="text-align: center;">
+                {% for cell in row %}
+               {% if forloop.first %}
+                          <td class="bad"
+                           style="text-align: center;  ">
+                              {{ cell.title }}
+              {% else %}
+
+  {% if cell|isnumeric %}
+  {% if cell|positive %}
+  <td class="good"
+   style="text-align: center;
+        background-color:#EEEEFF;  ">
+
+        {% else %}
+  {% if cell|negative %}
+  <td class="good"
+   style="text-align: center;
+
+                  background-color:pink; ">
+  {% else %}
+  <td class="good"
+   style="text-align: center;
+                  background-color:white;">
+  {% endif %}
+              {% endif %}
+
+                          {{ cell }}
+                                 </td>
+
+  {% endif %}
+              {% endif %}
+        {% endfor %}
+      </tr>
+    {% endfor %}
+
+  </table>
+
+
+</td>
+
+<td>
+
+  <table border="2">
+          <tr><td colspan="4" width="50%">Профиль  загрузки (потребность)</td><td colspan=5>
+         {{project}}</td><td colspan="4"> {{role_01}}</td></tr>
+    <tr>
+      <th  style="text-align: center;">
+  год
+      </th>
+      {% for x in data0_01 %}
+        <th  style="text-align: center;">
+
+          {{x.year}}
+        </th>
+     {% endfor %}
+  </tr><tr>
+      <th  style="text-align: center;">
+
+      </th>
+      {% for x in data0_01 %}
+        <th  style="text-align: center; ">
+
+       {{x.month}}
+        </th>
+     {% endfor %}
+    </tr>
+
+   {% for row in data_01 %}
+      <tr style="text-align: center;">
+          <td>
+          <form id="f00" action="/ajax/" method="POST">
+      {% csrf_token %}
+    <input type = hidden name="id" value='{{project_id_01}}'>
+       <input type = hidden name="r" value='{{r_01}}'>
+      <button type="submit">Сохранить</button>
+          </form></td>
+                {% for cell in row %}
+
+      {% if cell.load|positive %}
+                          <td class="good" key="{{cell.link}}" width = "45"
+        background-color:#EEEEFF;">{% else %}
+                  <td class="good"  key="{{cell.link}}"  width = "45"
+                      style="text-align: center; background-color:white;">
+          {% endif %}
+                          {{ cell.load }}
+                                 </td>
+
+        {% endfor %}
+
+
+      </tr>
+    {% endfor %}
+
+  </table>
+
+
+
+
+</td>
+</tr>
+<tr>
+<td></td><td></td>
+</tr>
+</table>
+<script>
+$('td.good').click(function() {
+
+  var p = $(this).attr("key");
+  var originalValue = $(this).text();
+  $(this).html('<input type="text" size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
+
+  $(this).click(function(){
+  $(this).html(originalValue);
+  })
+
+  $('td input').focusout(function() {
+    var newValue = $(this).val();
+    $(this).parent().text(newValue+'@');
+    addHiddenInput("f00", p, newValue);
+
+      });
+    });
+
+    function addHiddenInput(formId, name, value) {
+        // Get the form element using the formId parameter
+        var form = document.getElementById(formId);
+
+        // Create a new hidden input element
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+
+        // Add the new input element to the form
+        form.appendChild(input);}
+</script>
+
+{% endblock %}

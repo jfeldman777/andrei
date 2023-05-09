@@ -11,7 +11,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.ForeignKey(to=Role,on_delete=models.CASCADE)
     fio = models.CharField(max_length=30, default='?')
-
+    res = models.ManyToManyField(Role, related_name='they',default=None)
     def __str__(self):
         return self.user.username
 class Project(models.Model):

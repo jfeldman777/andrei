@@ -23,12 +23,12 @@
     {% for p in data %}
       <tr >
         {% for cell in p %}
-        <td style="text-align: center;  padding: 3px;
+        <td width = "40" style="text-align: center;  padding: 3px;
   {% if cell|isnumeric and cell|negative %}
   background-color:pink
   {% endif %}
     {% if cell|isnumeric and cell|zero %}
-  background-color:yellow
+  background-color:#EEEEFF
   {% endif %}
 
 

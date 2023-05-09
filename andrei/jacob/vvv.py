@@ -1,9 +1,289 @@
+
 from .models import Role,Project,Load,UserProfile,Task,Less
 from .forms import EntryForm
 import datetime
 from django.shortcuts import render,redirect,reverse
 from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
+
+def zero(name):
+        sum = [name]+[0]*12
+        return sum
+
+def diffx(person):
+    projects = Project.objects.all()
+    sum = [0]*12
+    for project in projects:
+        s = supply(project,person)
+        for i in range(12):
+            sum[i]+=s[i]
+    ls = less(person)
+    for i in range(12):
+        ls[i]-=sum[i]
+
+    return ls
+
+def less(person):
+    les = [1]*12
+    d = date.today().replace(day=15)
+    for i in range(12):
+        L = list(Less.objects.filter(start_date=d,person=person))
+        try:
+            t = L[0].load
+        except:
+            t = 1
+        d = inc(d)
+        les[i]=t
+    return les
+
+def supply(project,person):
+        sp=[0]*12
+        d = date.today().replace(day=15)
+        for i in range(12):
+            L = list(Task.objects.filter(project=project,month=d,person=person))
+            try:
+                t = L[0].load
+            except:
+                t = 0
+            d = inc(d)
+            sp[i]=t
+        return sp
+
+def demand(project,role):
+    dem = [0]*12
+    d = date.today().replace(day=15)
+    for i in range(12):
+        L = list(Load.objects.filter(project=project,month=d,role=role))
+        try:
+            t = L[0].load
+        except:
+            t = 0
+        d = inc(d)
+        dem[i]=t
+    return dem
+
+
+
+def moon():
+    y_data = []
+    m_data = []
+    d = date.today().replace(day=15)
+    for i in range(12):
+            y_data.append(d.year)
+            m_data.append(d.month)
+            d = inc(d)
+    return {"yy":y_data,"mm":m_data}
+
+def test1(request,id):
+    context = {'id':id}
+    return render(request,'test1.html',context)
+
+def a1(request):
+    moon12 = moon();
+    dem13 = []
+    sup13e = []
+    sup13 = []
+    dif13 = []
+
+    j = 1
+    r = 2
+    project = Project.objects.get(id=j)
+    role = Role.objects.get(id=r)
+    dem = demand(project,role)
+    dem13.append(['Потребность']+dem)
+
+    people = UserProfile.objects.filter(role = role)
+    supp=[0]*12
+    for person in people:
+
+        sup = supply(project,person)
+        sup13e0 = [person.fio]+sup
+        for i in range(12):
+            supp[i]+=sup[i]
+
+        dif = [person.fio]+diffx(person)
+
+        dif13.append(dif)
+        sup13e.append(sup13e0)
+
+    delta = ['Дельта']+[0]*12
+    for i in range(12):
+        delta[i+1] = supp[i]-dem[i]
+
+    moon12["del13"] = delta
+
+    zo = zero('Аутсорс')
+    zv = zero('Вакансии')
+    sup13 = ['Поставка']+supp
+
+    dem13.append(sup13)
+    dem13.append(zo)
+    dem13.append(zv)
+    dem13.append(delta)
+    moon12["dem130"]=dem13
+    moon12["dem12"]=dem
+    moon12["sup13e"]=sup13e
+    moon12["dif13"] = dif13
+
+
+    moon12["role"] = role
+
+    moon12["project"] = project
+    return render(request,'a1.html',moon12)
+
+
+def a3(request):
+    moon12 = moon();
+    dem14 = []
+    dem13L = []
+    sup = []
+    dem13R=[]
+    dif14 = []
+    j = 2
+    project = Project.objects.get(id=j)
+    roles = Role.objects.all()
+    # supp = [0]*12
+    # sup139 = []
+    sup14 = []
+    dif13 = []
+    dem1 = []
+    sup13=[]
+    sup100=[]
+
+
+
+    zo = zero('Аутсорс')
+    zv = zero('Вакансии')
+
+    for role in roles:
+
+        pz = [role.title]
+        dem = [role.title]+['Потребность']+demand(project,role)#----------------
+        dem1 = [role.title]+demand(project,role)#----------------------------
+        dem13R.append(dem1)#-------------------------------------------------
+        delta = ['Дельта']+[0]*12
+
+
+
+        p9 = role.title
+        people = UserProfile.objects.filter(role=role)
+        px = role.title#######################
+        supp = [-1,'Поставка']+[0]*12
+        p100 = role.title
+        for person in people:
+
+            dif = [person.fio]+diffx(person)
+            dif14.append([px]+dif)######################
+            px = -1##################################
+
+            sup = supply(project,person)
+            sup100=[p100,person.fio]+sup
+            p100=-1
+            for i in range(12):
+                supp[i+2]+=sup[i]
+            sup14.append(sup100)
+
+
+        dem13L.append(dem)##########################################
+        dem13L.append(supp)###############--
+        dem13L.append([-1]+zo)################
+        dem13L.append([-1]+zv)#####################
+
+        for i in range(12):
+            delta[i+1] = supp[i+2]-dem[i+2]
+
+        dem13L.append([-1]+delta)############################
+
+    moon12["dem13R"]=dem13R#####################
+    moon12["dem13L"]=dem13L###############################
+    moon12["sup14"]=sup14
+
+
+    moon12["dif14"] = dif14########################################
+    moon12["role"] = role
+
+    moon12["project"] = project
+    return render(request,'a3.html',moon12)
+
+def a2(request):
+    moon12 = moon();
+    dem14 = []
+    dem13L = []
+    sup = []
+    dem13R=[]
+    dif14 = []
+    r = 2
+    projects = Project.objects.all()
+    role = Role.objects.get(id=r)
+    people = UserProfile.objects.filter(role=role)
+    # supp = [0]*12
+    # sup139 = []
+    sup14 = []
+    dif13 = []
+    dem1 = []
+    sup13=[]
+    sup100=[]
+
+
+
+    zo = zero('Аутсорс')
+    zv = zero('Вакансии')
+
+    for project in projects:
+
+        pz = [project.title]
+        dem = [project.title]+['Потребность']+demand(project,role)#----------------
+        dem1 = [project.title]+demand(project,role)#----------------------------
+        dem13R.append(dem1)#-------------------------------------------------
+        delta = ['Дельта']+[0]*12
+
+
+
+        p9 = project.title
+
+
+        supp = [-1,'Поставка']+[0]*12
+        p100 = project.title
+
+        for person in people:
+            sup = supply(project,person)
+            sup100=[p100,person.fio]+sup
+            p100=-1
+            for i in range(12):
+                supp[i+2]+=sup[i]
+            sup14.append(sup100)
+
+
+        dem13L.append(dem)##########################################
+        dem13L.append(supp)###############--
+        dem13L.append([-1]+zo)################
+        dem13L.append([-1]+zv)#####################
+
+        for i in range(12):
+            delta[i+1] = supp[i+2]-dem[i+2]
+
+
+        #print(supp)
+        dem13L.append([-1]+delta)############################
+    px = role.title#######################
+    for person in people:
+        dif = [person.fio]+diffx(person)
+        dif14.append([px]+dif)######################
+        px = -1##################################
+
+    moon12["dem13R"]=dem13R#####################
+    moon12["dem13L"]=dem13L###############################
+    moon12["sup14"]=sup14
+
+
+    moon12["dif14"] = dif14########################################
+    moon12["role"] = role
+
+    moon12["project"] = project
+    return render(request,'a2.html',moon12)
+
+
+
 def prj_lead(request):
     projects = Project.objects.all().order_by ('general')
     data = []
@@ -13,7 +293,7 @@ def prj_lead(request):
         "name":p.general.fio}
         data.append(x)
     context = {"data":data}
-    return render(request,'prj_lead.html',context)
+    return render(request,'1prj_lead.html',context)
 
 def res_lead(request):
     roles = Role.objects.all().order_by ('general')
@@ -25,7 +305,7 @@ def res_lead(request):
         "name":u.fio}
         data.append(x)
     context = {"data":data}
-    return render(request,'res_lead.html',context)
+    return render(request,'1res_lead.html',context)
 
 def frames40(request):#������������ ���� �������� � ���� ��������
     return render(request, 'frames40.html')
@@ -125,14 +405,29 @@ def res(request, id,r):
      context = {'data': data,
               "data0":data0,"role":role,
                 'project':project,  "experts":experts}
-     return render(request, 'res.html', context)
+     return context
+     #return render(request, 'res.html', context)
 def index(request):
-    less = Less.objects.all()
+    p = None
+    r = None
+    project = '?'
+    if request.method == 'POST':
+        form = EntryForm(request.POST)
+        if form.is_valid():
+            project = form.cleaned_data['projects']
+            roles = form.cleaned_data['roles']
+            if project:
+                p = Project.objects.get(title=project)
+            if roles:
+                r = Role.objects.get(title=roles)
 
-    x = Less.objects.filter(person=6,start_date='2023-06-15')
+            if p== None or r == None:
+                return index(request)
 
-
-    return render(request,'index.html',{})
+            return frames42(request,p.id,r.id)
+    else:
+        form = EntryForm()
+    return render(request,'a0.html', {'form': form,"project":project})
 #
 # def page_balances(request):
 #     p = None
@@ -188,10 +483,11 @@ def res01(request, id,r):
          dat2[i] = {"link":f"{d}","load":num[i]}
          d = inc(d)
      data.append(dat2)
-     context = {'data': data,
-               "data0":data0,"project_id":id,"r":r,"role":role,
-                'project':project, }
-     return render(request, 'res01.html', context)
+     context = {'data_01': data,
+               "data0_01":data0,"project_id_01":id,"r_01":r,"role_01":role,
+                'project_01':project, }
+     return  context
+     #return render(request, 'res01.html', context)
 
 
 def res10(request, id,r):
@@ -239,8 +535,11 @@ def correctOst(data,l,n):
 def inside(d,d1,d2):
     b = (d1.year,d1.month) <= (d.year,d.month) <= (d2.year,d2.month)
 
-def frames42(request, pid, rid, project):  # ������������ ������� (������) � ������� (������)
-        return render(request, 'frames42.html', {"pid": pid, "rid": rid, "project": project})
+def frames42(request, pid, rid):  # ������������ ������� (������) � ������� (������)
+        context = res(request,pid, rid)
+        context01 = res01(request,pid, rid)
+        return render(request, 'frames421.html', context.update(context01))
+        #{"pid": pid, "rid": rid, "project": project})
 
 
 #################################################
@@ -946,6 +1245,8 @@ def one2role(request):
 
 
 def left(request,id):#���������� ������
+
+
     return render(request, 'frames2left.html',{'id':id})
 
 def right(request,rid):#���������� ������
@@ -965,12 +1266,12 @@ def entry(request):#������� ����
                 r = Role.objects.get(title=roles)
 
             if p== None and r == None:
-                return frames40(request)
+                return index(request)
             if p == None:
                 return res11(request,r.id)
             if r == None:
                 return left(request,p.id)
-            return frames42(request,p.id,r.id,project)
+            return frames42(request,p.id,r.id)
     else:
         form = EntryForm()
     return render(request, 'entry.html', {'form': form,"project":project})

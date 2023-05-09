@@ -30,7 +30,7 @@
  {% for row in data %}
     <tr style="text-align: center;">
         <td>
-        <form name="f01" action="/ajax/" method="POST">
+        <form id="f00" action="/ajax/" method="POST">
     {% csrf_token %}
   <input type = hidden name="id" value='{{project_id}}'>
      <input type = hidden name="r" value='{{r}}'>
@@ -39,10 +39,9 @@
               {% for cell in row %}
 
     {% if cell.load|positive %}
-                        <td class="good" key="{{cell.link}}" form="f01"
-                         style="text-align: center;
-      background-color:yellow;">{% else %}
-                <td class="good"  key="{{cell.link}}" form="f01"
+                        <td class="good" key="{{cell.link}}" width = "45"
+      background-color:#EEEEFF;">{% else %}
+                <td class="good"  key="{{cell.link}}"  width = "45"
                     style="text-align: center; background-color:white;">
         {% endif %}
                         {{ cell.load }}
@@ -57,12 +56,8 @@
 $('td.good').click(function() {
 
   var p = $(this).attr("key");
-  var formName = $(this).attr("form");
-
-
-
   var originalValue = $(this).text();
-  $(this).html('<input type="text" size="4" maxlength="4" value="' + $.trim(originalValue) + '">');
+  $(this).html('<input type="text" size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
 
   $(this).click(function(){
   $(this).html(originalValue);
@@ -71,18 +66,23 @@ $('td.good').click(function() {
   $('td input').focusout(function() {
     var newValue = $(this).val();
     $(this).parent().text(newValue+'@');
-var myForm = $('[name='+formName+']')
+    addHiddenInput("f00", p, newValue);
 
- var newInput = $("<input>");
-    newInput.attr("type", "hidden");
-    newInput.attr("name", p);
-    newInput.attr("value",newValue );
-    myForm.append(newInput);
+      });
+    });
 
+    function addHiddenInput(formId, name, value) {
+        // Get the form element using the formId parameter
+        var form = document.getElementById(formId);
 
-  });
-});
+        // Create a new hidden input element
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
 
+        // Add the new input element to the form
+        form.appendChild(input);}
 </script>
 
 {% endblock %}

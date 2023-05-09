@@ -4,7 +4,8 @@
 
 
 <table border="2"  >
-      <tr><td>Руководители проектов</td><td>проекты</td>
+      <tr><td>Руководители ресурсов</td><td>ресурсы</td>
+        <td>доступность</td><td>занятость</td>
       </tr>
 
       <tr >
@@ -15,10 +16,12 @@
 
         </td>
         <td style="text-align: center; ">
-          <a href="/left/{{cell.project_id}}">
+          <a href="/res11/{{cell.project_id}}">
           {{ cell.project }}
 </a>
         </td>
+        <td width=45><a href="/dost/{{res}}">Доступность</a></td>
+        <td width=45><a href="/zan/{{res}}">Занятость</a></td>
       </tr>
         {% endfor %}
 </table>

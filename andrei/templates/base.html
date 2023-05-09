@@ -1,15 +1,53 @@
 <!DOCTYPE html>
-{% load custom_filters %}
 {% load static %}
+{% load bootstrap4 %}
+
 <html>
 <head>
-       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>{% block title %}123{% endblock %}</title>
+  <title>{% block title %}{% endblock %}</title>
+  {% bootstrap_css %}
+  {% load custom_filters %}
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+  <style>
+    td.true {
+      background-color: yellow;
+    }
+    td.false {
+      background-color: white;
+    }
+        table {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.table-container {
+  position: relative;
+}
+
+table {
+  margin-bottom: 1rem; /* add a margin to the bottom of the table */
+}
+
+button {
+  display: block;
+  margin-top: 1rem; /* add a margin to the top of the button */
+}
+
+
+  </style>
 </head>
 <body>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+
+  <main class="container mt-5">
+
+    {% block content %}
+    {% endblock %}
+  </main>
+    {% bootstrap_javascript %}
 </body>
 </html>
