@@ -23,13 +23,6 @@ def alf(request):
             if roles:
                 r = Role.objects.get(title=roles)
 
-            # if p== None and r == None:
-            #     return a00(request)
-            # if r==None:
-            #     return a3(request,p.id)
-            # if p==None:
-            #     return a2(request,r.id)
-
             return ajr(request,p.id,r.id)
 
     form = EntryForm()
@@ -126,6 +119,66 @@ def moon():
             m_data.append(d.month)
             d = inc(d)
     return {"yy":y_data,"mm":m_data}
+def djr(request,j,r):
+    moon12 = moon();
+    dem13 = []
+    sup13e = []
+    sup13 = []
+    dif13 = []
+
+    project = Project.objects.get(id=j)
+    role = Role.objects.get(id=r)
+    dem = demand(project,role)
+    dem13.append(['Потребность']+dem)
+
+    people = UserProfile.objects.filter(role = role)
+    supp=[0]*12
+    for person in people:
+
+        sup = supply(project,person)
+        sup2 = [0]*12
+
+        d = date.today().replace(day=15)
+        for i in range(12):
+            sup2[i]={"link":f"{person.id}.{d.year}-{d.month}-15","val":sup[i]}
+            d = inc(d)
+
+        sup13e0 = [{"val":person.fio}]+sup2
+        for i in range(12):
+            supp[i]+=sup[i]
+
+        dif = [person.fio]+diffx(person)
+
+        dif13.append(dif)
+        sup13e.append(sup13e0)
+
+    delta = ['Дельта']+[0]*12
+    for i in range(12):
+        delta[i+1] = round(supp[i]-dem[i],2)
+
+    moon12["del13"] = delta
+
+    zo = zero('Аутсорс')
+    zv = zero('Вакансии')
+    sup13 = ['Поставка']+supp
+
+    dem13.append(sup13)
+    dem13.append(zo)
+    dem13.append(zv)
+    dem13.append(delta)
+    moon12["dem130"]=dem13
+    moon12["dem12"]=dem
+    moon12["sup13e"]=sup13e
+    moon12["dif13"] = dif13
+
+
+    moon12["role"] = role
+
+    moon12["project"] = project
+    moon12["id"] = j
+    moon12["r"] = r
+    moon12["j"] = j
+    return render(request,'djr.html',moon12)
 
 def ajr(request,j,r):
     moon12 = moon();
@@ -185,6 +238,7 @@ def ajr(request,j,r):
     moon12["project"] = project
     moon12["id"] = j
     moon12["r"] = r
+    moon12["j"] = j
     return render(request,'ajr.html',moon12)
 
 
@@ -248,16 +302,10 @@ def dj(request,j):
                 supp[i+2]+=sup[i]
             sup14.append(sup100)
 
-        #
-        # dem13L.append(dem)##########################################
-        # dem13L.append(supp)###############--
-        # dem13L.append([-1]+zo)################
-        # dem13L.append([-1]+zv)#####################
-
         for i in range(12):
             delta[i] = round(supp[i+2]-dem[i+2],2)
 
-        dem13L.append([j]+delta)############################
+        dem13L.append([role.title]+delta)############################
 
     moon12["dem13R"]=dem13R#####################
     moon12["dem13L"]=dem13L###############################
@@ -268,6 +316,7 @@ def dj(request,j):
     moon12["role"] = role
     moon12["project_id"] = j
     moon12["project"] = project
+    moon12["j"] = j
     return render(request,'dj.html',moon12)
 
 
@@ -352,6 +401,7 @@ def aj(request,j):
     moon12["role"] = role
     moon12["project_id"] = j
     moon12["project"] = project
+    moon12["j"] = j
     return render(request,'aj.html',moon12)
 
 def ar(request,r):
@@ -441,6 +491,7 @@ def ar(request,r):
     moon12["role"] = role
     moon12["r"]=role.id
     moon12["project"] = project
+    moon12["j"] = j
     return render(request,'ar.html',moon12)
 
 
@@ -496,22 +547,15 @@ def dr(request,r):
         for person in people:
             sup = supply(project,person)
             sup=[p100,person.fio]+sup
-
-            # p100=-1
+            sup14.append(sup)
+            p100=-1
             # for i in range(12):
-            #     supp100[i+1]+=sup[i]
-            # supp100=[person.fio]+supp100
-
-        # dem13L.append(dem)##########################################
-        # dem13L.append(supp)###############--
-        # dem13L.append([-1]+zo)################
-        # dem13L.append([-1]+zv)#####################
 
         for i in range(12):
             delta[i+1] = round(supp[i+2]-dem[i+2],2)
 
 
-        sup14.append(sup)
+
         dem13L.append(delta)############################!!!!!!!!!!!!!!!
     px = role.title#######################
     for person in people:
@@ -533,6 +577,7 @@ def dr(request,r):
     moon12["role"] = role
     moon12["r"]=role.id
     moon12["project"] = project
+    moon12["j"] = j
     return render(request,'dr.html',moon12)
 
 

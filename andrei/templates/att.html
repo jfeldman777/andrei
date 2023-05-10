@@ -2,11 +2,12 @@
 {% load custom_filters %}
 {% block content %}
 <a href="/" style="position:relative;">Домой</a>
-
+<a href="/" style="position:relative;">Все проекты</a>
+<a href="/" style="position:relative;">Все ресурсы</a>
 <table border="2" cellspacing="0" cellpadding="5"
 style="position:relative;text-align: center;" >
       <tr">
-        <th>Руководители проектов</th><th>проекты</th>
+        <th>Руководители проектов</th><th>проекты</th><th>потребность в ресурсах</th>
 
       </tr>
 
@@ -21,14 +22,18 @@ style="position:relative;text-align: center;" >
           <a href="/aj/{{cell.project_id}}">
           {{ cell.project }}
 </a>
-        <!-- </td><td><a href="/potr_prj/{{prj}}">Потребность</a></td>
-        <td><a href="/zan_prj/{{prj}}">Занятость</a></td> -->
+<td style="text-align: center; ">
+  <a href="/mj/{{cell.res_id}}">
+изменить
+</a>
+</td>
       </tr>
         {% endfor %}
 </table>
 <table border="2" cellspacing="0" cellpadding="5"
 style="position:relative;text-align: center;" >
-      <tr><th>Руководители ресурсов</th><th>ресурсы</th>
+      <tr><th>Руководители ресурсных пулов</th><th>ресурсы</th>
+        <th>доступность максимальная</th>
       </tr>
 
       <tr >
@@ -41,6 +46,11 @@ style="position:relative;text-align: center;" >
         <td style="text-align: center; ">
           <a href="/ar/{{cell.res_id}}">
           {{ cell.title }}
+</a>
+        </td>
+        <td style="text-align: center; ">
+          <a href="/mr/{{cell.res_id}}">
+        изменить
 </a>
         </td>
       </tr>
