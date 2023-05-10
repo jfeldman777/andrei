@@ -4,6 +4,7 @@ from . import vvv
 urlpatterns = [
 
 
+    path('dj/<int:j>', vvv.dj, name='dj'),
     path('aj/<int:j>', vvv.aj, name='aj'),
     path('sjr/', vvv.sjr, name='sjr'),
     path('sr/', vvv.sr, name='srs'),
