@@ -3,25 +3,19 @@
 {% block content %}
 
 <table border=2 width=100%>
-<tr><td colspan=2><h1>Все проекты - {{role}}</h1>
-  <a href="/">домой</a>   <a href="/dr/{{r}}">дельта</a>
+<tr><td colspan=2><h1>Все проекты - {{role}} - Дельта</h1>
+  <a href="/">домой</a> <a href="/ar/{{r}}">Подробно</a>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
     <table border=2 style="position:relative;top=0;"  width=100% >
-        <tr><td colspan=13>Балансировка<td></tr><td rowspan=2><b>{{role}}</b>
+        <tr><td colspan=13>Балансировка<td></tr><td rowspan=2><b>Проект</b>
 {% include 'moon.html' %}
 {% for dem in dem13L %}
 <tr>
 {% for t in dem %}
-{% if forloop.first %}
-{% if t|negative %}{% else %}
-<td colspan=13>{{t}}</td></tr><tr>
-  {% endif %}
-{% else %}
 <td>
 {{t}}
 </td>
-{% endif %}
 {% endfor %}
 
 </tr>

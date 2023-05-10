@@ -362,6 +362,97 @@ def ar(request,r):
 
 
 
+def dr(request,r):
+    moon12 = moon();
+    dem14 = []
+    dem13L = []
+    sup = []
+    dem13R=[]
+    dif14 = []
+
+    projects = Project.objects.all()
+    role = Role.objects.get(id=r)
+    people = UserProfile.objects.filter(role=role)
+    # supp = [0]*12
+    # sup139 = []
+    sup14 = []
+    dif13 = []
+    dem1 = []
+    sup13=[]
+    sup100=[]
+
+
+
+    zo = zero('Аутсорс')
+    zv = zero('Вакансии')
+
+
+    for project in projects:
+
+        pz = [project.title]
+        dem = [project.title]+['Потребность']+demand(project,role)#----------------
+        dem1 = [project.title]+demand(project,role)#----------------------------
+
+        dem2=[{"val":project.title}]+[0]*12
+
+        d = date.today().replace(day=15)
+        for i in range(12):
+            dem2[i+1]={"link":f"{project.id}.{d.year}-{d.month}-15","val":dem1[i+1]}
+            d = inc(d)
+
+        dem13R.append(dem2)#--------
+
+
+        #-----------------------------------------
+        delta = [project.title]+[0]*12
+        p9 = project.title
+        supp = [-1,'Поставка']+[0]*12
+        p100 = project.title
+        supp100=[p100]
+        for person in people:
+            sup = supply(project,person)
+            sup=[p100,person.fio]+sup
+
+            # p100=-1
+            # for i in range(12):
+            #     supp100[i+1]+=sup[i]
+            # supp100=[person.fio]+supp100
+
+        # dem13L.append(dem)##########################################
+        # dem13L.append(supp)###############--
+        # dem13L.append([-1]+zo)################
+        # dem13L.append([-1]+zv)#####################
+
+        for i in range(12):
+            delta[i+1] = round(supp[i+2]-dem[i+2],2)
+
+
+        sup14.append(sup)
+        dem13L.append(delta)############################!!!!!!!!!!!!!!!
+    px = role.title#######################
+    for person in people:
+        dif = diffx(person)
+        dif100=[]
+        da = date.today().replace(day=15)
+        for i in range(12):
+            dif100.append({"link":f"{person.id}.{da.year}-{da.month}-15","title":dif[i]})
+            da = inc(da)
+        dif14.append([px]+[person.fio]+dif100)######################
+        px = -1##################################
+
+    moon12["dem13R"]=dem13R#####################
+    moon12["dem13L"]=dem13L###############################
+    moon12["sup14"]=sup14
+
+
+    moon12["dif14"] = dif14########################################
+    moon12["role"] = role
+    moon12["r"]=role.id
+    moon12["project"] = project
+    return render(request,'dr.html',moon12)
+
+
+
 def mon_bar():
     dat = []
     d = date.today().replace(day=15)

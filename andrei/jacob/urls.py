@@ -10,7 +10,8 @@ urlpatterns = [
     path('test/', vvv.test, name='test'),
     path('sj/', vvv.sj, name='sj'),
     path('att/', vvv.att, name='att'),
-    path('ar/<int:r>/', vvv.ar, name='ar'),
+    path('dr/<int:r>/', vvv.dr, name='dr'),
+    path('ar/<int:r>/', vvv.ar, name='ar') ,
     path('ajr/<int:j>/<int:r>/', vvv.ajr, name='ajr'),
     path('', vvv.alf, name='alf'),
 ]
