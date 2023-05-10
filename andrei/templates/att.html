@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<a href="/" style="position:relative;">Домой</a>
+
+<table border="2" cellspacing="0" cellpadding="5"
+style="position:relative;text-align: center;" >
+      <tr">
+        <th>Руководители проектов</th><th>проекты</th>
+
+      </tr>
+
+      <tr">
+        {% for cell in data %}
+        <td>
+
+          {{ cell.name }}
+
+        </td>
+        <td style="text-align: center; cell-padding:3px;">
+          <a href="/aj/{{cell.project_id}}">
+          {{ cell.project }}
+</a>
+        <!-- </td><td><a href="/potr_prj/{{prj}}">Потребность</a></td>
+        <td><a href="/zan_prj/{{prj}}">Занятость</a></td> -->
+      </tr>
+        {% endfor %}
+</table>
+<table border="2" cellspacing="0" cellpadding="5"
+style="position:relative;text-align: center;" >
+      <tr><th>Руководители ресурсов</th><th>ресурсы</th>
+      </tr>
+
+      <tr >
+        {% for cell in data2 %}
+        <td style="text-align: center; ">
+
+          {{ cell.name }}
+
+        </td>
+        <td style="text-align: center; ">
+          <a href="/ar/{{cell.res_id}}">
+          {{ cell.title }}
+</a>
+        </td>
+      </tr>
+        {% endfor %}
+</table>
+
+
+{% endblock %}

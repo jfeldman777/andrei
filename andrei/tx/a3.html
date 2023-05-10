@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+
+<table border=2 width=100%>
+<tr><td colspan=2><h1>Все ресурсы - {{project}}</h1>
+<a href="/">домой</a>
+  <td></tr>
+  <tr style="text-align:center;"><td  width=50%>
+    <table border=2 style="position:relative;top=0;"  width=100% >
+        <tr><td colspan=13>Балансировка<td></tr><td rowspan=2><b>{{project}}</b>
+{% include 'moon.html' %}
+{% for dem in dem13L %}
+<tr>
+{% for t in dem %}
+{% if forloop.first %}
+{% if t|negative %}{% else %}
+<td colspan=13>{{t}}</td></tr><tr>
+  {% endif %}
+{% else %}
+<td>
+{{t}}
+</td>
+{% endif %}
+{% endfor %}
+
+</tr>
+<tr>
+{% for t in sup13 %}
+  {% if forloop.first %}
+  <td>Поставка</td>
+    {% else %}
+<td>
+{{t}}
+</td>
+{% endif %}
+{% endfor %}
+</tr>
+
+<tr>
+{% for s in sup13 %}
+<td>
+{{t}}
+</td>
+{% endfor %}
+</tr>
+
+
+
+
+<tr>
+{% for t in zv %}
+<td>
+{{t}}
+</td>
+{% endfor %}
+
+</tr>
+
+<tr>
+{% for t in zo %}
+<td>
+{{t}}
+</td>
+{% endfor %}
+
+</tr>
+
+<tr>
+{% for t in delta %}
+<td>
+{{t}}
+</td>
+{% endfor %}
+
+</tr>
+
+{% endfor %}
+    </table>
+  </td>
+    <td width=50%>
+      <table border=2 width=100% style="position:relative;top=0;">
+          <tr><td colspan=13>Потребность<td></tr><td rowspan=2><b>{{project}}</b>
+        {% include 'moon.html' %}
+        {% for dem in dem13R %}
+        <tr>
+        {% for t in dem %}
+
+        <td class="good" key="{{t.link}}">
+      {{t.title}}
+      </td>
+{% endfor %}
+</tr>        {% endfor %}
+<tr><td colspan=13 >
+  <form id="f10" action="/save4/" method="POST">
+  {% csrf_token %}
+<input type = hidden name="id" value='{{project_id}}'>
+  <button type="submit" >Сохранить изменения</button>
+</form>
+{%  include 'script.html'  %}
+</tr>
+      </table>
+
+    </td></tr>
+    <tr style="text-align:center;">
+
+      <td width=50%>
+        <table border=2 width=100% style="position:relative;top=0;">
+            <tr><td colspan=13>Утвержденные загрузки<td></tr><td rowspan=2><b>{{project}}</b>
+{% include 'moon.html' %}
+{% for tt in sup14 %}
+<tr>
+{% for t in tt %}
+  {% if forloop.first %}
+{% if t|negative %}{% else %}
+
+
+  <td colspan=13>{{t}}</td></tr><tr>
+    {% endif %}
+  {% else %}
+<td>
+{{t}}
+</td>
+{% endif %}
+{% endfor %}</tr>
+{% endfor %}
+        </table>
+      </td>
+      <td  width=50%>
+      <table border=2 style="position:relative;top=0;"  width=100% class="dif" >
+          <tr><td colspan=13>Ресурсный пул<td></tr><td rowspan=2><b>ФИО</b>
+{% include 'moon.html' %}
+{% for tt in dif14 %}
+<tr>
+{% for t in tt %}
+
+{% if forloop.first %}
+{% if t|negative %}
+
+{% else %}
+  <td colspan=13>{{t}}</td></tr><tr>
+{% endif %}
+{% else %}
+<td>
+{{t}}
+</td>
+{% endif %}
+{% endfor %}
+
+</tr>
+
+{% endfor %}
+      </table>
+    </td>
+
+    </tr>
+  </table>
+    {% include 'js.html' %}
+{% endblock %}

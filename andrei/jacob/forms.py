@@ -41,9 +41,9 @@ def table_to_formset(table):
 from django import forms
 
 class EntryForm(forms.Form):
-    projects = forms.ModelChoiceField(label='Проекты',required=False,
+    projects = forms.ModelChoiceField(label='Проекты',required=True,
                     queryset=Project.objects.all(), empty_label='выбрать проект',)
-    roles = forms.ModelChoiceField(label='Ресурсы',required=False,
+    roles = forms.ModelChoiceField(label='Ресурсы',required=True,
         queryset=Role.objects.all(), empty_label='выбрать ресурс', )
 
     def clean(self):
