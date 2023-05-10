@@ -27,12 +27,36 @@ def alf(request):
 
     form = EntryForm()
     return render(request,'alf.html', {'form': form})
+def atj(request):
+    projects = Project.objects.all().order_by ('general')
+    data = []
+    for p in projects:
+        x = {"j":p.id,
+            "project":p.title,
+        "name":p.general.fio}
+        data.append(x)
+    context = {"data":data}
 
+    return render(request,'atj.html',context)
+
+def atr(request):
+    context = {}
+    roles = Role.objects.all().order_by ('general')
+    data2 = []
+    for p in roles:
+        u = UserProfile.objects.get(user=p.general)
+        x = {
+            "title":p.title,"r":p.id,
+        "name":u.fio}
+        data2.append(x)
+    context["data2"]=data2
+
+    return render(request,'atr.html',context)
 def att(request):
     projects = Project.objects.all().order_by ('general')
     data = []
     for p in projects:
-        x = {"project_id":p.id,
+        x = {"j":p.id,
             "project":p.title,
         "name":p.general.fio}
         data.append(x)
@@ -42,8 +66,8 @@ def att(request):
     data2 = []
     for p in roles:
         u = UserProfile.objects.get(user=p.general)
-        x = {"res_id":p.id,
-            "title":p.title,
+        x = {
+            "title":p.title,"r":p.id,
         "name":u.fio}
         data2.append(x)
     context["data2"]=data2
@@ -156,15 +180,7 @@ def djr(request,j,r):
     for i in range(12):
         delta[i] = round(supp[i]-dem[i],2)
 
-    # moon12["del13"] = delta
-    #
-    # zo = zero('Аутсорс')
-    # zv = zero('Вакансии')
-    # sup13 = ['Поставка']+supp
 
-    # dem13.append(sup13)
-    # dem13.append(zo)
-    # dem13.append(zv)
     dem13.append(delta)
     moon12["dem130"]=dem13
     moon12["dem12"]=dem
@@ -321,6 +337,29 @@ def dj(request,j):
 
 
 
+def  mro(request):
+    moon12 = moon();
+    dif14 = []
+
+    project = Project.objects.all()
+    roles = Role.objects.all()
+
+
+
+    for role in roles:
+        p9 = role.title
+        people = UserProfile.objects.filter(role=role)
+        px = role.title#######################
+        for person in people:
+
+            dif = [person.fio]+diffx(person)
+            dif14.append([px]+dif)######################
+            px = -1##################################
+
+    moon12["dif14"] = dif14########################################
+
+    return render(request,'mro.html',moon12)
+
 def aj(request,j):
     moon12 = moon();
     dem14 = []
@@ -403,6 +442,88 @@ def aj(request,j):
     moon12["project"] = project
     moon12["j"] = j
     return render(request,'aj.html',moon12)
+def mj(request,j):
+    moon12 = moon();
+    dem14 = []
+    dem13L = []
+    sup = []
+    dem13R=[]
+    dif14 = []
+
+    project = Project.objects.get(id=j)
+    roles = Role.objects.all()
+    # supp = [0]*12
+    # sup139 = []
+    sup14 = []
+    dif13 = []
+    dem1 = []
+    sup13=[]
+    sup100=[]
+
+
+
+    zo = zero('Аутсорс')
+    zv = zero('Вакансии')
+
+    for role in roles:
+
+        pz = [role.title]
+        dem = [role.title]+['Потребность']+demand(project,role)#----------------
+        dem1 = demand(project,role)#--------
+        delta = ['Дельта']+[0]*12
+
+        dem2=[0]*12
+        d = date.today().replace(day=15)
+        for i in range(12):
+
+            x={"link":f"{role.id}.{d.year}-{d.month}-15","title":dem1[i]}
+            dem2[i]=x
+            d = inc(d)
+
+        dem13R.append([role.title]+dem2)#--------
+
+
+
+        p9 = role.title
+        people = UserProfile.objects.filter(role=role)
+        px = role.title#######################
+        supp = [-1,'Поставка']+[0]*12
+        p100 = role.title
+        for person in people:
+
+            dif = [person.fio]+diffx(person)
+            dif14.append([px]+dif)######################
+            px = -1##################################
+
+            sup = supply(project,person)
+            sup100=[p100,person.fio]+sup
+            p100=-1
+            for i in range(12):
+                supp[i+2]+=sup[i]
+            sup14.append(sup100)
+
+
+        dem13L.append(dem)##########################################
+        dem13L.append(supp)###############--
+        dem13L.append([-1]+zo)################
+        dem13L.append([-1]+zv)#####################
+
+        for i in range(12):
+            delta[i+1] = round(supp[i+2]-dem[i+2],2)
+
+        dem13L.append([-1]+delta)############################
+
+    moon12["dem13R"]=dem13R#####################
+    moon12["dem13L"]=dem13L###############################
+    moon12["sup14"]=sup14
+
+
+    moon12["dif14"] = dif14########################################
+    moon12["role"] = role
+    moon12["project_id"] = j
+    moon12["project"] = project
+    moon12["j"] = j
+    return render(request,'mj.html',moon12)
 
 def ar(request,r):
     moon12 = moon();
@@ -494,6 +615,28 @@ def ar(request,r):
 
     return render(request,'ar.html',moon12)
 
+def mr(request,r):
+    moon12 = moon();
+    dif14 = []
+
+    role = Role.objects.get(id=r)
+    people = UserProfile.objects.filter(role=role)
+
+    for person in people:
+        dif = less(person)
+        print(dif)
+        dif100=[0]*12
+        da = date.today().replace(day=15)
+        for i in range(12):
+            dif100[i]={"link":f"{person.id}.{da.year}-{da.month}-15","title":dif[i]}
+            da = inc(da)
+        dif14.append([person.fio]+dif100)######################
+        print(dif14)
+    moon12["dif14"] = dif14########################################
+    moon12["r"]=r
+    moon12["role"]=role
+
+    return render(request,'mr.html',moon12)
 
 
 
@@ -672,6 +815,33 @@ def pref(p):
     L.append(p.end_date)
     return L
 
+def smr(request):
+    id = 1
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            sr = request.POST.get('r')
+            r = int(sr)
+            role=Role.objects.get(id=r)
+
+            for k,v in request.POST.items():
+                print(k,v)
+                if '.' in k:
+                    p,d=k.split('.')
+                    print(161)
+                    try:
+                        person = UserProfile.objects.get(id=p)
+                        print(1615)
+                        tr(person,role,d,v)
+                    except:
+                        pass
+        else:
+            print(form.errors)
+
+    return mr(request,r)
+
 def sr(request):
     id = 1
     if request.method == "POST":
@@ -755,3 +925,56 @@ def sj(request):
             print(form.errors)
 
         return aj(request,j)
+def smj(request):
+    print(779)
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            for k,v in request.POST.items():
+                sid = request.POST.get('id')
+                j = int(sid)
+                project = Project.objects.get(id=j)
+                print(k,v)
+                if '.' in k:
+                    r,d=k.split('.')
+                    role = Role.objects.get(id=r)
+                    try:
+                        print(67878)
+                        tj(project,role,d,v)
+                        print(67879)
+                    except:
+                        pass
+        else:
+            print(form.errors)
+
+        return mj(request,j)
+def projects(request):
+    dmin = date.today()
+    dmin=dmin.replace(day=15)
+    dmax = inc_n(dmin,11)
+    moon12 = moon();
+    projects = Project.objects.all().order_by('general','start_date')
+
+    data = []
+    for p in projects:
+        data.append(pref(p)+[dif(p.start_date,p.end_date)]+mon_bool(dmin,dmax,p.start_date,p.end_date))
+
+    moon12["matrix"]=data
+
+    return render(request, 'prjlist.html', moon12)
+
+def dif(d1,d2):
+    return (d2.year-d1.year)*12+d2.month-d1.month+1
+def mon_bool(dmin,dmax,dstart,dend):
+    L = []
+    d = dmin.replace(day=15)
+    d2 = dmax.replace(day=15)
+    d3 = dstart.replace(day=15)
+    d4 = dend.replace(day=15)
+    while d <= d2:
+        b = (d3 <= d <= d4)
+        L.append(b)
+        d = inc(d)
+    return L

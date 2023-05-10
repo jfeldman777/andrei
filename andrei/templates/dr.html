@@ -118,7 +118,7 @@
       </td>
       <td  width=50%>
       <table border=2 style="position:relative;top=0;"  width=100% class="dif" >
-          <tr><td colspan=13>Ресурсный пул<td></tr><td rowspan=2><b>ФИО</b>
+          <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><td rowspan=2><b>ФИО</b>
 {% include 'moon.html' %}
 {% for tt in dif14 %}
 <tr>
@@ -140,15 +140,7 @@
 </tr>
 
 {% endfor %}
-<tr><td colspan=13 >
-  <form id="f10" action="/sr/" method="POST">
-  {% csrf_token %}
-<input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button>
-</form>
-{%  include 'script.html'  %}
 
-</td></tr>
       </table>
     </td>
 

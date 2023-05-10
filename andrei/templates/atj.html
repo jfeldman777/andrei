@@ -30,32 +30,7 @@ style="position:relative;text-align: center;" >
       </tr>
         {% endfor %}
 </table>
-<table border="2" cellspacing="0" cellpadding="5"
-style="position:relative;text-align: center;" >
-      <tr><th>Руководители ресурсных пулов</th><th>ресурсы</th>
-        <th>доступность максимальная</th>
-      </tr>
 
-      <tr >
-        {% for cell in data2 %}
-        <td style="text-align: center; ">
-
-          {{ cell.name }}
-
-        </td>
-        <td style="text-align: center; ">
-          <a href="/ar/{{cell.r}}">
-          {{ cell.title }}
-</a>
-        </td>
-        <td style="text-align: center; ">
-          <a href="/mr/{{cell.r}}">
-        изменить
-</a>
-        </td>
-      </tr>
-        {% endfor %}
-</table>
 
 
 {% endblock %}

@@ -3,11 +3,12 @@
 {% load static %}
 {% block content %}
 <h1>
-    <a href="/att/" target="_top">проекты и ресурсы</a></h1>
+    <a href="/atj/" target="_top">проекты</a> и
+      <a href="/atr/" target="_top">ресурсы</a></h1>
 
       <div style="background-color: #EEEEFF;">
       <form method="POST" target="_top" >
-          {% csrf_token %}  <button type="submit">Выбрать перспективу</button>
+          {% csrf_token %}  <button type="submit">Выбрать перспективу и назначить исполнителей </button>
               {{ form }}
 
         </form>

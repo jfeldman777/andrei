@@ -91,14 +91,8 @@
       </td>
 {% endfor %}
 </tr>        {% endfor %}
-<tr><td colspan=13 >
-  <form id="f10" action="/sj/" method="POST">
-  {% csrf_token %}
-<input type = hidden name="id" value='{{project_id}}'>
-  <button type="submit" >Сохранить изменения</button>
-</form>
-{%  include 'script.html'  %}
-</tr>
+
+
       </table>
 
     </td></tr>

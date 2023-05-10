@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<a href="/">домой</a>
+
+      <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
+          <tr><td colspan=13>Ресурсный пул (максимальная доступность)</td></tr>
+            <tr><td rowspan=2><b>ФИО</b>
+
+{% include 'moon.html' %}
+{% for tt in dif14 %}
+
+<tr>
+{% for t in tt %}
+{% if forloop.first %}
+{% if t|negative %}{% else %}
+<td colspan=13>{{t}}</td></tr><tr>
+  {% endif %}
+{% else %}
+<td>
+{{t}}
+</td>
+{% endif %}
+{% endfor %}
+</tr>
+{% endfor %}
+
+      </table>
+
+    {% include 'js.html' %}
+{% endblock %}
