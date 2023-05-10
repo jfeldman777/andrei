@@ -624,14 +624,14 @@ def mr(request,r):
 
     for person in people:
         dif = less(person)
-        print(dif)
+
         dif100=[0]*12
         da = date.today().replace(day=15)
         for i in range(12):
             dif100[i]={"link":f"{person.id}.{da.year}-{da.month}-15","title":dif[i]}
             da = inc(da)
         dif14.append([person.fio]+dif100)######################
-        print(dif14)
+
     moon12["dif14"] = dif14########################################
     moon12["r"]=r
     moon12["role"]=role
@@ -750,24 +750,24 @@ def inc_n(d,n):
 
 from datetime import datetime
 def tr(person, role, m, l):##########################################
-    print(701)
+
     try:
         instance = Less.objects.get(person=person, start_date=m)
     except:
         instance = None
-        print(702)
+
     if instance:
-        print(703)
+
         instance.load = l
         instance.save()
     else:
         # If the instance does not exist, create a new one
-        print(704)
+
         instance = Less.objects.create(person=person, start_date=m, load=l)
-        print(705)
+
 
 def tjr(p, j, d, l):
-    print(1578)
+
     try:
 
         instance = Task.objects.get(person=p,project=j, month=d)
@@ -784,23 +784,22 @@ def tjr(p, j, d, l):
 
 
 def tj(project,role, d, v):#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@s
-    print(1515)
+
     m = datetime.strptime(d, "%Y-%m-%d").date()
-    print(1998)
+
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
     except:
         instance = None
-    print(299)
+
     if instance:
         instance.load = float(v)
         instance.save()
 
-        print(499)
     else:
         x = float(v)
         instance = Load.objects.create(project=project, role=role, month=m, load=x)
-        print(699)
+
 
 def dif(d1,d2):
     return (d2.year-d1.year)*12+d2.month-d1.month+1
@@ -827,13 +826,13 @@ def smr(request):
             role=Role.objects.get(id=r)
 
             for k,v in request.POST.items():
-                print(k,v)
+
                 if '.' in k:
                     p,d=k.split('.')
-                    print(161)
+
                     try:
                         person = UserProfile.objects.get(id=p)
-                        print(1615)
+
                         tr(person,role,d,v)
                     except:
                         pass
@@ -854,13 +853,13 @@ def sr(request):
             role=Role.objects.get(id=r)
 
             for k,v in request.POST.items():
-                print(k,v)
+
                 if '.' in k:
                     p,d=k.split('.')
-                    print(161)
+
                     try:
                         person = UserProfile.objects.get(id=p)
-                        print(1615)
+
                         tr(person,role,d,v)
                     except:
                         pass
@@ -869,7 +868,7 @@ def sr(request):
 
     return ar(request,r)
 def sjr(request):
-    print(778)
+
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
@@ -884,16 +883,15 @@ def sjr(request):
                 j = int(sj)
                 project = Project.objects.get(id=j)
 
-                print(k,v)
                 if '.' in k:
                     p,d=k.split('.')
 
                     try:
-                        print(678)
+
                         person = UserProfile.objects.get(id=p)
-                        print(679)
+
                         tjr(person,project,d,v)
-                        print(680)
+
                     except:
                         pass
         else:
@@ -901,7 +899,7 @@ def sjr(request):
 
         return ajr(request,j,r)
 def sj(request):
-    print(779)
+
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
@@ -911,14 +909,14 @@ def sj(request):
                 sid = request.POST.get('id')
                 j = int(sid)
                 project = Project.objects.get(id=j)
-                print(k,v)
+
                 if '.' in k:
                     r,d=k.split('.')
                     role = Role.objects.get(id=r)
                     try:
-                        print(67878)
+
                         tj(project,role,d,v)
-                        print(67879)
+
                     except:
                         pass
         else:
@@ -926,7 +924,7 @@ def sj(request):
 
         return aj(request,j)
 def smj(request):
-    print(779)
+
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
@@ -936,14 +934,14 @@ def smj(request):
                 sid = request.POST.get('id')
                 j = int(sid)
                 project = Project.objects.get(id=j)
-                print(k,v)
+
                 if '.' in k:
                     r,d=k.split('.')
                     role = Role.objects.get(id=r)
                     try:
-                        print(67878)
+
                         tj(project,role,d,v)
-                        print(67879)
+
                     except:
                         pass
         else:

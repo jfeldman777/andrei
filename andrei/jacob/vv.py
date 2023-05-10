@@ -1097,7 +1097,7 @@ def save2(request):
             role=Role.objects.get(id=r)
 
             for k,v in request.POST.items():
-                print(k,v)
+
                 if '.' in k:
                     p,d=k.split('.')
                     try:
@@ -1110,7 +1110,6 @@ def save2(request):
 
     return a2(request,r)
 def save3(request):
-    print(7777)
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
@@ -1120,12 +1119,12 @@ def save3(request):
                 sr = request.POST.get('r')
                 r = int(sr)
                 role=Role.objects.get(id=r)
-                print(k,v)
+
                 if '.' in k:
                     p,d=k.split('.')
 
                     try:
-                        print(678)
+
                         UpdateOrCreateLess(p,role,d,v)
                     except:
                         pass
@@ -1134,7 +1133,6 @@ def save3(request):
 
         return a2(request,r)
 def save4(request):
-    print(7777)
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
@@ -1144,14 +1142,12 @@ def save4(request):
                 sid = request.POST.get('id')
                 j = int(sid)
                 project = Project.objects.get(id=j)
-                print(k,v)
+
                 if '.' in k:
                     r,d=k.split('.')
                     role = Role.objects.get(id=r)
                     try:
-                        print(67878)
                         my(project,role,d,v)
-                        print(67879)
                     except:
                         pass
         else:
