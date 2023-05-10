@@ -129,7 +129,7 @@ def djr(request,j,r):
     project = Project.objects.get(id=j)
     role = Role.objects.get(id=r)
     dem = demand(project,role)
-    dem13.append(['Потребность']+dem)
+    # dem13.append(['Потребность']+dem)
 
     people = UserProfile.objects.filter(role = role)
     supp=[0]*12
@@ -152,19 +152,19 @@ def djr(request,j,r):
         dif13.append(dif)
         sup13e.append(sup13e0)
 
-    delta = ['Дельта']+[0]*12
+    delta = [0]*12
     for i in range(12):
-        delta[i+1] = round(supp[i]-dem[i],2)
+        delta[i] = round(supp[i]-dem[i],2)
 
-    moon12["del13"] = delta
+    # moon12["del13"] = delta
+    #
+    # zo = zero('Аутсорс')
+    # zv = zero('Вакансии')
+    # sup13 = ['Поставка']+supp
 
-    zo = zero('Аутсорс')
-    zv = zero('Вакансии')
-    sup13 = ['Поставка']+supp
-
-    dem13.append(sup13)
-    dem13.append(zo)
-    dem13.append(zv)
+    # dem13.append(sup13)
+    # dem13.append(zo)
+    # dem13.append(zv)
     dem13.append(delta)
     moon12["dem130"]=dem13
     moon12["dem12"]=dem
@@ -489,9 +489,9 @@ def ar(request,r):
 
     moon12["dif14"] = dif14########################################
     moon12["role"] = role
-    moon12["r"]=role.id
+    moon12["r"]=r
     moon12["project"] = project
-    moon12["j"] = j
+
     return render(request,'ar.html',moon12)
 
 
@@ -577,7 +577,7 @@ def dr(request,r):
     moon12["role"] = role
     moon12["r"]=role.id
     moon12["project"] = project
-    moon12["j"] = j
+
     return render(request,'dr.html',moon12)
 
 
