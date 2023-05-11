@@ -4,7 +4,7 @@
 
 <table border=2 width=100%>
 <tr><td colspan=2><h1>Все проекты - {{role}} - Дельта</h1>
-  <a href="/">домой</a> <a href="/ar/{{r}}">Подробно</a>
+  <a href="/">домой</a> <a href="/ar/{{r}}">Подробно </a>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
     <table border=2 style="position:relative;top=0;"  width=100% >
@@ -113,7 +113,7 @@
 {% endfor %}</tr>
 {% endfor %}
 <tr><td colspan=13 >
-  <form id="f10" action="/sdr/" method="POST">
+  <form id="f10" action="/sdrd/" method="POST">
   {% csrf_token %}
 <input type = hidden name="r" value='{{r}}'>
   <button type="submit" >Сохранить изменения</button>

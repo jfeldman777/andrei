@@ -569,6 +569,7 @@ def ar(request,r):
     dif13 = []
     dem1 = []
     sup13=[]
+    sup13e=[]
     sup100=[]
 
 
@@ -601,14 +602,26 @@ def ar(request,r):
         supp100=[p100]+[0]*12
         for person in people:
             sup = supply(project,person)
-            sup=[p100,person.fio]+sup############################################s
-            sup14.append(sup)
+            sup2 = [0]*12
 
-
-            print(999,sup)
-            p100=-1
+            d = date.today().replace(day=15)
             for i in range(12):
-                 supp[i+2]+=sup[i+2]
+                sup2[i]={"link":f"{project.id}.{person.id}.{d.year}-{d.month}-15","val":sup[i]}
+                d = inc(d)
+
+            sup13e0 = [p100,{"val":person.fio}]+sup2
+            p100=-1
+            sup13e.append(sup13e0)
+            for i in range(12):
+                supp[i+2]+=sup[i]
+
+            # sup=[p100,person.fio]+sup#######################################s
+
+
+
+
+            # for i in range(12):
+            #      supp[i+2]+=sup[i+2]
 
         dem13L.append(dem)##########################################77777
         dem13L.append(supp)###############--
@@ -634,7 +647,7 @@ def ar(request,r):
 
     moon12["dem13R"]=dem13R#####################
     moon12["dem13L"]=dem13L###############################
-    moon12["sup14"]=sup14
+    moon12["sup13e"]=sup13e
 
 
     moon12["dif14"] = dif14########################################
@@ -730,7 +743,6 @@ def dr(request,r):
             sup14.append(sup)
 
 
-            print(999,sup)
             p100=-1
             for i in range(12):
                  supp[i+2]+=sup[i+2]
@@ -811,7 +823,7 @@ def tr(person, role, m, l):##########################################
         # If the instance does not exist, create a new one
 
         instance = Less.objects.create(person=person, start_date=m, load=l)
-def tdr(person, project, m, l):##########################################
+def tdr(project,person,  m, l):##########################################
 
     try:
         instance = Task.objects.get(person=person, project=project,month=m)
@@ -846,7 +858,6 @@ def tjr(p, j, d, l):
 
 
 def tj(project,role, m, v):#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@s
-    print(1090)
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
     except:
@@ -857,9 +868,7 @@ def tj(project,role, m, v):#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@s
         instance.save()
 
     else:
-        print(project,role,m,v)
         instance = Load.objects.create(project=project, role=role, month=m, load=v)
-        print(1091)
 
 def dif(d1,d2):
     return (d2.year-d1.year)*12+d2.month-d1.month+1
@@ -913,14 +922,14 @@ def sr(request):
             role=Role.objects.get(id=r)
 
             for k,v in request.POST.items():
-
                 if '.' in k:
-                    p,d=k.split('.')
+                    j,p,d=k.split('.')
 
                     try:
                         person = UserProfile.objects.get(id=p)
+                        project = Project.objects.get(id=j)
 
-                        tr(person,role,d,v)
+                        tdr(project,person,d,v)
                     except:
                         pass
         else:
@@ -944,11 +953,37 @@ def sdr(request):
                     j,p,d=k.split('.')
 
                     try:
-                        print(987,d)
+
                         person = UserProfile.objects.get(id=p)
                         project = Project.objects.get(id=j)
-                        tdr(person,project,d,v)
-                        print(986)
+                        tdr(project,person,d,v)
+
+                    except:
+                        pass
+        else:
+            print(form.errors)
+    return ar(request,r)
+
+def sdrd(request):
+    id = 1
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            sr = request.POST.get('r')
+            r = int(sr)
+            for k,v in request.POST.items():
+
+                if '.' in k:
+                    j,p,d=k.split('.')
+
+                    try:
+
+                        person = UserProfile.objects.get(id=p)
+                        project = Project.objects.get(id=j)
+                        tdr(project,person,d,v)
+
                     except:
                         pass
         else:
@@ -976,7 +1011,6 @@ def sdjr(request):
                 if '-' in k:
                     try:
                         tj(project,role,k,v)
-                        print(9861)
                     except:
                         pass
         else:
@@ -1016,8 +1050,7 @@ def sjr(request):
 
         return ajr(request,j,r)
 
-
-def sjr2(request):
+def sjrL(request):
 
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
@@ -1042,6 +1075,33 @@ def sjr2(request):
 
                         tjr(person,project,d,v)
 
+                    except:
+                        pass
+        else:
+            print(form.errors)
+
+        return djr(request,j,r)
+
+def sjrR(request):
+
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            for k,v in request.POST.items():
+                sr = request.POST.get('r')
+                r = int(sr)
+                role=Role.objects.get(id=r)
+
+                sj = request.POST.get('id')
+                j = int(sj)
+                project = Project.objects.get(id=j)
+
+                if '-' in k:
+
+                    try:
+                        tj(project,role,k,v)
                     except:
                         pass
         else:
