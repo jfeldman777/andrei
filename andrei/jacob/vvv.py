@@ -118,7 +118,18 @@ def supply(project,person):
             d = inc(d)
             sp[i]=t
         return sp
-
+def supply2(project,person):
+        sp=[0]*12
+        d = date.today().replace(day=15)
+        for i in range(12):
+            L = list(Task.objects.filter(project=project,month=d,person=person))
+            try:
+                t = L[0].load
+            except:
+                t = 0
+            d = inc(d)
+            sp[i]={"link":f"{project.id}.{person.id}.{d.year}-{d.month}-15","val":t}
+        return sp
 def demand(project,role):
     dem = [0]*12
     d = date.today().replace(day=15)
@@ -688,9 +699,11 @@ def dr(request,r):
         p100 = project.title
         supp100=[p100]
         for person in people:
-            sup = supply(project,person)
-            sup=[p100,person.fio]+sup
+            sup = supply2(project,person)
+            sup=[p100]+[{"val":person.fio}]+sup
+
             sup14.append(sup)
+
             p100=-1
             # for i in range(12):
 
@@ -710,6 +723,8 @@ def dr(request,r):
             da = inc(da)
         dif14.append([px]+[person.fio]+dif100)######################
         px = -1##################################
+
+
 
     moon12["dem13R"]=dem13R#####################
     moon12["dem13L"]=dem13L###############################
@@ -749,6 +764,8 @@ def inc_n(d,n):
     return d
 
 from datetime import datetime
+
+
 def tr(person, role, m, l):##########################################
 
     try:
@@ -764,6 +781,21 @@ def tr(person, role, m, l):##########################################
         # If the instance does not exist, create a new one
 
         instance = Less.objects.create(person=person, start_date=m, load=l)
+def tdr(person, project, m, l):##########################################
+
+    try:
+        instance = Task.objects.get(person=person, project=project,month=m)
+    except:
+        instance = None
+
+    if instance:
+
+        instance.load = l
+        instance.save()
+    else:
+        # If the instance does not exist, create a new one
+
+        instance = Task.objects.create(person=person, project=project,month=m, load=l)
 
 
 def tjr(p, j, d, l):
@@ -867,6 +899,38 @@ def sr(request):
             print(form.errors)
 
     return ar(request,r)
+
+
+def sdr(request):
+    id = 1
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            sr = request.POST.get('r')
+            r = int(sr)
+            for k,v in request.POST.items():
+
+                if '.' in k:
+                    j,p,d=k.split('.')
+
+                    try:
+                        print(987)
+                        person = UserProfile.objects.get(id=p)
+                        project=Project.objects.get(id=j)
+                        tdr(person,project,d,v)
+                        print(986)
+                    except:
+                        pass
+        else:
+            print(form.errors)
+
+    return dr(request,r)
+
+
+
+
 def sjr(request):
 
     if request.method == "POST":

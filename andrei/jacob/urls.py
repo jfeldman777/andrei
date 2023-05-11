@@ -11,6 +11,8 @@ urlpatterns = [
     path('dj/<int:j>', vvv.dj, name='dj'),
     path('aj/<int:j>', vvv.aj, name='aj'),
     path('sjr/', vvv.sjr, name='sjr'),
+    path('sdr/', vvv.sdr, name='sdr'),
+
     path('sr/', vvv.sr, name='sr'),
     path('test/', vvv.test, name='test'),
     path('sj/', vvv.sj, name='sj'),
