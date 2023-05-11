@@ -127,8 +127,9 @@ def supply2(project,person):
                 t = L[0].load
             except:
                 t = 0
-            d = inc(d)
+
             sp[i]={"link":f"{project.id}.{person.id}.{d.year}-{d.month}-15","val":t}
+            d = inc(d)
         return sp
 def demand(project,role):
     dem = [0]*12
@@ -597,17 +598,19 @@ def ar(request,r):
         p9 = project.title
         supp = [-1,'Поставка']+[0]*12
         p100 = project.title
-        supp100=[p100]
+        supp100=[p100]+[0]*12
         for person in people:
             sup = supply(project,person)
             sup=[p100,person.fio]+sup############################################s
             sup14.append(sup)
-            p100=-1
-            # for i in range(12):
-            #     supp100[i+1]+=sup[i]
-            # supp100=[person.fio]+supp100
 
-        dem13L.append(dem)##########################################
+
+            print(999,sup)
+            p100=-1
+            for i in range(12):
+                 supp[i+2]+=sup[i+2]
+
+        dem13L.append(dem)##########################################77777
         dem13L.append(supp)###############--
         dem13L.append([-1]+zo)################
         dem13L.append([-1]+zv)#####################
@@ -720,7 +723,19 @@ def dr(request,r):
             sup14.append(sup)
 
             p100=-1
-            # for i in range(12):
+            # for i in range(12):88888
+
+            sup = supply(project,person)
+            sup=[p100,person.fio]+sup############################################s
+            sup14.append(sup)
+
+
+            print(999,sup)
+            p100=-1
+            for i in range(12):
+                 supp[i+2]+=sup[i+2]
+
+
 
         for i in range(12):
             delta[i+1] = round(supp[i+2]-dem[i+2],2)
@@ -929,7 +944,7 @@ def sdr(request):
                     j,p,d=k.split('.')
 
                     try:
-                        print(987)
+                        print(987,d)
                         person = UserProfile.objects.get(id=p)
                         project = Project.objects.get(id=j)
                         tdr(person,project,d,v)
