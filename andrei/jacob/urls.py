@@ -12,7 +12,7 @@ urlpatterns = [
     path('aj/<int:j>', vvv.aj, name='aj'),
     path('sjr/', vvv.sjr, name='sjr'),
     path('sdr/', vvv.sdr, name='sdr'),
-
+    path('sdjr/', vvv.sdjr, name='sdjr'),
     path('sr/', vvv.sr, name='sr'),
     path('test/', vvv.test, name='test'),
     path('sj/', vvv.sj, name='sj'),

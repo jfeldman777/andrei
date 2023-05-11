@@ -1,0 +1,33 @@
+
+<script>
+$('td.good2').click(function() {
+
+  var p = $(this).attr("key");
+  var originalValue = $(this).text();
+  $(this).html('<input type="text" size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
+
+  $(this).click(function(){
+  $(this).html(originalValue);
+  })
+
+  $('td input').focusout(function() {
+    var newValue = $(this).val();
+    $(this).parent().text(newValue+'@');
+
+    var form = document.getElementById("f20");
+
+    // Create a new hidden input element
+    var input = document.createElement('input');
+
+    input.type = 'hidden';
+    input.name = p;
+
+    input.value = newValue;
+
+    // Add the new input element to the form
+    form.appendChild(input);
+
+
+});
+});
+</script>
