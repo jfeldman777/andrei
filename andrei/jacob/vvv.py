@@ -231,6 +231,7 @@ def ajr(request,j,r):
     project = Project.objects.get(id=j)
     role = Role.objects.get(id=r)
     dem = demand(project,role)
+    dem2 = demand2(project,role)
     dem13.append(['Потребность']+dem)
 
     people = UserProfile.objects.filter(role = role)
@@ -269,7 +270,7 @@ def ajr(request,j,r):
     dem13.append(zv)
     dem13.append(delta)
     moon12["dem130"]=dem13
-    moon12["dem12"]=dem
+    moon12["dem12"]=dem2
     moon12["sup13e"]=sup13e
     moon12["dif13"] = dif13
 
