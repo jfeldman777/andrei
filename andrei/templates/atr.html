@@ -8,7 +8,7 @@
 <table border="2" cellspacing="0" cellpadding="5"
 style="position:relative;text-align: center;" >
       <tr><th>Руководители ресурсных пулов</th><th>ресурсы</th>
-        <th>доступность максимальная</th>
+        <th>доступность максимальная</th><th>баланс и назначения</th>
       </tr>
 
       <tr >
@@ -19,15 +19,21 @@ style="position:relative;text-align: center;" >
 
         </td>
         <td style="text-align: center; ">
-          <a href="/ar/{{cell.r}}">
+
           {{ cell.title }}
-</a>
+
         </td>
         <td style="text-align: center; ">
           <a href="/mr/{{cell.r}}">
         изменить
 </a>
         </td>
+        <td style="text-align: center; ">
+  <a href="/ar/{{cell.r}}">
+        смотреть
+</a>
+        </td>
+
       </tr>
         {% endfor %}
 </table>

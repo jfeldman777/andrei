@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-
+{% include 'scroll.html' %}
 <table border=2 width=100%>
-<tr><td colspan=2><h1>Все проекты - {{role}} - Дельта</h1>
+<tr><td colspan=2><h1>Все проекты - {{role}} - Дельта*</h1>
   <a href="/">домой</a> <a href="/ar/{{r}}">Подробно </a>
+  <a href="/mr/{{r}}">максимальная доступность</a>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
-    <table border=2 style="position:relative;top=0;"  width=100% >
-        <tr><td colspan=13>Балансировка<td></tr><td rowspan=2><b>Проект</b>
-{% include 'moon.html' %}
+      <div class="table-container">
+
+    <table border=2 style="position:relative;top=0;"  width=100% ><thead>
+        <tr><th colspan=13>Балансировка</th></tr><tr><th rowspan=2>Проект</th>
+{% include 'moon.html' %}</thead><tbody>
 {% for dem in dem13L %}
 <tr>
 {% for t in dem %}
@@ -19,7 +22,7 @@
 {% endfor %}
 
 </tr>
-<tr>
+<!-- <tr>
 {% for t in sup13 %}
   {% if forloop.first %}
   <td>Поставка</td>
@@ -29,8 +32,8 @@
 </td>
 {% endif %}
 {% endfor %}
-</tr>
-
+</tr> -->
+<!--
 <tr>
 {% for s in sup13 %}
 <td>
@@ -58,19 +61,20 @@
 </td>
 {% endfor %}
 
-</tr>
+</tr> -->
 
-<tr>
+<!-- <tr>
 {% for t in delta %}
 <td>
 {{t}}
 </td>
 {% endfor %}
 
-</tr>
+</tr> -->
 
-{% endfor %}
+{% endfor %}<tbody>
     </table>
+    </div>
   </td>
     <td width=50%>
       <table border=2 width=100% style="position:relative;top=0;">
@@ -95,9 +99,11 @@
     <tr style="text-align:center;">
 
       <td width=50%>
-        <table border=2 width=100% style="position:relative;top=0;">
-            <tr><td colspan=13>Утвержденные загрузки*<td></tr><td rowspan=2><b>{{role}}</b>
-{% include 'moon.html' %}
+
+          <div class="table-container">
+        <table border=2 width=100% style="position:relative;top=0;"><thead>
+            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th rowspan=2>{{role}}
+{% include 'moon.html' %}</thead><tbody>
 {% for tt in sup14 %}
 <tr>
 {% for t in tt %}
@@ -120,13 +126,13 @@
 </form>
 {%  include 'script.html'  %}
 
-</td></tr>
-        </table>
+</td></tr></tbody>
+        </table></div>
       </td>
-      <td  width=50%>
-      <table border=2 style="position:relative;top=0;"  width=100% class="dif" >
-          <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><td rowspan=2><b>ФИО</b>
-{% include 'moon.html' %}
+      <td  width=50%>    <div class="table-container">
+      <table border=2 style="position:relative;top=0;"  width=100% class="dif" ><thead>
+          <tr><th colspan=13>Ресурсный пул (остаточная доступность)<th></tr><tr><th rowspan=2>ФИО
+{% include 'moon.html' %}</thead><tbody>
 {% for tt in dif14 %}
 <tr>
 {% for t in tt %}
@@ -147,8 +153,8 @@
 </tr>
 
 {% endfor %}
-
-      </table>
+</tbody>
+      </table></div>
     </td>
 
     </tr>

@@ -26,5 +26,7 @@ urlpatterns = [
     path('ar/<int:r>/', vvv.ar, name='ar') ,
     path('ajr/<int:j>/<int:r>/', vvv.ajr, name='ajr'),
     path('djr/<int:j>/<int:r>/', vvv.djr, name='djr'),
+    path('test/', vvv.test, name='test'),
+
     path('', vvv.alf, name='alf'),
 ]

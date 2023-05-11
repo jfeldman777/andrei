@@ -1041,7 +1041,7 @@ def sjr(request):
 
                         person = UserProfile.objects.get(id=p)
 
-                        tjr(person,project,d,v)
+                        tj(person,project,d,v)##################################
 
                     except:
                         pass
