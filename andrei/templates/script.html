@@ -24,6 +24,15 @@ $('td.good').click(function() {
 
     input.value = newValue;
 
+    var cellWidth = $(this).clientWidth-4;
+    var cellHeight = $(this).clientHeight-2;
+
+    var container = $(this)
+    input.style.width = cellWidth + "px";
+    input.style.height = cellHeight + "px";
+
+
+
     // Add the new input element to the form
     form.appendChild(input);
 

@@ -1,12 +1,13 @@
 <style>
   .table-container {
   overflow-y: scroll; /* Добавляем вертикальный скролл */
-  height: 300px; /* Устанавливаем высоту контейнера */
+  height: 400px; /* Устанавливаем высоту контейнера */
   position: relative; /* Устанавливаем позиционирование контейнера */
 }
 
 table {
   width: 100%; /* Устанавливаем ширину таблицы на 100% */
+
 }
 
 thead th {
@@ -14,5 +15,20 @@ thead th {
   top: 0; /* Устанавливаем верхнюю границу шапки на 0 */
   background-color: #fff; /* Добавляем фоновый цвет шапке */
 }
+td {
+  position: relative;
+}
+
+td table {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+td table td button {
+  display: block;
+  margin: 0 auto;
+}
+
 
   </style>

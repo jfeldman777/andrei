@@ -430,11 +430,12 @@ def aj(request,j):
 
 
         p9 = role.title
-        people = UserProfile.objects.filter(role=role)
+        people = set(UserProfile.objects.filter(role=role))
+        people2 = people #Project.objects.get(id=j).people
         px = role.title#######################
         supp = [-1,'Поставка']+[0]*12
         p100 = role.title
-        for person in people:
+        for person in people2 and people:#######################151515
 
             dif = [person.fio]+diffx(person)
             dif14.append([px]+dif)######################

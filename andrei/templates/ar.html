@@ -2,13 +2,17 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-<table border=2 width=100%>
-<tr><td colspan=2><h1>Все проекты - {{role}}</h1>
+<table border=2 width=100%  style="background-color:lightgrey;
+height: 100vh;
+">
+<tr><td colspan=2><h3>Все проекты - {{role}}</h3>
   <a href="/">домой</a>   <a href="/dr/{{r}}">дельта</a>  <a href="/mr/{{r}}">максимальная доступность</a>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
     <div class="table-container">
-    <table border=2 style="position:relative;top=0;"  width=100% >
+    <table border=2
+    style="position:relative;top=0;background-color:white;
+    "  width=100% >
 
       <thead>
         <tr><th colspan=13>Балансировка <th></tr><tr><th rowspan=2>{{role}}
@@ -29,55 +33,7 @@
 {% endfor %}
 
 </tr>
-<!-- <tr>
-{% for t in sup13 %}
-  {% if forloop.first %}
-  <td>Поставка</td>
-    {% else %}
-<td>
-{{t}}
-</td>
-{% endif %}
-{% endfor %}
-</tr> -->
 
-<!-- <tr>
-{% for s in sup13 %}
-<td>
-{{t}}
-</td>
-{% endfor %}
-</tr> -->
-
-
-
-<!--
-<tr>
-{% for t in zv %}
-<td>
-{{t}}
-</td>
-{% endfor %}
-
-</tr> -->
-
-<!-- <tr>
-{% for t in zo %}
-<td>
-{{t}}
-</td>
-{% endfor %}
-
-</tr> -->
-<!--
-<tr>
-{% for t in delta %}
-<td>
-{{t}}
-</td>
-{% endfor %}
-
-</tr> -->
 
 {% endfor %}
 </tbody>
@@ -86,7 +42,9 @@
   </td>
     <td width=50%>
           <div class="table-container">
-      <table border=2 width=100% style="position:relative;top=0;">
+      <table border=2 width=100% style="position:relative;top=0;background-color:white;
+
+      ">
           <tr><th colspan=13>Потребность<td></tr><td rowspan=2><b>{{role}}</b>
         {% include 'moon.html' %}
         {% for dem in dem13R %}
@@ -108,10 +66,13 @@
     <tr style="text-align:center;">
 
       <td width=50%>
+
             <div class="table-container">
 
-        <table border=2 width=100% style="position:relative;top=0;"><thead>
-            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th rowspan=2>{{role}}
+        <table border=2 width=100% style="position:relative;top=0;background-color:white;"><thead>
+            <tr><th colspan=13>Утвержденные загрузки</th></tr>
+
+            <tr><th rowspan=2>{{role}}
 {% include 'moon.html' %}</thead><tbody>
 {% for tt in sup13e %}
 <tr>
@@ -129,22 +90,25 @@
 {% endif %}
 {% endfor %}</tr>
 {% endfor %}
-<tr><td colspan=13 >
-  <form id="f10" action="/sr/" method="POST">
-  {% csrf_token %}
-<input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button>
-</form>
-{%  include 'script.html'  %}
 
-</td></tr>
 </tbody>
         </table>
-        </div>
-      </td>
+
+      </div>
+        <!-- <tr><td colspan=13> -->
+            <form id="f10" action="/sr/" method="POST">
+            {% csrf_token %}
+          <input type = hidden name="r" value='{{r}}'>
+            <button type="submit" >Сохранить измененияи </button>
+          </form>
+          {%  include 'script.html'  %}
+          <!-- </td></tr> -->
+
+        </td>
+
       <td  width=50%>
             <div class="table-container">
-      <table border=2 style="position:relative;top=0;"  width=100% class="dif" >
+      <table border=2 style="position:relative;top=0;background-color:white;"  width=100% class="dif" >
           <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><td rowspan=2><b>ФИО</b>
 {% include 'moon.html' %}
 {% for tt in dif14 %}

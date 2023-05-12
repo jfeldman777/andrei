@@ -3,149 +3,53 @@
 {% block content %}
 {% include 'scroll.html' %}
 <a href="/">домой</a><br>
-<div class="table-container">
-  <table>
-    <thead>
-      <tr>
-        <th>Header 1</th>
-        <th>Header 2</th>
-        <th>Header 3</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-
-    <tr>
-      <td>Row 1, Column 1</td>
-      <td>Row 1, Column 2</td>
-      <td>Row 1, Column 3</td>
-    </tr>
-    <tr>
-      <td>Row 1, Column 1</td>
-      <td>Row 1, Column 2</td>
-      <td>Row 1, Column 3</td>
-    </tr>
-    <tr>
-      <td>Row 1, Column 1</td>
-      <td>Row 1, Column 2</td>
-      <td>Row 1, Column 3</td>
-    </tr>
-
+<table border=2 width=50%>
   <tr>
-    <td>Row 1, Column 1</td>
-    <td>Row 1, Column 2</td>
-    <td>Row 1, Column 3</td>
+    <td onclick="showInput(this)">10</td>
+    <td onclick="showInput(this)">20</td>
   </tr>
   <tr>
-    <td>Row 1, Column 1</td>
-    <td>Row 1, Column 2</td>
-    <td>Row 1, Column 3</td>
+    <td onclick="showInput(this)">30</td>
+    <td onclick="showInput(this)">40
+      <div id="input-container" style="display:none;">
+        <input id="input-field" type="number" onblur="hideInput()">
+      </div>
+    </td>
   </tr>
-  <tr>
-    <td>Row 1, Column 1</td>
-    <td>Row 1, Column 2</td>
-    <td>Row 1, Column 3</td>
-  </tr>
+</table>
 
-<tr>
-  <td>Row 1, Column 1</td>
-  <td>Row 1, Column 2</td>
-  <td>Row 1, Column 3</td>
-</tr>
-<tr>
-  <td>Row 1, Column 1</td>
-  <td>Row 1, Column 2</td>
-  <td>Row 1, Column 3</td>
-</tr>
-<tr>
-  <td>Row 1, Column 1</td>
-  <td>Row 1, Column 2</td>
-  <td>Row 1, Column 3</td>
-</tr>
-      <tr>
-        <td>Row 1, Column 1</td>
-        <td>Row 1, Column 2</td>
-        <td>Row 1, Column 3</td>
-      </tr>
-      <tr>
-        <td>Row 2, Column 1</td>
-        <td>Row 2, Column 2</td>
-        <td>Row 2, Column 3</td>
-      </tr>
-      <!-- Add more rows here -->
-    </tbody>
-  </table>
-</div>
 
+
+<script>
+  function showInput(cell) {
+    // Получаем размеры ячейки
+    var cellWidth = cell.clientWidth;
+    var cellHeight = cell.clientHeight;
+
+    // Получаем ссылки на элементы input и контейнер
+    var input = document.getElementById("input-field");
+    var container = document.getElementById("input-container");
+
+    // Устанавливаем размеры input элемента в соответствии с размерами ячейки
+    input.style.width = cellWidth + "px";
+    input.style.height = cellHeight + "px";
+
+    // Показываем контейнер с input элементом
+    container.style.display = "block";
+
+    // Передаем значение ячейки в input элемент
+    input.value = cell.innerHTML;
+
+    // Перемещаем фокус на input элемент
+    input.focus();
+  }
+
+  function hideInput() {
+    // Скрываем контейнер с input элементом
+    var container = document.getElementById("input-container");
+    container.style.display = "none";
+  }
+</script>
 
 
 {% endblock %}s
