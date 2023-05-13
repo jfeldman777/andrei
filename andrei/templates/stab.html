@@ -1,0 +1,106 @@
+<!--
+<style>
+  html,
+  body {
+    height: 95%%;
+    margin: 0;
+    padding: 0;
+    text-align:center;
+  }
+
+  .out {
+    height: 100%;
+    width: 100%;
+  }
+
+  .in{
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll; /* Добавляем вертикальный скролл */
+      position: f; /* Устанавливаем позиционирование контейнера */
+  }
+
+  .in td {
+    border: 1px solid black;
+  }
+
+
+.h5{
+      height: 40px;
+}
+
+.out {
+background-color:lightgrey;
+
+}
+
+.in{
+background-color:yellow;
+}
+
+
+thead th {
+  position: sticky; /* Устанавливаем позиционирование шапки таблицы */
+  top: 0; /* Устанавливаем верхнюю границу шапки на 0 */
+  background-color: #fff; /* Добавляем фоновый цвет шапке */
+}
+
+td table {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+</style> -->
+<style>
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.outer-table {
+  height: calc(100% - 30px); /* вычитаем высоту верхней полоски */
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.outer-table td {
+  border: 1px solid black;
+  vertical-align: top;
+  height: 100vh; /* занимает всю высоту экрана */
+}
+
+.inner-table {
+  height: 50vh; /* 50% высоты экрана */
+  width: 50vw; /* 50% ширины экрана */
+
+  border-collapse: collapse;
+
+  overflow: auto; /* появляется скроллинг, если содержимое превышает высоту */
+}
+
+.inner-table td {
+  border: 1px solid gray;
+}
+
+.top-row td {
+  height: 30px; /* высота верхней полоски */
+  background-color: #eee;
+}
+
+.top-row td:first-child {
+  width: 50%; /* первая ячейка верхнего ряда занимает 50% ширины */
+}
+/* стили для малых таблиц */
+.small-table {
+  height: 50vh; /* занимает половину высоты экрана */
+  overflow: auto; /* появляется скроллинг, если содержимое превышает высоту */
+}
+
+/* стили для большой таблицы */
+.big-table-container {
+  height: 100vh; /* занимает всю высоту экрана */
+}
+
+</style>

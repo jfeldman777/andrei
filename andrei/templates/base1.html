@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap4 %}
+
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+
+
+  {% load custom_filters %}
+    <style>
+    td.true {
+      background-color: yellow;
+    }
+    td.false {
+      background-color: white;
+    }
+
+  </style>
+</head>
+<body>
+
+  <main class="container mt-5">
+
+    {% block content %}
+    {% endblock %}
+  </main>
+    {% bootstrap_javascript %}
+</body>
+</html>

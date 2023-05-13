@@ -45,6 +45,7 @@ class Task(models.Model):
     month = models.DateField()
     person = models.ForeignKey(to=UserProfile, on_delete = models.CASCADE)
     load = models.FloatField(default = 0)
+    role = models.ForeignKey(to=Role, on_delete = models.CASCADE,default=1)
 
     def __str__(self):
         return(f"{self.project}:{self.month}({self.person})={self.load} ")

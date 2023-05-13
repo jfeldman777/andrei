@@ -1,55 +1,147 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
-<a href="/">домой</a><br>
-<table border=2 width=50%>
-  <tr>
-    <td onclick="showInput(this)">10</td>
-    <td onclick="showInput(this)">20</td>
-  </tr>
-  <tr>
-    <td onclick="showInput(this)">30</td>
-    <td onclick="showInput(this)">40
-      <div id="input-container" style="display:none;">
-        <input id="input-field" type="number" onblur="hideInput()">
-      </div>
-    </td>
-  </tr>
+
+
+<style>
+  html, body {
+    height: 100%;
+    text-align:center;
+  }
+  body {
+    margin: 0;
+  }
+  table{
+    background-color: pink;
+    width: 100%;
+    height: 100%;
+  }
+
+  td {
+    vertical-align: top;
+  }
+  .in {
+    background-color: yellow;
+    width: 50%;
+    height: 50%;
+  }
+
+
+
+
+  table {
+    background-color: gray;
+    width: 100%;
+    height: 96%;
+    table-layout: fixed;
+  }
+
+  .out {
+    border-spacing: 10px;
+    border-collapse: separate;
+    width: 100%;
+    height: 100%;
+  }
+  .in-container {
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+    box-sizing: border-box;
+    border: 2px solid gray;
+  }
+
+</style>
+
+
+<table border=2 class="out">
+  <tr><td>
+            <div class="in-container">
+    <table class="in" id=t1>
+            <tr>
+              <td>
+                1
+              </td>
+            </tr>
+          </table>
+          </div>
+ </td>
+    <td>
+
+2
+    </td></tr>
+    <tr><td>3</td>
+      <td>
+
+
+        <div class="in-container">
+          <table class="in" id=t2>
+            <thead>
+              <tr>
+                <th>Header 1</th>
+                <th>Header 2</th>
+                <th>Header 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+              <!-- Добавьте еще строк, чтобы увидеть полосы прокрутки внутри контейнера -->
+            </tbody>
+          </table>
+        </div>
+      </td></tr>
 </table>
-
-
-
-<script>
-  function showInput(cell) {
-    // Получаем размеры ячейки
-    var cellWidth = cell.clientWidth;
-    var cellHeight = cell.clientHeight;
-
-    // Получаем ссылки на элементы input и контейнер
-    var input = document.getElementById("input-field");
-    var container = document.getElementById("input-container");
-
-    // Устанавливаем размеры input элемента в соответствии с размерами ячейки
-    input.style.width = cellWidth + "px";
-    input.style.height = cellHeight + "px";
-
-    // Показываем контейнер с input элементом
-    container.style.display = "block";
-
-    // Передаем значение ячейки в input элемент
-    input.value = cell.innerHTML;
-
-    // Перемещаем фокус на input элемент
-    input.focus();
-  }
-
-  function hideInput() {
-    // Скрываем контейнер с input элементом
-    var container = document.getElementById("input-container");
-    container.style.display = "none";
-  }
-</script>
-
-
-{% endblock %}s
+{% endblock %}

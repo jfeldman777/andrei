@@ -6,7 +6,7 @@
 height: 100vh;
 ">
 <tr><td colspan=2><h3>Все проекты - {{role}}</h3>
-  <a href="/">домой</a>   <a href="/dr/{{r}}">дельта</a>  <a href="/mr/{{r}}">максимальная доступность</a>
+(ar)<a href="/">домой</a>   <a href="/dr/{{r}}">дельта</a>  <a href="/mr/{{r}}">максимальная доступность</a>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
     <div class="table-container">
@@ -15,7 +15,7 @@ height: 100vh;
     "  width=100% >
 
       <thead>
-        <tr><th colspan=13>Балансировка <th></tr><tr><th rowspan=2>{{role}}
+        <tr><th colspan=13>Балансировка <th></tr><tr><th>{{role}}
 {% include 'moon.html' %}
 </thead><tbody>
 {% for dem in dem13L %}
@@ -45,14 +45,14 @@ height: 100vh;
       <table border=2 width=100% style="position:relative;top=0;background-color:white;
 
       ">
-          <tr><th colspan=13>Потребность<td></tr><td rowspan=2><b>{{role}}</b>
+          <tr><th colspan=13>Потребность<td></tr><td><b>{{role}}</b>
         {% include 'moon.html' %}
         {% for dem in dem13R %}
         <tr>
         {% for t in dem %}
 
 
-        <td class="good" key="{{t.link}}">
+        <td class="good" key="{{t.link}}" title="{{t.up}}">
 {{t.val}}
 </td>
 {% endfor %}
@@ -72,7 +72,7 @@ height: 100vh;
         <table border=2 width=100% style="position:relative;top=0;background-color:white;"><thead>
             <tr><th colspan=13>Утвержденные загрузки</th></tr>
 
-            <tr><th rowspan=2>{{role}}
+            <tr><th>{{role}}
 {% include 'moon.html' %}</thead><tbody>
 {% for tt in sup13e %}
 <tr>
@@ -84,7 +84,7 @@ height: 100vh;
   <td colspan=13>{{t}}</td></tr><tr>
     {% endif %}
   {% else %}
-  <td class="good" key="{{t.link}}">
+  <td class="good" key="{{t.link}}" title="{{t.up}}">
     {{t.val}}
   </td>
 {% endif %}
@@ -96,10 +96,10 @@ height: 100vh;
 
       </div>
         <!-- <tr><td colspan=13> -->
-            <form id="f10" action="/sr/" method="POST">
+            <form id="f10" action="/s5/" method="POST">
             {% csrf_token %}
           <input type = hidden name="r" value='{{r}}'>
-            <button type="submit" >Сохранить измененияи </button>
+            <button type="submit" >(5)Сохранить изменения </button>
           </form>
           {%  include 'script.html'  %}
           <!-- </td></tr> -->
@@ -109,7 +109,7 @@ height: 100vh;
       <td  width=50%>
             <div class="table-container">
       <table border=2 style="position:relative;top=0;background-color:white;"  width=100% class="dif" >
-          <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><td rowspan=2><b>ФИО</b>
+          <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><td><b>ФИО</b>
 {% include 'moon.html' %}
 {% for tt in dif14 %}
 <tr>

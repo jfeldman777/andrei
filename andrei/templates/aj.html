@@ -1,15 +1,15 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
 <table border=2 width=100%>
 <tr><td colspan=2><h1>Все ресурсы - {{project}}</h1>
-<a href="/">домой</a> <a href="/dj/{{j}}">Дельта</a>
+(aj)<a href="/">домой</a> <a href="/dj/{{j}}">Дельта</a>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
         <div class="table-container">
     <table border=2 style="position:relative;top=0;"  width=100% ><thead><tr>
-        <th colspan=13>Балансировка</th></tr><tr><th rowspan=2><b>{{project}}</b>
+        <th colspan=13>Балансировка</th></tr><tr><th><b>{{project}}</b>
 {% include 'moon.html' %}</thead><tbody>
 {% for dem in dem13L %}
 <tr>
@@ -81,13 +81,13 @@
   </td>
     <td width=50%>
       <table border=2 width=100% style="position:relative;top=0;">
-          <tr><td colspan=13>Потребность<td></tr><td rowspan=2><b>{{project}}</b>
+          <tr><td colspan=13>Потребность<td></tr><td><b>{{project}}</b>
         {% include 'moon.html' %}
         {% for dem in dem13R %}
         <tr>
         {% for t in dem %}
 
-        <td class="good" key="{{t.link}}">
+        <td class="good" key="{{t.link}}" title="{{t.up}}">
       {{t.title}}
       </td>
 {% endfor %}
@@ -101,7 +101,7 @@
 
       <td width=50%>  <div class="table-container">
         <table border=2 width=100% style="position:relative;top=0;"><thead>
-            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th rowspan=2>{{project}}
+            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th>{{project}}
 {% include 'moon.html' %}</thead><tbody
 {% for tt in sup14 %}
 <tr>
@@ -123,7 +123,7 @@
       </td>
       <td  width=50%>  <div class="table-container">
       <table border=2 style="position:relative;top=0;"  width=100% class="dif" ><thead>
-          <tr><th colspan=13>Ресурсный пул (остаточная доступность)</th></tr><tr><th rowspan=2>ФИО
+          <tr><th colspan=13>Ресурсный пул (остаточная доступность)</th></tr><tr><th>ФИО
 {% include 'moon.html' %}</thead><tbody>
 {% for tt in dif14 %}
 <tr>

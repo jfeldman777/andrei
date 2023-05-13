@@ -10,13 +10,18 @@ urlpatterns = [
     path('mj/<int:j>', vvv.mj, name='mj'),
     path('dj/<int:j>', vvv.dj, name='dj'),
     path('aj/<int:j>', vvv.aj, name='aj'),
-    path('sjrL/', vvv.sjrL, name='sjrL'),
-    path('sjrR/', vvv.sjrR, name='sjrR'),
-    path('sjr/', vvv.sjr, name='sjr'),
-    path('sdr/', vvv.sdr, name='sdr'),
-    path('sdrd/', vvv.sdrd, name='sdrd'),
-    path('sdjr/', vvv.sdjr, name='sdjr'),
-    path('sr/', vvv.sr, name='sr'),
+
+    path('s2/', vvv.s2, name='s2'),
+    path('s1/', vvv.s1, name='s1'),
+    path('s4/', vvv.s4, name='s4'),
+    path('s3/', vvv.s3, name='s3'),
+
+    path('s6/', vvv.s6, name='s6'),
+    # path('sdrd/', vvv.sdrd, name='sdrd'),
+
+
+
+    path('s5/', vvv.s5, name='s5'),
     path('test/', vvv.test, name='test'),
     path('sj/', vvv.sj, name='sj'),
     path('atj/', vvv.atj, name='atj'),
