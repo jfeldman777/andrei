@@ -1015,37 +1015,28 @@ def tr(person, role, m, l):##########################################
         # If the instance does not exist, create a new one
 
         instance = Less.objects.create(person=person, start_date=m, load=l)
-def tdr(project,person,  m, l):##########################################
-
-    try:
-        instance = Task.objects.get(person=person, project=project,month=m)
-    except:
-        instance = None
-
-    if instance:
-
-        instance.load = l
-        instance.save()
-    else:
-        # If the instance does not exist, create a new one
-
-        instance = Task.objects.create(person=person, project=project,month=m, load=l)
+# def tdr(project,person,  m, l):##########################################
+#     try:
+#         instance = Task.objects.get(person=person, project=project,month=m)
+#     except:
+#         instance = None
+#
+#     if instance:
+#         instance.load = l
+#         instance.save()
+#     else:
+#         instance = Task.objects.create(person=person, project=project,month=m, load=l)
 
 
 def tjTask(p, j, d, l):
-
     try:
-
         instance = Task.objects.get(person=p,project=j, month=d)
     except:
         instance = None
-
     if instance:
-
         instance.load = l
         instance.save()
     else:
-
         instance = Task.objects.create(person=p, project=j, month=d, load=l)
 
 
@@ -1101,41 +1092,39 @@ def smr(request):
             print(form.errors)
 
     return mr(request,r)
-
-def s51(request):
-    id = 1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            sr = request.POST.get('r')
-            r = int(sr)
-            role=Role.objects.get(id=r)
-
-            for k,v in request.POST.items():
-                if '.' in k:
-                    j,p,d=k.split('.')
-
-                    try:
-                        person = UserProfile.objects.get(id=p)
-                        project = Project.objects.get(id=j)
-
-                        tdr(project,person,d,v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return ar(request,r)
+#
+# def s51(request):
+#     id = 1
+#     if request.method == "POST":
+#         # create a form instance and populate it with data from the request:
+#         form = Form(request.POST)
+#         # check whether it's valid:
+#         if form.is_valid():
+#             sr = request.POST.get('r')
+#             r = int(sr)
+#             role=Role.objects.get(id=r)
+#
+#             for k,v in request.POST.items():
+#                 if '.' in k:
+#                     j,p,d=k.split('.')
+#
+#                     try:
+#                         person = UserProfile.objects.get(id=p)
+#                         project = Project.objects.get(id=j)
+#
+#                         tdr(project,person,d,v)
+#                     except:
+#                         pass
+#         else:
+#             print(form.errors)
+#
+#     return ar(request,r)
 
 
 def s5(request):
     id = 1
     if request.method == "POST":
-        # create a form instance and populate it with data from the request:
         form = Form(request.POST)
-        # check whether it's valid:
         if form.is_valid():
             sr = request.POST.get('r')
             r = int(sr)
@@ -1148,7 +1137,8 @@ def s5(request):
 
                         person = UserProfile.objects.get(id=p)
                         project = Project.objects.get(id=j)
-                        tdr(project,person,d,v)
+                        # tdr(project,person,d,v)
+                        tjTask(person,project,d,v)
 
                     except:
                         pass
@@ -1174,8 +1164,7 @@ def s6(request):
 
                         person = UserProfile.objects.get(id=p)
                         project = Project.objects.get(id=j)
-                        tdr(project,person,d,v)
-
+                        tjTask(person,project,d,v)
                     except:
                         pass
         else:
@@ -1211,34 +1200,26 @@ def s4(request):
 
 def s1(request):
     if request.method == "POST":
-        # create a form instance and populate it with data from the request:
         form = Form(request.POST)
-        # check whether it's valid:
         if form.is_valid():
             for k,v in request.POST.items():
                 sr = request.POST.get('r')
                 r = int(sr)
                 role=Role.objects.get(id=r)
-
                 sj = request.POST.get('id')
                 j = int(sj)
                 project = Project.objects.get(id=j)
-
                 if '.' in k:
                     p,d=k.split('.')
-
                     try:
-
                         person = UserProfile.objects.get(id=p)
-
                         tjTask(person,project,d,v)##################################
-
                     except:
                         pass
         else:
             print(form.errors)
 
-        return ajr(request,j,r)
+    return ajr(request,j,r)
 
 def s3(request):
     if request.method == "POST":
@@ -1273,28 +1254,22 @@ def s3(request):
 
 def s2(request):
     if request.method == "POST":
-        # create a form instance and populate it with data from the request:
         form = Form(request.POST)
-        # check whether it's valid:
         if form.is_valid():
             for k,v in request.POST.items():
                 sr = request.POST.get('r')
                 r = int(sr)
                 role=Role.objects.get(id=r)
-
                 sj = request.POST.get('id')
                 j = int(sj)
                 project = Project.objects.get(id=j)
-
                 if '-' in k:
-
                     try:
                         tjLoad(project,role,k,v)
                     except:
                         pass
         else:
             print(form.errors)
-
     return ajr(request,j,r)
 def sj(request):
 
