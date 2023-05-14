@@ -18,7 +18,7 @@ height: 100vh;
         <tr><th colspan=13>Балансировка <th></tr><tr><th>{{role}}
 {% include 'moon.html' %}
 </thead><tbody>
-{% for dem in dem13L %}
+{% for dem in w1 %}
 <tr>
 {% for t in dem %}
 {% if forloop.first %}
@@ -47,7 +47,7 @@ height: 100vh;
       ">
           <tr><th colspan=13>Потребность<td></tr><td><b>{{role}}</b>
         {% include 'moon.html' %}
-        {% for dem in dem13R %}
+        {% for dem in w2 %}
         <tr>
         {% for t in dem %}
 
@@ -74,7 +74,7 @@ height: 100vh;
 
             <tr><th>{{role}}
 {% include 'moon.html' %}</thead><tbody>
-{% for tt in sup13e %}
+{% for tt in w3 %}
 <tr>
 {% for t in tt %}
   {% if forloop.first %}
@@ -111,7 +111,7 @@ height: 100vh;
       <table border=2 style="position:relative;top=0;background-color:white;"  width=100% class="dif" >
           <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><td><b>ФИО</b>
 {% include 'moon.html' %}
-{% for tt in dif14 %}
+{% for tt in w4 %}
 <tr>
 {% for t in tt %}
 

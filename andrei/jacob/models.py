@@ -37,6 +37,7 @@ class Less(models.Model):
     person = models.ForeignKey(to=UserProfile, on_delete = models.CASCADE)
     start_date = models.DateField()
     load = models.FloatField(default = 0)
+    role = models.ForeignKey(to=Role, on_delete = models.CASCADE,default=1)
     def __str__(self):
         return(f"{self.person.user.last_name}({self.start_date})={self.load} ")
 
