@@ -191,157 +191,6 @@ def date12():
     d = inc_n(d,12)
     return d
 
-def DtaskP(person):
-    res = [0]*12
-    d = date0()
-    for i in range(12):
-        tasks = Task.objects.filter(person=person,
-                        month=d)
-        for t in tasks:
-            try:
-                res[i]+=t.load
-            except:
-                pass
-        d = inc(d)
-    return res
-
-def DtaskPRJ(person,role,project):
-    res = [0]*12
-    d = date0()
-    for i in range(12):
-        task = Task.objects.filter(person=person, role=role,project=project,
-                        month=d)
-        try:
-            res[i]=task[0].load
-        except:
-            pass
-        d = inc(d)
-    return res
-from collections import defaultdict
-def DlessPR(person,role):
-    res = [100]*12
-    d = date0()
-    for i in range(12):
-
-        task = Less.objects.filter(person=person, role=role,
-                        start_date__eq=d)
-        try:
-            res[i]=task[0].load
-        except:
-            pass
-        d = inc(d)
-    return res
-def DlessP(person):
-    res = [100]*12
-    t_map = defaultdict(float)
-    d = date0()
-    for i in range(12):
-        tasks = Less.objects.filter(person=person,
-                    start_date=d)
-        for t in tasks:
-            try:
-                res[i]+=t.load
-            except:
-                pass
-
-
-        d = inc(d)
-    return res
-def DlessR(role):
-    people = UserProfile.objects.filter(role=role)#(res__title=role)#role=role or
-    res = [0]*12
-    # t_map = defaultdict()
-    d = date0()
-    for i in range(12):
-        # people = Person.objects.all()
-        for person  in people:
-            task = Less.objects.filter(person=person,role=role,
-                        start_date=d)
-            try:
-                res[i]+=task[0].load
-            except:
-                res[i]+=100
-
-
-        d = inc(d)
-    return res
-
-def DloadRJ(role,project):
-    res = [0]*12
-    d = date0()
-    for i in range(12):
-
-        task = Load.objects.filter(role=role,project=project,
-                        month=d)
-        try:
-            res[i]=task[0].load
-        except:
-            pass
-        d = inc(d)
-    return res
-
-def DtaskR(role):
-    res = [0]*12
-    d = date0()
-    for i in range(12):
-        task = Task.objects.filter(role=role,
-                        month=d)
-        try:
-            res[i]+=task[0].load
-        except:
-            pass
-        d = inc(d)
-    return res
-
-
-def DtaskRJ(role,project):
-    res = [0]*12
-    d = date0()
-    for i in range(12):
-        task = Task.objects.filter(role=role,project=project,month=d)
-        try:
-            res[i]+=task[0].load
-        except:
-            pass
-        d = inc(d)
-    return res
-
-def DdifP(person):
-    less = DlessP(person)
-    task = DtaskP(person)
-    res = [0]*12
-    d = date0()
-    for i in range(12):
-        res[i]=less[i]-task[i]
-        d = inc(d)
-
-    print(7777)
-    print(less)
-    print(task)
-    print(res)
-    return res
-def DdifRJ(role,project):
-    load = DloadRJ(role,project)
-    task = DtaskRJ(role,project)
-    res = [0]*12
-    d = date0()
-    for i in range(12):
-        res[i]=task[i]-load[i]
-        d = inc(d)
-    return res
-def DdifR(role):
-    res = [0]*12
-    less = DlessR(role)
-    task = DtaskR(role)
-
-    d = date0()
-    for i in range(12):
-        res[i]=less[i]-task[i]
-        d = inc(d)
-    return res
-
-def up(a,b):
-    return f"надо:{a}/есть:{b}"
 
 def test(request):
     person = UserProfile.objects.get(id=4)
@@ -418,88 +267,10 @@ def zero(name):
         sum = [name]+[0]*12
         return sum
 
-def diffx(person):
-    projects = Project.objects.all()
-    sum = [0]*12
-    for project in projects:
-        s = supply(project,person)
-        for i in range(12):
-            sum[i]+=s[i]
-    ls = less(person)
-    for i in range(12):
-        ls[i]-=sum[i]
+def diffx(person,role):
 
-    return ls
 
-def less(person):
-    les = [1]*12
-    d = date.today().replace(day=15)
-    for i in range(12):
-        L = list(Less.objects.filter(start_date=d,person=person))
-        try:
-            t = L[0].load
-        except:
-            t = 100
-        d = inc(d)
-        les[i]=t
-    return les
-
-def supply(project,person):
-        sp=[0]*12
-        d = date.today().replace(day=15)
-        for i in range(12):
-            L = list(Task.objects.filter(project=project,month=d,person=person))
-            try:
-                t = L[0].load
-            except:
-                t = 0
-            d = inc(d)
-            sp[i]=t
-        return sp
-def supply2(project,person):
-        sp=[0]*12
-        d = date.today().replace(day=15)
-        for i in range(12):
-            L = list(Task.objects.filter(project=project,month=d,person=person))
-            try:
-                t = L[0].load
-            except:
-                t = 0
-
-            sp[i]={"link":f"{project.id}.{person.id}.{d.year}-{d.month}-15",
-            "up":up(1,2),
-            "val":t}#9898
-            d = inc(d)
-        return sp
-def demand(project,role):
-    return DloadRJ(role,project)
-    # dem = [0]*12
-    # d = date.today().replace(day=15)
-    # for i in range(12):
-    #     L = list(Load.objects.filter(project=project,month=d,role=role))
-    #     try:
-    #         t = L[0].load
-    #     except:
-    #         t = 0
-    #     d = inc(d)
-    #     dem[i]=t
-    # return dem
-
-def demand2(project,role):
-    dem = [0]*12
-    d = date.today().replace(day=15)
-    for i in range(12):
-        L = list(Load.objects.filter(project=project,month=d,role=role))
-        try:
-            t = L[0].load
-        except:
-            t = 0
-
-        dem[i]={"link":f"{d.year}-{d.month}-15",
-        "up":up(t,2),
-        "val":t}#9898
-        d = inc(d)
-    return dem
+    return pr_dif_(person,role)
 
 
 def moon():
@@ -792,7 +563,7 @@ def  mro(request):
         px = role.title#######################
         for person in people:
 
-            dif = [person.fio]+diffx(person)
+            dif = [person.fio]+diffx(person,role)
             dif14.append([px]+dif)######################
             px = -1##################################
 
@@ -802,84 +573,67 @@ def  mro(request):
 
 def aj(request,j):
     moon12 = moon();
-    dem14 = []
-    dem13L = []
-    sup = []
-    dem13R=[]
-    dif14 = []
-
+    w1=[]
+    w2=[]
+    w3=[]
+    w4=[]
     project = Project.objects.get(id=j)
     roles = Role.objects.all()
-    # supp = [0]*12
-    # sup139 = []
-    sup14 = []
-    dif13 = []
-    dem1 = []
-    sup13=[]
-    sup100=[]
-
-
 
     zo = zero('Аутсорс')
     zv = zero('Вакансии')
 
     for role in roles:
-
         pz = [role.title]
-        dem = [role.title]+['Потребность']+demand(project,role)#----------------
-        dem1 = demand(project,role)#--------
-        delta = ['Дельта']+[0]*12
+        dem = [role.title]+['Потребность']+rj_load_(role,project)#----------------
+        delta = ['Дельта']+rj_delta_(role,project)
 
         dem2=[0]*12
         d = date.today().replace(day=15)
         for i in range(12):
 
             x={"link":f"{role.id}.{d.year}-{d.month}-15",
-            "up":up(1,2),
-            "title":dem1[i]}#9898
+            "title":dem[i+2]}            
             dem2[i]=x
             d = inc(d)
 
-        dem13R.append([role.title]+dem2)#--------
+        w2.append([role.title]+dem2)#--------
 
 
 
         p9 = role.title
-        people = set(UserProfile.objects.filter(role=role))
-        people2 = people #Project.objects.get(id=j).people
-        px = role.title#######################
+        people = people_of_r(role)
+        px = role.title
         supp = [-1,'Поставка']+[0]*12
         p100 = role.title
-        for person in people2 and people:#######################151515
-
-            dif = [person.fio]+diffx(person)
-            dif14.append([px]+dif)######################
+        for person in people:
+            dif = [person.fio]+diffx(person,role)
+            w4.append([px]+dif)######################
             px = -1##################################
 
-            sup = supply(project,person)
+            sup = pr_task_(person,role)
             sup100=[p100,person.fio]+sup
             p100=-1
             for i in range(12):
                 supp[i+2]+=sup[i]
-            sup14.append(sup100)
+            w3.append(sup100)
 
 
-        dem13L.append(dem)##########################################
-        dem13L.append(supp)###############--
-        dem13L.append([-1]+zo)################
-        dem13L.append([-1]+zv)#####################
+        w1.append(dem)##########################################
+        w1.append(supp)###############--
+        w1.append(zo)################
+        w1.append(zv)#####################
+        
+        delta = rj_delta_(role,project)
 
-        for i in range(12):
-            delta[i+1] = round(supp[i+2]-dem[i+2])
+        w1.append(['Дельта']+delta)############################
 
-        dem13L.append([-1]+delta)############################
-
-    moon12["dem13R"]=dem13R#####################
-    moon12["dem13L"]=dem13L###############################
-    moon12["sup14"]=sup14
+    moon12["w2"]=w2#####################
+    moon12["w1"]=w1###############################
+    moon12["w3"]=w3
 
 
-    moon12["dif14"] = dif14########################################
+    moon12["w4"] = w4  ########################################
     moon12["role"] = role
     moon12["project_id"] = j
     moon12["project"] = project
@@ -936,7 +690,7 @@ def mj(request,j):
         p100 = role.title
         for person in people:
 
-            dif = [person.fio]+diffx(person)
+            dif = [person.fio]+diffx(person,role)
             dif14.append([px]+dif)######################
             px = -1##################################
 
