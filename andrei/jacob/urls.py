@@ -2,7 +2,16 @@ from django.urls import path
 from . import vvv
 
 urlpatterns = [
+        path('prjm_task/<int:p>/<int:r>/<int:j>/<int:y>/<int:m>', vvv.prjm_task, name='prjm_task'),
+            path('prm_isfree/<int:p>/<int:r>/<int:y>/<int:m>', vvv.prm_isfree, name='prm_isfree'),
+                path('rjm_load/<int:r>/<int:j>/<int:y>/<int:m>', vvv.rjm_load, name='rjm_load'),
+        path('prj_task/<int:p>/<int:r>/<int:j>', vvv.prj_task, name='prj_task'),
+            path('pr_isfree/<int:p>/<int:r>', vvv.pr_isfree, name='pr_isfree'),
+                path('rj_load/<int:r>/<int:j>', vvv.rj_load, name='rj_load'),
+                path('prm_task/<int:p>/<int:r>/<int:y>/<int:m>', vvv.prm_task, name='prm_task'),
+        path('pr_task/<int:p>/<int:r>', vvv.pr_task, name='pr_task'),
     path('mro/', vvv.mro, name='mro'),
+        path('mrom/', vvv.mrom, name='mrom'),
     path('prjlist/', vvv.projects, name='projects'),
     path('smj/', vvv.smj, name='smj'),
     path('smr/', vvv.smr, name='smr'),

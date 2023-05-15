@@ -87,18 +87,9 @@
 {% for tt in w4 %}
 <tr>
 {% for t in tt %}
+  <td>
+{{t}}
 
-{% if forloop.first %}
-{% if t|negative %}
-
-{% else %}
-  <td colspan=13>{{t}}</td></tr><tr>
-{% endif %}
-{% else %}
-  <td class="good" key="{{t.link}}" title="{{t.up}}">
-{{t.title}}
-</td>
-{% endif %}
 {% endfor %}
 
 </tr>

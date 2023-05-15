@@ -45,13 +45,11 @@ height: 100vh;
       <table border=2 width=100% style="position:relative;top=0;background-color:white;
 
       ">
-          <tr><th colspan=13>Потребность<td></tr><td><b>{{role}}</b>
+          <tr><th colspan=13>Потребность<td></tr><td>{{role}}
         {% include 'moon.html' %}
         {% for dem in w2 %}
         <tr>
         {% for t in dem %}
-
-
         <td class="good" key="{{t.link}}" title="{{t.up}}">
 {{t.val}}
 </td>
@@ -70,7 +68,7 @@ height: 100vh;
             <div class="table-container">
 
         <table border=2 width=100% style="position:relative;top=0;background-color:white;"><thead>
-            <tr><th colspan=13>Утвержденные загрузки</th></tr>
+            <tr><th colspan=13>Утвержденные загрузки*</th></tr>
 
             <tr><th>{{role}}
 {% include 'moon.html' %}</thead><tbody>
@@ -84,7 +82,7 @@ height: 100vh;
   <td colspan=13>{{t}}</td></tr><tr>
     {% endif %}
   {% else %}
-  <td class="good" key="{{t.link}}" title="{{t.up}}">
+  <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}};">
     {{t.val}}
   </td>
 {% endif %}
@@ -114,18 +112,9 @@ height: 100vh;
 {% for tt in w4 %}
 <tr>
 {% for t in tt %}
-
-{% if forloop.first %}
-{% if t|negative %}
-
-{% else %}
-  <td colspan=13>{{t}}</td></tr><tr>
-{% endif %}
-{% else %}
-  <td class="good" key="{{t.link}}">
-{{t.title}}
+<td>
+{{t}}
 </td>
-{% endif %}
 {% endfor %}
 
 </tr>

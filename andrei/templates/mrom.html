@@ -4,7 +4,7 @@
 <a href="/">домой</a>
 
       <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
-          <tr><td colspan=13>Ресурсный пул (остаточная доступность)</td></tr>
+          <tr><td colspan=13>Ресурсный пул (максимальная доступность)</td></tr>
             <tr><td><b>ФИО</b>
 
 {% include 'moon.html' %}
@@ -17,8 +17,8 @@
 <td colspan=13>{{t}}</td></tr><tr>
   {% endif %}
 {% else %}
-<td>
-{{t}}
+<td style="background-color:{{t.color}};">
+{{t.val}}
 </td>
 {% endif %}
 {% endfor %}

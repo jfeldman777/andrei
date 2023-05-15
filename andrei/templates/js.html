@@ -10,19 +10,28 @@
         for (var k = 0; k < cells.length; k++) {
 
 
-          if( tables[i].classList.contains("dif"))
-          {
-            if (cells[k].innerHTML < 0) {
-              cells[k].style.backgroundColor = "red";
-            }else if (cells[k].innerHTML == 0) {
-              cells[k].style.backgroundColor = "yellow";}
-              else{cells[k].style.backgroundColor = "white";}
-        }else { if (cells[k].innerHTML < 0) {
-                  cells[k].style.backgroundColor = "pink";
-                }else if (cells[k].innerHTML > 0) {
-                  cells[k].style.backgroundColor = "lightblue";
-                }
-}
+                        if( tables[i].classList.contains("dif")){
+                              if (cells[k].innerHTML < 0) {
+                                    cells[k].style.backgroundColor = "red";
+                              }else if (cells[k].innerHTML == 0) {
+                            cells[k].style.backgroundColor = "yellow";
+                          }else
+                            cells[k].style.backgroundColor = "white";
+                          }
+                      else
+
+
+                //   cells[k].style.backgroundColor = "pink";
+                // }else
+                             if (cells[k].innerHTML < 0) {
+                                cells[k].style.backgroundColor = "pink";
+                              }else
+                               if (cells[k].innerHTML > 0) {
+                                cells[k].style.backgroundColor = "lightblue";
+                              }
+  if(cells[k].classList.contains("mypink")){
+    cells[k].style.backgroundColor = "pink";
+  }
 
         }
       }
