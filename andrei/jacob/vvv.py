@@ -1228,3 +1228,5 @@ def pref(p):
     L.append(p.start_date)
     L.append(p.end_date)
     return L
+def up(a,b):
+    return f"надо:{a}/есть:{b}"

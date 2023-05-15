@@ -28,7 +28,7 @@ class Load(models.Model):
     project = models.ForeignKey(to=Project, on_delete = models.CASCADE)
     month = models.DateField()
     role = models.ForeignKey(to=Role, on_delete = models.CASCADE)
-    load = models.FloatField(default = 0)
+    load = models.IntegerField(default = 0)
 
     def __str__(self):
         return(f"{self.project}:{self.month}({self.role})={self.load} ")
@@ -36,7 +36,7 @@ class Load(models.Model):
 class Less(models.Model):
     person = models.ForeignKey(to=UserProfile, on_delete = models.CASCADE)
     start_date = models.DateField()
-    load = models.FloatField(default = 0)
+    load = models.IntegerField(default = 0)
     role = models.ForeignKey(to=Role, on_delete = models.CASCADE,default=1)
     def __str__(self):
         return(f"{self.person.user.last_name}({self.start_date})={self.load} ")
@@ -45,7 +45,7 @@ class Task(models.Model):
     project = models.ForeignKey(to=Project, on_delete = models.CASCADE)
     month = models.DateField()
     person = models.ForeignKey(to=UserProfile, on_delete = models.CASCADE)
-    load = models.FloatField(default = 0)
+    load = models.IntegerField(default = 0)
     role = models.ForeignKey(to=Role, on_delete = models.CASCADE,default=1)
 
     def __str__(self):
