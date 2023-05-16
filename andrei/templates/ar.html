@@ -45,12 +45,12 @@ height: 100vh;
       <table border=2 width=100% style="position:relative;top=0;background-color:white;
 
       ">
-          <tr><th colspan=13>Потребность<td></tr><td>{{role}}
+          <tr><th colspan=13>Потребность++<td></tr><td>{{role}}
         {% include 'moon.html' %}
         {% for dem in w2 %}
         <tr>
         {% for t in dem %}
-        <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}}">
+        <td class="good wow {{t.color}}" key="{{t.link}}" title="{{t.up}}">
 {{t.val}}
 </td>
 {% endfor %}

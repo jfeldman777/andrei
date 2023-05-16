@@ -502,13 +502,22 @@ def dj(request,j):
             diff=pr_dif_(person,role)
             d = date.today().replace(day=15)
             for i in range(12):
+                color=""
+                if delta[i] < 0:
+                    color="mypink"                           
                 b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
                 "up":up(
                 max(-delta[i],0)
                 ,diff[i]),
-                "val":a_w3[i]}
+                "val":a_w3[i],  "color":color
+                          
+                          }
                 d = inc(d)
 
+    
+                
+                
+                
             c_w3 = [p100,{"val":person.fio}]+b_w3
             p100=-1
             w3.append(c_w3)
