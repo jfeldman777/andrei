@@ -10,7 +10,7 @@
         <div class="table-container">
     <table border=2 style="position:relative;top=0;"  width=100% ><thead><tr>
         <th colspan=13>Балансировка</th></tr><tr><th><b>{{project}}</b>
-{% include 'moon.html' %}</thead><tbody>
+{% include 'moon.html' %}
 {% for dem in w1 %}
 <tr>
 {% for t in dem %}
@@ -32,44 +32,48 @@
   </td>
     <td width=50%>
       <table border=2 width=100% style="position:relative;top=0;">
-          <tr><td colspan=13>Потребность<td></tr><td><b>{{project}}</b>
+          <tr><td colspan=13>Потребность<td></tr><tr>
+                
         {% include 'moon.html' %}
-        {% for dem in w2 %}
         <tr>
-        {% for t in dem %}
+        {% for t in w2 %}
+        <td class="good2" key="{{t.link}}" title="{{t.up}}">
 
-        <td class="good" key="{{t.link}}" title="{{t.up}}">
-      {{t.title}}
-      </td>
+          {{t.val}}
+</td>
 {% endfor %}
-</tr>        {% endfor %}
 
-
-      </table>
-
+</tr>  
+            
+              </table>
+        
     </td></tr>
     <tr style="text-align:center;">
 
       <td width=50%>  <div class="table-container">
         <table border=2 width=100% style="position:relative;top=0;"><thead>
-            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th>{{project}}
-{% include 'moon.html' %}</thead><tbody
+            <tr><th colspan=13>Утвержденные загрузки**</th></tr><tr><th>{{project}}
+{% include 'moon.html' %}
+       
+            
 {% for tt in w3 %}
 <tr>
 {% for t in tt %}
   {% if forloop.first %}
 {% if t|negative %}{% else %}
 
-
+    
   <td colspan=13>{{t}}</td></tr><tr>
+            
+            
     {% endif %}
   {% else %}
 <td>
-{{t}}
+{{t.val}}
 </td>
 {% endif %}
 {% endfor %}</tr>
-{% endfor %}
+            {% endfor %}<//div>
         </table>
       </td>
       <td  width=50%>  <div class="table-container">

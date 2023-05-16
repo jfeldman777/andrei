@@ -468,54 +468,59 @@ def dj(request,j):
     w2=[]
     w1=[]
     moon12 = moon()
-    supp = [-1,'Поставка']+rj_task_(role,project)
-    delta = ['Дельта']+rj_delta_(role,project)
-    zo = zero('Аутсорс')
-    zv = zero('Вакансии')
+#    supp = [-1,'Поставка']+rj_task_(role,project)
+#    delta = ['Дельта']+rj_delta_(role,project)
+#    zo = zero('Аутсорс')
+#    zv = zero('Вакансии')
     w4=[]
+    
+    roles = Role.objects.all()
+    for role in roles:
 
-    people = people_of_r(role)
-    for person in people:#7777777777777777777777777777777777777777
-        diff=pr_dif_(person,role)
-        w4.append([person.fio]+diff)
+        people = people_of_r(role)
+        p6 = role.title                  
+        for person in people:#7777777777777777777777777777777777777777
+            diff=pr_dif_(person,role)
+            w4.append([p6,person.fio]+diff)
+            p6=-1
+            
+        delta = rj_delta_(role,project)
 
+        a_w2=[0]*12
+        dem_rj = rj_load_(role,project)#----------------
 
-    a_w2=[0]*12
-    dem_rj = rj_load_(role,project)#----------------
-
-        #sdiff=pr_dif_(person,role)
-    d = date.today().replace(day=15)
-    for i in range(12):
-
-        a_w2[i]=    {"link":f"{d.year}-{d.month}-15","val":dem_rj[i],
-            #"up":up(max(-delta[i+1],0),diff[i]),
-        }#
-
-        d = inc(d)
-    w2=a_w2
-
-
-    delta = ['Дельта']+rj_delta_(role,project)
-
-    for person in people:
-        b_w3 = [0]*12
-        a_w3 = prj_task_(person,role,project)
-        diff=pr_dif_(person,role)
         d = date.today().replace(day=15)
         for i in range(12):
-            b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
-            "up":up(
-            max(-delta[i+1],0)
-            ,diff[i]),
-            "val":a_w3[i]}
+
+            a_w2[i]={"link":f"{d.year}-{d.month}-15","val":dem_rj[i],
+                "up":up(max(-delta[i],0),diff[i]),
+            }#
+
             d = inc(d)
-
-        c_w3 = [{"val":person.fio}]+b_w3
-        p100=-1
-        w3.append(c_w3)
+        w2=a_w2
 
 
-    w1.append(delta)############################
+
+        p100 = role.title
+        for person in people:
+            b_w3 = [0]*12
+            a_w3 = prj_task_(person,role,project)
+            diff=pr_dif_(person,role)
+            d = date.today().replace(day=15)
+            for i in range(12):
+                b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+                "up":up(
+                max(-delta[i],0)
+                ,diff[i]),
+                "val":a_w3[i]}
+                d = inc(d)
+
+            c_w3 = [p100,{"val":person.fio}]+b_w3
+            p100=-1
+            w3.append(c_w3)
+
+
+        w1.append([role.title]+delta)############################
     moon12["w1"]=w1
     moon12["w2"]=w2
     moon12["w3"]=w3
@@ -526,7 +531,6 @@ def dj(request,j):
 
     moon12["project"] = project
     moon12["id"] = j
-    #moon12["r"] = r
     moon12["j"] = j
     return render(request,'dj.html',moon12)
 
@@ -595,71 +599,80 @@ def  mro(request):
     return render(request,'mro.html',moon12)
 
 def aj(request,j):
-    moon12 = moon();
-    w1=[]
-    w2=[]
-    w3=[]
+    person,role,project=get_prj(-1,-1,j)
     w4=[]
-    project = Project.objects.get(id=j)
-    roles = Role.objects.all()
+    w3=[]
+    w2=[]
+    w1=[]
+    moon12 = moon()
 
     zo = zero('Аутсорс')
     zv = zero('Вакансии')
+    w4=[]
 
+    roles = Role.objects.all()
+    a_w2=[0]*12
     for role in roles:
-        pz = [role.title]
-        dem = [role.title]+['Потребность']+rj_load_(role,project)#----------------
+        supp = ['Поставка']+rj_task_(role,project)
         delta = ['Дельта']+rj_delta_(role,project)
-
-        dem2=[0]*12
+        dem_rj = ['Потребность']+rj_load_(role,project)#----------------        
+        diff = rj_dif_(role,project)
         d = date.today().replace(day=15)
         for i in range(12):
+            a_w2[i]=    {"link":f"{d.year}-{d.month}-15","val":dem_rj[i+1],
+                "up":up(max(-delta[i+1],0),diff[i]),
+            }#
 
-            x={"link":f"{role.id}.{d.year}-{d.month}-15",
-            "title":dem[i+2]}            
-            dem2[i]=x
             d = inc(d)
+        w2.append(a_w2)
+        
 
-        w2.append([role.title]+dem2)#--------
-
-
-
-        p9 = role.title
-        people = people_of_r(role)
-        px = role.title
-        supp = [-1,'Поставка']+rj_task_(role,project)
         p100 = role.title
-        for person in people:
-            dif = [person.fio]+diffx(person,role)
-            w4.append([px]+dif)######################
-            px = -1##################################
+        p200 = role.title
 
-            sup = pr_task_(person,role)
-            sup100=[p100,person.fio]+sup
-            p100=-1
+        people = people_of_r(role)
+        for person in people:#7777777777777777777777777777777777777777
+            w4.append([p200,person.fio]+pr_dif_(person,role))
+            p200=-1
+
+            b_w3 = [0]*12
+            a_w3 = prj_task_(person,role,project)
+
+            d = date.today().replace(day=15)
             for i in range(12):
-                supp[i+2]+=sup[i]
-            w3.append(sup100)
+                color=""
+                if delta[i+1] < 0:
+                    color="mypink"
+                b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+                "up":up(
+                max(-delta[i+1],0)
+                ,diff[i]),
+                "val":a_w3[i],
+                "color":color
 
+                }
+                d = inc(d)
 
-        w1.append(dem)##########################################
-        w1.append(supp)###############--
+            c_w3 = [p100,{"val":person.fio}]+b_w3
+            p100=-1
+            w3.append(c_w3)
+
+        w1.append(dem_rj)##########################################77777
+        w1.append([-1]+supp)###############--
         w1.append([-1]+zo)################
         w1.append([-1]+zv)#####################
-        
-        delta = rj_delta_(role,project)
-
-        w1.append([-1,'Дельта']+delta)############################
-
-    moon12["w2"]=w2#####################
-    moon12["w1"]=w1###############################
+        w1.append([-1]+delta)############################
+    moon12["w1"]=w1
+    moon12["w2"]=w2
     moon12["w3"]=w3
+    moon12["w4"] = w4
 
 
-    moon12["w4"] = w4  ########################################
     moon12["role"] = role
-    moon12["project_id"] = j
+
     moon12["project"] = project
+    moon12["id"] = j
+    moon12["r"] = role.id
     moon12["j"] = j
     return render(request,'aj.html',moon12)
 def mj(request,j):
@@ -810,7 +823,7 @@ def ar(request,r):
             w3.append(c_w3)
 
         w1.append(dem_rj)##########################################77777
-        w1.append(supp)###############--
+        w1.append([-1]+supp)###############--
         w1.append([-1]+zo)################
         w1.append([-1]+zv)#####################
         w1.append([-1]+delta)############################

@@ -11,64 +11,14 @@
         <div class="table-container">
     <table border=2 style="position:relative;top=0;"  width=100% ><thead>
         <tr><th colspan=13>Балансировка<th></tr><tr><th rowspan=2><b>{{project}}</b>
-{% include 'moon.html' %}</thead><tbody>
-{% for dem in dem13L %}
+{% include 'moon.html' %}
+{% for dem in w1 %}
 <tr>
 {% for t in dem %}
 <td>
 {{t}}
 </td>
 {% endfor %}
-
-</tr>
-<tr>
-{% for t in sup13 %}
-  {% if forloop.first %}
-  <td>Поставка</td>
-    {% else %}
-<td>
-{{t}}
-</td>
-{% endif %}
-{% endfor %}
-</tr>
-
-<tr>
-{% for s in sup13 %}
-<td>
-{{t}}
-</td>
-{% endfor %}
-</tr>
-
-
-
-
-<tr>
-{% for t in zv %}
-<td>
-{{t}}
-</td>
-{% endfor %}
-
-</tr>
-
-<tr>
-{% for t in zo %}
-<td>
-{{t}}
-</td>
-{% endfor %}
-
-</tr>
-
-<tr>
-{% for t in delta %}
-<td>
-{{t}}
-</td>
-{% endfor %}
-
 </tr>
 
 {% endfor %}
@@ -79,13 +29,13 @@
     <td width=50%>
       <table border=2 width=100% style="position:relative;top=0;"><thead>
           <tr><th colspan=13>Потребность<th></tr><tr><th rowspan=2><b>{{project}}</b>
-        {% include 'moon.html' %}</thead><tbody>
-        {% for dem in dem13R %}
+        {% include 'moon.html' %}
+        {% for dem in w2 %}
         <tr>
         {% for t in dem %}
 
         <td class="good" key="{{t.link}}" title="{{t.up}}">
-      {{t.title}}
+      {{t.val}}
       </td>
 {% endfor %}
 </tr>        {% endfor %}
@@ -100,8 +50,8 @@
                 <div class="table-container">
         <table border=2 width=100% style="position:relative;top=0;"><thead>
             <tr><th colspan=13>Утвержденные загрузки<th></tr><tr><th rowspan=2>{{project}}
-{% include 'moon.html' %}</thead><tbody>
-{% for tt in sup14 %}
+{% include 'moon.html' %}
+{% for tt in w3 %}
 <tr>
 {% for t in tt %}
   {% if forloop.first %}
@@ -112,7 +62,7 @@
     {% endif %}
   {% else %}
 <td>
-{{t}}
+{{t.val}}
 </td>
 {% endif %}
 {% endfor %}</tr>
@@ -124,8 +74,8 @@
       <table border=2 style="position:relative;top=0;"  width=100% class="dif" >
         <thead>
           <tr><th colspan=13>Ресурсный пул (остаточная доступность)<th></tr><tr><th rowspan=2>ФИО
-{% include 'moon.html' %}</thead><tbody>
-{% for tt in dif14 %}
+{% include 'moon.html' %}
+{% for tt in w4 %}
 <tr>
 {% for t in tt %}
 
