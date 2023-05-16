@@ -6,7 +6,11 @@ from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
 
-
+def mj_outside(m,j):
+    d1 = j.start_date
+    d2 = j.end_date
+    return not(d1 <= m and m <= d2)
+    
 def get_prj(p,r,j):
     role=None
     if r>0:
@@ -308,6 +312,7 @@ def moon():
     ##################################################################
 def djr(request,j,r):
     person,role,project=get_prj(-1,r,j)
+    
     w4=[]
     w3=[]
     w2=[]
@@ -346,7 +351,9 @@ def djr(request,j,r):
         d = date.today().replace(day=15)
         for i in range(12):
             color = ""
-            if delta[i] < 0:
+            if mj_outside(d,project):
+                color = "mygrey"            
+            elif delta[i] < 0:   
                 color="mypink"
             b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
             "up":up(
@@ -422,7 +429,9 @@ def ajr(request,j,r):
         for i in range(12):
 
             color=""
-            if delta[i+1] < 0:
+            if mj_outside(d,project):
+                color = "mygrey"
+            elif delta[i+1] < 0:
                 color="mypink"
             b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
             "up":up(
@@ -503,6 +512,8 @@ def dj(request,j):
             d = date.today().replace(day=15)
             for i in range(12):
                 color=""
+                if mj_outside(d,project):
+                    color = "mygrey"                
                 if delta[i] < 0:
                     color="mypink"                           
                 b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
@@ -647,7 +658,9 @@ def aj(request,j):
             d = date.today().replace(day=15)
             for i in range(12):
                 color=""
-                if delta[i+1] < 0:
+                if mj_outside(d,project):
+                    color = "mygrey"                
+                elif delta[i+1] < 0:
                     color="mypink"
                 b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
                 "up":up(
@@ -812,6 +825,8 @@ def ar(request,r):
 
             for i in range(12):
                 color=""
+                if mj_outside(d,project):
+                    color = "mygrey"
                 if delta[i+1] < 0:
                     color="mypink"
                 b_w3[i] = {"link":f"{project.id}.{person.id}.{d.year}-{d.month}-15",
@@ -938,7 +953,9 @@ def dr(request,r):
                 
             for i in range(12):
                 color=""
-                if delta[i] < 0:
+                if mj_outside(d,project):
+                    color = "mygrey"
+                elif delta[i] < 0:
                     color="mypink"
                 b_w3[i] = {"link":f"{project.id}.{person.id}.{d.year}-{d.month}-15",
                 "up":up(
