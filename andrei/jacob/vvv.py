@@ -468,10 +468,7 @@ def dj(request,j):
     w2=[]
     w1=[]
     moon12 = moon()
-#    supp = [-1,'Поставка']+rj_task_(role,project)
-#    delta = ['Дельта']+rj_delta_(role,project)
-#    zo = zero('Аутсорс')
-#    zv = zero('Вакансии')
+
     w4=[]
     
     roles = Role.objects.all()
@@ -492,12 +489,9 @@ def dj(request,j):
         d = date.today().replace(day=15)
         for i in range(12):
 
-            a_w2[i]={"link":f"{d.year}-{d.month}-15","val":dem_rj[i],
-                "up":up(max(-delta[i],0),diff[i]),
-            }#
-
+            a_w2[i]=dem_rj[i]
             d = inc(d)
-        w2=a_w2
+        w2.append([role.title]+a_w2)
 
 
 
@@ -615,21 +609,24 @@ def aj(request,j):
     for role in roles:
         supp = ['Поставка']+rj_task_(role,project)
         delta = ['Дельта']+rj_delta_(role,project)
-        dem_rj = ['Потребность']+rj_load_(role,project)#----------------        
+        dem_rj = rj_load_(role,project)#----------------        
         diff = rj_dif_(role,project)
+    
+
         d = date.today().replace(day=15)
         for i in range(12):
-            a_w2[i]=    {"link":f"{d.year}-{d.month}-15","val":dem_rj[i+1],
-                "up":up(max(-delta[i+1],0),diff[i]),
-            }#
 
+            a_w2[i]=dem_rj[i]
             d = inc(d)
-        w2.append(a_w2)
-        
+        w2.append([role.title]+a_w2)
 
+        
+        
+        
+        
         p100 = role.title
         p200 = role.title
-
+        p300=role.title
         people = people_of_r(role)
         for person in people:#7777777777777777777777777777777777777777
             w4.append([p200,person.fio]+pr_dif_(person,role))
@@ -657,7 +654,7 @@ def aj(request,j):
             p100=-1
             w3.append(c_w3)
 
-        w1.append(dem_rj)##########################################77777
+        w1.append([role.title,'Потребность']+dem_rj)##########################################77777
         w1.append([-1]+supp)###############--
         w1.append([-1]+zo)################
         w1.append([-1]+zv)#####################

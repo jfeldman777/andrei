@@ -32,20 +32,24 @@
   </td>
     <td width=50%>
       <table border=2 width=100% style="position:relative;top=0;">
-          <tr><td colspan=13>Потребность<td></tr><tr>
-                
-        {% include 'moon.html' %}
+          <tr><td colspan=13>Потребность<td></tr><tr><td>{{project}}</td>
+      
+          
+          
+          
+                  {% include 'moon.html' %}
+        {% for dem in w2 %}
         <tr>
-        {% for t in w2 %}
-        <td class="good2" key="{{t.link}}" title="{{t.up}}">
-
-          {{t.val}}
+        {% for t in dem %}
+        <td class="good" key="{{t.link}}" title="{{t.up}}">
+{{t}}
 </td>
 {% endfor %}
+</tr>        {% endfor %}
 
-</tr>  
-            
-              </table>
+
+
+      </table>
         
     </td></tr>
     <tr style="text-align:center;">
