@@ -925,14 +925,26 @@ def dr(request,r):
             a_w3 = prj_task_(person,role,project)
 
             d = date.today().replace(day=15)
+
+                
             for i in range(12):
+                color=""
+                if delta[i] < 0:
+                    color="mypink"
                 b_w3[i] = {"link":f"{project.id}.{person.id}.{d.year}-{d.month}-15",
                 "up":up(
-                max(-delta[i],0)
-                ,x[i]),
-                "val":a_w3[i]}
-                d = inc(d)
+                max(-delta[i],0),diff[i]),
+                "val":a_w3[i],
+                "color":color
 
+                }
+##########################################################################3333333
+                d = inc(d)              
+                
+                
+                
+                
+                
             c_w3 = [p100,{"val":person.fio}]+b_w3
             p100=-1
             w3.append(c_w3)
