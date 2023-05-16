@@ -1065,7 +1065,7 @@ def s6(request):
                     j,p,d=k.split('.')
 
                     try:
-                        role = Rle.objects.get(id=r)
+                        role = Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
                         project = Project.objects.get(id=j)
                         tjTask(person,role,project,d,v)
