@@ -6,6 +6,28 @@ from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
 
+def p_101(person):
+    sum = [0]*12
+    roles = {person.role}.union(person.res.all())
+    for role in roles:
+        isfree = pr_isfree_(person,role)
+        for i in range(12):
+            sum[i]+=isfree[i]
+    res = [True]*12
+    for i in range (12):
+        res[i]=sum[i]>100
+    return res
+
+#
+## Get a person instance
+#person = Person.objects.get(id=1)
+#
+## Create a set containing the combination of roles and their many-to-many field values
+#role_mtm_set = {(role, role.mtm_field.all()) for role in person.roles.all()}
+
+
+
+
 def mj_outside(m,j):
     d1 = j.start_date
     d2 = j.end_date
@@ -25,9 +47,11 @@ def get_prj(p,r,j):
     return (person,role,project)
 
 def people_of_r(role):
-    pp = UserProfile.objects.filter(Q(role = role)|Q(res = role))
-    print(pp)
-    return pp
+    pp1 = set(UserProfile.objects.filter(Q(role = role)))
+    pp2 = set(UserProfile.objects.filter(Q(res = role)))
+
+    
+    return pp1.union(pp2)
 
 def prjm_task(request,p,r,j,y,m):
     d = date(y,m,15)#.replace(year=y).replace(month=m).replace(day=15)
@@ -219,7 +243,8 @@ def date12():
 
 def test(request):
     person = UserProfile.objects.get(id=4)
-    Less.objects.create(person=person,start_date='2023-12-15',load=2)
+    roles = {person.role}.union(person.res.all())
+    print(roles)
     return render(request,'a00.html')
 def alf(request):
     p = None
@@ -383,7 +408,7 @@ def djr(request,j,r):
     moon12["r"] = r
     moon12["j"] = j
     return render(request,'djr.html',moon12)
-
+#Дельта, один проект, один ресурс
 def ajr(request,j,r):
     person,role,project=get_prj(-1,r,j)
     w4=[]
@@ -469,7 +494,7 @@ def ajr(request,j,r):
     moon12["j"] = j
     return render(request,'ajr.html',moon12)
 
-
+#Альфа, один проект, один ресуря
 def dj(request,j):
     person,role,project=get_prj(-1,-1,j)
     w4=[]
@@ -548,8 +573,8 @@ def dj(request,j):
     moon12["j"] = j
     return render(request,'dj.html',moon12)
 
-
-def  mrom(request):
+#Дельта, один проект все ресурсы
+def mrom(request):#Максимальная доступнасть по всем ресурсам
     moon12 = moon();
     dif14 = []
 
@@ -571,19 +596,21 @@ def  mrom(request):
         people = people_of_r(role)
         px = role.title#######################
         for person in people:
+            is100 = p_101(person)
+            
             dif2 = [{"val":person.fio}]+[0]*12
             dif = [person.fio]+pr_isfree_(person,role)
             for i in range(12):
 
                 if arr[person.id][role.id][i] > 100:
-                    color = "red"
+                    color = "pink"
                 else:
                     color = "white"
 
                 dif2[i+1] = {
                 "color":color,
-                "val":dif[i+1]
-                }
+                "val":dif[i+1],
+                    "fire":is100[i]}
 
             dif14.append([px]+dif2)######################
             px = -1##################################
@@ -591,8 +618,8 @@ def  mrom(request):
     moon12["dif14"] = dif14########################################
 
     return render(request,'mrom.html',moon12)
-
-def  mro(request):
+#
+def mro(request):#Остаточная доступость по всем ресурсам
     moon12 = moon();
     dif14 = []
 
@@ -601,17 +628,17 @@ def  mro(request):
     for role in roles:
         p9 = role.title
         people = people_of_r(role)
-        px = role.title#######################
+        px = role.title
         for person in people:
 
             dif = [person.fio]+diffx(person,role)
-            dif14.append([px]+dif)######################
-            px = -1##################################
+            dif14.append([px]+dif)
+            px = -1
 
-    moon12["dif14"] = dif14########################################
+    moon12["dif14"] = dif14
 
     return render(request,'mro.html',moon12)
-
+#
 def aj(request,j):
     person,role,project=get_prj(-1,-1,j)
     w4=[]
@@ -693,88 +720,35 @@ def aj(request,j):
     moon12["id"] = j
     moon12["r"] = role.id
     moon12["j"] = j
-    return render(request,'aj.html',moon12)
+    return render(request,'aj.html',moon12)#АЛьфа, один проект все ресурсы
 def mj(request,j):
+    person,role,project=get_prj(-1,-1,j)
+
+    w2=[]
     moon12 = moon()
-    dem14 = []
-    dem13L = []
-    sup = []
-    dem13R=[]
-    dif14 = []
 
-    project = Project.objects.get(id=j)
     roles = Role.objects.all()
-    # supp = [0]*12
-    # sup139 = []
-    sup14 = []
-    dif13 = []
-    dem1 = []
-    sup13=[]
-    sup100=[]
-
-
-
-    zo = zero('Аутсорс')
-    zv = zero('Вакансии')
-
     for role in roles:
+        diff = rj_dif_(role,project)
+        people = people_of_r(role)
+        
+        delta = rj_delta_(role,project)
 
-        pz = [role.title]
-        dem = [role.title]+['Потребность']+demand(project,role)#----------------
-        dem1 = demand(project,role)#--------
-        delta = ['Дельта']+[0]*12
+        a_w2=[0]*12
+        dem_rj = rj_load_(role,project)#----------------
 
-        dem2=[0]*12
         d = date.today().replace(day=15)
         for i in range(12):
-
-            x={"link":f"{role.id}.{d.year}-{d.month}-15",
-            "up":up(1,2),
-            "title":dem1[i]}#9898
-            dem2[i]=x
+            a_w2[i]={"link":f"{d.year}-{d.month}-15","val":dem_rj[i],
+            "up":up(max(-delta[i],0),diff[i]),}
             d = inc(d)
-
-        dem13R.append([role.title]+dem2)#--------
-
+        w2.append([{"val":role.title}]+a_w2)
 
 
+    moon12["w2"]=w2
 
-        people = UserProfile.objects.filter(role=role)
-        px = role.title#######################
-        supp = [-1,'Поставка']+[0]*12
-        p100 = role.title
-        for person in people:
-
-            dif = [person.fio]+diffx(person,role)
-            dif14.append([px]+dif)######################
-            px = -1##################################
-
-            sup = supply(project,person)
-            sup100=[p100,person.fio]+sup
-            p100=-1
-            for i in range(12):
-                supp[i+2]+=sup[i]
-            sup14.append(sup100)
-
-
-        dem13L.append(dem)##########################################
-        dem13L.append(supp)###############--
-        dem13L.append([-1]+zo)################
-        dem13L.append([-1]+zv)#####################
-
-        for i in range(12):
-            delta[i+1] = round(supp[i+2]-dem[i+2])
-
-        dem13L.append([-1]+delta)############################
-
-    moon12["dem13R"]=dem13R#####################
-    moon12["dem13L"]=dem13L###############################
-    moon12["sup14"]=sup14
-
-
-    moon12["dif14"] = dif14########################################
     moon12["role"] = role
-    moon12["project_id"] = j
+
     moon12["project"] = project
     moon12["j"] = j
     return render(request,'mj.html',moon12)
@@ -861,7 +835,7 @@ def ar(request,r):
     moon12["project"] = project
 
     return render(request,'ar.html',moon12)
-########################################################################
+#########################################################################Альфа, один ресурс, все проекты
 def smr(request):
     id = 1
     if request.method == "POST":
@@ -886,16 +860,17 @@ def smr(request):
         else:
             print(form.errors)
 
-    return mr(request,r)
+    return mr(request,r)#
 def mr(request,r):
     moon12 = moon()
     dif14 = []
+    dif15 = []
 
     role = Role.objects.get(id=r)
     people = people_of_r(r)
 
     for person in people:
-        dif = less(person)
+        dif = pr_isfree_(person,role)
 
         dif100=[0]*12
         da = date.today().replace(day=15)
@@ -906,13 +881,28 @@ def mr(request,r):
             da = inc(da)
         dif14.append([person.fio]+dif100)######################
 
-    moon12["dif14"] = dif14########################################
+        
+    for person in people:
+        dif = pr_dif_(person,role)
+
+        dif100=[0]*12
+        da = date.today().replace(day=15)
+        for i in range(12):
+            dif100[i]={"link":f"{person.id}.{da.year}-{da.month}-15",
+            "up":up(1,2),
+            "title":dif[i]}#9898
+            da = inc(da)
+        dif15.append([person.fio]+dif100)######################       
+        
+    moon12["dif14"] = dif14
+        
+    moon12["dif15"] = dif15
     moon12["r"]=r
     moon12["role"]=role
 
     return render(request,'mr.html',moon12)
 
-
+#
 def dr(request,r):
     person,role,project=get_prj(-1,r,-1)
     diff = rj_dif_(role,project)
@@ -992,7 +982,7 @@ def dr(request,r):
     return render(request,'dr.html',moon12)
 
 
-
+#Дельта, один ресурс, все проекты
 def mon_bar():
     dat = []
     d = date.today().replace(day=15)
@@ -1019,24 +1009,17 @@ def inc_n(d,n):
 
 
 
-def tr(person, role, m, l):##########################################
-
+def tr(person, role, m, l):#Запись в таблицу - один ресурс, максимальная доступность
     try:
         instance = Less.objects.get(person=person, start_date=m)
     except:
         instance = None
-
     if instance:
-
         instance.load = l
         instance.save()
     else:
-        # If the instance does not exist, create a new one
-
         instance = Less.objects.create(person=person, start_date=m, load=l)
-
-def tjTask(p,r, j, d, l):
-    print(909,p,j,d,l)
+def tjTask(p,r, j, d, l):#Запись в таблицу - загрузка человека по проекту
     try:
         instance = Task.objects.get(person=p,project=j, role=r,month=d)
     except:
@@ -1046,9 +1029,8 @@ def tjTask(p,r, j, d, l):
         instance.save()
     else:
         instance = Task.objects.create(person=p, role=r, project=j, month=d, load=l)
-
-
-def tjLoad(project,role, m, v):#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@s
+        
+def tjLoad(project,role, m, v):#Запись в таблицу - потребность проекта в ресурсах
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
     except:
@@ -1059,9 +1041,8 @@ def tjLoad(project,role, m, v):#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@s
         instance.save()
 
     else:
-        instance = Load.objects.create(project=project, role=role, month=m, load=v)
-
-def s5(request):
+        instance = Load.objects.create(project=project, role=role, month=m, load=v)  
+def s5(request): 
     print(969)
     id = 1
     if request.method == "POST":
@@ -1087,7 +1068,6 @@ def s5(request):
         else:
             print(form.errors)
     return ar(request,r)
-
 def s6(request):
     id = 1
     if request.method == "POST":
@@ -1113,8 +1093,6 @@ def s6(request):
             print(form.errors)
 
     return dr(request,r)
-
-
 def s4(request):
     id = 1
     if request.method == "POST":
@@ -1139,7 +1117,7 @@ def s4(request):
         else:
             print(form.errors)
     return djr(request,j,r)
-
+#
 def s1(request):
     if request.method == "POST":
         form = Form(request.POST)
@@ -1162,7 +1140,7 @@ def s1(request):
             print(form.errors)
 
     return ajr(request,j,r)
-
+##
 def s3(request):
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
@@ -1193,7 +1171,7 @@ def s3(request):
             print(form.errors)
 
     return djr(request,j,r)
-
+#
 def s2(request):
     if request.method == "POST":
         form = Form(request.POST)
@@ -1212,7 +1190,7 @@ def s2(request):
                         pass
         else:
             print(form.errors)
-    return ajr(request,j,r)
+    return ajr(request,j,r)#
 def sj(request):
     j=1
     if request.method == "POST":
@@ -1237,7 +1215,7 @@ def sj(request):
         else:
             print(form.errors)
 
-        return aj(request,j)
+        return aj(request,j)#
 def smj(request):
 
     if request.method == "POST":
