@@ -9,7 +9,7 @@
 </h1>
 (ajr)<a href="/">домой</a> <a href="/djr/{{j}}/{{r}}">Дельта</a>
 <td></tr>
-  <tr style="text-align:center;"><td  width=50%>
+  <tr style="text-align:center;"><td  width=50%> <div class="table-container">
     <table border=2 style="position:relative;top=0;"  width=100% >
         <tr><td colspan=13>Балансировка<td></tr><tr><td>---
 {% include 'moon.html' %}
@@ -25,11 +25,16 @@
 
 {% endfor %}
 
-    </table>
+        
+        
+        
+        
+        </tbody>
+      </table></div>
   </td>
-    <td width=50%>
-      <table border=2 width=100% style="position:relative;top=0;">
-        <tr><td colspan=13>Потребность<td></tr>
+    <td width=50% style="vertical-align:top;"><div class="table-container">
+      <table border=2 width=100% style="position:relative;top=0;"><thead>
+        <tr><th colspan=13>Потребность*<th></tr>
           <tr>
         {% include 'moon.html' %}
         <tr>
@@ -52,7 +57,7 @@
 
 </td></tr>
 
-      </table>
+        </table></div>
 
     </td></tr>
     <tr style="text-align:center;">
@@ -84,8 +89,8 @@
 </td></tr>
         </table>
       </td>
-      <td  width=50%>
-      <table border=2 style="position:relative;top=0;"  width=100% class="dif">
+      <td  width=50% style="vertical-align:top;">
+      <table border=2 style="position:relative;top=0;vertical-align:top;"  width=100% class="dif">
           <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><tr><td>ФИО
 {% include 'moon.html' %}
 {% for dem in w4 %}
@@ -101,5 +106,5 @@
     </tr>
   </table>
     {% include 'js.html' %}
-    <!-- {% include 'script.html' %} -->
+
 {% endblock %}

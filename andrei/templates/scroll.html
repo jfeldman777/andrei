@@ -1,41 +1,54 @@
 <style>
 table .out{
 height:100hv;
+    top:0;
 }
 table .in{
   height:50hv;
-
+top:0;
 }
-
+  .table-container-d {
+  overflow-y: scroll; /* Добавляем вертикальный скролл */
+  height: 300px; /* Устанавливаем высоту контейнера */
+  position: relative; /* Устанавливаем позиционирование контейнера */
+      top:0;
+}
   .table-container {
   overflow-y: scroll; /* Добавляем вертикальный скролл */
   height: 400px; /* Устанавливаем высоту контейнера */
   position: relative; /* Устанавливаем позиционирование контейнера */
+      top:0;
 }
 
 table {
   width: 100%; /* Устанавливаем ширину таблицы на 100% */
-
+top:0;
 }
 
 thead th {
   position: sticky; /* Устанавливаем позиционирование шапки таблицы */
   top: 0; /* Устанавливаем верхнюю границу шапки на 0 */
   background-color: #fff; /* Добавляем фоновый цвет шапке */
+    text-decoration-color: #000; 
+    color:  #000;
 }
 td {
   position: relative;
+vertical-align: top;
+    top:0;
 }
 
 td table {
   position: absolute;
-  bottom: 0;
+
   right: 0;
+    top:0;
 }
 
 td table td button {
   display: block;
   margin: 0 auto;
+    top:0;
 }
 
 

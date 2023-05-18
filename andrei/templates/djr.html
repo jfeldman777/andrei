@@ -10,8 +10,9 @@
 <a href="/">домой</a> <a href="/ajr/{{j}}/{{r}}">Подробно</a>
 <td></tr>
   <tr style="text-align:center;"><td  width=50%>
-    <table border=2 style="position:relative;top=0;"  width=100% >
-        <tr><td colspan=13>Балансировка<td></tr><tr>
+       <div class="table-container-2">
+    <table border=2 style="position:relative;top=0;"  width=100% ><thead>
+        <tr><th colspan=13>Балансировка<th></tr><tr>
           {% include 'moon.html' %}
 {% for tt in w1 %}
 <tr>
@@ -22,10 +23,10 @@
 {% endfor %}
 </tr>
 {% endfor %}
-
-    </table>
+        </tbody>
+           </table></div>
   </td>
-    <td width=50%>
+    <td width=50%> <div class="table-container-2">
       <table border=2 width=100% style="position:relative;top=0;">
         <tr><td colspan=13>Потребность<td></tr>
           <tr>
@@ -49,7 +50,7 @@
 </form>
 {%  include 'script2.html'  %}
 
-      </table>
+        </table></div>
 
     </td></tr>
     <tr style="text-align:center;">
@@ -98,5 +99,5 @@
     </tr>
   </table>
     {% include 'js.html' %}
-    <!-- {% include 'script.html' %} -->
+    {% include 'script.html' %}
 {% endblock %}

@@ -30,9 +30,9 @@
 {% endfor %}</tbody>
     </table></div>
   </td>
-    <td width=50%>
-      <table border=2 width=100% style="position:relative;top=0;">
-          <tr><td colspan=13>Потребность<td></tr><tr><td>{{project}}</td>
+    <td width=50%> <div class="table-container">
+      <table border=2 width=100% style="position:relative;top=0;"><thead>
+          <tr><th colspan=13>Потребность<th></tr><tr><th>{{project}}</th>
       
           
           
@@ -48,15 +48,15 @@
 </tr>        {% endfor %}
 
 
-
+          </tbody>
       </table>
-        
+        </div>
     </td></tr>
     <tr style="text-align:center;">
 
       <td width=50%>  <div class="table-container">
         <table border=2 width=100% style="position:relative;top=0;"><thead>
-            <tr><th colspan=13>Утвержденные загрузки**</th></tr><tr><th>{{project}}
+            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th>{{project}}
 {% include 'moon.html' %}
        
             
