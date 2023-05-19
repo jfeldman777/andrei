@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
+
+<span class="icon icon-primary">
+  <i class="bi-house"></i>
+</span>
+<span class="icon icon-soft-primary">
+  <i class="bi-house"></i>
+</span>
 <a href="/" style="position:relative;">Домой</a>
-<a href="/prjlist/" style="position:relative;">Все проекты</a>
-<a href="/mro/" style="position:relative;">Все ресурсы оставшиеся</a>
-<a href="/mrom/" style="position:relative;">Все ресурсы максимальные</a>
+<a href="/prjlist/" style="position:relative;">Портфель проектов</a>
+
 <table border="2" cellspacing="0" cellpadding="5"
 style="position:relative;text-align: center;" >
       <tr><th>Руководители ресурсных пулов</th><th>ресурсы</th>
@@ -41,6 +47,7 @@ style="position:relative;text-align: center;" >
       </tr>
         {% endfor %}
 </table>
-
+<a href="/mro/" style="position:relative;">Все ресурсы оставшиеся</a>
+<a href="/mrom/" style="position:relative;">Все ресурсы максимальные</a>
 
 {% endblock %}

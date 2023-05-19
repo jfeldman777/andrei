@@ -11,8 +11,9 @@ urlpatterns = [
                 path('prm_task/<int:p>/<int:r>/<int:y>/<int:m>', vvv.prm_task, name='prm_task'),
         path('pr_task/<int:p>/<int:r>', vvv.pr_task, name='pr_task'),
     path('mro/', vvv.mro, name='mro'),
-        path('mrom/', vvv.mrom, name='mrom'),
-    path('prjlist/', vvv.projects, name='projects'),
+        path('smrom/', vvv.smrom, name='ssmrom'),     
+    path('mrom/', vvv.mrom, name='mrom'),
+    path('prjlist/', vvv.prjlist, name='prjlist'),
     path('smj/', vvv.smj, name='smj'),
     path('smr/', vvv.smr, name='smr'),
     path('mr/<int:r>', vvv.mr, name='mr'),
@@ -22,13 +23,19 @@ urlpatterns = [
     path('dj/<int:j>', vvv.dj, name='dj'),
     path('aj/<int:j>', vvv.aj, name='aj'),
 
+
+    path('s12/', vvv.s12, name='s12'),
+    path('s11/', vvv.s11, name='s11'),
+    path('s10/', vvv.s10, name='s10'),
+    path('s9/', vvv.s9, name='s9'),
+    path('s8/', vvv.s8, name='s8'),
+    path('s7/', vvv.s7, name='s7'),
     path('s2/', vvv.s2, name='s2'),
     path('s1/', vvv.s1, name='s1'),
     path('s4/', vvv.s4, name='s4'),
     path('s3/', vvv.s3, name='s3'),
 
     path('s6/', vvv.s6, name='s6'),
-    # path('sdrd/', vvv.sdrd, name='sdrd'),
 
 
 

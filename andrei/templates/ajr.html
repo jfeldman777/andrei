@@ -7,7 +7,7 @@
 
   {{role}}
 </h1>
-(ajr)<a href="/">домой</a> <a href="/djr/{{j}}/{{r}}">Дельта</a>
+(ajr)<a href="/">домой</a> <a href="/djr/{{j}}/{{r}}">Дельта</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
 <td></tr>
   <tr style="text-align:center;"><td  width=50%> <div class="table-container">
     <table border=2 style="position:relative;top=0;"  width=100% >
@@ -64,29 +64,32 @@
 
       <td width=50%>
         <table border=2 width=100% style="position:relative;top=0;">
-            <tr><td colspan=13>Утвержденные загрузки**<td></tr><tr><td>ФИО
+            <tr><td colspan=13>Утвержденные загрузки<td></tr><tr><td>ФИО
 {% include 'moon.html' %}
 
 {% for tt in w3 %}
 <tr>
 {% for t in tt %}
+    
+    
 <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}}">
-
   {{t.val}}
-
-</td>{% endfor %}
-</tr>
+</td>{% endfor %}</tr>
 {% endfor %}
 <tr><td colspan=13 >
+    
+    
   <form id="f10" action="/s1/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >(1)Сохранить изменения</button>
-</form>
+  <button type="submit" >(1)Сохранить изменения</button></form>
 {%  include 'script.html'  %}
+    
+    
+    
 
-</td></tr>
+    </td></tr></tbody>
         </table>
       </td>
       <td  width=50% style="vertical-align:top;">

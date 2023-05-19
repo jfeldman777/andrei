@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-<a href="/">домой</a>
-
+<a href="/">домой</a> <a href="/mrom/" style="position:relative;">Все ресурсы максимальные</a>  
+<a href="/prjlist/" style="position:relative;">Портфель проектов</a> 
+ <a href="/atr/" style="position:relative;">Руководители ресурсов</a>  
       <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
           <tr><td colspan=13>Ресурсный пул (остаточная доступность)</td></tr>
             <tr><td><b>ФИО</b>
@@ -26,6 +27,7 @@
 {% endfor %}
 
       </table>
-
-    {% include 'js.html' %}
+<!--<a href="/mro/" style="position:relative;">Все ресурсы оставшиеся</a>-->
+          
+  {% include 'js.html' %}
 {% endblock %}

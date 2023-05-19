@@ -4,7 +4,7 @@
 {% include 'scroll.html' %}
 <table border=2 width=100%>
 <tr><td colspan=2><h1>Все ресурсы - {{project}}</h1>
-(aj)<a href="/">домой</a> <a href="/dj/{{j}}">Дельта</a>
+(aj)<a href="/">домой</a> <a href="/dj/{{j}}">Дельта</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
         <div class="table-container">
@@ -41,12 +41,21 @@
         {% for dem in w2 %}
         <tr>
         {% for t in dem %}
-        <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}}">
-{{t}}
+        <td class="good2 {{t.color}}" key="{{t.link}}" title="{{t.up}}">
+{{t.val}}
 </td>
 {% endfor %}
 </tr>        {% endfor %}
+<tr><td colspan=13 >
+  <form id="f20" action="/s7/" method="POST">
+  {% csrf_token %}
+<input type = hidden name="id" value='{{id}}'>
+<input type = hidden name="r" value='{{r}}'>
+  <button type="submit" > Сохранить изменения</button>
+</form>
+{%  include 'script2.html'  %}
 
+</td></tr>
 
           </tbody>
       </table>
@@ -64,21 +73,33 @@
 <tr>
 {% for t in tt %}
   {% if forloop.first %}
-{% if t|negative %}{% else %}
-
+{% if t|negative %}
     
-  <td colspan=13>{{t}}</td></tr><tr>
-            
-            
+    {% else %}
+  <td colspan=13>  
+      {{t}}</td></tr><tr>  
     {% endif %}
   {% else %}
-<td>
+            
+            
+  <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}};">
 {{t.val}}
 </td>
+            
+            
+            
 {% endif %}
 {% endfor %}</tr>
-            {% endfor %}<//div>
-        </table>
+            {% endfor %}<tr><td colspan=13>
+              <form id="f10" action="/s8/" method="POST">
+  {% csrf_token %}
+<input type = hidden name="id" value='{{id}}'>
+<input type = hidden name="r" value='{{r}}'>
+  <button type="submit" >Сохранить изменения</button></form>
+{%  include 'script.html'  %}
+            </td></tr>
+            
+        </table></div>
       </td>
       <td  width=50%>  <div class="table-container">
       <table border=2 style="position:relative;top=0;"  width=100% class="dif" ><thead>

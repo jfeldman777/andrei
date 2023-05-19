@@ -3,7 +3,9 @@
 {% block content %}
 
 <h1>Все ресурсы - {{project}}</h1>
-<a href="/">домой</a> 
+<a href="/">домой</a> <a href="/atj/">к проектам</a>
+<a href="/prjlist/" style="position:relative;">Портфель проектов</a> 
+<a href="/mrom/" style="position:relative;">Все ресурсы максимальные</a> 
 
 
     <table border=2 style="position:relative;top=0;text-align:center;"  width=100% >
@@ -13,7 +15,7 @@
         <tr>
         {% for t in dem %}
 
-        <td class="good" key="{{t.link}}" title="{{t.up}}">
+        <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}}">
       {{t.val}}
       </td>
 {% endfor %}

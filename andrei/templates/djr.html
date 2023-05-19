@@ -7,9 +7,9 @@
 
   {{role}} -  Дельта
 </h1>
-<a href="/">домой</a> <a href="/ajr/{{j}}/{{r}}">Подробно</a>
+<a href="/">домой</a> <a href="/ajr/{{j}}/{{r}}">Подробно</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
 <td></tr>
-  <tr style="text-align:center;"><td  width=50%>
+  <tr style="text-align:center;"><td  width=50% style="vertical-align:top;">
        <div class="table-container-2">
     <table border=2 style="position:relative;top=0;"  width=100% ><thead>
         <tr><th colspan=13>Балансировка<th></tr><tr>
@@ -26,7 +26,7 @@
         </tbody>
            </table></div>
   </td>
-    <td width=50%> <div class="table-container-2">
+    <td width=50% style="vertical-align:top;"> <div class="table-container-2">
       <table border=2 width=100% style="position:relative;top=0;">
         <tr><td colspan=13>Потребность<td></tr>
           <tr>
@@ -55,7 +55,7 @@
     </td></tr>
     <tr style="text-align:center;">
 
-      <td width=50%>
+      <td width=50% style="vertical-align:top;">
         <table border=2 width=100% style="position:relative;top=0;">
             <tr><td colspan=13>Утвержденные загрузки<td></tr><tr><td>ФИО
 {% include 'moon.html' %}
@@ -63,26 +63,31 @@
 {% for tt in w3 %}
 <tr>
 {% for t in tt %}
+    
+    
+    
+    
 <td class="good  {{t.color}}" key="{{t.link}}" title="{{t.up}}">
-
   {{t.val}}
-
-</td>{% endfor %}
-</tr>
+</td>{% endfor %}</tr>
 {% endfor %}
 <tr><td colspan=13 >
+    
   <form id="f10" action="/s3/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >(3) Сохранить изменения</button>
-</form>
+  <button type="submit" >(3) Сохранить изменения</button></form>
 {%  include 'script.html'  %}
 
+    
+    
+    
+    
 </td></tr>
         </table>
       </td>
-      <td  width=50%>
+      <td  width=50% style="vertical-align:top;">
       <table border=2 style="position:relative;top=0;"  width=100% class="dif">
           <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><tr><td>ФИО
 {% include 'moon.html' %}
@@ -99,5 +104,4 @@
     </tr>
   </table>
     {% include 'js.html' %}
-    {% include 'script.html' %}
 {% endblock %}

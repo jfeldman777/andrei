@@ -1,8 +1,29 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
+<style>
+    .hidden {
+  display: none;
+}
 
-<img src="{% static 'fire2.png' %}" alt="Icon">
+</style>
+<button id="toggleButton" style="position:absolute;top:0;left:0;">Toggle Menu</button>
 
+<ul id="menu" class="hidden">
+  <li><a href="#">Menu Item 1</a></li>
+  <li><a href="#">Menu Item 2</a></li>
+  <li><a href="#">Menu Item 3</a></li>
+</ul>
+
+
+<script>
+
+const toggleButton = document.getElementById('toggleButton');
+const menu = document.getElementById('menu');
+
+toggleButton.addEventListener('click', function() {
+  menu.classList.toggle('hidden');
+});
+
+</script>
 {% endblock %}

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-<a href="/">домой</a> <a href="/ar/{{r}}">балансы</a> <a href="/dr/{{r}}">дельта</a>
+{% load static %}
+<a href="/">домой</a>   <a href="/mrom/">все ресурсы (максимально)</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a> 
 <h1>{{role}}</h1>
 
       <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
@@ -17,7 +18,13 @@
 
 {% else %}
   <td class="good" key="{{t.link}}" >
+      
+      
 {{t.title}}
+      {% if t.fire %}
+<img src="{% static 'fire2.png' %}" alt="Icon" width=16>
+
+                {% endif%}
 </td>
 {% endif %}
 {% endfor %}

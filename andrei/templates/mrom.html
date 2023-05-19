@@ -2,8 +2,10 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-<a href="/">домой</a>
+<a href="/">домой</a>      <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
 
+<a href="/mro/" style="position:relative;">Все ресурсы оставшиеся</a>
+ <a href="/atr/" style="position:relative;">Руководители ресурсов</a> 
       <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
           <tr><td colspan=13>Ресурсный пул (максимальная доступность)</td></tr>
             <tr><td><b>ФИО</b>
@@ -14,11 +16,19 @@
 <tr>
 {% for t in tt %}
 {% if forloop.first %}
+    
+    
 {% if t|negative %}{% else %}
-<td colspan=13>{{t}}</td></tr><tr>
+<td colspan=13><a href="/mr1/{{t.r}}">
+    {{t.val}}</a>
+    </td></tr><tr>
   {% endif %}
+                
+                
 {% else %}
-<td style="background-color:{{t.color}};">
+<td style="background-color:{{t.color}};"
+class="good" key="{{t.link}}" >
+    
 {{t.val}}{% if t.fire %}
 <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
 
@@ -28,8 +38,19 @@
 {% endfor %}
 </tr>
 {% endfor %}
+<tr><td colspan=13 >
+  <form id="f10" action="/smrom/" method="POST">
+  {% csrf_token %}
+<input type = hidden name="id" value='{{j}}'>
+  <button type="submit" >Сохранить изменения</button>
+</form>
+{%  include 'script.html'  %}
 
+
+    </td></tr>
       </table>
+
+<!--<a href="/mrom/" style="position:relative;">Все ресурсы максимальные</a>-->
 
     {% include 'js.html' %}
 {% endblock %}

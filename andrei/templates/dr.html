@@ -2,10 +2,10 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-<table border=2 width=100% style="background-color:lightgrey; vertical-align: top;" class=out>
+<table border=2 width=100% style="vertical-align: top;" class=out>
 <tr><td colspan=2><h1>Все проекты - {{role}} - Дельта</h1>
-(dr)<a href="/">домой</a> <a href="/ar/{{r}}">Подробно </a>
-  <a href="/mr/{{r}}">максимальная доступность</a>
+(dr)<a href="/">домой</a> <a href="/ar/{{r}}">Подробно </a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
+  <a href="/mr1/{{r}}">максимальная доступность</a>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
       <div class="table-container-2">
@@ -17,7 +17,13 @@
 <tr>
 {% for t in dem %}
 <td>
-{{t}}
+    {% if forloop.first %}
+    <a href="/dj/{{t.j}}">   
+{{t.val}}        
+    </a>
+    {% else %}
+    {{t.val}}   
+    {% endif %}
 </td>
 {% endfor %}
 
@@ -29,20 +35,43 @@
   </td>
     <td width=50%> <div class="table-container-2">
       <table border=2 width=100% style="position:relative;top=0;background-color:white;" class=in>
-          <tr><td colspan=13>Потребность+<td></tr><td><b>{{role}}</b>
+          <tr><td colspan=13>Потребность<td></tr><td><b>{{role}}</b>
         {% include 'moon.html' %}
         {% for dem in w2 %}
         <tr>
         {% for t in dem %}
+           
+    {% if forloop.first %} <td>
+    <a href="/djr/{{t.j}}/{{t.r}}">   
+{{t.val}}  
+    </a>
+    {% else %}
 
-
-        <td class="good  hello  {{t.color}}" key="{{t.link}}" title="{{t.up}}">
+        <td class="good2  {{t.color}}" key="{{t.link}}" title="{{t.up}}">
 {{t.val}}
+                {% endif %}
 </td>
+            
+            
+            
 {% endfor %}
 </tr>        {% endfor %}
 
 
+<tr><td colspan=13 >
+    
+    
+  <form id="f20" action="/s12/" method="POST">
+  {% csrf_token %}
+<input type = hidden name="id" value='{{id}}'>
+<input type = hidden name="r" value='{{r}}'>
+  <button type="submit" >Сохранить изменения</button></form>
+{%  include 'script2.html'  %}
+    
+    
+    
+
+    </td></tr></tbody>
 
         </table></div>
 
@@ -68,17 +97,17 @@
   </td>
 {% endif %}
 {% endfor %}</tr>
-{% endfor %}
+{% endfor %}<tr><td colspan=13>
 
-</tbody>
-        </table></div>
           <form id="f10" action="/s6/" method="POST">
           {% csrf_token %}
         <input type = hidden name="r" value='{{r}}'>
-          <button type="submit" >(6) Сохранить изменения</button>
+          <button type="submit" > Сохранить изменения</button>
         </form>
         {%  include 'script.html'  %}
-        </td>
+            </td></tr>
+</tbody>
+        </table></div>
 
       <td  width=50%>    <div class="table-container">
       <table border=2 style="position:relative;top=0;background-color:white;"  width=100% class="dif in" ><thead>

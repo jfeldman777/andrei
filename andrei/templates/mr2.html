@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-<a href="/">домой</a> <a href="/ar/{{r}}">балансы</a> <a href="/dr/{{r}}">дельта</a>
+<a href="/">домой</a> <a href="/atr/">ресурсы</a> <a href="/atj/">проекты</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a> 
 <h1>{{role}}</h1>
 
 
@@ -28,7 +28,8 @@
 {% endfor %}
 
 </table>
-
+<a href="/mro/" style="position:relative;">Все ресурсы оставшиеся</a>
+<a href="/mrom/" style="position:relative;">Все ресурсы максимальные</a>
 
     {% include 'js.html' %}
 {% endblock %}
