@@ -1551,6 +1551,7 @@ def s2(request):
                 project = Project.objects.get(id=j)
                 if '-' in k:
                     try:
+                        person=None
                         tjLoad(person,role,project,k,v)
                     except:
                         pass

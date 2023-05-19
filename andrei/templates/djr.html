@@ -2,7 +2,7 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-<table border=2 width=100%>
+<table border=2 width=100% class="out">
 <tr><td colspan=2><h3 style="text-align:center;">{{project}}-
 
   {{role}}
@@ -27,8 +27,8 @@
            </table></div>
   </td>
     <td width=50% style="vertical-align:top;"> <div class="table-container-2">
-      <table border=2 width=100% style="position:relative;top=0;">
-        <tr><td colspan=13>Потребность<td></tr>
+      <table border=2 width=100% style="position:relative;top=0;"><thead>
+        <tr><th colspan=13>Потребность</th></tr>
           <tr>
         {% include 'moon.html' %}
         <tr>
