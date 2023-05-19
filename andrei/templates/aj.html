@@ -20,7 +20,11 @@
   {% endif %}
 {% else %}
 <td>
-{{t}}
+  {% if t|isstr:'Дельта' %}
+  <a href="/dj/{{j}}">{{t}}</a>
+  {% else %}
+  {{t}}
+  {% endif %}
 </td>
       {% endif %}
 {% endfor %}
@@ -131,4 +135,5 @@
     </tr></tbody>
   </table></div>
     {% include 'js.html' %}
+
 {% endblock %}

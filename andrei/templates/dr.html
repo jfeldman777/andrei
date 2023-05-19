@@ -4,14 +4,15 @@
 {% include 'scroll.html' %}
 
 <table border=2 width=100% style="vertical-align: top;" class=out>
-<tr><td colspan=2><h3 style="text-align:center;">Все проекты - {{role}} - Дельта</h3>
+<tr><td colspan=2><h3 style="text-align:center;">Все проекты - {{role}}</h3>
 
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
       <div class="table-container-2">
 
-    <table border=2 style="position:relative;top=0;background-color:white;"  width=100% class=in><thead>
-        <tr><th colspan=13>Балансировка</th></tr><tr><th>Проект</th>
+    <table border=2 style="position:relative;top=0;background-color:white;"
+      width=100% class=in><thead>
+        <tr><th colspan=13>Дельта</th></tr><tr><th>Проект</th>
 {% include 'moon.html' %}</thead><tbody>
 {% for dem in w1 %}
 <tr>
@@ -29,12 +30,16 @@
 
 </tr>
 
-{% endfor %}<tbody>
+{% endfor %}
+<tr><td colspan=13>
+<a href="/ar/{{r}}">подробнее</a></td><tr>
+<tbody>
     </table>
     </div>
   </td>
     <td width=50%> <div class="table-container-2">
-      <table border=2 width=100% style="position:relative;top=0;background-color:white;" class=in>
+      <table border=2 width=100% style="position:relative;top=0;background-color:white;"
+      class=in>
           <tr><td colspan=13>Потребность<td></tr><td><b>{{role}}</b>
         {% include 'moon.html' %}
         {% for dem in w2 %}
@@ -131,4 +136,5 @@
     </tr>
   </table>
     {% include 'js.html' %}
+    {% include 'menu.html' %}
 {% endblock %}

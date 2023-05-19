@@ -5,13 +5,13 @@
 <table border=2 width=100%>
 <tr><td colspan=2><h3 style="text-align:center;">{{project}}-
 
-  {{role}} -  Дельта
+  {{role}}
 </h3>
 <td></tr>
   <tr style="text-align:center;"><td  width=50% style="vertical-align:top;">
        <div class="table-container-2">
     <table border=2 style="position:relative;top=0;"  width=100% ><thead>
-        <tr><th colspan=13>Балансировка<th></tr><tr>
+        <tr><th colspan=13>Дельта<th></tr><tr>
           {% include 'moon.html' %}
 {% for tt in w1 %}
 <tr>
@@ -21,7 +21,8 @@
 </td>
 {% endfor %}
 </tr>
-{% endfor %}
+{% endfor %}<tr><td colspan=13>
+<a href="/ajr/{{j}}/{{r}}">подробнее</a></td><tr>
         </tbody>
            </table></div>
   </td>
@@ -103,5 +104,5 @@
     </tr>
   </table>
     {% include 'js.html' %}
-
+{% include 'menu.html' %}
 {% endblock %}

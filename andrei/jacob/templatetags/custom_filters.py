@@ -12,7 +12,11 @@ def isnumeric(value):
     except ValueError:
         return False
 
-
+@register.filter
+def isstr(value,s):
+    if str(value)==s:
+        return True
+    return False
 
 
 @register.filter

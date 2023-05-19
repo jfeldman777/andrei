@@ -1,42 +1,98 @@
 
-<style>
-.under-table{
-  position: fixed;
-  bottom: 0;
-  left:0;
 
-}
-  .button-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 10px;
-    box-sizing: border-box;
-  }
+<nav class="navbar" style="position:absolute;top:0;left:0;">
+  <div class="container">
+    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Остальные элементы навбара -->
 
-  .top-left-button {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
+<!-- Header -->
+<header class="navbar navbar-expand-lg navbar-end mb-3" >
+  <div class="container">
+    <div class="navbar-nav-wrap">
 
-  .top-right-button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-  }
+      <!-- Toggle -->
+      <button type="button" class="navbar-toggler ms-auto" data-bs-toggle="collapse" data-bs-target="#navbarNavMenu"
+       aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbarNavMenu">
+        <span class="navbar-toggler-default">
+          <i class="bi-list"></i>
+        </span>
+        <span class="navbar-toggler-toggled">
+          <i class="bi-x"></i>
+        </span>
+      </button>
+      <!-- End Toggle -->
+
+      <nav class="navbar-nav-wrap-col collapse navbar-collapse" id="navbarNavMenu">
+        <!-- Navbar -->
 
 
-    .hidden {
-  display: none;
-}
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Домой</a>
+          </li>
 
-</style>
-<div class="button-container">
-<button class="top-right-button" onclick="location.href='/'">Домой</button>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdownSubMenu"
+            role="button" data-bs-toggle="dropdown" aria-expanded="false">Проекты</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownSubMenu"
+            style="min-width: 230px;">
+              <a class="dropdown-item" href="/prjlist/">Портфель</a>
+
+
+              <a class="dropdown-item" href="/atj/">Руководители</a>
+
+            </div>
+          </li>
+          <!-- Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#"
+            id="dropdownSubMenu" role="button" data-bs-toggle="dropdown"
+             aria-expanded="false">Ресурсы</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownSubMenu"
+             style="min-width: 230px;">
+              <a class="dropdown-item" href="/mro/" >Все ресурсы оставшиеся</a>
+
+
+
+              <a class="dropdown-item" href="/mrom/">Все ресурсы максимальные</a>
+
+              <a class="dropdown-item" href="/atr/">Руководители</a>
+            </div>
+          </li>
+          <!-- End Dropdown -->
+
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdownSubMenu"
+            role="button" data-bs-toggle="dropdown" aria-expanded="false">Балансы</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownSubMenu"
+            style="min-width: 230px;">
+              <a class="dropdown-item" href="/b/1">за месяц</a>
+
+                <a class="dropdown-item" href="/b/3">за три</a>
+
+                  <a class="dropdown-item" href="/b/6">за шесть</a>
+
+                    <a class="dropdown-item" href="/b/12">за двенадцать</a>
+
+            </div>
+          </li>
+
+
+        </ul>
+        <!-- End Navbar -->
+      </nav>
+
+    </div>
+  </div>
+</header>
+<!-- End Header -->
+
 </div>
+</nav>

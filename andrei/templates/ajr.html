@@ -14,7 +14,11 @@
 <tr>
 {% for t in tt %}
 <td>
-{{t}}
+  {% if t|isstr:'Дельта' %}
+  <a href="/dr/{{r}}">{{t}}</a>
+  {% else %}
+  {{t}}
+  {% endif %}
 </td>
 {% endfor %}
 
@@ -106,5 +110,5 @@
     </tr>
   </table>
     {% include 'js.html' %}
-
+{% include 'menu.html' %}
 {% endblock %}

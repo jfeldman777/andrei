@@ -4,13 +4,15 @@
 {% include 'scroll.html' %}
 
 <table border=2 width=100%>
-<tr><td colspan=2><h3  style="text-align:center;">Все ресурсы - {{project}} - Дельта</h3>
+<tr><td colspan=2><h3  style="text-align:center;">Все ресурсы - {{project}}</h3>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
 
         <div class="table-container-2">
     <table border=2 style="position:relative;top=0;"  width=100% ><thead>
-        <tr><th colspan=13>Балансировка<th></tr><tr><th rowspan=2><b>{{project}}</b>
+        <tr><th colspan=13>
+          Дельта
+            <th></tr><tr><th rowspan=2><b>{{project}}</b>
 {% include 'moon.html' %}
 {% for dem in w1 %}
 <tr>
@@ -27,7 +29,8 @@
 {% endfor %}
 </tr>
 
-{% endfor %}
+{% endfor %}<tr><td colspan=13>
+<a href="/aj/{{j}}">подробнее</a></td><tr>
 </tbody>
     </table>
     </div>
@@ -151,5 +154,5 @@
     </tr>
   </table>
     {% include 'js.html' %}
-
+{% include 'menu.html' %}
 {% endblock %}
