@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-<a href="/" style="position:relative;">Домой</a>
-<a href="/prjlist/" style="position:relative;">Все проекты</a>
-<a href="/mro/" style="position:relative;">Все ресурсы</a>
+{% include 'menu2.html' %}
 <table border="2" cellspacing="0" cellpadding="5"
 style="position:relative;text-align: center;" >
       <tr">
@@ -49,7 +47,7 @@ style="position:relative;text-align: center;" >
 </a>
         </td>
         <td style="text-align: center; ">
-          <a href="/mr/{{cell.r}}">
+          <a href="/mr1/{{cell.r}}">
         изменить
 </a>
         </td>

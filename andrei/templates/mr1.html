@@ -2,8 +2,10 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-<a href="/">домой</a>   <a href="/mrom/">все ресурсы (максимально)</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a> 
-<h1>{{role}}</h1>
+{% include 'menu2.html' %}
+<!-- <a href="/">домой</a>   <a href="/mrom/">все ресурсы (максимально)</a>
+ <a href="/prjlist/" style="position:relative;">Портфель проектов</a>  -->
+<h3>{{role}}</h3>
 
       <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
           <tr><td colspan=13>Ресурсный пул (максимальная доступность)<td></tr><tr><td rowspan=2><b>ФИО</b></td></tr>
@@ -18,8 +20,8 @@
 
 {% else %}
   <td class="good" key="{{t.link}}" >
-      
-      
+
+
 {{t.title}}
       {% if t.fire %}
 <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
@@ -43,6 +45,6 @@
 
 </td></tr>
       </table>
- 
+
     {% include 'js.html' %}
 {% endblock %}

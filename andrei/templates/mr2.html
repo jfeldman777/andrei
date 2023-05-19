@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-<a href="/">домой</a> <a href="/atr/">ресурсы</a> <a href="/atj/">проекты</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a> 
+{% include 'menu2.html' %}
+<a href="/prjlist/" style="position:relative;">Портфель проектов</a> 
 <h1>{{role}}</h1>
 
 

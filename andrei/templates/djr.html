@@ -3,11 +3,10 @@
 {% block content %}
 
 <table border=2 width=100%>
-<tr><td colspan=2><h1>{{project}}-
+<tr><td colspan=2><h3 style="text-align:center;">{{project}}-
 
   {{role}} -  Дельта
-</h1>
-<a href="/">домой</a> <a href="/ajr/{{j}}/{{r}}">Подробно</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
+</h3>
 <td></tr>
   <tr style="text-align:center;"><td  width=50% style="vertical-align:top;">
        <div class="table-container-2">
@@ -46,7 +45,7 @@
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >(4) Сохранить изменения</button>
+  <button type="submit" >Сохранить изменения</button>
 </form>
 {%  include 'script2.html'  %}
 
@@ -63,27 +62,27 @@
 {% for tt in w3 %}
 <tr>
 {% for t in tt %}
-    
-    
-    
-    
+
+
+
+
 <td class="good  {{t.color}}" key="{{t.link}}" title="{{t.up}}">
   {{t.val}}
 </td>{% endfor %}</tr>
 {% endfor %}
 <tr><td colspan=13 >
-    
+
   <form id="f10" action="/s3/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >(3) Сохранить изменения</button></form>
+  <button type="submit" >Сохранить изменения</button></form>
 {%  include 'script.html'  %}
 
-    
-    
-    
-    
+
+
+
+
 </td></tr>
         </table>
       </td>
@@ -104,4 +103,5 @@
     </tr>
   </table>
     {% include 'js.html' %}
+
 {% endblock %}

@@ -5,9 +5,6 @@
 <table border=2 width=100%  style=" height: 100vh;
 ">
 <tr><td colspan=2><h3>Все проекты - {{role}}</h3>
-(ar)<a href="/">домой</a>   <a href="/dr/{{r}}">дельта</a>  <a href="/mr/{{r}}">максимальная доступность</a>
-    
-    <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
     <div class="table-container">
@@ -60,17 +57,17 @@
 
 
 <tr><td colspan=13 >
-    
-    
+
+
   <form id="f20" action="/s11/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
   <button type="submit" >Сохранить изменения</button></form>
 {%  include 'script2.html'  %}
-    
-    
-    
+
+
+
 
     </td></tr></tbody>
       </table>
@@ -92,22 +89,22 @@
 {% for t in tt %}
   {% if forloop.first %}
 {% if t|negative %}{% else %}
-    
-    
+
+
   <td colspan=13>{{t}}</td></tr><tr>
     {% endif %}
   {% else %}
-            
+
   <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}};">
     {{t.val}}
   </td>
-            
-            
+
+
 {% endif %}
 {% endfor %}</tr>
 {% endfor %}
 
-            
+
 <tr><td colspan=13 >
 
 
@@ -121,8 +118,8 @@
           {%  include 'script.html'  %}
           <!-- </td></tr> -->
     </td></tr></tbody>
-            
-            
+
+
         </table>
 
       </div>

@@ -2,9 +2,9 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
+
 <table border=2 width=100%>
-<tr><td colspan=2><h1>Все ресурсы - {{project}}</h1>
-(aj)<a href="/">домой</a> <a href="/dj/{{j}}">Дельта</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
+<tr><td colspan=2><h3 style="text-align:center;">Все ресурсы - {{project}}</h3>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
         <div class="table-container">
@@ -22,7 +22,7 @@
 <td>
 {{t}}
 </td>
-      {% endif %}    
+      {% endif %}
 {% endfor %}
 
 </tr>
@@ -33,10 +33,10 @@
     <td width=50%> <div class="table-container">
       <table border=2 width=100% style="position:relative;top=0;"><thead>
           <tr><th colspan=13>Потребность<th></tr><tr><th>{{project}}</th>
-      
-          
-          
-          
+
+
+
+
                   {% include 'moon.html' %}
         {% for dem in w2 %}
         <tr>
@@ -67,27 +67,27 @@
         <table border=2 width=100% style="position:relative;top=0;"><thead>
             <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th>{{project}}
 {% include 'moon.html' %}
-       
-            
+
+
 {% for tt in w3 %}
 <tr>
 {% for t in tt %}
   {% if forloop.first %}
 {% if t|negative %}
-    
+
     {% else %}
-  <td colspan=13>  
-      {{t}}</td></tr><tr>  
+  <td colspan=13>
+      {{t}}</td></tr><tr>
     {% endif %}
   {% else %}
-            
-            
+
+
   <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}};">
 {{t.val}}
 </td>
-            
-            
-            
+
+
+
 {% endif %}
 {% endfor %}</tr>
             {% endfor %}<tr><td colspan=13>
@@ -98,7 +98,7 @@
   <button type="submit" >Сохранить изменения</button></form>
 {%  include 'script.html'  %}
             </td></tr>
-            
+
         </table></div>
       </td>
       <td  width=50%>  <div class="table-container">

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+{% include 'menu2.html' %}
+{% include 'js.html' %}
+<h2>Относительная нехватка ресурсов {{hh}} вперед</h2>
+<div style=" top:50; width: 100%; align:center;   padding: 2px;">
+    <table border=2 style="position:relative;top=0;text-align:center;"  width=100% >
+      <thead>
+        <tr><th>
+          проект\ресурс</th>
+          {% for t in txy %}
+<th><a href="{{t.link}}">
+  {{t.val}}
+</th>
+      {% endfor %}</tr></thead><tbody>
+      {% for xy in tab %}
+<tr>
+  {% for x in xy %}
+  <td  style="background-color:{{x.color}};" ><a href="{{x.link}}">
+{{x.val}}</a>
+  </td>
+  {% endfor %}
+    </tr>
+{% endfor %}
+</tbody>
+      </table>
+
+      </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{
+  "name": "gulp",
+  "version": "1.0.0",
+  "description": "Задача о расписании",
+  "main": "index.js",
+  "scripts": {
+    "gulp": "gulp"
+  },
+  "author": "",
+  "license": "ISC"
+}

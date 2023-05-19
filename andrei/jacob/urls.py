@@ -11,11 +11,14 @@ urlpatterns = [
                 path('prm_task/<int:p>/<int:r>/<int:y>/<int:m>', vvv.prm_task, name='prm_task'),
         path('pr_task/<int:p>/<int:r>', vvv.pr_task, name='pr_task'),
     path('mro/', vvv.mro, name='mro'),
-        path('smrom/', vvv.smrom, name='ssmrom'),     
+        path('smrom/', vvv.smrom, name='ssmrom'),
     path('mrom/', vvv.mrom, name='mrom'),
     path('prjlist/', vvv.prjlist, name='prjlist'),
     path('smj/', vvv.smj, name='smj'),
+
     path('smr/', vvv.smr, name='smr'),
+    path('b/<int:n>/', vvv.b, name='b'),
+
     path('mr/<int:r>', vvv.mr, name='mr'),
     path('mr1/<int:r>', vvv.mr1, name='mr1'),
     path('mr2/<int:r>', vvv.mr2, name='mr2'),

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<style>
+    .hidden {
+  display: none;
+}
+
+</style>
+<button id="toggleButton" style="position:absolute;top:0;left:0;">Toggle Menu</button>
+<ul class="navbar-nav hidden" id="menu" >
+  <li class="nav-item">
+    <a class="nav-link" href="#">Главная</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">О нас</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Контакты</a>
+  </li>
+</ul>
+
+<!--
+
+<ul id="menu" class="hidden">
+  <li><a href="#">Menu Item 1</a></li>
+  <li><a href="#">Menu Item 2</a></li>
+  <li><a href="#">Menu Item 3</a></li>
+</ul>
+
+-->
+
+<script>
+
+const toggleButton = document.getElementById('toggleButton');
+const menu = document.getElementById('menu');
+
+toggleButton.addEventListener('click', function() {
+  menu.classList.toggle('hidden');
+});
+
+</script>
+
+
+
+{% endblock %}

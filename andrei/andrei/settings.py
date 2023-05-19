@@ -111,8 +111,9 @@ AUTH_PASSWORD_VALIDATORS = [
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-]
-
+    os.path.join(BASE_DIR, 'css'),
+    os.path.join(BASE_DIR, 'js/dest'),
+ ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

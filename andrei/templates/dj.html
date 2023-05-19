@@ -2,9 +2,9 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
+
 <table border=2 width=100%>
-<tr><td colspan=2><h1>Все ресурсы - {{project}} - Дельта</h1>
-<a href="/">домой</a> <a href="/aj/{{j}}">Подробно</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
+<tr><td colspan=2><h3  style="text-align:center;">Все ресурсы - {{project}} - Дельта</h3>
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
 
@@ -17,11 +17,11 @@
 {% for t in dem %}
 <td>
     {% if forloop.first %}
-    <a href="/dr/{{t.r}}">   
-{{t.val}}        
+    <a href="/dr/{{t.r}}">
+{{t.val}}
     </a>
     {% else %}
-    {{t.val}}   
+    {{t.val}}
     {% endif %}
 </td>
 {% endfor %}
@@ -40,8 +40,8 @@
         <tr>
         {% for t in dem %}
  {% if forloop.first %} <td>
-    <a href="/djr/{{t.j}}/{{t.r}}">   
-{{t.val}}  
+    <a href="/djr/{{t.j}}/{{t.r}}">
+{{t.val}}
     </a>
     {% else %}
 
@@ -49,22 +49,22 @@
 {{t.val}}
                 {% endif %}
 </td>
-             
-            
+
+
 {% endfor %}
 </tr>        {% endfor %}
 <tr><td colspan=13 >
-    
-    
+
+
   <form id="f20" action="/s10/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
   <button type="submit" >Сохранить изменения</button></form>
 {%  include 'script2.html'  %}
-    
-    
-    
+
+
+
 
     </td></tr></tbody>
       </table>
@@ -85,36 +85,36 @@
 {% if t|negative %}{% else %}
 
 
-  <td colspan=13>{{t}}</td></tr><tr>      
+  <td colspan=13>{{t}}</td></tr><tr>
     {% endif %}
   {% else %}
-            
-            
-            
+
+
+
   <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}};">
 {{t.val}}
 </td>
-            
-            
+
+
 {% endif %}
 {% endfor %}</tr>
 {% endfor %}
-            
+
 <tr><td colspan=13 >
-    
-    
+
+
   <form id="f10" action="/s9/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
   <button type="submit" >Сохранить изменения</button></form>
 {%  include 'script.html'  %}
-    
-    
-    
+
+
+
 
     </td></tr></tbody>
-            
+
             </tbody>
         </table>
         </div>
@@ -151,4 +151,5 @@
     </tr>
   </table>
     {% include 'js.html' %}
+
 {% endblock %}
