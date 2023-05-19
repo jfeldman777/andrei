@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-
+{% include 'scroll.html' %}
 <table border=2 width=100%>
 <tr><td colspan=2><h3  style="text-align:center;">{{project}} -
   {{role}}
 </h3>
-  <tr style="text-align:center;"><td  width=50%> <div class="table-container">
-    <table border=2 style="position:relative;top=0;"  width=100% >
-        <tr><td colspan=13>Балансировка<td></tr><tr><td>---
+  <tr style="text-align:center;"><td  width=50%> <div class="table-container-2">
+    <table border=2 style="position:relative;top=0;"  width=100% ><thead>
+        <tr><th colspan=13>Балансировка</th></tr><tr><th>---
 {% include 'moon.html' %}
 {% for tt in w1 %}
 <tr>
@@ -33,10 +33,10 @@
         </tbody>
       </table></div>
   </td>
-    <td width=50% style="vertical-align:top;"><div class="table-container">
+    <td width=50% style="vertical-align:top;"><div class="table-container-2">
       <table border=2 width=100% style="position:relative;top=0;"><thead>
-        <tr><th colspan=13>Потребность*<th></tr>
-          <tr>
+        <tr><th colspan=13>Потребность</th></tr>
+          <th>
         {% include 'moon.html' %}
         <tr>
         {% for t in w2 %}
@@ -47,12 +47,12 @@
 {% endfor %}
 
 </tr>
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:center;">
   <form id="f20" action="/s2/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button>
+  <button type="submit" class="button3">Сохранить изменения</button>
 </form>
 {%  include 'script2.html'  %}
 
@@ -64,8 +64,9 @@
     <tr style="text-align:center;">
 
       <td width=50%>
-        <table border=2 width=100% style="position:relative;top=0;">
-            <tr><td colspan=13>Утвержденные загрузки<td></tr><tr><td>ФИО
+         <div class="table-container">
+        <table border=2 width=100% style="position:relative;top=0;"><thead>
+            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th>ФИО
 {% include 'moon.html' %}
 
 {% for tt in w3 %}
@@ -77,25 +78,22 @@
   {{t.val}}
 </td>{% endfor %}</tr>
 {% endfor %}
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:center;">
 
 
   <form id="f10" action="/s1/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button></form>
+  <button type="submit" class="button3">Сохранить изменения</button></form>
 {%  include 'script.html'  %}
-
-
-
-
     </td></tr></tbody>
         </table>
       </td>
-      <td  width=50% style="vertical-align:top;">
-      <table border=2 style="position:relative;top=0;vertical-align:top;"  width=100% class="dif">
-          <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><tr><td>ФИО
+      <td  width=50% style="vertical-align:top;">     <div class="table-container">
+      <table border=2 style="position:relative;top=0;vertical-align:top;"
+       width=100% class="dif"><thead>
+          <tr><th colspan=13>Ресурсы (остаточная доступность)</th></tr><tr><th>ФИО
 {% include 'moon.html' %}
 {% for dem in w4 %}
 <tr>

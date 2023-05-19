@@ -2,12 +2,7 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-{% include 'menu2.html' %}
-
-<!-- <a href="/">домой</a>      <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
-
-<a href="/mro/" style="position:relative;">Все ресурсы оставшиеся</a>
- <a href="/atr/" style="position:relative;">Руководители ресурсов</a>  -->
+{% include 'menu.html' %}
       <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
           <tr><td colspan=13>Ресурсный пул (максимальная доступность)</td></tr>
             <tr><td><b>ФИО</b>
@@ -40,11 +35,11 @@ class="good" key="{{t.link}}" >
 {% endfor %}
 </tr>
 {% endfor %}
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:center;">
   <form id="f10" action="/smrom/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{j}}'>
-  <button type="submit" >Сохранить изменения</button>
+  <button type="submit" class="button3">Сохранить изменения</button>
 </form>
 {%  include 'script.html'  %}
 

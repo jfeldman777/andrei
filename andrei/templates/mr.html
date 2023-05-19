@@ -2,8 +2,9 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'menu2.html' %}
-<a href="/dr/{{r}}">дельта</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a> 
-<h1>{{role}}</h1>
+<a href="/dr/{{r}}">дельта</a> <a href="/prjlist/" style="position:relative;">Портфель проектов</a>
+
+<h3 style="text-align:center;">{{role}}</h3>
 
       <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
           <tr><td colspan=13>Ресурсный пул (максимальная доступность)<td></tr><tr><td rowspan=2><b>ФИО</b></td></tr>
@@ -27,11 +28,11 @@
 
 {% endfor %}
 
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:center;">
   <form id="f10" action="/smr/" method="POST">
   {% csrf_token %}
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button>
+  <button type="submit" class="button3">Сохранить изменения</button>
 </form>
 {%  include 'script.html'  %}
 

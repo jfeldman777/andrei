@@ -39,8 +39,8 @@
   </td>
     <td width=50%> <div class="table-container-2">
       <table border=2 width=100% style="position:relative;top=0;background-color:white;"
-      class=in>
-          <tr><td colspan=13>Потребность<td></tr><td><b>{{role}}</b>
+      class=in><thead>
+          <tr><th colspan=13>Потребность<th></tr><th>{{role}}
         {% include 'moon.html' %}
         {% for dem in w2 %}
         <tr>
@@ -63,14 +63,14 @@
 </tr>        {% endfor %}
 
 
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:center;">
 
 
   <form id="f20" action="/s12/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button></form>
+  <button type="submit" class="button3">Сохранить изменения</button></form>
 {%  include 'script2.html'  %}
 
 
@@ -102,12 +102,12 @@
   </td>
 {% endif %}
 {% endfor %}</tr>
-{% endfor %}<tr><td colspan=13>
+{% endfor %}<tr><td colspan=13 style="text-align:center;">
 
           <form id="f10" action="/s6/" method="POST">
           {% csrf_token %}
         <input type = hidden name="r" value='{{r}}'>
-          <button type="submit" > Сохранить изменения</button>
+          <button type="submit" class="button3"> Сохранить изменения</button>
         </form>
         {%  include 'script.html'  %}
             </td></tr>
@@ -116,7 +116,7 @@
 
       <td  width=50%>    <div class="table-container">
       <table border=2 style="position:relative;top=0;background-color:white;"  width=100% class="dif in" ><thead>
-          <tr><th colspan=13>Ресурсный пул (остаточная доступность)<th></tr><tr><th>ФИО
+          <tr><th colspan=13>Ресурсы (остаточная доступность)<th></tr><tr><th>ФИО
 {% include 'moon.html' %}</thead><tbody>
 {% for tt in w4 %}
 <tr>

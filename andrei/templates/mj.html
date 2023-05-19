@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'menu2.html' %}
-<h1>Все ресурсы - {{project}}</h1>
+{% include 'menu.html' %}
+<h3 style="text-align:center;" >Все ресурсы - {{project}}</h3>
 
 
 
@@ -18,11 +18,11 @@
       </td>
 {% endfor %}
 </tr>        {% endfor %}
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:center;">
   <form id="f10" action="/smj/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{j}}'>
-  <button type="submit" >Сохранить изменения</button>
+  <button type="submit" class="button3">Сохранить изменения</button>
 </form>
 {%  include 'script.html'  %}
 

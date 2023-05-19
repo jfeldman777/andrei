@@ -56,14 +56,14 @@
 
 {% endfor %}
 </tr>        {% endfor %}
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:center;">
 
 
   <form id="f20" action="/s10/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button></form>
+  <button type="submit" class="button3">Сохранить изменения</button></form>
 {%  include 'script2.html'  %}
 
 
@@ -103,14 +103,14 @@
 {% endfor %}</tr>
 {% endfor %}
 
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:center;">
 
 
   <form id="f10" action="/s9/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button></form>
+  <button type="submit" class="button3">Сохранить изменения</button></form>
 {%  include 'script.html'  %}
 
 
@@ -125,7 +125,7 @@
       <td  width=50%>  <div class="table-container">
       <table border=2 style="position:relative;top=0;"  width=100% class="dif" >
         <thead>
-          <tr><th colspan=13>Ресурсный пул (остаточная доступность)<th></tr><tr><th rowspan=2>ФИО
+          <tr><th colspan=13>Ресурсы (остаточная доступность)<th></tr><tr><th rowspan=2>ФИО
 {% include 'moon.html' %}
 {% for tt in w4 %}
 <tr>

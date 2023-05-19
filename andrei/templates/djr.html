@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-
+{% include 'scroll.html' %}
 <table border=2 width=100%>
 <tr><td colspan=2><h3 style="text-align:center;">{{project}}-
 
@@ -11,7 +11,7 @@
   <tr style="text-align:center;"><td  width=50% style="vertical-align:top;">
        <div class="table-container-2">
     <table border=2 style="position:relative;top=0;"  width=100% ><thead>
-        <tr><th colspan=13>Дельта<th></tr><tr>
+        <tr><th colspan=13>Дельта</th></tr><tr>
           {% include 'moon.html' %}
 {% for tt in w1 %}
 <tr>
@@ -41,23 +41,25 @@
 {% endfor %}
 
 </tr>
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:left; vertical-align:top;">
   <form id="f20" action="/s4/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button>
+  <button type="submit" class="button3">Сохранить изменения</button>
 </form>
 {%  include 'script2.html'  %}
 
         </table></div>
 
     </td></tr>
-    <tr style="text-align:center;">
+    <tr style="text-align:center; vertical-align:top;">
 
       <td width=50% style="vertical-align:top;">
+         <div class="table-container-2">
         <table border=2 width=100% style="position:relative;top=0;">
-            <tr><td colspan=13>Утвержденные загрузки<td></tr><tr><td>ФИО
+          <thead>
+            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th>ФИО
 {% include 'moon.html' %}
 
 {% for tt in w3 %}
@@ -71,25 +73,22 @@
   {{t.val}}
 </td>{% endfor %}</tr>
 {% endfor %}
-<tr><td colspan=13 >
+<tr><td colspan=13 style="text-align:right;">
 
   <form id="f10" action="/s3/" method="POST">
   {% csrf_token %}
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" >Сохранить изменения</button></form>
+  <button type="submit" class="button3">Сохранить изменения</button></form>
 {%  include 'script.html'  %}
-
-
-
-
-
 </td></tr>
         </table>
       </td>
       <td  width=50% style="vertical-align:top;">
+         <div class="table-container-2">
       <table border=2 style="position:relative;top=0;"  width=100% class="dif">
-          <tr><td colspan=13>Ресурсный пул (остаточная доступность)<td></tr><tr><td>ФИО
+        <thead>
+          <tr><th colspan=13>Ресурсы (остаточная доступность)</th></tr><tr><th>ФИО
 {% include 'moon.html' %}
 {% for dem in w4 %}
 <tr>
