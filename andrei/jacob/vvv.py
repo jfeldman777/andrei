@@ -1104,7 +1104,7 @@ def mj(request,p,r,j):#Потребность на малом экране
             if mj_outside(d,project):
                 color = "mygrey"
             a_w2[i]={
-                "link":f"0.{project.id}{role.id}.{d.year}-{d.month}-15",
+                "link":f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val":dem_rj[i],
             "up":up(max(-delta[i],0),diff[i]),
                     "color":color
@@ -1329,7 +1329,7 @@ def mrom(request):#Максимальная доступнасть по всем
                     color = "white"
 
                 dif2[i+1] = {
-                    "link":f"{person.id}.{role.id}.{d.year}-{d.month}-15",
+                    "link":f"{person.id}.{role.id}.0.{d.year}-{d.month}-15",
                 "color":color,
                 "val":dif[i+1],
                     "fire":is100[i]}
@@ -1456,6 +1456,7 @@ def s2(request):
     p=0
     j=0
     r=0
+    print(666)
     if request.method == "POST":
         form = Form(request.POST)
         if form.is_valid():
@@ -1463,6 +1464,7 @@ def s2(request):
                 html=request.POST.get('html')
                 if '.' in k:
                     p,r,j,d=k.split('.')
+                    print(999,k)
                     try:
                         person=None
                         role=Role.objects.get(id=r)

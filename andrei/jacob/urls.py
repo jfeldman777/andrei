@@ -27,7 +27,7 @@ urlpatterns = [
     
     path('mr1/<int:r>', vvv.mr1, name='mr1'),
     path('mr2/<int:r>', vvv.mr2, name='mr2'),
-    path('mj/<int:j>', vvv.mj, name='mj'),
+    path('mj/<int:p>/<int:r>/<int:j>/', vvv.mj, name='mj'),
 
     path('dj/<int:p>/<int:r>/<int:j>/', vvv.dj, name='dj'),
     path('aj/<int:p>/<int:r>/<int:j>/', vvv.aj, name='aj'),

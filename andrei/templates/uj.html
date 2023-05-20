@@ -2,11 +2,13 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
+{% include 'menu.html' %}
+<h3 style="text-align:center;">Проект {{project}}</h3>
 
         <table border=2 width=100% style="position:relative;top=0;text-align:center;">
           <thead>
             <tr><th colspan=13>
-                <a href="/dj/0/{{j}}/0/" style="color:white">
+                <a href="/dj/0/0/{{j}}/" style="color:white">
                 Утвержденные загрузки
                 </a>
                 </th></tr><tr><th>ФИО
@@ -43,5 +45,5 @@
         </table>
 
     {% include 'js.html' %}
-{% include 'menu.html' %}
+
 {% endblock %}
