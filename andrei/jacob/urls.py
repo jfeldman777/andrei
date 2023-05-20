@@ -18,45 +18,33 @@ urlpatterns = [
 
     path('smr/', vvv.smr, name='smr'),
     path('b/<int:n>/', vvv.b, name='b'),
-    path('mr/<int:r>', vvv.mr, name='mr'),
+    path('mr/<int:p>/<int:r>/<int:j>/', vvv.mr, name='mr'),
 
 
-    path('ur/<int:r>', vvv.ur, name='ur'),
-    path('uj/<int:j>', vvv.uj, name='uj'),
-    path('ujr/<int:j>/<int:r>/', vvv.ujr, name='ujr'), 
+    path('ur/<int:p>/<int:r>/<int:j>/', vvv.ur, name='ur'),
+    path('uj/<int:p>/<int:r>/<int:j>/', vvv.uj, name='uj'),
+    path('ujr/<int:p>/<int:r>/<int:j>/', vvv.ujr, name='ujr'), 
     
     path('mr1/<int:r>', vvv.mr1, name='mr1'),
     path('mr2/<int:r>', vvv.mr2, name='mr2'),
     path('mj/<int:j>', vvv.mj, name='mj'),
 
-    path('dj/<int:j>', vvv.dj, name='dj'),
-    path('aj/<int:j>', vvv.aj, name='aj'),
-    path('s12/', vvv.s12, name='s12'),
+    path('dj/<int:p>/<int:r>/<int:j>/', vvv.dj, name='dj'),
+    path('aj/<int:p>/<int:r>/<int:j>/', vvv.aj, name='aj'),
 
-    path('s11/', vvv.s11, name='s11'),
-    path('s10/', vvv.s10, name='s10'),
-    path('s9/', vvv.s9, name='s9'),
-    path('s8/', vvv.s8, name='s8'),
-    path('s7/', vvv.s7, name='s7'),
+    
     path('s2/', vvv.s2, name='s2'),
     path('s1/', vvv.s1, name='s1'),
-    path('s4/', vvv.s4, name='s4'),
-    path('s3/', vvv.s3, name='s3'),
-
-    path('s6/', vvv.s6, name='s6'),
-
-
-
-    path('s5/', vvv.s5, name='s5'),
+    
     path('test/', vvv.test, name='test'),
     path('sj/', vvv.sj, name='sj'),
     path('atj/', vvv.atj, name='atj'),
     path('atr/', vvv.atr, name='atr'),
     path('att/', vvv.att, name='att'),
-    path('dr/<int:r>/', vvv.dr, name='dr'),
-    path('ar/<int:r>/', vvv.ar, name='ar') ,
-    path('ajr/<int:j>/<int:r>/', vvv.ajr, name='ajr'),
-    path('djr/<int:j>/<int:r>/', vvv.djr, name='djr'),
+    path('dr/<int:p>/<int:r>/<int:j>/', vvv.dr, name='dr'),
+    path('ar/<int:p>/<int:r>/<int:j>/', vvv.ar, name='ar') ,
+    path('ajr/<int:p>/<int:r>/<int:j>/', vvv.ajr, name='ajr'),
+    path('djr/<int:p>/<int:r>/<int:j>/', vvv.djr, name='djr'),
     path('test/', vvv.test, name='test'),
 
     path('', vvv.alf, name='alf'),

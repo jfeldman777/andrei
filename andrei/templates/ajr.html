@@ -15,7 +15,7 @@
 {% for t in tt %}
 <td>
   {% if t|isstr:'Дельта' %}
-  <a href="/dr/{{r}}">{{t}}</a>
+  <a href="/dr/0/{{r}}/0/">{{t}}</a>
   {% else %}
   {{t}}
   {% endif %}
@@ -51,8 +51,6 @@
   <form id="f20" action="/s2/" method="POST">
   {% csrf_token %}
       <input type = hidden name="html" value='ajr'>
-<input type = hidden name="id" value='{{id}}'>
-<input type = hidden name="r" value='{{r}}'>
   <button type="submit" class="button3">Сохранить изменения</button>
 </form>
 {%  include 'script2.html'  %}
@@ -88,8 +86,6 @@
   <form id="f10" action="/s1/" method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='ajr'>
-<input type = hidden name="id" value='{{id}}'>
-<input type = hidden name="r" value='{{r}}'>
   <button type="submit" class="button3">Сохранить изменения</button></form>
 {%  include 'script.html'  %}
     </td></tr></tbody>

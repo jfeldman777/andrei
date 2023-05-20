@@ -7,7 +7,7 @@
         <table border=2 width=100% style="position:relative;top=0; text-align:center;">
           <thead>
             <tr><th colspan=13>
-                 <a href="/djr/{{j}}/{{r}}" style="color:white">
+                 <a href="/djr/0/{{r}}/{{j}}" style="color:white">
                      Утвержденные загрузки</a>
                 </th></tr><tr><th>ФИО
 {% include 'moon.html' %}
@@ -25,11 +25,9 @@
 {% endfor %}
 <tr height=20px>
       <td colspan=13  style="text-align:center; vertical-align:top;padding=0;spacing:">
-  <form id="f10" action="/s3/" method="POST">
+  <form id="f10" action="/s1/" method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='ujr'>
-<input type = hidden name="id" value='{{id}}'>
-<input type = hidden name="r" value='{{r}}'>
 
   <button type="submit" class="button3" >Сохранить изменения</button></form>
 {%  include 'script.html'  %}

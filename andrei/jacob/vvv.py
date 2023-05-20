@@ -42,12 +42,11 @@ def b(request,n):
     txy = [0]*len(roles)
     for j in range(len(roles)):
         txy[j] ={
-         "val":roles[j].title,"link":f"/dr/{roles[j].id}"
-         }
+         "val":roles[j].title,"link":f"/dr/0/{roles[j].id}/0/"}
 
     for i in range(len(projects)):
         xy[i][0]={"val":projects[i],
-        "link":f"/dj/{projects[i].id}"
+        "link":f"/dj/0/0/{projects[i].id}/"
         }
         for j in range(len(roles)):
 
@@ -63,7 +62,7 @@ def b(request,n):
                 color = "white"
 
             xy[i][j+1] = {"val":f"{x}%",
-            "link":f"/djr/{projects[i].id}/{roles[j].id}",
+            "link":f"/djr/0/{roles[j].id}/{projects[i].id}/",
             "color":color,
             "i":project.id,
         "j":role.id}
@@ -89,6 +88,7 @@ def mj_outside(m,j):
     return not(d1 <= m and m <= d2)
 
 def get_prj(p,r,j):
+    print(777,p,r,j)
     role=None
     if r>0:
         role = Role.objects.get(id=r)
@@ -389,7 +389,7 @@ def moon():
             d = inc(d)
     return {"yy":y_data,"mm":m_data,"ym":ym}
     ##################################################################
-def ujr(request,j,r):
+def ujr(request,p,r,j):
     person,role,project=get_prj(-1,r,j)
     w3=[]
 
@@ -410,7 +410,8 @@ def ujr(request,j,r):
                 color = "mygrey"
             elif delta[i] < 0:
                 color="mypink"
-            b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+            b_w3[i] = {
+                "link":f"{person.id}{r}.{j}.{d.year}-{d.month}-15",
             "up":up(
             max(-delta[i],0)
             ,diff[i]),
@@ -434,7 +435,7 @@ def ujr(request,j,r):
     moon12["j"] = j
     return render(request,'ujr.html',moon12)
 
-def uj(request,j):
+def uj(request,p,r,j):
     person,role,project=get_prj(-1,-1,j)
     w3=[]
 
@@ -450,7 +451,6 @@ def uj(request,j):
         dem_rj = rj_load_(role,project)#----------------
         p100 = {"val":role.title}
         for person in people:
-            print(98)
             b_w3 = [0]*12
             a_w3 = prj_task_(person,role,project)
 
@@ -461,7 +461,7 @@ def uj(request,j):
                     color = "mygrey"
                 elif delta[i] < 0:
                     color="mypink"
-                b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+                b_w3[i] = {"link":f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                 "up":up(
                 max(-delta[i],0)
                 ,diff[i]),
@@ -486,7 +486,7 @@ def uj(request,j):
     moon12["j"] = j
     return render(request,'uj.html',moon12)    
     
-def ur(request,r):
+def ur(request,p,r,j):
     person,role,project=get_prj(-1,r,-1)
     w3=[]
 
@@ -511,7 +511,7 @@ def ur(request,r):
                     color = "mygrey"
                 elif delta[i] < 0:
                     color="mypink"
-                b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+                b_w3[i] = {"link":f"{person.id},{r}.{project.id}.{d.year}-{d.month}-15",
                 "up":up(
                 max(-delta[i],0)
                 ,diff[i]),
@@ -535,7 +535,7 @@ def ur(request,r):
 
     return render(request,'ur.html',moon12)
     
-def djr(request,j,r):
+def djr(request,p,r,j):
     person,role,project=get_prj(-1,r,j)
 
     w4=[]
@@ -561,7 +561,7 @@ def djr(request,j,r):
         color=""
         if mj_outside(d,project):
                 color = "mygrey"
-        a_w2[i]=    {"link":f"{d.year}-{d.month}-15","val":dem_rj[i],
+        a_w2[i]=    {"link":f"{person.id}.{r}.{j}.{d.year}-{d.month}-15","val":dem_rj[i],
             "up":up(max(-delta[i],0),diff[i]),
                   "color":color,
 
@@ -583,7 +583,8 @@ def djr(request,j,r):
                 color = "mygrey"
             elif delta[i] < 0:
                 color="mypink"
-            b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+            b_w3[i] = {
+                "link":f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
             "up":up(
             max(-delta[i],0)
             ,diff[i]),
@@ -612,8 +613,9 @@ def djr(request,j,r):
     moon12["j"] = j
     return render(request,'djr.html',moon12)
 #Дельта, один проект, один ресурс
-def ajr(request,j,r):#Альфа, один проект, один ресуря
+def ajr(request,p,r,j):#Альфа, один проект, один ресуря
     person,role,project=get_prj(-1,r,j)
+    print(222,j,r)
     w4=[]
     w3=[]
     w2=[]
@@ -640,7 +642,8 @@ def ajr(request,j,r):#Альфа, один проект, один ресуря
         color=""
         if mj_outside(d,project):
             color = "mygrey"
-        a_w2[i]=    {"link":f"{d.year}-{d.month}-15","val":dem_rj[i+1],
+        a_w2[i]=    {"link":f"0.{r}.{j}.{d.year}-{d.month}-15",
+                     "val":dem_rj[i+1],
             "up":up(max(-delta[i+1],0),diff[i]),
                     "color":color,
 
@@ -667,7 +670,7 @@ def ajr(request,j,r):#Альфа, один проект, один ресуря
                 color = "mygrey"
             elif delta[i+1] < 0:
                 color="mypink"
-            b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+            b_w3[i] = {"link":f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
             "up":up(
             max(-delta[i+1],0)
             ,diff[i]),
@@ -704,7 +707,7 @@ def ajr(request,j,r):#Альфа, один проект, один ресуря
     return render(request,'ajr.html',moon12)
 
 
-def ar(request,r):
+def ar(request,p,r,j):
     person,role,project=get_prj(-1,r,-1)
     people = people_of_r(r)
     w3=[]
@@ -728,7 +731,7 @@ def ar(request,r):
                     color = "mygrey"
             a_w2[i+1]={"val":dem_rj[i+2],
                       "color":color,
-                       "link":f"{project.id}.{d.year}-{d.month}-15",
+                       "link":f"0.{r}.{project.id}.{d.year}-{d.month}-15",
 
 
 
@@ -763,7 +766,8 @@ def ar(request,r):
                     color = "mygrey"
                 if delta[i+1] < 0:
                     color="mypink"
-                b_w3[i] = {"link":f"{project.id}.{person.id}.{d.year}-{d.month}-15",
+                b_w3[i] = {
+                     "link":f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                 "up":up(
                 max(-delta[i+1],0),diff[i]),
                 "val":a_w3[i],
@@ -796,7 +800,7 @@ def ar(request,r):
 
     return render(request,'ar.html',moon12)
 
-def dr(request,r):
+def dr(request,p,r,j):
     person,role,project=get_prj(-1,r,-1)
     diff = rj_dif_(role,project)
     people = people_of_r(r)
@@ -824,7 +828,8 @@ def dr(request,r):
             a_w2[i+1]={"val":dem_rj[i+2],
                        "j":project.id,
                       "r":role.id,
-                       "color":color,"link":f"{project.id}.{d.year}-{d.month}-15",
+                       "color":color,
+                     "link":f"0.{r}.{project.id}.{d.year}-{d.month}-15",
                       }
             d = inc(d)
         w2.append(a_w2)#--------
@@ -853,7 +858,8 @@ def dr(request,r):
                     color = "mygrey"
                 elif delta[i] < 0:
                     color="mypink"
-                b_w3[i] = {"link":f"{project.id}.{person.id}.{d.year}-{d.month}-15",
+                b_w3[i] = {
+                     "link":f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                 "up":up(
                 max(-delta[i],0),diff[i]),
                 "val":a_w3[i],
@@ -862,11 +868,6 @@ def dr(request,r):
                 }
 ##########################################################################3333333
                 d = inc(d)
-
-
-
-
-
             c_w3 = [p100,{"val":person.fio}]+b_w3
             p100=-1
             w3.append(c_w3)
@@ -890,7 +891,7 @@ def dr(request,r):
     return render(request,'dr.html',moon12)
 
 
-def dj(request,j):#Дельта, один проект все ресурсы
+def dj(request,p,r,j):#Дельта, один проект все ресурсы
     person,role,project=get_prj(-1,-1,j)
     w4=[]
     w3=[]
@@ -923,7 +924,7 @@ def dj(request,j):#Дельта, один проект все ресурсы
 
             a_w2[i]={
           "val" : dem_rj[i],
-             "link":f"{role.id}.{d.year}-{d.month}-15",
+            "link":f"0.{role.id}.{j}.{d.year}-{d.month}-15",
             }
 
 
@@ -931,7 +932,8 @@ def dj(request,j):#Дельта, один проект все ресурсы
         w2.append([
             {"r":role.id,"j":project.id,
         "val":role.title,
-            "link":f"{role.id}.{d.year}-{d.month}-15", "color":color
+             "link":f"0.{role.id}.{j}.{d.year}-{d.month}-15",
+             "color":color
             }
 
         ]+a_w2)
@@ -950,7 +952,8 @@ def dj(request,j):#Дельта, один проект все ресурсы
                     color = "mygrey"
                 if delta[i] < 0:
                     color="mypink"
-                b_w3[i] = {"link":f"{person.id}.{role.id}.{d.year}-{d.month}-15",
+                b_w3[i] = {
+                 "link":f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                 "up":up(
                 max(-delta[i],0)
                 ,diff[i]),
@@ -987,7 +990,7 @@ def dj(request,j):#Дельта, один проект все ресурсы
 
 
 
-def aj(request,j):#Альфа, один проект
+def aj(request,p,r,j):#Альфа, один проект
     person,role,project=get_prj(-1,-1,j)
     w4=[]
     w3=[]
@@ -1014,7 +1017,8 @@ def aj(request,j):#Альфа, один проект
             color=""
             if mj_outside(d,project):
                 color = "mygrey"
-            a_w2[i]=    {"link":f"{role.id}.{d.year}-{d.month}-15",
+            a_w2[i]=    {
+                "link":f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                          "val":dem_rj[i],
                 "up":up(max(-delta[i+1],0),diff[i]),
                         "color":color,
@@ -1045,7 +1049,8 @@ def aj(request,j):#Альфа, один проект
                     color = "mygrey"
                 elif delta[i+1] < 0:
                     color="mypink"
-                b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+                b_w3[i] = {
+                     "link":f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                 "up":up(
                 max(-delta[i+1],0)
                 ,diff[i]),
@@ -1077,7 +1082,7 @@ def aj(request,j):#Альфа, один проект
     moon12["r"] = role.id
     moon12["j"] = j
     return render(request,'aj.html',moon12)#АЛьфа, один проект все ресурсы
-def mj(request,j):#Потребность на малом экране
+def mj(request,p,r,j):#Потребность на малом экране
     person,role,project=get_prj(-1,-1,j)
 
     w2=[]
@@ -1098,7 +1103,9 @@ def mj(request,j):#Потребность на малом экране
             color=""
             if mj_outside(d,project):
                 color = "mygrey"
-            a_w2[i]={"link":f"{role.id}.{d.year}-{d.month}-15","val":dem_rj[i],
+            a_w2[i]={
+                "link":f"0.{project.id}{role.id}.{d.year}-{d.month}-15",
+                "val":dem_rj[i],
             "up":up(max(-delta[i],0),diff[i]),
                     "color":color
                     }
@@ -1117,22 +1124,22 @@ def mj(request,j):#Потребность на малом экране
 
 
 #########################################################################Альфа, один ресурс, все проекты
-def smr(request):
+def smr(request):#доступность
     id = 1
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
         if form.is_valid():
-            sr = request.POST.get('r')
-            r = int(sr)
-            role=Role.objects.get(id=r)
+
+            
 
             for k,v in request.POST.items():
 
                 if '.' in k:
-                    p,d=k.split('.')
+                    p,r,j,d=k.split('.')
 
                     try:
+                        role=Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
 
                         tr(person,role,d,v)
@@ -1142,7 +1149,7 @@ def smr(request):
             print(form.errors)
 
     return mr1(request,r)
-def smrom(request):
+def smrom(request):#Доступность
     id = 1
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
@@ -1151,7 +1158,7 @@ def smrom(request):
             for k,v in request.POST.items():
 
                 if '.' in k:
-                    p,r,d=k.split('.')
+                    p,r,j,d=k.split('.')
 
                     try:
                         person = UserProfile.objects.get(id=p)
@@ -1164,7 +1171,7 @@ def smrom(request):
 
     return mrom(request)#s
 
-def mr(request,r):#максимальна доступность одного ресурса и Остаточная доступность
+def mr(request,p,r,j):#максимальна доступность одного ресурса и Остаточная доступность
     moon12 = moon()
     dif14 = []
     dif15 = []
@@ -1178,7 +1185,7 @@ def mr(request,r):#максимальна доступность одного р
         dif100=[0]*12
         da = date.today().replace(day=15)
         for i in range(12):
-            dif100[i]={"link":f"{person.id}.{da.year}-{da.month}-15",
+            dif100[i]={"link":f"{person.id}.{r}.0.{da.year}-{da.month}-15",
             "up":up(1,2),
             "title":dif[i]}#9898
             da = inc(da)
@@ -1191,7 +1198,7 @@ def mr(request,r):#максимальна доступность одного р
         dif100=[0]*12
         da = date.today().replace(day=15)
         for i in range(12):
-            dif100[i]={"link":f"{person.id}.{da.year}-{da.month}-15",
+            dif100[i]={"link":f"{person.id}.{r}.0.{da.year}-{da.month}-15",
             "up":up(1,2),
             "title":dif[i]}#9898
             da = inc(da)
@@ -1382,7 +1389,7 @@ def inc_n(d,n):
 
 
 
-def tr(person, role, m, l):#Запись в таблицу - один ресурс, максимальная доступность
+def tr(person, role, m, l):#Доступность
     try:
         instance = Less.objects.get(person=person, role=role,start_date=m)
     except:
@@ -1392,7 +1399,7 @@ def tr(person, role, m, l):#Запись в таблицу - один ресур
         instance.save()
     else:
         instance = Less.objects.create(person=person, role=role,start_date=m, load=l)
-def tjTask(p,r, j, d, l):#Запись в таблицу - загрузка человека по проекту
+def tjTask(p,r, j, d, l):#Загрузка
     try:
         instance = Task.objects.get(person=p,project=j, role=r,month=d)
     except:
@@ -1403,8 +1410,7 @@ def tjTask(p,r, j, d, l):#Запись в таблицу - загрузка че
     else:
         instance = Task.objects.create(person=p, role=r, project=j, month=d, load=l)
 
-def tjLoad(person,role,project, m, v):#Запись в таблицу - потребность проекта в ресурсах
-    print(99)
+def tjLoad(person,role,project, m, v):#Потребность
     try:
         instance = Load.objects.get(project=project, role=role, month=m)
     except:
@@ -1418,186 +1424,21 @@ def tjLoad(person,role,project, m, v):#Запись в таблицу - потр
         print(88)
         instance = Load.objects.create(project=project, role=role, month=m, load=v)
         print(77)
-def s5(request):
-    id = 1
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            sr = request.POST.get('r')
-            r = int(sr)
-            for k,v in request.POST.items():
 
-                if '.' in k:
-                    j,p,d=k.split('.')
-
-                    try:
-                        role = Role.objects.get(id=r)
-                        person = UserProfile.objects.get(id=p)
-                        project = Project.objects.get(id=j)
-                        tjTask(person,role,project,d,v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-    return ar(request,r)
-def s6(request):
-    id = 1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            sr = request.POST.get('r')
-            r = int(sr)
-            for k,v in request.POST.items():
-
-                if '.' in k:
-                    j,p,d=k.split('.')
-
-                    try:
-                        role = Role.objects.get(id=r)
-                        person = UserProfile.objects.get(id=p)
-                        project = Project.objects.get(id=j)
-                        tjTask(person,role,project,d,v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return dr(request,r)
-def s4(request):
-    id = 1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            sr = request.POST.get('r')
-            r = int(sr)
-            role = Role.objects.get(id=r)
-            sj = request.POST.get('id')
-            j = int(sj)
-            project = Project.objects.get(id=j)
-
-            for k,v in request.POST.items():
-
-                if '-' in k:
-                    person=None
-                    try:
-                        tjLoad(person,role,project,k,v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-    return djr(request,j,r)
-#
 def s1(request):
+    p=0
+    r=0
+    j=0
     if request.method == "POST":
         form = Form(request.POST)
         if form.is_valid():
             for k,v in request.POST.items():
-                sr = request.POST.get('r')
-                r = int(sr)
-                role=Role.objects.get(id=r)
-                sj = request.POST.get('id')
-                j = int(sj)
-                project = Project.objects.get(id=j)
+                html=request.POST.get('html')
+                print(888,html)
                 if '.' in k:
-                    p,d=k.split('.')
-                    try:
-                        person = UserProfile.objects.get(id=p)
-                        tjTask(person,role,project,d,v)##################################
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return ajr(request,j,r)
-
-def s12(request):
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k,v in request.POST.items():
-                sr = request.POST.get('r')
-                r = int(sr)
-                role=Role.objects.get(id=r)
-
-                if '.' in k:
-                    j,d=k.split('.')
+                    p,r,j,d=k.split('.')
                     try:
                         project = Project.objects.get(id=j)
-                        person = None
-                        tjLoad(person,role,project,d,v)##################################
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return dr(request,r)
-
-
-
-def s11(request):
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k,v in request.POST.items():
-                sr = request.POST.get('r')
-                r = int(sr)
-                role=Role.objects.get(id=r)
-                print(55)
-                if '.' in k:
-                    print(44,k)
-                    j,d=k.split('.')
-
-                    try:
-                        print(66)
-                        project = Project.objects.get(id=j)
-                        person = None
-                        tjLoad(person,role,project,d,v)##################################
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return ar(request,r)
-
-
-def s10(request):
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k,v in request.POST.items():
-
-
-                sj = request.POST.get('id')
-                j = int(sj)
-                project = Project.objects.get(id=j)
-                if '.' in k:
-                    r,d=k.split('.')
-                    try:
-                        role=Role.objects.get(id=r)
-                        person = None
-                        tjLoad(person,role,project,d,v)##################################
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return dj(request,j)
-
-def s9(request):
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k,v in request.POST.items():
-                sj = request.POST.get('id')
-                j = int(sj)
-                project = Project.objects.get(id=j)
-                if '.' in k:
-                    p,r,d=k.split('.')
-                    try:
                         role=Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
                         tjTask(person,role,project,d,v)##################################
@@ -1606,104 +1447,33 @@ def s9(request):
         else:
             print(form.errors)
 
-    return dj(request,j)
-def s8(request):
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k,v in request.POST.items():
-                sr = request.POST.get('r')
-                r = int(sr)
-                role=Role.objects.get(id=r)
-                sj = request.POST.get('id')
-                j = int(sj)
-                project = Project.objects.get(id=j)
-                if '.' in k:
-                    p,d=k.split('.')
-                    try:
-                        person = UserProfile.objects.get(id=p)
-                        tjTask(person,role,project,d,v)##################################
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return aj(request,j)
-def s7(request):
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k,v in request.POST.items():
-
-                sj = request.POST.get('id')
-                j = int(sj)
-                project = Project.objects.get(id=j)
-                if '.' in k:
-                    r,d=k.split('.')
-                    try:
-                        role=Role.objects.get(id=r)
-                        person = None
-                        tjLoad(person,role,project,d,v)##################################
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return aj(request,j)
+    return eval(f"{html}(request,{p},{r},{j})")
 
 
-##
-def s3(request):
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            for k,v in request.POST.items():
-                sr = request.POST.get('r')
-                r = int(sr)
-                role=Role.objects.get(id=r)
 
-                sj = request.POST.get('id')
-                j = int(sj)
-                project = Project.objects.get(id=j)
 
-                if '.' in k:
-                    p,d=k.split('.')
-
-                    try:
-
-                        person = UserProfile.objects.get(id=p)
-
-                        tjTask(person,role,project,d,v)
-
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return djr(request,j,r)
-#
 def s2(request):
+    p=0
+    j=0
+    r=0
     if request.method == "POST":
         form = Form(request.POST)
         if form.is_valid():
             for k,v in request.POST.items():
-                sr = request.POST.get('r')
-                r = int(sr)
-                role=Role.objects.get(id=r)
-                sj = request.POST.get('id')
-                j = int(sj)
-                project = Project.objects.get(id=j)
-                if '-' in k:
+                html=request.POST.get('html')
+                if '.' in k:
+                    p,r,j,d=k.split('.')
                     try:
                         person=None
-                        tjLoad(person,role,project,k,v)
+                        role=Role.objects.get(id=r)
+                        project = Project.objects.get(id=j)
+                        tjLoad(person,role,project,d,v)
                     except:
                         pass
         else:
             print(form.errors)
-    return ajr(request,j,r)#
+    return eval(f"{html}(request,{p},{r},{j})")
+
 def sj(request):
     j=1
     if request.method == "POST":

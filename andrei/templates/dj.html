@@ -30,7 +30,7 @@
 </tr>
 
 {% endfor %}<tr><td colspan=13>
-<a href="/aj/{{j}}">подробнее</a></td><tr>
+<a href="/aj/0/0/{{j}}/">подробнее</a></td><tr>
 </tbody>
     </table>
     </div>
@@ -59,11 +59,9 @@
 <tr><td colspan=13 style="text-align:center;">
 
 
-  <form id="f20" action="/s10/" method="POST">
+  <form id="f20" action="/s2/" method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='dj'>
-<input type = hidden name="id" value='{{id}}'>
-<input type = hidden name="r" value='{{r}}'>
   <button type="submit" class="button3">Сохранить изменения</button></form>
 {%  include 'script2.html'  %}
 
@@ -82,7 +80,7 @@
         <table border=2 width=100% style="position:relative;top=0;"><thead>
             <tr><th colspan=13>
                 
-                <a href="/uj/{{j}}" style="color:white;">
+                <a href="/uj/0/0/{{j}}" style="color:white;">
               Утвержденные загрузки</a>
                 
                 
@@ -113,11 +111,9 @@
 <tr><td colspan=13 style="text-align:center;">
 
 
-  <form id="f10" action="/s9/" method="POST">
+  <form id="f10" action="/s1/" method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='dj'>
-<input type = hidden name="id" value='{{id}}'>
-<input type = hidden name="r" value='{{r}}'>
   <button type="submit" class="button3">Сохранить изменения</button></form>
 {%  include 'script.html'  %}
 
