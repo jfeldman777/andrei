@@ -19,7 +19,7 @@
 {% for t in dem %}
 <td>
     {% if forloop.first %}
-    <a href="/dr/{{t.r}}">
+    <a href="/dr/0/{{t.r}}/0/">
 {{t.val}}
     </a>
     {% else %}
@@ -43,7 +43,7 @@
         <tr>
         {% for t in dem %}
  {% if forloop.first %} <td>
-    <a href="/djr/{{t.j}}/{{t.r}}">
+    <a href="/djr/0/{{t.r}}/{{t.j}}">
 {{t.val}}
     </a>
     {% else %}

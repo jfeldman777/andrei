@@ -12,6 +12,8 @@ class UserProfile(models.Model):
     role = models.ForeignKey(to=Role,on_delete=models.CASCADE)
     fio = models.CharField(max_length=30, default='?')
     res = models.ManyToManyField(Role, related_name='they',default=None)
+    virtual = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.user.username
 class Project(models.Model):
