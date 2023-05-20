@@ -31,6 +31,7 @@
 <tr><td colspan=13 style="text-align:center;">
   <form id="f10" action="/smr/" method="POST">
   {% csrf_token %}
+            <input type = hidden name="html" value='mr'>
 <input type = hidden name="r" value='{{r}}'>
   <button type="submit" class="button3">Сохранить изменения</button>
 </form>

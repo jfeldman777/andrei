@@ -149,6 +149,7 @@
 <tr><td colspan=13 >
   <form id="f10" action="/save3/" method="POST">
   {% csrf_token %}
+            <input type = hidden name="html" value='a2'>
 <input type = hidden name="r" value='{{r}}'>
   <button type="submit" >Сохранить изменения</button>
 </form>

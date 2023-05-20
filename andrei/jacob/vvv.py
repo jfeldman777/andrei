@@ -389,6 +389,152 @@ def moon():
             d = inc(d)
     return {"yy":y_data,"mm":m_data,"ym":ym}
     ##################################################################
+def ujr(request,j,r):
+    person,role,project=get_prj(-1,r,j)
+    w3=[]
+
+    moon12 = moon()
+    delta = rj_delta_(role,project)
+    diff = rj_dif_(role,project)
+    people = people_of_r(role)
+    dem_rj = rj_load_(role,project)#----------------
+
+    for person in people:
+        b_w3 = [0]*12
+        a_w3 = prj_task_(person,role,project)
+
+        d = date.today().replace(day=15)
+        for i in range(12):
+            color = ""
+            if mj_outside(d,project):
+                color = "mygrey"
+            elif delta[i] < 0:
+                color="mypink"
+            b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+            "up":up(
+            max(-delta[i],0)
+            ,diff[i]),
+            "val":a_w3[i],
+            "color":color
+
+            }
+            d = inc(d)
+
+        c_w3 = [{"val":person.fio}]+b_w3
+        p100=-1
+        w3.append(c_w3)
+
+    moon12["w3"]=w3
+
+    moon12["role"] = role
+
+    moon12["project"] = project
+    moon12["id"] = j
+    moon12["r"] = r
+    moon12["j"] = j
+    return render(request,'ujr.html',moon12)
+
+def uj(request,j):
+    person,role,project=get_prj(-1,-1,j)
+    w3=[]
+
+    moon12 = moon()
+    
+    
+    roles  = Role.objects.all()
+    for role in roles:
+    
+        delta = rj_delta_(role,project)
+        diff = rj_dif_(role,project)
+        people = people_of_r(role)
+        dem_rj = rj_load_(role,project)#----------------
+        p100 = {"val":role.title}
+        for person in people:
+            print(98)
+            b_w3 = [0]*12
+            a_w3 = prj_task_(person,role,project)
+
+            d = date.today().replace(day=15)
+            for i in range(12):
+                color = ""
+                if mj_outside(d,project):
+                    color = "mygrey"
+                elif delta[i] < 0:
+                    color="mypink"
+                b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+                "up":up(
+                max(-delta[i],0)
+                ,diff[i]),
+                "val":a_w3[i],
+                "color":color
+
+                }
+                d = inc(d)
+
+            c_w3 = [p100,{"val":person.fio}]+b_w3
+            p100=-1
+            w3.append(c_w3)
+
+
+    moon12["w3"]=w3
+
+    moon12["role"] = role
+
+    moon12["project"] = project
+    moon12["id"] = j
+
+    moon12["j"] = j
+    return render(request,'uj.html',moon12)    
+    
+def ur(request,r):
+    person,role,project=get_prj(-1,r,-1)
+    w3=[]
+
+    moon12 = moon()
+    delta = rj_delta_(role,project)
+    diff = rj_dif_(role,project)
+    people = people_of_r(role)
+    dem_rj = rj_load_(role,project)#----------------
+    
+    projects = Project.objects.all()
+    
+    for project in projects:
+        p100={"val":project.title}
+        for person in people:
+            b_w3 = [0]*12
+            a_w3 = prj_task_(person,role,project)
+
+            d = date.today().replace(day=15)
+            for i in range(12):
+                color = ""
+                if mj_outside(d,project):
+                    color = "mygrey"
+                elif delta[i] < 0:
+                    color="mypink"
+                b_w3[i] = {"link":f"{person.id}.{d.year}-{d.month}-15",
+                "up":up(
+                max(-delta[i],0)
+                ,diff[i]),
+                "val":a_w3[i],
+                "color":color
+
+                }
+                d = inc(d)
+
+            c_w3 = [p100,{"val":person.fio}]+b_w3
+            p100=-1
+            w3.append(c_w3)
+
+    moon12["w3"]=w3
+
+    moon12["role"] = role
+
+    moon12["project"] = project
+
+    moon12["r"] = r
+
+    return render(request,'ur.html',moon12)
+    
 def djr(request,j,r):
     person,role,project=get_prj(-1,r,j)
 

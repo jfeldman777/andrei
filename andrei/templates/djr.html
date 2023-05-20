@@ -44,6 +44,7 @@
 <tr><td colspan=13 style="text-align:left; vertical-align:top;">
   <form id="f20" action="/s4/" method="POST">
   {% csrf_token %}
+            <input type = hidden name="html" value='djr'>
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
   <button type="submit" class="button3">Сохранить изменения</button>
@@ -59,7 +60,13 @@
          <div class="table-container-2">
         <table border=2 width=100% style="position:relative;top=0;">
           <thead>
-            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th>ФИО
+            <tr><th colspan=13>
+                
+            <a href="/ujr/{{j}}/{{r}}" style="color:white;">
+              Утвержденные загрузки</a>
+                
+                </th>
+              </tr><tr><th>ФИО
 {% include 'moon.html' %}
 
 {% for tt in w3 %}

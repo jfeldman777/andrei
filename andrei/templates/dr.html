@@ -68,6 +68,7 @@
 
   <form id="f20" action="/s12/" method="POST">
   {% csrf_token %}
+            <input type = hidden name="html" value='dr'>
 <input type = hidden name="id" value='{{id}}'>
 <input type = hidden name="r" value='{{r}}'>
   <button type="submit" class="button3">Сохранить изменения</button></form>
@@ -87,7 +88,12 @@
 
           <div class="table-container">
         <table border=2 width=100% style="position:relative;top=0;background-color:white;" class=in><thead>
-            <tr><th colspan=13>Утвержденные загрузки</th></tr><tr><th>{{role}}
+            <tr><th colspan=13>
+                
+                     <a href="/ur/{{r}}" style="color:white;">
+              Утвержденные загрузки</a>
+                
+                </th></tr><tr><th>{{role}}
 {% include 'moon.html' %}</thead><tbody>
 {% for tt in w3 %}
 <tr>
@@ -106,6 +112,7 @@
 
           <form id="f10" action="/s6/" method="POST">
           {% csrf_token %}
+                    <input type = hidden name="html" value='dr'>
         <input type = hidden name="r" value='{{r}}'>
           <button type="submit" class="button3"> Сохранить изменения</button>
         </form>
