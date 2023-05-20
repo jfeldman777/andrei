@@ -652,8 +652,8 @@ def ajr(request,p,r,j):#Альфа, один проект, один ресуря
     moon12 = moon()
     supp = [-1,'Поставка']+rj_task_(role,project)
     delta = ['Дельта']+rj_delta_(role,project)
-    zo = ['Аутсорс']+outsrc(role,project)
-    zv = ['Вакансии']+vacancia(role,project)
+    zo = ['АУТСОРС']+outsrc(role,project)
+    zv = ['ВАКАНСИЯ']+vacancia(role,project)
     w4=[]
 
 
@@ -749,8 +749,8 @@ def ar(request,p,r,j):
     moon12 = moon()
     projects = Project.objects.all()
 
-    zo = ['Аутсорс']+outsrc(role,project)
-    zv = ['Вакансии']+vacancia(role,project)
+    zo = ['АУТСОРС']+outsrc(role,project)
+    zv = ['ВАКАНСИЯ']+vacancia(role,project)
 #W222222222222222222222222222222
     for project in projects:
         diff = rj_dif_(role,project)
@@ -1039,8 +1039,8 @@ def aj(request,p,r,j):#Альфа, один проект
     roles = Role.objects.all()
     a_w2=[0]*12
     for role in roles:
-        zo = ['Аутсорс']+outsrc(role,project)
-        zv = ['Вакансии']+vacancia(role,project)
+        zo = ['АУТСОРС']+outsrc(role,project)
+        zv = ['ВАКАНСИЯ']+vacancia(role,project)
         supp = ['Поставка']+rj_task_(role,project)
         delta = ['Дельта']+rj_delta_(role,project)
         dem_rj = rj_load_(role,project)#----------------
