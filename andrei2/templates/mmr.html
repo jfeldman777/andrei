@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+{% include 'menu.html' %}
+<h3 style="text-align:center;" >Все ресурсы - {{project}}</h3>
+
+
+
+    <table border=2 style="position:relative;top=0;text-align:center;"  width=100% >
+      <tr><td colspan=13>Потребность<td></tr><td rowspan=2><b>{{project}}</b>
+        {% include 'moon.html' %}
+        {% for dem in w2 %}
+        <tr>
+        {% for t in dem %}
+
+        <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}}">
+      {{t.val}}
+      </td>
+{% endfor %}
+</tr>        {% endfor %}
+<tr style="text-align:center;">
+  <td colspan=13 style="text-align:center;">
+  <form id="f10" action="/s2/" method="POST"  style="text-align:center;">
+  {% csrf_token %}
+            <input type = hidden name="html" value='mmr'>
+<input type = hidden name="id" value='{{j}}'>
+<div style="text-align:center;">
+  <button type="submit" class="button3">Сохранить изменения</button>
+</div>
+</form>
+{%  include 'script.html'  %}
+    </td></tr>
+        </table>
+
+
+    {% include 'js.html' %}
+{% endblock %}

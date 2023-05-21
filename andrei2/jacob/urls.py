@@ -18,16 +18,18 @@ urlpatterns = [
 
     path('smr/', vvv.smr, name='smr'),
     path('b/<int:n>/', vvv.b, name='b'),
-    path('mr/<int:p>/<int:r>/<int:j>/', vvv.mr, name='mr'),
+    path('mjr/<int:p>/<int:r>/<int:j>/', vvv.mjr, name='mjr'),
 
 
     path('ur/<int:p>/<int:r>/<int:j>/', vvv.ur, name='ur'),
     path('uj/<int:p>/<int:r>/<int:j>/', vvv.uj, name='uj'),
     path('ujr/<int:p>/<int:r>/<int:j>/', vvv.ujr, name='ujr'), 
     
-    path('mr1/<int:r>', vvv.mr1, name='mr1'),
-    path('mr2/<int:r>', vvv.mr2, name='mr2'),
-    path('mj/<int:p>/<int:r>/<int:j>/', vvv.mj, name='mj'),
+    path('mr1/<int:p>/<int:r>/<int:j>/', vvv.mr1, name='mr1'),
+    path('mr2/<int:p>/<int:r>/<int:j>/', vvv.mr2, name='mr2'),
+    path('mmj/<int:p>/<int:r>/<int:j>/', vvv.mmj, name='mmj'),
+    path('mmr/<int:p>/<int:r>/<int:j>/', vvv.mmr, name='mmr'),
+    path('mmjr/<int:p>/<int:r>/<int:j>/', vvv.mmjr, name='mmjr'),
 
     path('dj/<int:p>/<int:r>/<int:j>/', vvv.dj, name='dj'),
     path('aj/<int:p>/<int:r>/<int:j>/', vvv.aj, name='aj'),

@@ -37,20 +37,19 @@
   </td>
     <td width=50%>  <div class="table-container-2">
       <table border=2 width=100% style="position:relative;top=0;"><thead>
-          <tr><th colspan=13>Потребность<th></tr><tr><th rowspan=2><b>{{project}}</b>
+          <tr><th colspan=13>
+                     <a href="/mmj/{{p}}/{{r}}/{{j}}" style="color:white;">Потребность</a>
+              <th></tr><tr><th rowspan=2><b>{{project}}</b>
         {% include 'moon.html' %}
         {% for dem in w2 %}
         <tr>
         {% for t in dem %}
- {% if forloop.first %} <td>
-    <a href="/djr/0/{{t.r}}/{{t.j}}">
-{{t.val}}
-    </a>
-    {% else %}
+
+
 
         <td class="good2  {{t.color}}" key="{{t.link}}" title="{{t.up}}">
 {{t.val}}
-                {% endif %}
+               
 </td>
 
 

@@ -3,6 +3,7 @@
 {% block content %}
 {% include 'menu.html' %}
 
+
 <h3 style="text-align:center;">{{role}}</h3>
 
       <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
@@ -30,7 +31,7 @@
 <tr><td colspan=13 style="text-align:center;">
   <form id="f10" action="/smr/" method="POST">
   {% csrf_token %}
-            <input type = hidden name="html" value='mr'>
+            <input type = hidden name="html" value='mjr'>
 <input type = hidden name="r" value='{{r}}'>
   <button type="submit" class="button3">Сохранить изменения</button>
 </form>
