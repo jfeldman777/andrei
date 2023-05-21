@@ -14,6 +14,8 @@ SECURE_PROXY_SSL_HEADER = None
 
 import os
 
+IS_HEROKU = os.getenv('IS_HEROKU')
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -114,9 +116,28 @@ AUTH_PASSWORD_VALIDATORS = [
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'css'),
-    os.path.join(BASE_DIR, 'js/dest'),
+
  ]
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+ ]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+if IS_HEROKU:
+    #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+    STORAGES = {
+        # Enable WhiteNoise's GZip and Brotli compression of static assets:
+        # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
