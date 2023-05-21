@@ -1,1 +1,1 @@
-web: gunicorn andrei.wsgi --log-file -
+web: gunicorn aj-app.wsgi --log-file -
