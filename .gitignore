@@ -14,8 +14,8 @@ logs/
 *.pyc
 
 # Static files
-staticfiles/
-media/
+#staticfiles/
+#media/
 
 # Dependency directories
 venv/
