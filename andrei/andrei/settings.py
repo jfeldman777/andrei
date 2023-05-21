@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'jacob',"alla",
+    'jacob',
     'bootstrap4',
     'jacob.templatetags',
     'crispy_forms',
@@ -111,8 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-#    os.path.join(BASE_DIR, 'css'),
-#    os.path.join(BASE_DIR, 'js/dest'),
  ]
 
 # Internationalization
