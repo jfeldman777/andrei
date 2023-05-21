@@ -9,44 +9,34 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
+SECURE_PROXY_SSL_HEADER = None
+
 import os
-import dj_database_url
-from dotenv import load_dotenv
+
 from pathlib import Path
 
-import secrets
-from django.test.runner import DiscoverRunner
-
-IS_HEROKU = os.getenv('IS_HEROKU')
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
 
 load_dotenv()
 
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 31536000  # Set the value in seconds
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+# SECURITY WARNING: keep the secret key used in production secret!SECRET_KEY = os.getenv('SECRET_KEY')
 SECRET_KEY = os.getenv('SECRET_KEY')
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
-if not IS_HEROKU:
-    DEBUG = True
+ALLOWED_HOSTS = []
 
 
-if IS_HEROKU:
-    ALLOWED_HOSTS = ["*"]
-else:
-    ALLOWED_HOSTS = ['127.0.0.1','localhost']
+# Application definition
 
 INSTALLED_APPS = [
-    "whitenoise.runserver_nostatic",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'andrei.middleware.AllowFrameMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     # ...
 ]
 ROOT_URLCONF = 'andrei.urls'
@@ -77,7 +66,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['templates','b/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -100,21 +89,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-        
-        
     }
 }
-
-import django_heroku
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, '='),
-#    }
-#}
-
-#django_heroku.settings(locals())
 
 
 # Password validation
@@ -135,99 +111,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'css'),
+    os.path.join(BASE_DIR, 'js/dest'),
  ]
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-if IS_HEROKU:
-    #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-    STORAGES = {
-        # Enable WhiteNoise's GZip and Brotli compression of static assets:
-        # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-        },
-    }
-
-    WHITENOISE_KEEP_ONLY_HASHED_FILES = True
-    MAX_CONN_AGE = 600
-    if "CI" in os.environ:
-        TEST_RUNNER = "andrei.settings.HerokuDiscoverRunner"
-
-
-
-    # Update the default database configuration to use the Heroku-provided DATABASE_URL
-#    db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-#    DATABASES['default'].update(db_from_env)
-
-
-
-
-        
-#if "DATABASE_URL" in os.environ:
-#    # Configure Django for DATABASE_URL environment variable.
-#    DATABASES["default"] = dj_database_url.config(
-#        conn_max_age=MAX_CONN_AGE,
-#        ssl_require=True,
-#    )
-
-        
-import dj_database_url
-
-# ...
-
-# Configure the default database connection using dj_database_url.config()
-# Make sure to replace 'your-database-url' with the actual database URL
-# Example: 'postgres://username:password@host:port/database_name'
-
-#DATABASE_URL = 'sqlite://../db.sqlite3'
-#DATABASES = {
-#    'default': dj_database_url.config(
-#        default=DATABASE_URL,
-#        conn_max_age=MAX_CONN_AGE,
-#        ssl_require=True
-#    )
-#}
-        
-#    
-#if "CI" in os.environ:
-#    DATABASES["default"]["TEST"] = DATABASES["default"] 
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
+
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+STATIC_URL = 'static/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-#DATABASE_URL = 'sqlite://../db.sqlite3'
-
-
-
-class HerokuDiscoverRunner(DiscoverRunner):
-    """Test Runner for Heroku CI, which provides a database for you.
-    This requires you to set the TEST database (done for you by settings().)"""
-
-    def setup_databases(self, **kwargs):
-        self.keepdb = True
-        return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
-
