@@ -1,3 +1,3 @@
-web: gunicorn andrei.wsgi --log-file -
+web: gunicorn andrei2.wsgi --log-file -
 
 

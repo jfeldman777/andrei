@@ -38,10 +38,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'andrei.middleware.AllowFrameMiddleware',
+    'andrei2.middleware.AllowFrameMiddleware',
     # ...
 ]
-ROOT_URLCONF = 'andrei.urls'
+ROOT_URLCONF = 'andrei2.urls'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 TEMPLATES = [
     {
@@ -59,7 +59,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'andrei.wsgi.application'
+WSGI_APPLICATION = 'andrei2.wsgi.application'
+
+
 
 
 DATABASES = {
