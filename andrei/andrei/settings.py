@@ -14,14 +14,22 @@ import dj_database_url
 from dotenv import load_dotenv
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+import secrets
+from django.test.runner import DiscoverRunner
 
+IS_HEROKU = "DYNO" in os.environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000  # Set the value in seconds
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
