@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
-#import dj_database_url
+import dj_database_url
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -88,8 +88,21 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        
+        
     }
 }
+
+import django_heroku
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, '='),
+#    }
+#}
+
+#django_heroku.settings(locals())
 
 
 # Password validation
@@ -142,5 +155,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-import django_heroku
-django_heroku.settings(locals())
+DATABASE_URL = 'sqlite://../db.sqlite3'
+
