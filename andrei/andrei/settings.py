@@ -17,7 +17,7 @@ from pathlib import Path
 import secrets
 from django.test.runner import DiscoverRunner
 
-IS_HEROKU = "DYNO" in os.environ
+IS_HEROKU = os.getenv('IS_HEROKU')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,14 +36,17 @@ SECURE_HSTS_PRELOAD = True
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True
+if not IS_HEROKU:
+    DEBUG = True
 
-ALLOWED_HOSTS = ['aj-app.herokuapp.com','127.0.0.1','localhost']
 
-
-# Application definition
+if IS_HEROKU:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'andrei.middleware.AllowFrameMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     # ...
 ]
 ROOT_URLCONF = 'andrei.urls'
@@ -73,7 +77,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates','b/templates'],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,9 +142,51 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+if IS_HEROKU:
+    #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
+    STORAGES = {
+        # Enable WhiteNoise's GZip and Brotli compression of static assets:
+        # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+
+    WHITENOISE_KEEP_ONLY_HASHED_FILES = True
+    MAX_CONN_AGE = 600
+    if "CI" in os.environ:
+        TEST_RUNNER = "andrei.settings.HerokuDiscoverRunner"
+
+#if "DATABASE_URL" in os.environ:
+#    # Configure Django for DATABASE_URL environment variable.
+#    DATABASES["default"] = dj_database_url.config(
+#        conn_max_age=MAX_CONN_AGE,
+#        ssl_require=True,
+#    )
+
+        
+import dj_database_url
+
+# ...
+
+# Configure the default database connection using dj_database_url.config()
+# Make sure to replace 'your-database-url' with the actual database URL
+# Example: 'postgres://username:password@host:port/database_name'
+
+#DATABASE_URL = 'sqlite://../db.sqlite3'
+#DATABASES = {
+#    'default': dj_database_url.config(
+#        default=DATABASE_URL,
+#        conn_max_age=MAX_CONN_AGE,
+#        ssl_require=True
+#    )
+#}
+        
+#    
+#if "CI" in os.environ:
+#    DATABASES["default"]["TEST"] = DATABASES["default"] 
 
 
 # Internationalization
@@ -163,5 +209,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DATABASE_URL = 'sqlite://../db.sqlite3'
+#DATABASE_URL = 'sqlite://../db.sqlite3'
+
+
+
+class HerokuDiscoverRunner(DiscoverRunner):
+    """Test Runner for Heroku CI, which provides a database for you.
+    This requires you to set the TEST database (done for you by settings().)"""
+
+    def setup_databases(self, **kwargs):
+        self.keepdb = True
+        return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
 
