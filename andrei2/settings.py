@@ -1,4 +1,11 @@
 import os
+# settings.py
+
+# ...
+
+SECURE_PROXY_SSL_HEADER = None
+
+# ...
 
 IS_HEROKU = os.getenv('IS_HEROKU')
 
