@@ -1,5 +1,5 @@
 import os
-# settings.py
+import django_heroku
 
 # ...
 
@@ -95,12 +95,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [    
-                            os.path.join(BASE_DIR, 'staticfiles')
-    #'./staticfiles/'
+                            os.path.join(BASE_DIR, 'static')
+
  ]
 
 
-STATIC_ROOT = './static/'    #os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 
