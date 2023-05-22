@@ -18,7 +18,7 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
-ALLOWED_HOSTS = ['andrei2.herokuapp.com']
+ALLOWED_HOSTS = ['andrei2.herokuapp.com','127.0.0.1']
 
 
 # Application definition
@@ -95,12 +95,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),
+    os.path.join(BASE_DIR, 'static'),
 
  ]
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 if IS_HEROKU:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
