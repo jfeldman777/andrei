@@ -4,8 +4,19 @@ $('td.good').click(function() {
 
   var p = $(this).attr("key");
   var originalValue = $(this).text();
-  $(this).html('<input type="text" size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
+    
+    var currentTime = new Date().getTime();
 
+
+    
+  $(this).html('<input type="text" id='+currentTime+' size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
+    //alert(1);
+    var element = document.getElementById(currentTime);
+    
+    element.focus()
+    //alert(3);
+    
+    
   $(this).click(function(){
   $(this).html(originalValue);
   })
