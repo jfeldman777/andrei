@@ -337,7 +337,7 @@ def alf(request):
             if roles:
                 r = Role.objects.get(title=roles)
 
-            return ajr(request,p.id,r.id)
+            return ajr(request,p.id,r.id,1)
 
     form = EntryForm()
     return render(request,'alf.html', {'form': form})
