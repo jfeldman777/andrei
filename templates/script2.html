@@ -7,15 +7,32 @@ $('td.good2').click(function() {
     
   //$(this).html('<input type="text" size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
     
-    var currentTime = new Date().getTime();    
-  $(this).html('<input type="text" id='+currentTime+' size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
-    //alert(1);
-    var element = document.getElementById(currentTime);
+    var ID = new Date().getTime();    
+  $(this).html('<input type="text" id='+ID+' size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
+
+    var element = document.getElementById(ID);
+    
+    
+    
+    
     
     element.focus()
+    
+        
+      $(this).on('keypress', '#' + ID, function(event) {
+    if (event.which === 13) { // 13 соответствует клавише Enter
+      element.blur();
+    }
+  });
+    
+    
+    
+    
   $(this).click(function(){
   $(this).html(originalValue);
   })
+    
+    
 
   $('td input').focusout(function() {
     var newValue = $(this).val();
