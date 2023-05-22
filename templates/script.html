@@ -5,12 +5,12 @@ $('td.good').click(function() {
   var p = $(this).attr("key");
   var originalValue = $(this).text();
     
-    var ID = new Date().getTime();
-
-
+     var x = $.trim(originalValue) ;
+    if (x == '0') x = '';
     
-  $(this).html('<input type="text" id='+ID+' size="1" maxlength="4" value="' + $.trim(originalValue) + '">');
-    //alert(1);
+    var ID = new Date().getTime();    
+  $(this).html('<input type="text" id='+ID+' size="1" maxlength="4" value="' + x + '">');
+
     var element = document.getElementById(ID);
     
     element.focus()
