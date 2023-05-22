@@ -5,7 +5,7 @@ __pycache__/
 
 # Local development settings
 .env
-*.qlite3
+*.*qlite3
 
 # Logs and debug files
 logs/
@@ -14,7 +14,7 @@ logs/
 *.pyc
 
 # Static files
-#staticfiles/
+staticfiles/
 #media/
 
 # Dependency directories
