@@ -1,46 +1,7 @@
 {% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-<style>
-  .button1 {
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+{% load static %}
+<img src="{% static 'fire2.png' %}" alt="Icon" width=16>
 
-  .button3:hover {
-    background-color: #0b7dda;
-  }
-  .button2 {
-    background: linear-gradient(to right, #FF5F6D, #FFC371);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  .button3 {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 40px;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  }
-  .button3:hover {
-    background-color: #0b7dda;
-  }
-
-</style>
-<button class="button1"/>
-
-<button class="button2"/>
-
-<button class="button3"> Сохранить изменения </button>
 {% endblock %}

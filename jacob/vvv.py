@@ -320,8 +320,7 @@ def date12():
 
 
 def test(request):
-    person = UserProfile.objects.get(id=4)
-    roles = {person.role}.union(person.res.all())
+ 
     return render(request,'a_test.html')
 def alf(request):
     p = None
