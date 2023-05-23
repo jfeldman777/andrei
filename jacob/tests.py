@@ -30,17 +30,6 @@ class YourSystemTest(TestCase):
         # Удаление созданных объектов или другие необходимые действия после каждого теста
 
 
-
-    # def test_dj(self):
-    #     client = Client()
-    #     response = client.get(reverse('dj'))
-    #     self.assertEqual(response.status_code, 200)
-    #
-    # def test_aj(self):
-    #     client = Client()
-    #     response = client.get(reverse('aj'))
-    #     self.assertEqual(response.status_code, 200)
-
     def test_atj(self):
         client = Client()
         response = client.get(reverse('atj'))
@@ -64,10 +53,26 @@ class YourSystemTest(TestCase):
 from django.test import TestCase
 
 class MyPageTestCase(TestCase):
-    def test_page_with_parameters(self):
-        # Отправка GET-запроса на страницу с параметрами
+    def test_aj(self):
         response = self.client.get('/aj/', {'p': 2, 'r': 2, "j":2})
+        self.assertEqual(response.status_code, 200)
 
-        # Проверка возвращаемого кода
-        self.assertEqual(response.status_code, 200)  # Здесь 200 - ожидаемый код ответа
+    def test_dj(self):
+        response = self.client.get('/dj/', {'p': 2, 'r': 2, "j":2})
+        self.assertEqual(response.status_code, 200)
 
+    def test_ar(self):
+        response = self.client.get('/ar/', {'p': 2, 'r': 2, "j":2})
+        self.assertEqual(response.status_code, 200)
+
+    def test_dr(self):
+        response = self.client.get('/dr/', {'p': 2, 'r': 2, "j":2})
+        self.assertEqual(response.status_code, 200)
+
+    def test_ajr(self):
+        response = self.client.get('/ajr/', {'p': 2, 'r': 2, "j":2})
+        self.assertEqual(response.status_code, 200)
+
+    def test_djr(self):
+        response = self.client.get('/djr/', {'p': 2, 'r': 2, "j":2})
+        self.assertEqual(response.status_code, 200)
