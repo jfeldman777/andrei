@@ -5,7 +5,8 @@ from django.shortcuts import render
 from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
-
+def up(a, b):
+    return f"надо:{a}/есть:{b}"
 
 def demm(r, j, n):
     rjd = rj_load_(r, j)
@@ -1646,6 +1647,7 @@ def sj(request):
 
 
 def smj(request):
+    p=-1
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
@@ -1669,7 +1671,7 @@ def smj(request):
         else:
             print(form.errors)
 
-        return mj(request, j)
+        return mmj(request,p,r ,j)
 
 
 def prjlist(request):  # все проекты (портфель)
@@ -1716,5 +1718,3 @@ def pref(p):
     return L
 
 
-def up(a, b):
-    return f"надо:{a}/есть:{b}"
