@@ -353,6 +353,8 @@ def date12():
 
 
 def test(request):
+    project = Project.objects.get(id=2)
+    print (project)
     return render(request, 'a_test.html')
 
 

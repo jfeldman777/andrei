@@ -25,6 +25,7 @@ $('td.good2').click(function() {
       $(this).on('keypress', '#' + ID, function(event) {
     if (event.which === 13) { // 13 соответствует клавише Enter
       element.blur();
+          element.focus(function(){})
     }
   });
     
