@@ -10,4 +10,64 @@
 #
 #    from django.core.management import call_command
 #    result = call_command('test', 'userapp')
-#    sys.exit(result) 
+#    sys.exit(result)
+from django.test import Client
+
+from django.http import response
+from django.test import TestCase, Client
+from django.urls import reverse
+from .models import Load, Role, Project, UserProfile, Task
+
+class YourSystemTest(TestCase):
+    def setUp(self):
+        pass
+        # Настройка данных для тестов
+        # Создание объектов модели или другие необходимые действия перед каждым тестом
+
+    def tearDown(self):
+        pass
+        # Очистка данных после тестов
+        # Удаление созданных объектов или другие необходимые действия после каждого теста
+
+
+
+    # def test_dj(self):
+    #     client = Client()
+    #     response = client.get(reverse('dj'))
+    #     self.assertEqual(response.status_code, 200)
+    #
+    # def test_aj(self):
+    #     client = Client()
+    #     response = client.get(reverse('aj'))
+    #     self.assertEqual(response.status_code, 200)
+
+    def test_atj(self):
+        client = Client()
+        response = client.get(reverse('atj'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_att(self):
+        client = Client()
+        response = client.get(reverse('att'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_alf(self):
+        client = Client()
+        response = client.get(reverse('alf'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_atr(self):
+        client = Client()
+        response = client.get(reverse('atr'))
+        self.assertEqual(response.status_code, 200)
+
+from django.test import TestCase
+
+class MyPageTestCase(TestCase):
+    def test_page_with_parameters(self):
+        # Отправка GET-запроса на страницу с параметрами
+        response = self.client.get('/aj/', {'p': 2, 'r': 2, "j":2})
+
+        # Проверка возвращаемого кода
+        self.assertEqual(response.status_code, 200)  # Здесь 200 - ожидаемый код ответа
+

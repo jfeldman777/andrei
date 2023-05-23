@@ -803,17 +803,19 @@ def ar(request, p, r, j):
         w4 = []
 
         x = [0] * 12
-        p100 = project.title
+        p200 = project.title
         for person in people_rr:
+            diff = pr_dif_(person, role)
+            x = diff
+            w4.append([person.fio] + x)
 
+
+        p100 = project.title
+        for person in people_rv:
             b_w3 = [0] * 12
             a_w3 = prj_task_(person, role, project)
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
-
-            x = diff
-            w4.append([person.fio] + x)
-
             for i in range(12):
                 color = ""
                 if mj_outside(d, project):
@@ -900,6 +902,7 @@ def dr(request, p, r, j):
             x = diff
             w4.append([person.fio] + x)
 
+        for person in people_rv:
             b_w3 = [0] * 12
             a_w3 = prj_task_(person, role, project)
 
@@ -1071,15 +1074,14 @@ def aj(request, p, r, j):  # Альфа, один проект
 
         p100 = role.title
         p200 = role.title
-        p300 = role.title
         people_rr = people_of_rr(role)
         people_rv = people_of_rv(role)
         for person in people_rr:  #
             diff = pr_dif_(person, role)
-
             w4.append([p200, person.fio] + diff)
-            p200 = -1
-
+            p200=-1
+        for person in people_rv:  #
+            diff = pr_dif_(person, role)
             b_w3 = [0] * 12
             a_w3 = prj_task_(person, role, project)
 
