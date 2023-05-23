@@ -37,7 +37,6 @@ def n2txt(n):
 def b(request, n):
     projects = Project.objects.all()
     roles = Role.objects.all()
-    context = {}
     xy = [0] * len(projects)
     for i in range(len(projects)):
         xy[i] = [0] * (len(roles) + 1)
@@ -560,8 +559,6 @@ def ur(request, p, r, j):
     delta = rj_delta_(role, project)
 
     people = people_of_rv(role)
-    dem_rj = rj_load_(role, project)  # ----------------
-
     projects = Project.objects.all()
 
     for project in projects:
@@ -572,11 +569,11 @@ def ur(request, p, r, j):
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
-                color = ""
+                color = "white"
                 if mj_outside(d, project):
-                    color = "mygrey"
+                    color = "grey"
                 elif delta[i] < 0:
-                    color = "mypink"
+                    color = "pink"
                 b_w3[i] = {"link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                            "up": up(
                                max(-delta[i], 0)
@@ -1352,7 +1349,6 @@ def mr2(request, p, r, j):  # максимальна доступность од
 
     role = Role.objects.get(id=r)
     people_rr = people_of_rr(role)
-    people_rv = people_of_rv(role)
 
     for person in people_rr:
         dif = pr_isfree_(person, role)

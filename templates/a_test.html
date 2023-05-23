@@ -2,6 +2,139 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-<img src="{% static 'fire2.png' %}" alt="Icon" width=16>
+<style>
+    .table-container {
+  position: relative;
+  overflow: auto;
+  height: 400px; /* Укажите желаемую высоту контейнера таблицы */
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  background-color: #ffff00; /* Задайте желаемый цвет фона заголовка */
+  z-index: 1;
+}
+
+</style>
+<script>
+    window.addEventListener('DOMContentLoaded', function() {
+  var tableContainer = document.querySelector('.table-container');
+  tableContainer.addEventListener('scroll', function() {
+    var scrollLeft = this.scrollLeft;
+    var thead = this.querySelector('thead');
+    thead.style.transform = 'translateX(' + -scrollLeft + 'px)';
+  });
+});
+
+
+
+</script>
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Заголовок 1</th>
+            <th>Заголовок 2</th>
+            <th>Заголовок 3</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}
