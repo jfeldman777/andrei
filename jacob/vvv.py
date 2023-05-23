@@ -143,9 +143,9 @@ def rjm_load(request,r,j,y,m):
     return render(request,'a_test.html',context)
 
 
-def rj_dif_(r,j):
+def rj_dif_(p,r,j):
     res = [0]*12
-    load = rj_isfree_(r,j)
+    load = pr_isfree_(p,r)
     task = rj_task_(r,j)
     for i in range(12):
         res[i] = load[i]-task[i]
@@ -419,14 +419,14 @@ def ujr(request,p,r,j):
 
     moon12 = moon()
     delta = rj_delta_(role,project)
-    diff = rj_dif_(role,project)
+    
     people = people_of_rv(role)
     dem_rj = rj_load_(role,project)#----------------
 
     for person in people:
         b_w3 = [0]*12
         a_w3 = prj_task_(person,role,project)
-
+        diff = pr_dif_(person,role)
         d = date.today().replace(day=15)
         for i in range(12):
             color = ""
@@ -470,11 +470,15 @@ def uj(request,p,r,j):
     for role in roles:
     
         delta = rj_delta_(role,project)
-        diff = rj_dif_(role,project)
+        
+        
+        
+        
         people = people_of_rv(role)
         dem_rj = rj_load_(role,project)#----------------
         p100 = {"val":role.title}
         for person in people:
+            diff = pr_dif_(person,role)
             b_w3 = [0]*12
             a_w3 = prj_task_(person,role,project)
 
@@ -516,7 +520,7 @@ def ur(request,p,r,j):
 
     moon12 = moon()
     delta = rj_delta_(role,project)
-    diff = rj_dif_(role,project)
+    
     people = people_of_rv(role)
     dem_rj = rj_load_(role,project)#----------------
     
@@ -527,7 +531,7 @@ def ur(request,p,r,j):
         for person in people:
             b_w3 = [0]*12
             a_w3 = prj_task_(person,role,project)
-
+            diff = pr_dif_(person,role)
             d = date.today().replace(day=15)
             for i in range(12):
                 color = ""
@@ -570,7 +574,7 @@ def djr(request,p,r,j):
     delta = rj_delta_(role,project)
 
     w4=[]
-    diff = rj_dif_(role,project)
+
     people_rv = people_of_rv(role)
     people_rr = people_of_rr(role)
     
@@ -590,7 +594,7 @@ def djr(request,p,r,j):
         if mj_outside(d,project):
                 color = "mygrey"
         a_w2[i]=    {"link":f"{person.id}.{r}.{j}.{d.year}-{d.month}-15","val":dem_rj[i],
-            "up":up(max(-delta[i],0),diff[i]),
+            
                   "color":color,
 
         }#
@@ -603,7 +607,7 @@ def djr(request,p,r,j):
     for person in people_rv:
         b_w3 = [0]*12
         a_w3 = prj_task_(person,role,project)
-
+        diff = pr_dif_(person,role)
         d = date.today().replace(day=15)
         for i in range(12):
             color = ""
@@ -657,7 +661,7 @@ def ajr(request,p,r,j):#Альфа, один проект, один ресуря
     w4=[]
 
 
-    diff = rj_dif_(role,project)
+
     people_rr = people_of_rr(role)
     people_rv = people_of_rv(role)
     
@@ -676,7 +680,7 @@ def ajr(request,p,r,j):#Альфа, один проект, один ресуря
             color = "mygrey"
         a_w2[i]=    {"link":f"0.{r}.{j}.{d.year}-{d.month}-15",
                      "val":dem_rj[i+1],
-            "up":up(max(-delta[i+1],0),diff[i]),
+            
                     "color":color,
 
 
@@ -693,7 +697,7 @@ def ajr(request,p,r,j):#Альфа, один проект, один ресуря
     for person in people_rv:
         b_w3 = [0]*12
         a_w3 = prj_task_(person,role,project)
-
+        diff = pr_dif_(person,role)
         d = date.today().replace(day=15)
         for i in range(12):
 
@@ -754,7 +758,7 @@ def ar(request,p,r,j):
     zv = ['ВАКАНСИЯ']+vacancia(role,project)
 #W222222222222222222222222222222
     for project in projects:
-        diff = rj_dif_(role,project)
+        
         a_w2=[{"val":project.title,"j":project.id,"r":r}]+[0]*12
         dem_rj = [project.title]+['Потребность']+rj_load_(role,project)#
 
@@ -784,15 +788,15 @@ def ar(request,p,r,j):
         x=[0]*12
         p100 = project.title
         for person in people_rr:
-            x=pr_dif_(person,role)
-            w4.append([person.fio]+x)
+
 
             b_w3 = [0]*12
             a_w3 = prj_task_(person,role,project)
-
+            diff = pr_dif_(person,role)
             d = date.today().replace(day=15)
 
-
+            x=diff
+            w4.append([person.fio]+x)
 
             for i in range(12):
                 color=""
@@ -836,7 +840,7 @@ def ar(request,p,r,j):
 
 def dr(request,p,r,j):
     person,role,project=get_prj(-1,r,-1)
-    diff = rj_dif_(role,project)
+    
     people_rr = people_of_rr(role)
     people_rv = people_of_rv(role)
     w3=[]
@@ -878,9 +882,11 @@ def dr(request,p,r,j):
         x=[0]*12
         p100 = project.title
         for person in people_rr:
-            x=pr_dif_(person,role)
+            diff = pr_dif_(person,role)
+            x=diff
             w4.append([person.fio]+x)
 
+            
             b_w3 = [0]*12
             a_w3 = prj_task_(person,role,project)
 
@@ -1051,7 +1057,7 @@ def aj(request,p,r,j):#Альфа, один проект
         supp = ['Поставка']+rj_task_(role,project)
         delta = ['Дельта']+rj_delta_(role,project)
         dem_rj = rj_load_(role,project)#----------------
-        diff = rj_dif_(role,project)
+        
 
 
 
@@ -1063,7 +1069,7 @@ def aj(request,p,r,j):#Альфа, один проект
             a_w2[i]=    {
                 "link":f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                          "val":dem_rj[i],
-                "up":up(max(-delta[i+1],0),diff[i]),
+               
                         "color":color,
 
             }#
@@ -1079,10 +1085,12 @@ def aj(request,p,r,j):#Альфа, один проект
         p300=role.title
         people_rr = people_of_rr(role)
         people_rv = people_of_rv(role)
-        for person in people_rr:#7777777777777777777777777777777777777777
-            w4.append([p200,person.fio]+pr_dif_(person,role))
+        for person in people_rr:#
+            diff = pr_dif_(person,role)
+            
+            w4.append([p200,person.fio]+diff)
             p200=-1
-
+            
             b_w3 = [0]*12
             a_w3 = prj_task_(person,role,project)
 
@@ -1136,7 +1144,7 @@ def mmjr(request,p,r,j):#Потребность на малом экране
 
     roles = Role.objects.all()
     for role in roles:
-        diff = rj_dif_(role,project)
+        
         people_rr = people_of_rr(role)
         people_rv = people_of_rv(role)
 
@@ -1153,7 +1161,7 @@ def mmjr(request,p,r,j):#Потребность на малом экране
             a_w2[i]={
                 "link":f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val":dem_rj[i],
-            "up":up(max(-delta[i],0),diff[i]),
+            
                     "color":color
                     }
             d = inc(d)
@@ -1196,7 +1204,7 @@ def mmj(request,p,r,j):#Потребность на малом экране
             a_w2[i]={
                 "link":f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val":dem_rj[i],
-            "up":up(max(-delta[i],0),diff[i]),
+            
                     "color":color
                     }
             d = inc(d)
@@ -1236,7 +1244,7 @@ def mmr(request,p,r,j):#Потребность на малом экране
             a_w2[i]={
                 "link":f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val":dem_rj[i],
-            "up":up(max(-delta[i],0),diff[i]),
+            
                     "color":color
                     }
             d = inc(d)
@@ -1301,26 +1309,6 @@ def smrom(request):#Доступность
 
     return mrom(request)#s
 
-# def mr(request,p,r,j):#максимальна доступность одного ресурса и Остаточная доступность
-#     moon12 = moon()
-#     dif14 = []
-#     dif15 = []
-#
-#     role = Role.objects.get(id=r)
-#     people_rr = people_of_rr(role)
-#     people_rv = people_of_rv(role)
-#
-#     for person in people_rr:
-#         dif = pr_isfree_(person,role)
-#
-#         dif100=[0]*12
-#         da = date.today().replace(day=15)
-#         for i in range(12):
-#             dif100[i]={"link":f"{person.id}.{r}.0.{da.year}-{da.month}-15",
-#             "up":up(1,2),
-#             "title":dif[i]}#9898
-#             da = inc(da)
-#         dif14.append([person.fio]+dif100)######################
 
 def mjr(request, p, r, j):  # максимальна доступность одного ресурса и Остаточная доступность
     moon12 = moon()
@@ -1338,7 +1326,7 @@ def mjr(request, p, r, j):  # максимальна доступность од
         da = date.today().replace(day=15)
         for i in range(12):
             dif100[i] = {"link": f"{person.id}.{r}.0.{da.year}-{da.month}-15",
-                         "up": up(1, 2),
+                         
                          "title": dif[i]}  # 9898
             da = inc(da)
         dif14.append([person.fio] + dif100)  ######################
@@ -1350,7 +1338,7 @@ def mjr(request, p, r, j):  # максимальна доступность од
         da = date.today().replace(day=15)
         for i in range(12):
             dif100[i]={"link":f"{person.id}.{r}.0.{da.year}-{da.month}-15",
-            "up":up(1,2),
+           
             "title":dif[i]}#9898
             da = inc(da)
         dif15.append([person.fio]+dif100)######################
@@ -1393,7 +1381,7 @@ def mr2(request, p, r, j):#максимальна доступность одн�
         da = date.today().replace(day=15)
         for i in range(12):
             dif100[i]={"link":f"{person.id}.0.0.{da.year}-{da.month}-15",
-            "up":up(1,2),
+      
             "title":dif[i]}#9898
             da = inc(da)
         dif15.append([person.fio]+dif100)######################
