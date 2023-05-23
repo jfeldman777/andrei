@@ -1179,9 +1179,9 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
 
     roles = Role.objects.all()
     for role in roles:
-        diff = rj_dif_(role, project)
-        people_rr = people_of_rr(role)
-        people_rv = people_of_rv(role)
+        # diff = rj_dif_(None,role, project)
+        # people_rr = people_of_rr(role)
+        # people_rv = people_of_rv(role)
 
         delta = rj_delta_(role, project)
 
