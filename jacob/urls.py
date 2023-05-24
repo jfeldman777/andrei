@@ -46,7 +46,7 @@ urlpatterns = [
     path('atr/', vvv.atr, name='atr'),
 #    path('att/', vvv.att, name='att'),
 
-    path('test/', vvv.test, name='test'),
+    path('test/', vvv.atest, name='test'),
 
     path('', vvv.alf, name='alf'),
 ]

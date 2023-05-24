@@ -24,18 +24,14 @@ $('td.good').click(function() {
   });
     
     
-    
-//    
-//  $(this).click(function(){
-//  $(this).html(originalValue);
-//      //$(this).off('click');
-//  })
+
 
   $('td input').focusout(function() {
     var newValue = $(this).val();
     $(this).parent().text(newValue+'@');
 
     var form = document.getElementById("f10");
+      form.action = "/s1/"
 
     // Create a new hidden input element
     var input = document.createElement('input');

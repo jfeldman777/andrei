@@ -48,13 +48,13 @@
         {% for dem in w2 %}
         <tr>
         {% for t in dem %}
-        <td class="good2 {{t.color}}" key="{{t.link}}" title="{{t.up}}">
+        <td class="good2 " key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
 {{t.val}}
 </td>
 {% endfor %}
 </tr>        {% endfor %}
 <tr><td colspan=13 style="text-align:center;">
-  <form id="f20" action="/s2/" method="POST">
+  <form id="f20"  method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='aj'>
   <button type="submit" class="button3"> Сохранить изменения</button>
@@ -95,13 +95,13 @@
   {% else %}
 
 
-  <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}};">
+  <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
 {{t.val}}
 </td>
 {% endif %}
 {% endfor %}</tr>
             {% endfor %}<tr><td colspan=13 style="text-align:center;">
-              <form id="f10" action="/s1/" method="POST">
+              <form id="f10"  method="POST">
   {% csrf_token %}
                         <input type = hidden name="html" value='aj'>
   <button type="submit" class="button3">Сохранить изменения</button></form>

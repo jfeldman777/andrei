@@ -18,7 +18,7 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
-ALLOWED_HOSTS = ['andrei2.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['andrei2.herokuapp.com','127.0.0.1','testserver','localhost']
 
 
 # Application definition
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'jacob.templatetags',
     'crispy_forms',
+    'mixer'
 
 ]
 from .middleware import AllowFrameMiddleware

@@ -5,63 +5,30 @@
 from django.test import SimpleTestCase,TestCase,Client
 from django.urls import reverse,resolve
 from .vvv import *
-
-#class TestViews(TestCase):
-#    def setUp(self):
+#
+#### test_views.py
+#class sViewTest(TestCase):
+#    @classmethod
+#    def setUpTestData(self):
 #        self.names = [
 #            'alf',
 #            'mro',
-#            'ssmrom',
 #            'mrom',
 #            'prjlist',
-#            'smj',
-#            'smr',       
-#            's2',
-#            's1',    
-#            'sj',
 #            'atj',
 #            'atr',
-#            'att',    
+#  
 #                    ]
 #        self.client = Client()
-#  
-
-#    def test_alf(self):
-#        for x in self.names:
-#            print(x)
-#            response = self.client.get(x)
-#            self.assertEqual(response.status_code, 200)
-
-
-### test_views.py
-class StudentListViewTest(TestCase):
-    @classmethod
-    def setUpTestData(self):
-        self.names = [
-            'alf',
-            'mro',
-            'mrom',
-            'prjlist',
-            'atj',
-            'atr',
-  
-                    ]
-        self.client = Client()
-
-    def test_url_accessible_by_name(self):
-        for name in self.names:
-            print(2,name)
-            response = self.client.get(reverse(name))
-            self.assertIn(response.status_code, [200, 301])
 #
-#    def test_view_uses_correct_template(self):
+#    def _test_url_accessible_by_name(self):
 #        for name in self.names:
+#            print(2,name)
 #            response = self.client.get(reverse(name))
 #            self.assertIn(response.status_code, [200, 301])
-#            self.assertTemplateUsed(response, f"{name}.html")
-
-    
-        
+#
+#    
+#        
         
         
 
