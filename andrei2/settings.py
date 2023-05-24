@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'jacob.templatetags',
     'crispy_forms',
-    'mixer'
+
 
 ]
 from .middleware import AllowFrameMiddleware
