@@ -770,6 +770,8 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
 
 
 def ar(request, p, r, j):
+#    print(888,p,r,j)
+#    role = Role.objects.get(id=r)
     person, role, project = get_prj(-1, r, -1)
     people_rr = people_of_rr(role)
     people_rv = people_of_rv(role)
@@ -1257,6 +1259,9 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
 #########################################################################Альфа, один ресурс, все проекты
 def smr(request):  # доступность
     id = 1
+    r=1
+    p=1
+    j=1
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
@@ -1277,7 +1282,7 @@ def smr(request):  # доступность
         else:
             print(form.errors)
 
-    return mr1(request, r)
+    return mr1(request, p,r,j)
 
 
 def smrom(request):  # Доступность
@@ -1392,7 +1397,7 @@ def mr1(request, p, r, j):  # максимальна доступность од
     moon12 = moon()
     dif14 = []
     dif15 = []
-
+    print(p,r,j)
     role = Role.objects.get(id=r)
     people_rr = people_of_rr(role)
     people_rv = people_of_rv(role)
@@ -1404,23 +1409,12 @@ def mr1(request, p, r, j):  # максимальна доступность од
         dif100 = [0] * 12
         da = date.today().replace(day=15)
         for i in range(12):
-            dif100[i] = {"link": f"{person.id}.0.0.{da.year}-{da.month}-15",
+            dif100[i] = {"link": f"{person.id}.{role.id}.0.{da.year}-{da.month}-15",
                          "fire": is100[i],
                          "title": dif[i]}  # 9898
             da = inc(da)
         dif14.append([person.fio] + dif100)  ######################
 
-    for person in people_rr:
-        dif = pr_dif_(person, role)
-
-        dif100 = [0] * 12
-        da = date.today().replace(day=15)
-        for i in range(12):
-            dif100[i] = {"link": f"{person.id}.0.0.{da.year}-{da.month}-15",
-                         "fire": is100[i],
-                         "title": dif[i]}  # 9898
-            da = inc(da)
-        dif15.append([person.fio] + dif100)  ######################
 
     moon12["dif14"] = dif14
 

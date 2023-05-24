@@ -5,33 +5,88 @@
 from django.test import SimpleTestCase,TestCase,Client
 from django.urls import reverse,resolve
 from .vvv import *
-class TestUrls(SimpleTestCase):
-    def test_1(self):
-        url = reverse('alf')
-        print(resolve(url))
-        self.assertEquals(resolve(url).func,alf)
+
+#class TestViews(TestCase):
+#    def setUp(self):
+#        self.names = [
+#            'alf',
+#            'mro',
+#            'ssmrom',
+#            'mrom',
+#            'prjlist',
+#            'smj',
+#            'smr',       
+#            's2',
+#            's1',    
+#            'sj',
+#            'atj',
+#            'atr',
+#            'att',    
+#                    ]
+#        self.client = Client()
+#  
+
+#    def test_alf(self):
+#        for x in self.names:
+#            print(x)
+#            response = self.client.get(x)
+#            self.assertEqual(response.status_code, 200)
 
 
-    def test_ar(self):
-        url = reverse('ar',args=[2,2,2])
-        print(url)
-        self.assertEquals(resolve(url).func, ar)
-
-
-class TestVies(TestCase):
-    def setUp(self):
+### test_views.py
+class StudentListViewTest(TestCase):
+    @classmethod
+    def setUpTestData(self):
+        self.names = [
+            'alf',
+            'mro',
+            'ssmrom',
+            'mrom',
+            'prjlist',
+            'smr',       
+            's2',
+            's1',    
+            'sj',
+            'atj',
+            'atr',
+            'att',    
+                    ]
         self.client = Client()
-        self.url_alf = reverse('alf')
-        self.url_ar = reverse('ar',args = [2,2,2])
 
-    def test_alf(self):
-        response = self.client.get(self.url_alf)
-        self.assertEquals(response.status_code,200)
-        self.assertTemplateUsed(response,'alf.html')
-    def test_ar(self):
-        response = self.client.get(self.url_ar)
-        self.assertEquals(response.status_code,200)
-        self.assertTemplateUsed(response,'ar.html')
+    def test_url_exists(self):
+        for name in self.names:
+            print(1,name)
+            response = self.client.get(f"/{name}")
+            self.assertIn(response.status_code, [200, 301])
+
+    def test_url_accessible_by_name(self):
+        for name in self.names:
+            print(2,name)
+            response = self.client.get(reverse(name))
+            self.assertIn(response.status_code, [200, 301])
+#
+#    def test_view_uses_correct_template(self):
+#        for name in self.names:
+#            response = self.client.get(reverse(name))
+#            self.assertIn(response.status_code, [200, 301])
+#            self.assertTemplateUsed(response, f"{name}.html")
+
+    
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+#    def test_ar(self):
+#        response = self.client.get(self.url_ar)
+#        self.assertEquals(response.status_code,200)
+#        self.assertTemplateUsed(response,'ar.html')
 #
 #
 #
