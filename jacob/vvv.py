@@ -526,13 +526,13 @@ def uj(request, p, r, j):
 
             d = date.today().replace(day=15)
             for i in range(12):
-            color = "white"
-            if mj_outside(d, project):
-                color = "lightgrey"
-                if delta[i] < 0:
-                    color = "#B266FF"
-            elif delta[i] < 0:
-                color = "pink"
+                color = "white"
+                if mj_outside(d, project):
+                    color = "lightgrey"
+                    if delta[i] < 0:
+                        color = "#B266FF"
+                elif delta[i] < 0:
+                    color = "pink"
                 b_w3[i] = {"link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                            "up": up(
                                max(-delta[i], 0)
@@ -576,13 +576,13 @@ def ur(request, p, r, j):
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
-            color = "white"
-            if mj_outside(d, project):
-                color = "lightgrey"
-                if delta[i] < 0:
-                    color = "#B266FF"
-            elif delta[i] < 0:
-                color = "pink"
+                color = "white"
+                if mj_outside(d, project):
+                    color = "lightgrey"
+                    if delta[i] < 0:
+                        color = "#B266FF"
+                elif delta[i] < 0:
+                    color = "pink"
                 b_w3[i] = {"link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                            "up": up(
                                max(-delta[i], 0)
@@ -831,13 +831,13 @@ def ar(request, p, r, j):
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
-            color = "white"
-            if mj_outside(d, project):
-                color = "lightgrey"
-                if delta[i] < 0:
-                    color = "#B266FF"
-            elif delta[i] < 0:
-                color = "pink"
+                color = "white"
+                if mj_outside(d, project):
+                    color = "lightgrey"
+                    if delta[i] < 0:
+                        color = "#B266FF"
+                elif delta[i] < 0:
+                    color = "pink"
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(
@@ -925,13 +925,13 @@ def dr(request, p, r, j):
             d = date.today().replace(day=15)
 
             for i in range(12):
-            color = "white"
-            if mj_outside(d, project):
-                color = "lightgrey"
-                if delta[i] < 0:
-                    color = "#B266FF"
-            elif delta[i] < 0:
-                color = "pink"
+                color = "white"
+                if mj_outside(d, project):
+                    color = "lightgrey"
+                    if delta[i] < 0:
+                        color = "#B266FF"
+                elif delta[i] < 0:
+                    color = "pink"
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(
@@ -1018,13 +1018,13 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
-            color = "white"
-            if mj_outside(d, project):
-                color = "lightgrey"
-                if delta[i] < 0:
-                    color = "#B266FF"
-            elif delta[i] < 0:
-                color = "pink"
+                color = "white"
+                if mj_outside(d, project):
+                    color = "lightgrey"
+                    if delta[i] < 0:
+                        color = "#B266FF"
+                elif delta[i] < 0:
+                    color = "pink"
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                     "up": up(
@@ -1107,13 +1107,13 @@ def aj(request, p, r, j):  # Альфа, один проект
 
             d = date.today().replace(day=15)
             for i in range(12):
-            color = "white"
-            if mj_outside(d, project):
-                color = "lightgrey"
-                if delta[i+1] < 0:
-                    color = "#B266FF"
-            elif delta[i+1] < 0:
-                color = "pink"
+                color = "white"
+                if mj_outside(d, project):
+                    color = "lightgrey"
+                    if delta[i+1] < 0:
+                        color = "#B266FF"
+                elif delta[i+1] < 0:
+                    color = "pink"
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                     "up": up(
