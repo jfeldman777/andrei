@@ -745,9 +745,9 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
             color = "white"
             if mj_outside(d, project):
                 color = "lightgrey"
-                if delta[i] < 0:
+                if delta[i+1] < 0:
                     color = "#B266FF"
-            elif delta[i] < 0:
+            elif delta[i+1] < 0:
                 color = "pink"
             b_w3[i] = {"link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
                        "up": up(
