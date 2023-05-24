@@ -38,12 +38,12 @@ class="good" key="{{t.link}}" >
 </tr>
 {% endfor %}
 <tr><td colspan=13 style="text-align:center;">
-  <form id="f10" action="/smrom/" method="POST">
+  <form id="f10" method="POST">
   {% csrf_token %}
-<input type = hidden name="id" value='{{j}}'>
+<input type = hidden name="html" value='mrom'>
   <button type="submit" class="button3">Сохранить изменения</button>
 </form>
-{%  include 'script.html'  %}
+{%  include 'script3.html'  %}
 
 
     </td></tr>
