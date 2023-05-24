@@ -6,21 +6,21 @@
 
 
 
-    <table border=2 style="position:relative;top=0;text-align:center;"  width=100% >
-      <tr><td colspan=13>Потребность<td></tr><td rowspan=2><b>{{project}}</b>
+    <table border=2 style="position:relative;top=0;text-align:center;"  width=100% ><thead>>
+        <tr><th colspan=13>Потребность</th></tr><th rowspan=2>{{project}}
         {% include 'moon.html' %}
         {% for dem in w2 %}
         <tr>
         {% for t in dem %}
 
-        <td class="good {{t.color}}" key="{{t.link}}" title="{{t.up}}">
+        <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color: {{t.color}}">
       {{t.val}}
       </td>
 {% endfor %}
 </tr>        {% endfor %}
 <tr style="text-align:center;">
   <td colspan=13 style="text-align:center;">
-  <form id="f10" action="/s2/" method="POST"  style="text-align:center;">
+  <form id="f10"  method="POST"  style="text-align:center;">
   {% csrf_token %}
             <input type = hidden name="html" value='mmjr'>
 <input type = hidden name="id" value='{{j}}'>

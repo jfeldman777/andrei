@@ -583,6 +583,9 @@ def ur(request, p, r, j):
                         color = "#B266FF"
                 elif delta[i] < 0:
                     color = "pink"
+                elif delta[i] > 0:
+                    color = "lightblue"
+                    
                 b_w3[i] = {"link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                            "up": up(
                                max(-delta[i], 0)
@@ -631,10 +634,11 @@ def djr(request, p, r, j):
 
     d = date.today().replace(day=15)
     for i in range(12):
-
-        color = ""
+        color="white"
         if mj_outside(d, project):
             color = "lightgrey"
+        elif dem_rj[i]>0:
+            color = "lightblue"
         a_w2[i] = {"link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15", "val": dem_rj[i],
 
                    "color": color,
@@ -714,9 +718,11 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
 
     d = date.today().replace(day=15)
     for i in range(12):
-        color = ""
+        color="white"
         if mj_outside(d, project):
             color = "lightgrey"
+        elif dem_rj[i]>0:
+            color = "lightblue"
         a_w2[i] = {"link": f"0.{r}.{j}.{d.year}-{d.month}-15",
                    "val": dem_rj[i + 1],
 
@@ -800,9 +806,11 @@ def ar(request, p, r, j):
 
         d = date.today().replace(day=15)
         for i in range(12):
-            color = ""
+            color="white"
             if mj_outside(d, project):
                 color = "lightgrey"
+            elif dem_rj[i+2]>0:
+                color = "lightblue"
             a_w2[i + 1] = {"val": dem_rj[i + 2],
                            "color": color,
                            "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
@@ -834,9 +842,9 @@ def ar(request, p, r, j):
                 color = "white"
                 if mj_outside(d, project):
                     color = "lightgrey"
-                    if delta[i] < 0:
+                    if delta[i+1] < 0:
                         color = "#B266FF"
-                elif delta[i] < 0:
+                elif delta[i+1] < 0:
                     color = "pink"
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
@@ -895,9 +903,11 @@ def dr(request, p, r, j):
 
         d = date.today().replace(day=15)
         for i in range(12):
-            color = ""
+            color="white"
             if mj_outside(d, project):
                 color = "lightgrey"
+            elif dem_rj[i+2]>0:
+                color = "lightblue"
             a_w2[i + 1] = {"val": dem_rj[i + 2],
                            "j": project.id,
                            "r": role.id,
@@ -992,12 +1002,14 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
 
         d = date.today().replace(day=15)
         for i in range(12):
-            color = ""
+            color="white"
             if mj_outside(d, project):
                 color = "lightgrey"
+            elif dem_rj[i]>0:
+                color = "lightblue"
 
             a_w2[i] = {
-                "val": dem_rj[i],
+                "val": dem_rj[i],"color":color,
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
             }
 
@@ -1079,9 +1091,12 @@ def aj(request, p, r, j):  # Альфа, один проект
 
         d = date.today().replace(day=15)
         for i in range(12):
-            color = ""
+            color = "white"
             if mj_outside(d, project):
                 color = "lightgrey"
+            elif dem_rj[i]>0:
+                color = "lightblue"
+
             a_w2[i] = {
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
@@ -1169,9 +1184,11 @@ def mmjr(request, p, r, j):  # Потребность на малом экран
 
         d = date.today().replace(day=15)
         for i in range(12):
-            color = ""
+            color = "white"
             if mj_outside(d, project):
                 color = "lightgrey"
+            elif dem_rj[i]>0:
+                color = "lightblue"
             a_w2[i] = {
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
@@ -1211,9 +1228,11 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
 
         d = date.today().replace(day=15)
         for i in range(12):
-            color = ""
+            color = "white"
             if mj_outside(d, project):
                 color = "lightgrey"
+            elif dem_rj[i]>0:
+                color = "lightblue"
             a_w2[i] = {
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
@@ -1253,7 +1272,11 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
 
         d = date.today().replace(day=15)
         for i in range(12):
-            color = ""
+            color="white"
+            if mj_outside(d, project):
+                color = "lightgrey"
+            elif dem_rj[i]>0:
+                color = "lightblue"
             a_w2[i] = {
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
