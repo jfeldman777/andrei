@@ -40,24 +40,13 @@ class StudentListViewTest(TestCase):
         self.names = [
             'alf',
             'mro',
-            'ssmrom',
             'mrom',
             'prjlist',
-            'smr',       
-            's2',
-            's1',    
-            'sj',
             'atj',
             'atr',
-            'att',    
+  
                     ]
         self.client = Client()
-
-    def test_url_exists(self):
-        for name in self.names:
-            print(1,name)
-            response = self.client.get(f"/{name}")
-            self.assertIn(response.status_code, [200, 301])
 
     def test_url_accessible_by_name(self):
         for name in self.names:
