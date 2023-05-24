@@ -8,8 +8,9 @@
   <td></tr>
   <tr style="text-align:center;"><td  width=50%>
         <div class="table-container">
-    <table border=2 style="position:relative;top=0;"  width=100% ><thead><tr>
-        <th colspan=13>Балансировка</th></tr><tr><th><b>{{project}}</b>
+    <table border=2 style="position:relative;top=0;" class="balance"
+           width=100% ><thead><tr>
+        <th colspan=13>Балансировка</th></tr><tr><th>{{project}}
 {% include 'moon.html' %}
 {% for dem in w1 %}
 <tr>
@@ -35,7 +36,7 @@
     </table></div>
   </td>
     <td width=50%> <div class="table-container">
-      <table border=2 width=100% style="position:relative;top=0;"><thead>
+      <table border=2 width=100% style="position:relative;top=0;" ><thead>
       <tr>
           <th colspan=13 >
           <a href="/mmj/{{p}}/{{r}}/{{j}}" style="color:white;">Потребность</a>

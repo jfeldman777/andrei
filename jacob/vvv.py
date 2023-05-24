@@ -721,7 +721,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
         color="white"
         if mj_outside(d, project):
             color = "lightgrey"
-        elif dem_rj[i]>0:
+        elif dem_rj[i+1]>0:
             color = "lightblue"
         a_w2[i] = {"link": f"0.{r}.{j}.{d.year}-{d.month}-15",
                    "val": dem_rj[i + 1],
