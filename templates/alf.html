@@ -56,19 +56,23 @@
 
     </li>
     <li>
-    Назначение на проект
+    Потребности, назначения, балансировка 
 
+
+
+  <ol>
+        <li><a href="/b/1">на один месяц вперед</a></li>
+
+        <li><a href="/b/3">на три месяца вперед</a></li>
+        <li><a href="/b/6">на полгода  вперед</a></li>
+
+        <li><a href="/b/12">на год вперед</a>
+        </li>
+
+        </ol>
     </li>
 
 </ol>
-
-      <div style="background-color: #EEEEFF;">
-      <div style="background-color: #EEEEFF;">
-      <form method="POST" target="_top" >
-          {% csrf_token %}  <button type="submit">Выбрать перспективу и назначить исполнителей </button>
-              {{ form }}
-<img src="{% static 'fire2.png' %}" alt="Icon" width=16>
-
         </form>
         </div>
 {% endblock %}

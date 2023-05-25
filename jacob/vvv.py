@@ -350,6 +350,8 @@ def atest(request):
 
 
 def alf(request):
+    return render(request, 'alf.html', {})
+def alff(request):
     p = None
     r = None
     project = '?'
