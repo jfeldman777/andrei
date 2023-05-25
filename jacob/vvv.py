@@ -1077,9 +1077,9 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
                 color = "white"
                 if mj_outside(d, project):
                     color = "lightgrey"
-                    if delta[i+1] < 0:
+                    if delta[i] < 0:
                         color = "#B266FF"
-                elif delta[i+1] < 0:
+                elif delta[i] < 0:
                     color = "pink"                        
                 elif a_w3[i]>0:
                     color = "lightblue"                   
