@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
+{% load static %}
+{% include 'menu.html' %}
 
-<!-- my_template.html -->
+<h3 style="align-items: left">Проект</h3><div style="text-align: center">
+<!-- my_template.html -->    <table border=2 style="position:relative;top=0;background-color:white;" 
+      width=40% class=in>
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
+    {{ form.as_table }}<tr><td>
+    <button type="submit"  class="button3">Сохранить</button></td></tr>
 </form>
-
+</table>
+</div>
 
 {% endblock %}

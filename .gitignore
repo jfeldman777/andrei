@@ -15,7 +15,7 @@ logs/
 *.pyc
 
 # Static files
-#staticfiles/
+staticfiles/
 #media/
 
 # Dependency directories
