@@ -62,6 +62,42 @@ class PageStatusTestCase(TestCase):
         response = client.get('/eva2/djr/')
         self.assertEqual(response.status_code, 200)           
     
+    
+    def test_uj(self):
+        client = Client()
+        response = client.get('/eva2/uj/')
+        self.assertEqual(response.status_code, 200)      
+        
+        
+    def test_ur(self):
+        client = Client()
+        response = client.get('/eva2/ur/')
+        self.assertEqual(response.status_code, 200)            
+ 
+    def test_ujr(self):
+        client = Client()
+        response = client.get('/eva2/ujr/')
+        self.assertEqual(response.status_code, 200)   
+    def test_uj(self):
+        client = Client()
+        response = client.get('/eva2/uj/')
+        self.assertEqual(response.status_code, 200)      
+        
+    def test_mmjr(self):
+        client = Client()
+        response = client.get('/eva2/mmjr/')
+        self.assertEqual(response.status_code, 200)   
+        
+    def test_mmj(self):
+        client = Client()
+        response = client.get('/eva2/mmj/')
+        self.assertEqual(response.status_code, 200)            
+ 
+    def test_mmr(self):
+        client = Client()
+        response = client.get('/eva2/mmr/')
+        self.assertEqual(response.status_code, 200)         
+        
 #    def test_redirect_status(self):
 #        client = Client()
 #        response = client.get('/redirect-url/')

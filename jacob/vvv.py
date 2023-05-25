@@ -544,7 +544,7 @@ def uj(request, p, r, j):
 
     moon12["project"] = project
     moon12["id"] = j
-    moon12["r"] = role.id
+    moon12["r"] = 0
     moon12["j"] = j
     return render(request, 'uj.html', moon12)
 
@@ -1196,7 +1196,7 @@ def mmjr(request, p, r, j):  # Потребность на малом экран
 
     moon12["project"] = project
     moon12["j"] = j
-    moon12["r"] = role.id
+    moon12["r"] = 0
     moon12["id"] = j
     return render(request, 'mmjr.html', moon12)
 
@@ -1240,7 +1240,7 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
 
     moon12["project"] = project
     moon12["j"] = j
-    moon12["r"] = role.id
+    moon12["r"] = 0
     moon12["id"] = j
     return render(request, 'mmj.html', moon12)
 
@@ -1253,7 +1253,7 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
 
     roles = Role.objects.all()
     for role in roles:
-        diff = rj_dif_(role, project)
+#        diff = rj_dif_(person,role, project)
         people_rr = people_of_rr(role)
         people_rv = people_of_rv(role)
 
@@ -1282,9 +1282,9 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
     moon12["role"] = role
 
     moon12["project"] = project
-    moon12["j"] = j
-    moon12["r"] = role.id
-    moon12["id"] = j
+    moon12["j"] = 0
+    moon12["r"] = 0
+    moon12["id"] = 0
     return render(request, 'mmr.html', moon12)
 
 
