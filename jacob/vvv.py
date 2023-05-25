@@ -1018,7 +1018,7 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
                       {"r": role.id, "j": project.id,
                        "val": role.title,
                        "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
-                       "color": color
+                       
                        }
 
                   ] + a_w2)
