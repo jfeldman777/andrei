@@ -8,6 +8,7 @@ urlpatterns = [
     path('s1/', vvv.s1, name='s1'),    
     path('sj/', vvv.sj, name='sj'),
     path('smrom/', vvv.smrom, name='smrom'),
+    path('eva2/<str:fun>/', vvv.eva2, name='eva2'), 
     
     path('b/<int:n>/', vvv.b, name='b'),        
     path('mjr/<int:p>/<int:r>/<int:j>/', vvv.mjr, name='mjr'),
@@ -24,13 +25,11 @@ urlpatterns = [
     path('dr/<int:p>/<int:r>/<int:j>/', vvv.dr, name='dr'),
     path('ar/<int:p>/<int:r>/<int:j>/', vvv.ar, name='ar') ,
     path('ajr/<int:p>/<int:r>/<int:j>/', vvv.ajr, name='ajr'),
-    path('djr/<int:p>/<int:r>/<int:j>/', vvv.djr, name='djr'),       
-    path('eva2/<str:fun>/', vvv.eva2, name='eva2'),    
+    path('djr/<int:p>/<int:r>/<int:j>/', vvv.djr, name='djr'),     
+   
     path('mro/', vvv.mro, name='mro'),      
-
     path('mrom/', vvv.mrom, name='mrom'),
-    path('prjlist/', vvv.prjlist, name='prjlist'),
- 
+    path('prjlist/', vvv.prjlist, name='prjlist'), 
     path('atj/', vvv.atj, name='atj'),
     path('atr/', vvv.atr, name='atr'),
     path('test/', vvv.atest, name='test'),
