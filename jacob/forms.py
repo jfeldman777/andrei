@@ -28,5 +28,5 @@ from .models import Project
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['title', 'general','start_date','end_date']
+        fields = ['id','title', 'general','start_date','end_date']
         # Дополнительные поля формы

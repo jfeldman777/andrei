@@ -1,5 +1,5 @@
 from .models import Less
-from .forms import EntryForm
+from .forms import EntryForm,ProjectForm
 from datetime import *
 from django.shortcuts import render
 from django.forms import Form
@@ -351,25 +351,25 @@ def atest(request):
 
 def alf(request):
     return render(request, 'alf.html', {})
-def alff(request):
-    p = None
-    r = None
-    project = '?'
+
+from django.shortcuts import render, get_object_or_404, redirect
+def alff(request, id=None):
+    instance = None
+    if id:
+        instance = get_object_or_404(Project, id=id)
+        
     if request.method == 'POST':
-        form = EntryForm(request.POST)
+        form = ProjectForm(request.POST, instance=instance)
         if form.is_valid():
-            project = form.cleaned_data['projects']
-            roles = form.cleaned_data['roles']
-            if project:
-                p = Project.objects.get(title=project)
-            if roles:
-                r = Role.objects.get(title=roles)
+            form.save()
+            return redirect('prjlist')        
 
-            return ajr(request, p.id, r.id, 1)
+    else:
+        form = ProjectForm(instance=instance)
+    return render(request, 'form.html', {'form': form})
 
-    form = EntryForm()
-    return render(request, 'alf.html', {'form': form})
-
+#################################
+###########################
 
 def atj(request):
     projects = Project.objects.all().order_by('general')

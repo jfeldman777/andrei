@@ -2,6 +2,10 @@ from django.urls import path
 from . import vvv
 
 urlpatterns = [
+    
+
+    path('form/<int:id>/', vvv.alff, name='alff_with_id'),
+    path('form/', vvv.alff, name='alff'),
     path('smj/', vvv.smj, name='smj'),
     path('sm/', vvv.sm, name='sm'),       
     path('s2/', vvv.s2, name='s2'),
