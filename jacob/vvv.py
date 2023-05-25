@@ -8,6 +8,12 @@ from django.db.models import Q
 def up(a, b):
     return f"надо:{a}/есть:{b}"
 
+def eva(request, fun):
+    return eval(f"{fun}(request)")
+
+def eva2(request, fun):
+    return eval(f"{fun}(request,2,2,2)")
+
 def demm(r, j, n):
     rjd = rj_load_(r, j)
     sum = 0
@@ -96,13 +102,22 @@ def mj_outside(m, j):
 def get_prj(p, r, j):
     role = None
     if r > 0:
-        role = Role.objects.get(id=r)
+        try:
+            role = Role.objects.filter(id=r)[0]
+        except:
+            pass
     person = None
     if p > 0:
-        person = UserProfile.objects.get(id=p)
+        try:
+            person = UserProfile.objects.filter(id=p)[0]
+        except:
+            pass
     project = None
     if j > 0:
-        project = Project.objects.get(id=j)
+        try:
+            project = Project.objects.filter(id=j)[0]
+        except:
+            pass
 
     return (person, role, project)
 
@@ -117,20 +132,6 @@ def people_of_rr(role):
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
     return pp1.union(pp2)
-
-#
-#def prjm_task(request, p, r, j, y, m):
-#    d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
-#    person, role, project = get_prj(p, r, j)
-#    task = Task.objects.filter(project=project, person=person, role=role, month=d)
-#    context = {"t": task}
-#    return render(request, 'a_test.html', context)
-#
-#
-#def prm_isfree(request, p, r, y, m):
-#    res = prm_isfree_(p, r, y, m)
-#    context = {"t": res}
-#    return render(request, 'a_test.html', context)
 
 
 def prm_isfree_(p, r, y, m):
@@ -148,13 +149,6 @@ def prm_isfree_(p, r, y, m):
     return t
 
 
-#def rjm_load(request, r, j, y, m):
-#    d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
-#    person, role, project = get_prj(-1, r, j)
-#    task = Load.objects.filter(project=project, role=role, month=d)
-#    context = {"t": task}
-#    return render(request, 'a_test.html', context)
-
 
 def rj_dif_(p, r, j):
     res = [0] * 12
@@ -165,11 +159,6 @@ def rj_dif_(p, r, j):
 
     return res
 
-#
-#def pr_dif(request, p, r):
-#    t = pr_dif_(p, r)
-#    context = {"t": t}
-#    return render(request, 'a_test.html', context)
 
 
 def pr_dif_(p, r):
@@ -180,12 +169,6 @@ def pr_dif_(p, r):
         c[i] = b[i] - a[i]
     return c
 
-#
-#def pr_task(request, p, r):
-#    res = pr_task_(p, r)
-#    context = {"t": res}
-#    return render(request, 'a_test.html', context)
-#
 
 def pr_task_(person, role):
     d = date.today().replace(day=15)
@@ -202,12 +185,18 @@ def pr_task_(person, role):
 
 
 def vacancia(role, project):
-    person = UserProfile.objects.get(id=11)
+    try:
+        person = UserProfile.objects.filter(id=11)[0]
+    except:
+        person = None    
     return prj_task_(person, role, project)
 
 
-def outsrc(role, project):
-    person = UserProfile.objects.get(id=10)
+def outsrc(role, project): 
+    try:
+        person = UserProfile.objects.filter(id=10)[0]
+    except:
+        person = None
     return prj_task_(person, role, project)
 
 
@@ -786,14 +775,13 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
 
 
 def ar(request, p, r, j):
-#    print(888,p,r,j)
-#    role = Role.objects.get(id=r)
     person, role, project = get_prj(-1, r, -1)
     people_rr = people_of_rr(role)
     people_rv = people_of_rv(role)
     w3 = []
     w2 = []
     w1 = []
+    w4 = []
     moon12 = moon()
     projects = Project.objects.all()
 
@@ -823,7 +811,7 @@ def ar(request, p, r, j):
         supp = ['Поставка'] + rj_task_(role, project)
         delta = ['Дельта'] + rj_delta_(role, project)
 
-        w4 = []
+
 
         x = [0] * 12
         p200 = project.title

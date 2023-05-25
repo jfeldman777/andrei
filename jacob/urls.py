@@ -21,7 +21,9 @@ urlpatterns = [
     path('djr/<int:p>/<int:r>/<int:j>/', vvv.djr, name='djr'),
     
     
-    path('mro/', vvv.mro, name='mro'),
+    path('eva2/<str:fun>/', vvv.eva2, name='eva2'),
+    
+    path('mro/', vvv.mro, name='mro'),      
     path('smrom/', vvv.smrom, name='smrom'),
     path('mrom/', vvv.mrom, name='mrom'),
     path('prjlist/', vvv.prjlist, name='prjlist'),
