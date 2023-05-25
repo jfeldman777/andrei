@@ -790,8 +790,15 @@ def ar(request, p, r, j):
     zo = ['АУТСОРС'] + outsrc(role, project)
     zv = ['ВАКАНСИЯ'] + vacancia(role, project)
     # W222222222222222222222222222222
-    for project in projects:
+    
+    x = [0] * 12
 
+    for person in people_rr:
+        diff = pr_dif_(person, role)
+        x = diff
+        w4.append([person.fio] + x)    
+    for project in projects:
+        p200 = project.title
         a_w2 = [{"val": project.title, "j": project.id, "r": r}] + [0] * 12
         dem_rj = [project.title] + ['Потребность'] + rj_load_(role, project)  #
 
@@ -815,12 +822,7 @@ def ar(request, p, r, j):
 
 
 
-        x = [0] * 12
-        p200 = project.title
-        for person in people_rr:
-            diff = pr_dif_(person, role)
-            x = diff
-            w4.append([person.fio] + x)
+
 
 
         p100 = project.title
@@ -881,11 +883,22 @@ def dr(request, p, r, j):
     w2 = []
     w1 = []
     w4 = []    
-    moon12 = moon()
+    moon12 = moon() 
+    
+    x = [0] * 12
+
+    for person in people_rr:
+        diff = pr_dif_(person, role)
+        x = diff
+        w4.append([person.fio] + x)    
+    
+    
+    
     projects = Project.objects.all()
 
     # W222222222222222222222222222222
     for project in projects:
+        p100 = project.title        
         a_w2 = [{"val": project.title,
                  "j": project.id,
                  "r": role.id,
@@ -913,12 +926,7 @@ def dr(request, p, r, j):
 
 
 
-        x = [0] * 12
-        p100 = project.title
-        for person in people_rr:
-            diff = pr_dif_(person, role)
-            x = diff
-            w4.append([person.fio] + x)
+
 
         for person in people_rv:
             b_w3 = [0] * 12
@@ -1334,7 +1342,7 @@ def mjr(request, p, r, j):  # максимальна доступность од
 
         dif100 = [0] * 12
         da = date.today().replace(day=15)
-        for i in range(12):
+        for iF in range(12):
             dif100[i] = {"link": f"{person.id}.{r}.0.{da.year}-{da.month}-15",
 
                          "title": dif[i]}  # 9898
