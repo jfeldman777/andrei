@@ -1317,60 +1317,6 @@ def sm(request):
     return mrom(request)  # s
     
 #########################################################################Альфа, один ресурс, все проекты
-def smr(request):  # доступность
-    id = 1
-    r=1
-    p=1
-    j=1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        if form.is_valid():
-
-            for k, v in request.POST.items():
-
-                if '.' in k:
-                    p, r, j, d = k.split('.')
-
-                    try:
-                        role = Role.objects.get(id=r)
-                        person = UserProfile.objects.get(id=p)
-
-                        tr(person, role, d, v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return mr1(request, p,r,j)
-
-
-def smrom(request):  # Доступность
-    id = 1
-    r=1
-    p=1
-    j=1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        if form.is_valid():
-            for k, v in request.POST.items():
-
-                if '.' in k:
-                    p, r, j, d = k.split('.')
-
-                    try:
-                        person = UserProfile.objects.get(id=p)
-                        role = Role.objects.get(id=r)
-                        tr(person, role, d, v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return mrom(request)  # s
-
-
 def mjr(request, p, r, j):  # максимальна доступность одного ресурса и Остаточная доступность
     moon12 = moon()
     dif14 = []

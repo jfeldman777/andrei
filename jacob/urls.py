@@ -7,7 +7,7 @@ urlpatterns = [
     path('s2/', vvv.s2, name='s2'),
     path('s1/', vvv.s1, name='s1'),    
     path('sj/', vvv.sj, name='sj'),
-#    path('smrom/', vvv.smrom, name='smrom'),
+
     path('eva2/<str:fun>/', vvv.eva2, name='eva2'), 
     
     path('b/<int:n>/', vvv.b, name='b'),        
