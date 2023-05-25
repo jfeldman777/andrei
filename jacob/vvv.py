@@ -1794,7 +1794,7 @@ def pref(p):
     L = []
     L.append(p.general.fio)
 
-    L.append({"title": p.title, "link": p.id})  # 989898
+    L.append({"title": p.title, "id": p.id})  # 989898
 
     L.append(p.start_date)
     L.append(p.end_date)
