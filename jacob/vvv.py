@@ -472,6 +472,8 @@ def ujr(request, p, r, j):
                     color = "#B266FF"
             elif delta[i] < 0:
                 color = "pink"
+            elif a_w3[i]>0:
+                color = "lightblue"
             b_w3[i] = {
                 "link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
                 "up": up(
@@ -526,6 +528,8 @@ def uj(request, p, r, j):
                         color = "#B266FF"
                 elif delta[i] < 0:
                     color = "pink"
+                elif a_w3[i]>0:
+                    color = "lightblue"
                 b_w3[i] = {"link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                            "up": up(
                                max(-delta[i], 0)
@@ -577,7 +581,7 @@ def ur(request, p, r, j):
                         color = "#B266FF"
                 elif delta[i] < 0:
                     color = "pink"
-                elif delta[i] > 0:
+                elif a_w3[i]>0:
                     color = "lightblue"
                     
                 b_w3[i] = {"link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
