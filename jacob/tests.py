@@ -98,6 +98,11 @@ class PageStatusTestCase(TestCase):
         response = client.get('/eva2/mmr/')
         self.assertEqual(response.status_code, 200)  
         
+    def test_mjr(self):
+        client = Client()
+        response = client.get('/eva2/mjr/')
+        self.assertEqual(response.status_code, 200)          
+        
     def test_b(self):
         client = Client()
         response = client.get('/b/3/')

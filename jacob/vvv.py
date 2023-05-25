@@ -1344,8 +1344,11 @@ def mjr(request, p, r, j):  # максимальна доступность од
     moon12 = moon()
     dif14 = []
     dif15 = []
-
-    role = Role.objects.get(id=r)
+    try:
+        role = Role.objects.filter(id=r)[0]
+    except:
+        role = None
+    
     people_rr = people_of_rr(role)
     people_rv = people_of_rv(role)
 
