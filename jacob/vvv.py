@@ -749,13 +749,18 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
         diff = pr_dif_(person, role)
         d = date.today().replace(day=15)
         for i in range(12):
+                
             color = "white"
             if mj_outside(d, project):
                 color = "lightgrey"
                 if delta[i+1] < 0:
                     color = "#B266FF"
             elif delta[i+1] < 0:
-                color = "pink"
+                color = "pink"                        
+            elif a_w3[i]>0:
+                color = "lightblue"
+
+                
             b_w3[i] = {"link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
                        "up": up(
                            max(-delta[i + 1], 0)
@@ -966,9 +971,9 @@ def dr(request, p, r, j):
                 color = "white"
                 if mj_outside(d, project):
                     color = "lightgrey"
-                    if delta[i+1] < 0:
+                    if delta[i] < 0:
                         color = "#B266FF"
-                elif delta[i+1] < 0:
+                elif delta[i] < 0:
                     color = "pink"                        
                 elif a_w3[i]>0:
                     color = "lightblue" 
