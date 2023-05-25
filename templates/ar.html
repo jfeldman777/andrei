@@ -78,7 +78,7 @@
   <form id="f20"  method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='ar'>
-  <button type="submit" class="button3">Сохранить изменения</button></form>
+  <button type="submit" class="button3" disabled="true">Сохранить изменения</button></form>
 {%  include 'script2.html'  %}
 
 
@@ -133,7 +133,7 @@
             {% csrf_token %}
                       <input type = hidden name="html" value='ar'>
           <input type = hidden name="r" value='{{r}}'>
-            <button type="submit" class="button3">Сохранить изменения </button>
+            <button type="submit" class="button3"  disabled="true">Сохранить изменения </button>
           </form>
           {%  include 'script.html'  %}
           <!-- </td></tr> -->
