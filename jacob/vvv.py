@@ -94,6 +94,8 @@ def p_101(person):
 
 
 def mj_outside(m, j):
+    if j == None:
+        return True
     d1 = j.start_date
     d2 = j.end_date
     return not (d1 <= m and m <= d2)
@@ -621,7 +623,7 @@ def djr(request, p, r, j):
 
     a_w2 = [0] * 12
     dem_rj = rj_load_(role, project)  # ----------------
-
+    
     d = date.today().replace(day=15)
     for i in range(12):
         color="white"
@@ -629,7 +631,7 @@ def djr(request, p, r, j):
             color = "lightgrey"
         elif dem_rj[i]>0:
             color = "lightblue"
-        a_w2[i] = {"link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15", "val": dem_rj[i],
+        a_w2[i] = {"link": f"0.{r}.{j}.{d.year}-{d.month}-15", "val": dem_rj[i],
 
                    "color": color,
 
@@ -878,6 +880,7 @@ def dr(request, p, r, j):
     w3 = []
     w2 = []
     w1 = []
+    w4 = []    
     moon12 = moon()
     projects = Project.objects.all()
 
@@ -908,7 +911,7 @@ def dr(request, p, r, j):
 
         delta = rj_delta_(role, project)
 
-        w4 = []
+
 
         x = [0] * 12
         p100 = project.title
@@ -1147,7 +1150,7 @@ def aj(request, p, r, j):  # Альфа, один проект
 
     moon12["project"] = project
     moon12["id"] = j
-    moon12["r"] = role.id
+    moon12["r"] = 0
     moon12["j"] = j
 
     moon12["p"] = 0
