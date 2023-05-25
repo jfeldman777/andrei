@@ -118,19 +118,19 @@ def people_of_rr(role):
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
     return pp1.union(pp2)
 
-
-def prjm_task(request, p, r, j, y, m):
-    d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
-    person, role, project = get_prj(p, r, j)
-    task = Task.objects.filter(project=project, person=person, role=role, month=d)
-    context = {"t": task}
-    return render(request, 'a_test.html', context)
-
-
-def prm_isfree(request, p, r, y, m):
-    res = prm_isfree_(p, r, y, m)
-    context = {"t": res}
-    return render(request, 'a_test.html', context)
+#
+#def prjm_task(request, p, r, j, y, m):
+#    d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
+#    person, role, project = get_prj(p, r, j)
+#    task = Task.objects.filter(project=project, person=person, role=role, month=d)
+#    context = {"t": task}
+#    return render(request, 'a_test.html', context)
+#
+#
+#def prm_isfree(request, p, r, y, m):
+#    res = prm_isfree_(p, r, y, m)
+#    context = {"t": res}
+#    return render(request, 'a_test.html', context)
 
 
 def prm_isfree_(p, r, y, m):
@@ -148,12 +148,12 @@ def prm_isfree_(p, r, y, m):
     return t
 
 
-def rjm_load(request, r, j, y, m):
-    d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
-    person, role, project = get_prj(-1, r, j)
-    task = Load.objects.filter(project=project, role=role, month=d)
-    context = {"t": task}
-    return render(request, 'a_test.html', context)
+#def rjm_load(request, r, j, y, m):
+#    d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
+#    person, role, project = get_prj(-1, r, j)
+#    task = Load.objects.filter(project=project, role=role, month=d)
+#    context = {"t": task}
+#    return render(request, 'a_test.html', context)
 
 
 def rj_dif_(p, r, j):
@@ -165,11 +165,11 @@ def rj_dif_(p, r, j):
 
     return res
 
-
-def pr_dif(request, p, r):
-    t = pr_dif_(p, r)
-    context = {"t": t}
-    return render(request, 'a_test.html', context)
+#
+#def pr_dif(request, p, r):
+#    t = pr_dif_(p, r)
+#    context = {"t": t}
+#    return render(request, 'a_test.html', context)
 
 
 def pr_dif_(p, r):
@@ -180,12 +180,12 @@ def pr_dif_(p, r):
         c[i] = b[i] - a[i]
     return c
 
-
-def pr_task(request, p, r):
-    res = pr_task_(p, r)
-    context = {"t": res}
-    return render(request, 'a_test.html', context)
-
+#
+#def pr_task(request, p, r):
+#    res = pr_task_(p, r)
+#    context = {"t": res}
+#    return render(request, 'a_test.html', context)
+#
 
 def pr_task_(person, role):
     d = date.today().replace(day=15)
@@ -226,12 +226,12 @@ def prm_task(request, p, r, y, m):
     context = {"t": t}
     return render(request, 'a_test.html', context)
 
-
-def prj_task(request, p, r, j):
-    person, role, project = get_prj(p, r, j)
-    res = prj_task_(person, role, project)
-    context = {"t": res}
-    return render(request, 'a_test.html', context)
+#
+#def prj_task(request, p, r, j):
+#    person, role, project = get_prj(p, r, j)
+#    res = prj_task_(person, role, project)
+#    context = {"t": res}
+#    return render(request, 'a_test.html', context)
 
 
 def prj_task_(p, r, j):
@@ -275,11 +275,11 @@ def rj_task_(r, j):
         d = inc(d)
     return res
 
-
-def pr_isfree(request, p, r):
-    res = pr_isfree_(p, r)
-    context = {"t": res}
-    return render(request, 'a_test.html', context)
+#
+#def pr_isfree(request, p, r):
+#    res = pr_isfree_(p, r)
+#    context = {"t": res}
+#    return render(request, 'a_test.html', context)
 
 
 def pr_isfree_(person, role):
@@ -311,12 +311,12 @@ def rj_isfree_(role, project):
             res[i] += isfree[i]
     return res
 
-
-def rj_load(request, r, j):
-    person, role, project = get_prj(-1, r, j)
-    res = rj_load_(role, project)
-    context = {"t": res}
-    return render(request, 'a_test.html', context)
+#
+#def rj_load(request, r, j):
+#    person, role, project = get_prj(-1, r, j)
+#    res = rj_load_(role, project)
+#    context = {"t": res}
+#    return render(request, 'a_test.html', context)
 
 
 def rj_load_(r, j):
