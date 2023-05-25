@@ -563,12 +563,13 @@ def ur(request, p, r, j):
     w3 = []
 
     moon12 = moon()
-    delta = rj_delta_(role, project)
+    
 
     people = people_of_rv(role)
     projects = Project.objects.all()
 
     for project in projects:
+        delta = rj_delta_(role, project)
         p100 = {"val": project.title}
         for person in people:
             b_w3 = [0] * 12

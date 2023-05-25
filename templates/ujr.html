@@ -19,13 +19,13 @@
 
 
 
-<td class="good  {{t.color}}" key="{{t.link}}" title="{{t.up}}">
+  <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
   {{t.val}}
 </td>{% endfor %}</tr>
 {% endfor %}
 <tr height=20px>
       <td colspan=13  style="text-align:center; vertical-align:top;padding=0;spacing:">
-  <form id="f10" action="/s1/" method="POST">
+  <form id="f10"  method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='ujr'>
 
