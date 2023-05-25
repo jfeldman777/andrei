@@ -646,13 +646,28 @@ def djr(request, p, r, j):
         diff = pr_dif_(person, role)
         d = date.today().replace(day=15)
         for i in range(12):
+#            color = "white"
+#            if mj_outside(d, project):
+#                color = "lightgrey"
+#                if delta[i] < 0:
+#                    color = "#B266FF"
+#            elif delta[i] < 0:
+#                color = "pink"
+#                
             color = "white"
             if mj_outside(d, project):
                 color = "lightgrey"
-                if delta[i] < 0:
+                if delta[i+1] < 0:
                     color = "#B266FF"
-            elif delta[i] < 0:
-                color = "pink"
+            elif delta[i+1] < 0:
+                color = "pink"                        
+            elif a_w3[i]>0:
+                color = "lightblue"
+                
+                
+                
+                
+                
             b_w3[i] = {
                 "link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
                 "up": up(
@@ -829,6 +844,7 @@ def ar(request, p, r, j):
         for person in people_rv:
             b_w3 = [0] * 12
             a_w3 = prj_task_(person, role, project)
+            print(a_w3)
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
@@ -838,7 +854,10 @@ def ar(request, p, r, j):
                     if delta[i+1] < 0:
                         color = "#B266FF"
                 elif delta[i+1] < 0:
-                    color = "pink"
+                    color = "pink"                        
+                elif a_w3[i]>0:
+                    color = "lightblue"
+
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(
@@ -929,19 +948,31 @@ def dr(request, p, r, j):
 
 
         for person in people_rv:
+            diff = pr_dif_(person, role)
             b_w3 = [0] * 12
             a_w3 = prj_task_(person, role, project)
 
             d = date.today().replace(day=15)
 
             for i in range(12):
+#                color = "white"
+#                if mj_outside(d, project):
+#                    color = "lightgrey"
+#                    if delta[i] < 0:
+#                        color = "#B266FF"
+#                elif delta[i] < 0:
+#                    color = "pink"
+#                    
                 color = "white"
                 if mj_outside(d, project):
                     color = "lightgrey"
-                    if delta[i] < 0:
+                    if delta[i+1] < 0:
                         color = "#B266FF"
-                elif delta[i] < 0:
-                    color = "pink"
+                elif delta[i+1] < 0:
+                    color = "pink"                        
+                elif a_w3[i]>0:
+                    color = "lightblue" 
+                    
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(
@@ -1030,13 +1061,25 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
+#                color = "white"
+#                if mj_outside(d, project):
+#                    color = "lightgrey"
+#                    if delta[i] < 0:
+#                        color = "#B266FF"
+#                elif delta[i] < 0:
+#                    color = "pink"
+                    
                 color = "white"
                 if mj_outside(d, project):
                     color = "lightgrey"
-                    if delta[i] < 0:
+                    if delta[i+1] < 0:
                         color = "#B266FF"
-                elif delta[i] < 0:
-                    color = "pink"
+                elif delta[i+1] < 0:
+                    color = "pink"                        
+                elif a_w3[i]>0:
+                    color = "lightblue"                   
+                    
+                    
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                     "up": up(
@@ -1122,13 +1165,26 @@ def aj(request, p, r, j):  # Альфа, один проект
 
             d = date.today().replace(day=15)
             for i in range(12):
+#                color = "white"
+#                if mj_outside(d, project):
+#                    color = "lightgrey"
+#                    if delta[i+1] < 0:
+#                        color = "#B266FF"
+#                elif delta[i+1] < 0:
+#                    color = "pink"
+                    
                 color = "white"
                 if mj_outside(d, project):
                     color = "lightgrey"
                     if delta[i+1] < 0:
                         color = "#B266FF"
                 elif delta[i+1] < 0:
-                    color = "pink"
+                    color = "pink"                        
+                elif a_w3[i]>0:
+                    color = "lightblue"    
+                    
+                    
+                    
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                     "up": up(
@@ -1217,10 +1273,6 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
 
     roles = Role.objects.all()
     for role in roles:
-        # diff = rj_dif_(None,role, project)
-        # people_rr = people_of_rr(role)
-        # people_rv = people_of_rv(role)
-
         delta = rj_delta_(role, project)
 
         a_w2 = [0] * 12

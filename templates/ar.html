@@ -78,15 +78,13 @@
   <form id="f20"  method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='ar'>
-<input type = hidden name="id" value='{{id}}'>
-<input type = hidden name="r" value='{{r}}'>
   <button type="submit" class="button3">Сохранить изменения</button></form>
 {%  include 'script2.html'  %}
 
 
 
 
-    </td></tr></tbody>
+    </td></tr>
       </table>
 </div>
     </td></tr>
@@ -96,7 +94,7 @@
 
             <div class="table-container">
 
-        <table border=2 width=100% class="balance"
+        <table border=2 width=100% 
                style="position:relative;top=0;background-color:white;"><thead>
             <tr><th colspan=13>
          <a href="/ur/0/{{r}}/0/" style="color:white;">
