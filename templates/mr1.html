@@ -17,10 +17,11 @@
   <td>{{t}}</td>
 
 {% else %}
-  <td class="good" key="{{t.link}}" >
+<td style="background-color:{{t.color}};" class="good" key="{{t.link}}" >
 
 
-{{t.title}}
+
+{{t.val}}
       {% if t.fire %}
 <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
 
@@ -36,11 +37,11 @@
 <tr><td colspan=13 style="text-align:center;">
   <form id="f10" method="POST">
   {% csrf_token %}
-            <input type = hidden name="html" value='mr1'>
-<input type = hidden name="r" value='{{r}}'>
+            <input type = hidden name="html" value=''>
+
   <button type="submit" class="button3">Сохранить изменения</button>
 </form>
-{%  include 'script4.html'  %}
+{%  include 'script3.html'  %}
 
 </td></tr>
       </table>

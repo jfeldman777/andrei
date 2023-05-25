@@ -1287,7 +1287,35 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
     moon12["id"] = 0
     return render(request, 'mmr.html', moon12)
 
+def sm(request):
+    html=""
+    id = 1
+    r=1
+    p=1
+    j=1
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = Form(request.POST)
+        if form.is_valid():
+            html = request.POST.get('html')
+            for k, v in request.POST.items():
 
+                if '.' in k:
+                    p, r, j, d = k.split('.')
+
+                    try:
+                        role = Role.objects.get(id=r)
+                        person = UserProfile.objects.get(id=p)
+
+                        tr(person, role, d, v)
+                    except:
+                        pass
+        else:
+            print(form.errors)
+    if html=="":
+        return mr1(request, p,r,j)
+    return mrom(request)  # s
+    
 #########################################################################Альфа, один ресурс, все проекты
 def smr(request):  # доступность
     id = 1
@@ -1319,6 +1347,9 @@ def smr(request):  # доступность
 
 def smrom(request):  # Доступность
     id = 1
+    r=1
+    p=1
+    j=1
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
         form = Form(request.POST)
@@ -1436,7 +1467,7 @@ def mr1(request, p, r, j):  # максимальна доступность од
     moon12 = moon()
     dif14 = []
     dif15 = []
-    print(p,r,j)
+
     try:
         role = Role.objects.filter(id=r)[0]
     except:
@@ -1452,9 +1483,9 @@ def mr1(request, p, r, j):  # максимальна доступность од
         dif100 = [0] * 12
         da = date.today().replace(day=15)
         for i in range(12):
-            dif100[i] = {"link": f"{person.id}.{role.id}.0.{da.year}-{da.month}-15",
+            dif100[i] = {"link": f"{person.id}.{r}.0.{da.year}-{da.month}-15",
                          "fire": is100[i],
-                         "title": dif[i]}  # 9898
+                         "val": dif[i]}  # 9898
             da = inc(da)
         dif14.append([person.fio] + dif100)  ######################
 
@@ -1489,7 +1520,7 @@ def mrom(request):  # Максимальная доступнасть по вс�
     for role in roles:
         p9 = role.title
         people_rr = people_of_rr(role)
-        people_rv = people_of_rv(role)
+
         px = {"val": role.title, "r": role.id}  #######################
         for person in people_rr:
             is100 = p_101(person)
