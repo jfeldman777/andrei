@@ -1388,8 +1388,12 @@ def mr2(request, p, r, j):  # максимальна доступность од
     moon12 = moon()
     dif14 = []
     dif15 = []
-
-    role = Role.objects.get(id=r)
+    try:
+        role = Role.objects.filter(id=r)[0]
+    except:
+        role = None
+    
+    
     people_rr = people_of_rr(role)
 
     for person in people_rr:
@@ -1430,7 +1434,11 @@ def mr1(request, p, r, j):  # максимальна доступность од
     dif14 = []
     dif15 = []
     print(p,r,j)
-    role = Role.objects.get(id=r)
+    try:
+        role = Role.objects.filter(id=r)[0]
+    except:
+        role= None
+    
     people_rr = people_of_rr(role)
     people_rv = people_of_rv(role)
 
