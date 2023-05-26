@@ -6,7 +6,7 @@ __pycache__/
 # Local development settings
 .env
 *db.qlite3
-*db.sqlite3
+db.sqlite3
 
 # Logs and debug files
 logs/
