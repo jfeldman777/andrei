@@ -129,8 +129,12 @@ def people_of_rv(role):
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
     pps = pp1.union(pp2)
     ppl = sorted(list(pps),key = lambda x: x.fio)
-    ou = UserProfile.objects.filter(id=11)[0]
-    ov = UserProfile.objects.filter(id=10)[0]
+    try:    
+        ou = UserProfile.objects.filter(id=11)[0]
+        ov = UserProfile.objects.filter(id=10)[0]
+    except:
+        ou=None
+        ov=None
     return ppl+[ou,ov]
 
 
@@ -173,8 +177,11 @@ def pr_dif_(p, r):
     c = [0] * 12
     a = pr_task_(p, r)
     b = pr_isfree_(p, r)
-    for i in range(12):
-        c[i] = b[i] - a[i]
+    try:
+        for i in range(12):
+            c[i] = b[i] - a[i]
+    except:
+        return None
     return c
 
 
@@ -283,6 +290,8 @@ def pr_isfree_(person, role):
     res = [0] * 12
     d = date.today().replace(day=15)  # .replace(year=y).replace(month=m).replace(day=15)
     t = -1
+    if person == None:
+        return None
     if person.role == role:
         t = 100
     elif person.res.filter(id=role.id).exists():
@@ -470,10 +479,16 @@ def ujr(request, p, r, j):
     dem_rj = rj_load_(role, project)  # ----------------
 
     for person in people:
+        if person == None:
+            break
         b_w3 = [0] * 12
         a_w3 = prj_task_(person, role, project)
         diff = pr_dif_(person, role)
         d = date.today().replace(day=15)
+        try:
+            p = person.id
+        except:
+            p = 0
         for i in range(12):
             color = "white"
             if mj_outside(d, project):
@@ -484,11 +499,15 @@ def ujr(request, p, r, j):
                 color = "pink"
             elif a_w3[i]>0:
                 color = "lightblue"
+            try:
+                df = diff[i]
+            except:
+                df = 0
             b_w3[i] = {
-                "link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
+                "link": f"{p}.{r}.{j}.{d.year}-{d.month}-15",
                 "up": up(
                     max(-delta[i], 0)
-                    , diff[i]),
+                    , df),
                 "val": a_w3[i],
                 "color": color
 
@@ -657,6 +676,8 @@ def djr(request, p, r, j):
     w2 = a_w2
 
     for person in people_rv:
+        if person == None:
+            break
         b_w3 = [0] * 12
         a_w3 = prj_task_(person, role, project)
         diff = pr_dif_(person, role)
@@ -674,14 +695,18 @@ def djr(request, p, r, j):
                 color = "lightblue"
                 
                 
-                
-                
+            try:
+                p = person.id
+                df = diff[i]
+            except:
+                p = 0
+                df = 0
                 
             b_w3[i] = {
-                "link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
+                "link": f"{p}.{r}.{j}.{d.year}-{d.month}-15",
                 "up": up(
                     max(-delta[i], 0)
-                    , diff[i]),
+                    , df),
                 "val": a_w3[i],
                 "color": color
 
@@ -753,6 +778,8 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
     delta = ['Дельта'] + rj_delta_(role, project)
 
     for person in people_rv:
+        if person == None:
+            break
         b_w3 = [0] * 12
         a_w3 = prj_task_(person, role, project)
         diff = pr_dif_(person, role)
@@ -1229,7 +1256,8 @@ def aj(request, p, r, j):  # Альфа, один проект
 
 def mmjr(request, p, r, j):  # Потребность на малом экране
     person, role, project = get_prj(-1, r, j)
-
+    if role == None:
+        return alf(request)
     w2 = []
     moon12 = moon()
 
@@ -1246,7 +1274,7 @@ def mmjr(request, p, r, j):  # Потребность на малом экран
         elif dem_rj[i]>0:
             color = "lightblue"
         a_w2[i] = {
-            "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
+            "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
 
             "color": color
