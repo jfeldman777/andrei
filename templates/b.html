@@ -10,15 +10,24 @@
         <tr><th>
           проект\ресурс</th>
           {% for t in txy %}
-<th><a href="{{t.link}}"  style="color:white;">
+<th><a href="{{t.link}}"  style="color:white;" class="br">
   {{t.val}}
 </th>
       {% endfor %}</tr></thead><tbody>
       {% for xy in tab %}
 <tr>
   {% for x in xy %}
-  <td  style="background-color:{{x.color}};" ><a href="{{x.link}}">
-{{x.val}}</a>
+    
+    {% if forloop.first %}
+      <td  style="background-color:{{x.color}};" ><a href="{{x.link}}" class="bj">
+    {%  else %}
+    
+  <td  style="background-color:{{x.color}};" ><a href="{{x.link}}" class="brj">
+      {% endif %}
+{{x.val}}
+      
+      </a>
+      
   </td>
   {% endfor %}
     </tr>

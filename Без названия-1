@@ -1,0 +1,27 @@
+from django import forms
+from .models import Project
+
+class ProjectForm(forms.ModelForm):
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'datepicker'}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'datepicker'}))
+
+    class Meta:
+        model = Project
+        fields = ['id', 'title', 'general', 'start_date', 'end_date']
+        labels = {
+            'id': 'Project ID',
+            'title': 'Project Title',
+            'general': 'General Information',
+            'start_date': 'Start Date',
+            'end_date': 'End Date',
+        }
+from django import forms
+
+class ProjectForm(forms.ModelForm):
+    start_date = forms.DateField(widget=forms.SelectDateWidget)
+    end_date = forms.DateField(widget=forms.SelectDateWidget)
+    title = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'size': '50'}))
+
+    class Meta:
+        model = Project
+        fields = ['id', 'title', 'general', 'start_date', 'end_date']
