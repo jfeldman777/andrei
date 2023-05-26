@@ -13,21 +13,21 @@
         <tr>
         {% for t in dem %}
 
-        <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color: {{t.color}}">
+        <td class="good2" key="{{t.link}}" title="{{t.up}}" style="background-color: {{t.color}}">
       {{t.val}}
       </td>
 {% endfor %}
 </tr>        {% endfor %}
 <tr style="text-align:center;">
   <td colspan=13 style="text-align:center;">
-  <form id="f10" method="POST"  style="text-align:center;">
+  <form id="f20" method="POST"  style="text-align:center;">
   {% csrf_token %}
             <input type = hidden name="html" value='mmj'>
 <div style="text-align:center;">
   <button type="submit" class="button3"  disabled="true">Сохранить изменения</button>
 </div>
 </form>
-{%  include 'script.html'  %}
+{%  include 'script2.html'  %}
     </td></tr>
         </table>
 

@@ -125,15 +125,21 @@ def get_prj(p, r, j):
 
 
 def people_of_rv(role):
-    pp1 = set(UserProfile.objects.filter(Q(role=role)))
-    pp2 = set(UserProfile.objects.filter(Q(res=role)))
-    return pp1.union(pp2)
+    pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
+    pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
+    pps = pp1.union(pp2)
+    ppl = sorted(list(pps),key = lambda x: x.fio)
+    ou = UserProfile.objects.filter(id=11)[0]
+    ov = UserProfile.objects.filter(id=10)[0]
+    return ppl+[ou,ov]
 
 
 def people_of_rr(role):
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
-    return pp1.union(pp2)
+    pps = pp1.union(pp2)
+    ppl = sorted(list(pps),key = lambda x: x.fio)
+    return ppl
 
 
 def prm_isfree_(p, r, y, m):
@@ -188,7 +194,7 @@ def pr_task_(person, role):
 
 def vacancia(role, project):
     try:
-        person = UserProfile.objects.filter(id=11)[0]
+        person = UserProfile.objects.filter(id=10)[0]
     except:
         person = None    
     return prj_task_(person, role, project)
@@ -196,7 +202,7 @@ def vacancia(role, project):
 
 def outsrc(role, project): 
     try:
-        person = UserProfile.objects.filter(id=10)[0]
+        person = UserProfile.objects.filter(id=11)[0]
     except:
         person = None
     return prj_task_(person, role, project)
@@ -344,8 +350,12 @@ def date12():
 
 
 def atest(request):
-    project = Project.objects.get(id=2)
-    print (project)
+    role=2
+    pp1 = set(UserProfile.objects.filter(Q(role=role)))
+    pp2 = set(UserProfile.objects.filter(Q(res=role)))
+    pps = pp1.union(pp2)
+    ppl = sorted(list(pps),key = lambda x: x.fio)    
+    print (ppl)
     return render(request, 'a_test.html')
 
 
@@ -652,14 +662,7 @@ def djr(request, p, r, j):
         diff = pr_dif_(person, role)
         d = date.today().replace(day=15)
         for i in range(12):
-#            color = "white"
-#            if mj_outside(d, project):
-#                color = "lightgrey"
-#                if delta[i] < 0:
-#                    color = "#B266FF"
-#            elif delta[i] < 0:
-#                color = "pink"
-#                
+       
             color = "white"
             if mj_outside(d, project):
                 color = "lightgrey"
@@ -1176,14 +1179,6 @@ def aj(request, p, r, j):  # Альфа, один проект
 
             d = date.today().replace(day=15)
             for i in range(12):
-#                color = "white"
-#                if mj_outside(d, project):
-#                    color = "lightgrey"
-#                    if delta[i+1] < 0:
-#                        color = "#B266FF"
-#                elif delta[i+1] < 0:
-#                    color = "pink"
-                    
                 color = "white"
                 if mj_outside(d, project):
                     color = "lightgrey"
@@ -1238,32 +1233,26 @@ def mmjr(request, p, r, j):  # Потребность на малом экран
     w2 = []
     moon12 = moon()
 
-    roles = Role.objects.all()
-    for role in roles:
+    delta = rj_delta_(role, project)
 
-        people_rr = people_of_rr(role)
-        people_rv = people_of_rv(role)
+    a_w2 = [0] * 12
+    dem_rj = rj_load_(role, project)  # ----------------
 
-        delta = rj_delta_(role, project)
+    d = date.today().replace(day=15)
+    for i in range(12):
+        color = "white"
+        if mj_outside(d, project):
+            color = "lightgrey"
+        elif dem_rj[i]>0:
+            color = "lightblue"
+        a_w2[i] = {
+            "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
+            "val": dem_rj[i],
 
-        a_w2 = [0] * 12
-        dem_rj = rj_load_(role, project)  # ----------------
-
-        d = date.today().replace(day=15)
-        for i in range(12):
-            color = "white"
-            if mj_outside(d, project):
-                color = "lightgrey"
-            elif dem_rj[i]>0:
-                color = "lightblue"
-            a_w2[i] = {
-                "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
-                "val": dem_rj[i],
-
-                "color": color
-            }
-            d = inc(d)
-        w2.append([{"val": role.title}] + a_w2)
+            "color": color
+        }
+        d = inc(d)
+    w2.append([{"val": role.title}] + a_w2)
 
     moon12["w2"] = w2
 
@@ -1271,7 +1260,7 @@ def mmjr(request, p, r, j):  # Потребность на малом экран
 
     moon12["project"] = project
     moon12["j"] = j
-    moon12["r"] = 0
+    moon12["r"] = r
     moon12["id"] = j
     return render(request, 'mmjr.html', moon12)
 
@@ -1281,7 +1270,7 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
 
     w2 = []
     moon12 = moon()
-
+    
     roles = Role.objects.all()
     for role in roles:
         delta = rj_delta_(role, project)
@@ -1322,12 +1311,8 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
     w2 = []
     moon12 = moon()
 
-    roles = Role.objects.all()
-    for role in roles:
-#        diff = rj_dif_(person,role, project)
-        people_rr = people_of_rr(role)
-        people_rv = people_of_rv(role)
-
+    projects = Project.objects.all()
+    for project in projects:
         delta = rj_delta_(role, project)
 
         a_w2 = [0] * 12
@@ -1341,21 +1326,21 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
             elif dem_rj[i]>0:
                 color = "lightblue"
             a_w2[i] = {
-                "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
+                "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
                 "color": color
             }
             d = inc(d)
-        w2.append([{"val": role.title}] + a_w2)
+        w2.append([{"val": project.title}] + a_w2)
 
     moon12["w2"] = w2
 
     moon12["role"] = role
 
     moon12["project"] = project
-    moon12["j"] = 0
-    moon12["r"] = 0
-    moon12["id"] = 0
+    moon12["j"] = j
+    moon12["r"] = r
+    moon12["id"] = j
     return render(request, 'mmr.html', moon12)
 
 def sm(request):
