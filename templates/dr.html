@@ -10,10 +10,10 @@
   <tr style="text-align:center;"><td  width=50%>
       <div class="table-container-2">
 
-    <table border=2 style="position:relative;top=0;background-color:white;" class="balance"
+    <table border=2 style="position:relative;top:0;background-color:white;" class="balance"
       width=100% class=in><thead>
         <tr><th colspan=13>Дельта</th></tr><tr><th>Проект</th>
-{% include 'moon.html' %}</thead><tbody>
+{% include 'moon.html' %}
 {% for dem in w1 %}
 <tr>
 {% for t in dem %}
@@ -38,7 +38,7 @@
     </div>
   </td>
     <td width=50%> <div class="table-container-2">
-      <table border=2 width=100% style="position:relative;top=0;background-color:white;"
+      <table border=2 width=100% style="position:relative;top:0;background-color:white;"
       class=in><thead>
           <tr><th colspan=13>
                   Потребность
@@ -71,7 +71,7 @@
   <form id="f20"  method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='dr'>
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button></form>
+  <button type="submit" class="button3 fixed-button2"  disabled="true">Сохранить изменения</button></form>
 {%  include 'script2.html'  %}
 
 
@@ -87,7 +87,7 @@
       <td width=50%>
 
           <div class="table-container">
-        <table border=2 width=100% style="position:relative;top=0;background-color:white;" class=in><thead>
+        <table border=2 width=100% style="position:relative;top:0;background-color:white;" class=in><thead>
             <tr><th colspan=13>
                 
                      <a href="/ur/0/{{r}}/0/" style="color:white;">
@@ -113,32 +113,35 @@
           <form id="f10" method="POST">
           {% csrf_token %}
                     <input type = hidden name="html" value='dr'>
-          <button type="submit" class="button3"  disabled="true"> Сохранить изменения</button>
+          <button type="submit" class="button3 fixed-button1"  disabled="true"> Сохранить изменения</button>
         </form>
         {%  include 'script.html'  %}
             </td></tr>
 </tbody>
         </table></div>
 
-      <td  width=50%>    <div class="table-container">
-      <table border=2 style="position:relative;top=0;background-color:white;"  width=100% class="dif in" ><thead>
+      <td  width=50%>  
+          <div class="table-container">
+      <table border=2 style="position:relative;top:0;background-color:white;"  width=100% class="dif in" >
+        <thead>
           <tr><th colspan=13>Ресурсы (остаточная доступность)<th></tr><tr><th>ФИО
-{% include 'moon.html' %}</thead><tbody>
+{% include 'moon.html' %}
+</thead><tbody>
 {% for tt in w4 %}
 <tr>
 {% for t in tt %}
   <td>
 {{t}}
-
+</td>
 {% endfor %}
 
 </tr>
 
 {% endfor %}
 </tbody>
-      </table></div>
+      </table><
+      /div>    
     </td>
-
     </tr>
   </table>
     {% include 'js.html' %}

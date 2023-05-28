@@ -5,42 +5,52 @@
 {% include 'menu.html' %}
 
 <h3 style="text-align:center;">Проекты</h3>
-<table border="2" cellspacing="0" cellpadding="5"
-style="position:relative;text-align: center; background-color:#FFF;" ><thead>
-      <tr>
-        <th>Руководители проектов</th><th>проекты</th><th>потребность в ресурсах</th>
-<th>баланс и назначения</th><th>Дельта</th>
-      </tr>
+<table border="2" cellspacing="0" cellpadding="5" style="position:relative;text-align: center; background-color:#FFF;">
+  <thead>
+    <tr>
+      <th>Руководители проектов</th>
+      <th>проекты</th>
+      <th>потребность в ресурсах</th>
+      <th>баланс </th>
+      <th>дельта </th>
+      <th>назначения</th>
+    </tr>
 
-      <tr>
-        {% for cell in data %}
-        <td>
+    <tr>
+      {% for cell in data %}
+      <td>
 
-          {{ cell.name }}
+        {{ cell.name }}
 
-        </td>
-        <td style="text-align: center; cell-padding:3px;">
+      </td>
+      <td style="text-align: center; padding:3px;">
 
-          {{ cell.project }}
+        {{ cell.project }}
 
-<td style="text-align: center; ">
-  <a href="/mmj/0/0/{{cell.j}}">
-изменить
-</a>
-</td>
+      <td style="text-align: center; ">
+        <a href="/mmj/0/0/{{cell.j}}">
+          изменить
+        </a>
+      </td>
 
-<td style="text-align: center; ">
-      <a href="/aj/0/0/{{cell.j}}">
-смотреть
-</a>
-</td>
-                              <td style="text-align: center; ">
-      <a href="/dj/0/0/{{cell.j}}">
-смотреть
-</a>
-</td>
-      </tr>
-        {% endfor %}
+      <td style="text-align: center; ">
+        <a href="/aj/0/0/{{cell.j}}">
+          смотреть
+        </a>
+      </td>
+
+      <td style="text-align: center; ">
+        <a href="/dj/0/0/{{cell.j}}">
+          смотреть
+        </a>
+      </td>
+        <td style="text-align: center; ">
+        <a href="/uj/0/0/{{cell.j}}">
+          изменить
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
 </table>
 
 

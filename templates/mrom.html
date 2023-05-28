@@ -5,50 +5,56 @@
 {% include 'menu.html' %}
 
 <h3 style="text-align: center;">Ресурсы (максимальная доступность)</h3>
-      <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" ><thead>
+<table border=2 style="position:relative;top:0;text-align:center;" width=100% class="dif">
+  <thead>
 
-            <tr><th>ФИО
+    <tr>
+      <th>ФИО
 
-{% include 'moon.html' %}
-{% for tt in dif14 %}
+        {% include 'moon.html' %}
+        {% for tt in dif14 %}
 
-<tr>
-{% for t in tt %}
-{% if forloop.first %}
-
-
-{% if t|negative %}{% else %}
-<td colspan=13><a href="/mr1/0/{{t.r}}/0/" class="mrom">
-    {{t.val}}</a>
-    </td></tr><tr>
-  {% endif %}
+    <tr>
+      {% for t in tt %}
+      {% if forloop.first %}
 
 
-{% else %}
-<td style="background-color:{{t.color}};" class="good" key="{{t.link}}" >
-
-{{t.val}}{% if t.fire %}
-<img src="{% static 'fire2.png' %}" alt="Icon" width=16>
-
-                {% endif%}
-                </td>
-{% endif %}
-{% endfor %}
-</tr>
-{% endfor %}
-<tr><td colspan=13 style="text-align:center;">
-  <form id="f10" method="POST">
-  {% csrf_token %}
-<input type = hidden name="html" value='mrom'>
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button>
-</form>
-{%  include 'script3.html'  %}
+      {% if t|negative %}{% else %}
+      <td colspan=13><a href="/mr1/0/{{t.r}}/0/" class="mrom">
+          {{t.val}}</a>
+      </td>
+    </tr>
+    <tr>
+      {% endif %}
 
 
-    </td></tr>
-      </table>
+      {% else %}
+      <td style="background-color:{{t.color}};" class="good" key="{{t.link}}">
+
+        {{t.val}}{% if t.fire %}
+        <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
+
+        {% endif%}
+      </td>
+      {% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan=13 style="text-align:center;">
+        <form id="f10" method="POST">
+          {% csrf_token %}
+          <input type=hidden name="html" value='mrom'>
+          <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
+        </form>
+        {% include 'script3.html' %}
+
+
+      </td>
+    </tr>
+</table>
 
 <!--<a href="/mrom/" style="position:relative;">Все ресурсы максимальные</a>-->
 
-    {% include 'js.html' %}
+{% include 'js.html' %}
 {% endblock %}

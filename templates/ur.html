@@ -4,7 +4,7 @@
 {% include 'scroll.html' %}
   <h3 style="text-align:center;">Ресурс {{role}}</h3>
 
-        <table border=2 width=100% style="position:relative;top=0;background-color:white;text-align:center" class=in><thead>
+        <table border=2 width=100% style="position:relative;top:0;background-color:white;text-align:center" class=in><thead>
             <tr><th colspan=13>
                  <a href="/dr/0/{{r}}/0/" style="color:white">
                 Загрузки
@@ -33,7 +33,7 @@
           <form id="f10"  method="POST">
           {% csrf_token %}
                     <input type = hidden name="html" value='ur'>
-          <button type="submit" class="button3"  disabled="true"> Сохранить изменения</button>
+          <button type="submit" class="button3 fixed-button1"  disabled="true"> Сохранить изменения</button>
         </form>
         {%  include 'script.html'  %}
             </td></tr>

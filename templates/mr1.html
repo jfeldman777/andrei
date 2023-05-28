@@ -5,46 +5,54 @@
 {% include 'menu.html' %}
 <h3>{{role}}</h3>
 
-      <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" ><thead>
-          <tr><th colspan=13>Ресурсный пул (максимальная доступность)</th></tr><tr><th rowspan=2>ФИО</th></tr>
-{% include 'moon.html' %}
-{% for tt in dif14 %}
-<tr>
-{% for t in tt %}
+<table border=2 style="position:relative;top:0;text-align:center;" width=100% class="dif">
+  <thead>
+    <tr>
+      <th colspan=13>Ресурсный пул (максимальная доступность)</th>
+    </tr>
+    <tr>
+      <th rowspan=2>ФИО</th>
+    </tr>
+    {% include 'moon.html' %}
+    {% for tt in dif14 %}
+    <tr>
+      {% for t in tt %}
 
-{% if forloop.first %}
+      {% if forloop.first %}
 
-  <td>{{t}}</td>
+      <td>{{t}}</td>
 
-{% else %}
-<td style="background-color:{{t.color}};" class="good" key="{{t.link}}" >
+      {% else %}
+      <td style="background-color:{{t.color}};" class="good" key="{{t.link}}">
 
 
 
-{{t.val}}
-      {% if t.fire %}
-<img src="{% static 'fire2.png' %}" alt="Icon" width=16>
+        {{t.val}}
+        {% if t.fire %}
+        <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
 
-                {% endif%}
-</td>
-{% endif %}
-{% endfor %}
+        {% endif%}
+      </td>
+      {% endif %}
+      {% endfor %}
 
-</tr>
+    </tr>
 
-{% endfor %}
+    {% endfor %}
 
-<tr><td colspan=13 style="text-align:center;">
-  <form id="f10" method="POST">
-  {% csrf_token %}
-            <input type = hidden name="html" value=''>
+    <tr>
+      <td colspan=13 style="text-align:center;">
+        <form id="f10" method="POST">
+          {% csrf_token %}
+          <input type=hidden name="html" value=''>
 
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button>
-</form>
-{%  include 'script3.html'  %}
+          <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
+        </form>
+        {% include 'script3.html' %}
 
-</td></tr>
-      </table>
+      </td>
+    </tr>
+</table>
 
-    {% include 'js.html' %}
+{% include 'js.html' %}
 {% endblock %}

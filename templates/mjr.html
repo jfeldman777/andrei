@@ -6,7 +6,7 @@
 
 <h3 style="text-align:center;">{{role}}</h3>
 
-      <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
+      <table border=2 style="position:relative;top:0;text-align:center;"  width=100% class="dif" >
           <tr><td colspan=13>Ресурсный пул (максимальная доступность)<td></tr><tr><td rowspan=2><b>ФИО</b></td></tr>
 {% include 'moon.html' %}
 {% for tt in dif14 %}
@@ -33,13 +33,13 @@
   {% csrf_token %}
             <input type = hidden name="html" value='mjr'>
 <input type = hidden name="r" value='{{r}}'>
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button>
+  <button type="submit" class="button3 fixed-button1"  disabled="true">Сохранить изменения</button>
 </form>
 {%  include 'script.html'  %}
 
 </td></tr>
       </table>
- <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
+ <table border=2 style="position:relative;top:0;text-align:center;"  width=100% class="dif" >
           <tr><td colspan=13>Ресурсный пул (оставшаяся доступность)<td></tr><tr><td rowspan=2><b>ФИО</b></td></tr>
 {% include 'moon.html' %}
 {% for tt in dif15 %}

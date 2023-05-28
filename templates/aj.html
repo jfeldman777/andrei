@@ -4,142 +4,188 @@
 {% include 'scroll.html' %}
 
 <table border=2 width=100%>
-<tr><td colspan=2><h3 style="text-align:center;">Все ресурсы - {{project}}</h3>
-  <td></tr>
-  <tr style="text-align:center;"><td  width=50%>
-        <div class="table-container">
-    <table border=2 style="position:relative;top=0;" class="balance"
-           width=100% ><thead><tr>
-        <th colspan=13>Балансировка</th></tr><tr><th>{{project}}
-{% include 'moon.html' %}
-{% for dem in w1 %}
-<tr>
-{% for t in dem %}
-{% if forloop.first %}
-{% if t|negative %}{% else %}
-<td colspan=13>{{t}}</td></tr><tr>
-  {% endif %}
-{% else %}
-<td>
-  {% if t|isstr:'Дельта' %}
-  <a href="/dj/0/0/{{j}}">{{t}}</a>
-  {% else %}
-  {{t}}
-  {% endif %}
-</td>
-      {% endif %}
-{% endfor %}
+  <tr>
+    <td colspan=2>
+      <h3 style="text-align:center;">Все ресурсы - {{project}}</h3>
+    <td>
+  </tr>
+  <tr style="text-align:center;">
+    <td width=50%>
+      <div class="table-container">
+        <table border=2 style="position:relative;top:0;" class="balance" width=100%>
+          <thead>
+            <tr>
+              <th colspan=13>Балансировка</th>
+            </tr>
+            <tr>
+              <th>{{project}}
+                {% include 'moon.html' %}
+                {% for dem in w1 %}
+            <tr>
+              {% for t in dem %}
+              {% if forloop.first %}
+              {% if t|negative %}{% else %}
+              <td colspan=13>{{t}}</td>
+            </tr>
+            <tr>
+              {% endif %}
+              {% else %}
+              <td>
+                {% if t|isstr:'Дельта' %}
+                <a href="/dj/0/0/{{j}}">{{t}}</a>
+                {% else %}
+                {{t}}
+                {% endif %}
+              </td>
+              {% endif %}
+              {% endfor %}
 
-</tr>
+            </tr>
 
-{% endfor %}</tbody>
-    </table></div>
-  </td>
-    <td width=50%> <div class="table-container">
-      <table border=2 width=100% style="position:relative;top=0;" ><thead>
-      <tr>
-          <th colspan=13 >
-          <a href="/mmj/{{p}}/{{r}}/{{j}}" style="color:white;">Потребность</a>
-          <th></tr><tr><th>{{project}}</th>
+            {% endfor %}</tbody>
+        </table>
+      </div>
+    </td>
+    <td width=50%>
+      <div class="table-container">
+        <table border=2 width=100% style="position:relative;top:0;">
+          <thead>
+            <tr>
+              <th colspan=13>
+                <a href="/mmj/{{p}}/{{r}}/{{j}}" style="color:white;">Потребность</a>
+              <th>
+            </tr>
+            <tr>
+              <th>{{project}}</th>
 
 
 
 
-                  {% include 'moon.html' %}
-        {% for dem in w2 %}
-        <tr>
-        {% for t in dem %}
-        <td class="good2 " key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
-{{t.val}}
-</td>
-{% endfor %}
-</tr>        {% endfor %}
-<tr><td colspan=13 style="text-align:center;">
-  <form id="f20"  method="POST">
-  {% csrf_token %}
-            <input type = hidden name="html" value='aj'>
-  <button type="submit" class="button3"  disabled="true"> Сохранить изменения</button>
-</form>
-{%  include 'script2.html'  %}
+              {% include 'moon.html' %}
+              {% for dem in w2 %}
+            <tr>
+              {% for t in dem %}
+              <td class="good2 " key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
+                {{t.val}}
+              </td>
+              {% endfor %}
+            </tr> {% endfor %}
+            <tr>
+              <td colspan=13 style="text-align:center;">
+                <form id="f20" method="POST">
+                  {% csrf_token %}
+                  <input type=hidden name="html" value='aj'>
+                  <button type="submit" class="button3 fixed-button2" disabled="true"> Сохранить изменения</button>
+                </form>
+                {% include 'script2.html' %}
 
-</td></tr>
+              </td>
+            </tr>
 
+            </tbody>
+        </table>
+      </div>
+    </td>
+  </tr>
+  <tr style="text-align:center;">
+
+    <td width=50%>
+      <div class="table-container">
+        <table border=2 width=100% style="position:relative;top:0;">
+          <thead>
+            <tr>
+              <th colspan=13>
+
+                <a href="/uj/0/0/{{j}}" style="color:white;">
+                  Загрузки</a>
+
+
+
+              </th>
+            </tr>
+            <tr>
+              <th>{{project}}
+                {% include 'moon.html' %}
+
+
+                {% for tt in w3 %}
+            <tr>
+              {% for t in tt %}
+              {% if forloop.first %}
+              {% if t|negative %}
+
+              {% else %}
+              <td colspan=13>
+                {{t}}</td>
+            </tr>
+            <tr>
+              {% endif %}
+              {% else %}
+
+
+              <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+                {{t.val}}
+              </td>
+              {% endif %}
+              {% endfor %}
+            </tr>
+            {% endfor %}<tr>
+              <td colspan=13 style="text-align:center;">
+                <form id="f10" method="POST">
+                  {% csrf_token %}
+                  <input type=hidden name="html" value='aj'>
+                  <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
+                </form>
+                {% include 'script.html' %}
+              </td>
+            </tr>
+
+        </table>
+      </div>
+    </td>
+    <td width=50%>
+      <div class="table-container">
+        <table border=2 style="position:relative;top:0;" width=100% class="dif">
+          <thead>
+            <tr>
+              <th colspan=13>Ресурсы (остаточная доступность)</th>
+            </tr>
+            <tr>
+              <th>ФИО
+                {% include 'moon.html' %}
+          </thead>
+          <tbody>
+            {% for tt in w4 %}
+            <tr>
+              {% for t in tt %}
+
+              {% if forloop.first %}
+              {% if t|negative %}
+
+              {% else %}
+              <td colspan=13>{{t}}</td>
+            </tr>
+            <tr>
+              {% endif %}
+              {% else %}
+              <td>
+                {{t}}
+              </td>
+              {% endif %}
+              {% endfor %}
+
+            </tr>
+
+            {% endfor %}
           </tbody>
-      </table>
-        </div>
-    </td></tr>
-    <tr style="text-align:center;">
-
-      <td width=50%>  <div class="table-container">
-        <table border=2 width=100% style="position:relative;top=0;"><thead>
-            <tr><th colspan=13>
-                
-            <a href="/uj/0/0/{{j}}" style="color:white;">
-              Загрузки</a>
-                
-                
-                
-                </th></tr><tr><th>{{project}}
-{% include 'moon.html' %}
-
-
-{% for tt in w3 %}
-<tr>
-{% for t in tt %}
-  {% if forloop.first %}
-{% if t|negative %}
-
-    {% else %}
-  <td colspan=13>
-      {{t}}</td></tr><tr>
-    {% endif %}
-  {% else %}
-
-
-  <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
-{{t.val}}
-</td>
-{% endif %}
-{% endfor %}</tr>
-            {% endfor %}<tr><td colspan=13 style="text-align:center;">
-              <form id="f10"  method="POST">
-  {% csrf_token %}
-                        <input type = hidden name="html" value='aj'>
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button></form>
-{%  include 'script.html'  %}
-            </td></tr>
-
-        </table></div>
-      </td>
-      <td  width=50%>  <div class="table-container">
-      <table border=2 style="position:relative;top=0;"  width=100% class="dif" ><thead>
-          <tr><th colspan=13>Ресурсы (остаточная доступность)</th></tr><tr><th>ФИО
-{% include 'moon.html' %}</thead><tbody>
-{% for tt in w4 %}
-<tr>
-{% for t in tt %}
-
-{% if forloop.first %}
-{% if t|negative %}
-
-{% else %}
-  <td colspan=13>{{t}}</td></tr><tr>
-{% endif %}
-{% else %}
-<td>
-{{t}}
-</td>
-{% endif %}
-{% endfor %}
-
-</tr>
-
-{% endfor %}</tbody>
-      </table></div>
+        </table>
+      </div>
     </td>
 
-    </tr></tbody>
-  </table></div>
-    {% include 'js.html' %}
+  </tr>
+  </tbody>
+</table>
+</div>
+{% include 'js.html' %}
 {% include 'menu.html' %}
 {% endblock %}

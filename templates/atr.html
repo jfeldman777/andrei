@@ -3,41 +3,61 @@
 {% block content %}
 {% include 'menu.html' %}
 <h3 style="text-align:center;">Ресурсы</h3>
-<table border="2" cellspacing="0" cellpadding="5"
-style="position:relative;text-align: center;" ><thead>
-      <tr><th>Руководители ресурсных пулов</th><th>ресурсы</th>
-        <th>доступность максимальная</th><th>баланс и назначения</th><th>доступность оставшаяся</th>
-      </tr>
+<table border="2" cellspacing="0" cellpadding="5" style="position:relative;text-align: center;">
+  <thead>
+    <tr>
+      <th>Руководители ресурсных пулов</th>
+      <th>ресурсы</th>
+      <th>доступность максимальная</th>
+      <th>доступность оставшаяся</th>
+      <th>баланс </th>
+      <th>дельта </th>
+      <th>назначения</th>
+  
+    </tr>
 
-      <tr >
-        {% for cell in data2 %}
+    <tr>
+      {% for cell in data2 %}
+      <td style="text-align: center; ">
+
+        {{ cell.name }}
+
+      </td>
+      <td style="text-align: center; ">
+
+        {{ cell.title }}
+
+      </td>
+      <td style="text-align: center; ">
+        <a href="/mr1/0/{{cell.r}}/0/">
+          изменить
+        </a>
+      </td>
+
+      <td style="text-align: center; ">
+        <a href="/mr2/0/{{cell.r}}/0/">
+          смотреть
+        </a>
+      </td>
+      <td style="text-align: center; ">
+        <a href="/ar/0/{{cell.r}}/0/">
+          смотреть
+        </a>
+      </td>
         <td style="text-align: center; ">
-
-          {{ cell.name }}
-
-        </td>
+        <a href="/dr/0/{{cell.r}}/0/">
+          смотреть
+        </a>
+      </td>
         <td style="text-align: center; ">
+        <a href="/ur/0/{{cell.r}}/0/">
+          изменить
+        </a>
+      </td>
 
-          {{ cell.title }}
 
-        </td>
-        <td style="text-align: center; ">
-          <a href="/mr1/0/{{cell.r}}/0/">
-        изменить
-</a>
-        </td>
-        <td style="text-align: center; ">
-  <a href="/ar/0/{{cell.r}}/0/">
-        смотреть
-</a>
-        </td>        <td style="text-align: center; ">
-          <a href="/mr2/0/{{cell.r}}/0/">
-        смотреть
-</a>
-        </td>
-
-      </tr>
-        {% endfor %}
+    </tr>
+    {% endfor %}
 </table>
 
 {% endblock %}

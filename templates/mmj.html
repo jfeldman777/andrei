@@ -6,7 +6,7 @@
 
 
 
-    <table border=2 style="position:relative;top=0;text-align:center;"  width=100% ><thead>
+    <table border=2 style="position:relative;top:0;text-align:center;"  width=100% ><thead>
         <tr><th colspan=13>Потребность</td></tr><th rowspan=2>{{project}}
         {% include 'moon.html' %}
         {% for dem in w2 %}
@@ -24,7 +24,7 @@
   {% csrf_token %}
             <input type = hidden name="html" value='mmj'>
 <div style="text-align:center;">
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button>
+  <button type="submit" class="button3 fixed-button2"  disabled="true">Сохранить изменения</button>
 </div>
 </form>
 {%  include 'script2.html'  %}

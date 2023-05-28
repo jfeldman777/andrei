@@ -1,60 +1,62 @@
 <script>
-$('td.good2').click(function() {
+const t2='td.good2'
+const f2='f20'
+const s2 = '/s2/'
 
-  var p = $(this).attr("key");
-  var originalValue = $(this).text();
-    
-    
-    
- var x = $.trim(originalValue) ;
+
+
+
+  $('td.good2').click(function () {
+
+    var p = $(this).attr("key");
+    var originalValue = $(this).text();
+
+    var x = $.trim(originalValue);
     if (x == '0') x = '';
-    
-    var ID = new Date().getTime();    
-  $(this).html('<input type="text" id='+ID+' size="1" maxlength="4" value="' + x + '">');
+
+    var ID = new Date().getTime();
+    $(this).html('<input type="text" id=' + ID + ' size="1" maxlength="4" value="' + x + '">');
 
     var element = document.getElementById(ID);
-        element.focus()
-    
-        
-      $(this).on('keypress', '#' + ID, function(event) {
-    if (event.which === 13) { // 13 соответствует клавише Enter
-      element.blur();
-    }
+    element.focus()
+
+
+    $(this).on('keypress', '#' + ID, function (event) {
+      if (event.which === 13) { // 13 соответствует клавише Enter
+        element.blur();
+      }
+    });
+
+
+
+
+    $('td input').focusout(function () {
+      var newValue = $(this).val();
+      $(this).parent().text(newValue + '@');
+
+      var form = document.getElementById("f20");
+      form.action = "/s2/"
+
+
+      button = form.querySelector(".button3");
+      button.disabled = false;
+
+      // Create a new hidden input element
+      var input = document.createElement('input');
+
+      input.type = 'hidden';
+      input.name = p;
+      input.value = newValue;
+      var cellWidth = $(this).clientWidth - 4;
+      var cellHeight = $(this).clientHeight - 2;
+
+      var container = $(this)
+      input.style.width = cellWidth + "px";
+      input.style.height = cellHeight + "px";
+      //Add the new input element to the form
+      form.appendChild(input);
+
+
+    });
   });
-    
-
-    
-
-  $('td input').focusout(function() {
-    var newValue = $(this).val();
-    $(this).parent().text(newValue+'@');
-
-    var form = document.getElementById("f20");
-        form.action = "/s2/"
-      
-      
-button = form.querySelector(".button3");
-      button.disabled = false;      
-
-    // Create a new hidden input element
-    var input = document.createElement('input');
-
-    input.type = 'hidden';
-    input.name = p;
-    input.value = newValue;
-    //
-    var cellWidth = $(this).clientWidth-4;
-    var cellHeight = $(this).clientHeight-2;
-
-    var container = $(this)
-    input.style.width = cellWidth + "px";
-    input.style.height = cellHeight + "px";
-    //Add the new input element to the form
-    form.appendChild(input);
-
-
-});
-});
-
-
 </script>

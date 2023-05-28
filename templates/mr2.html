@@ -5,30 +5,36 @@
 <h1>{{role}}</h1>
 
 
- <table border=2 style="position:relative;top=0;text-align:center;"  width=100% class="dif" >
-          <tr><td colspan=13>Ресурсный пул (оставшаяся доступность)</td></tr><tr><td rowspan=2>
-     <b>ФИО</b></td></tr>
-{% include 'moon.html' %}
-{% for tt in dif15 %}
-<tr>
-{% for t in tt %}
+<table border=2 style="position:relative;top:0;text-align:center;" width=100% class="dif">
+  <tr>
+    <td colspan=13>Ресурсный пул (оставшаяся доступность)</td>
+  </tr>
+  <tr>
+    <td rowspan=2>
+      <b>ФИО</b>
+    </td>
+  </tr>
+  {% include 'moon.html' %}
+  {% for tt in dif15 %}
+  <tr>
+    {% for t in tt %}
 
-{% if forloop.first %}
+    {% if forloop.first %}
 
-  <td>{{t}}</td>
+    <td>{{t}}</td>
 
-{% else %}
-  <td class="good" key="{{t.link}}" title="{{t.up}}">
-{{t.title}}
-</td>
-{% endif %}
-{% endfor %}
+    {% else %}
+    <td class="good" key="{{t.link}}" title="{{t.up}}">
+      {{t.title}}
+    </td>
+    {% endif %}
+    {% endfor %}
 
-</tr>
+  </tr>
 
-{% endfor %}
+  {% endfor %}
 
 </table>
 
-    {% include 'js.html' %}
+{% include 'js.html' %}
 {% endblock %}

@@ -2,45 +2,48 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'menu.html' %}
-<h3 style="text-align: center;">Проекты</h3>
-<div style=" top:50; width: 100%; align:center;   padding: 2px;">
-    <table border=2 style="position:relative;top=0;text-align:center;"  width=100% ><thead>
+<h3 style="text-align: center;">Портфель проектов</h3>
+<div style=" top:50; width: 100%; text-align:center;   padding: 2px;">
+  <table border=2 style="position:relative;top:0;text-align:center;" width=100%>
+    <thead>
 
-    <tr width=100% style="text-align: center;  padding: 5px;"><th colspan="17">Проекты</th></tr>
-<th style="text-align: center; ">РП</th>
-      <th style="text-align: center;  padding: 5px;" > <a href="/form/" style="color:white;">
+      <tr width=100% style="text-align: center;  padding: 5px;">
+        <th colspan="17">Проекты</th>
+      </tr>
+      <th style="text-align: center; ">РП</th>
+      <th style="text-align: center;  padding: 5px;"> <a href="/form/" style="color:white;">
           Название</a>
-        </th>
-      <th style="text-align: center;  padding: 5px;" >Начало</th>
-      <th style="text-align: center;  padding: 5px;" >Окончание</th>
-      <th style="text-align: center;  padding: 5px;" >Длит<br>(мес)</th>
+      </th>
+      <th style="text-align: center;  padding: 5px;">Начало</th>
+      <th style="text-align: center;  padding: 5px;">Окончание</th>
+      <th style="text-align: center;  padding: 5px;">Длит<br>(мес)</th>
 
-  {% include 'moon.html' %}
+      {% include 'moon.html' %}
 
 
-  {% for row in matrix %}
-    <tr style="text-align: center;  padding: 5px;">
+      {% for row in matrix %}
+      <tr style="text-align: center;  padding: 5px;">
         {% for cell in row %}
         {% if cell|isBool %}
-          <td class="{% if cell %}true{% else %}false{% endif %}">
-              {% if cell %}*{% else %}-{% endif %}
-          </td>
-      {% else %}
-        <td style="text-align: center; ">
-{% if cell|isObject %}
-            <a href="/form/{{cell.id}}/">
-
-
-             {{cell.title}}
-            </a>
+        <td class="{% if cell %}true{% else %}false{% endif %}">
+          {% if cell %}*{% else %}-{% endif %}
+        </td>
         {% else %}
+        <td style="text-align: center; ">
+          {% if cell|isObject %}
+          <a href="/form/{{cell.id}}/">
+
+
+            {{cell.title}}
+          </a>
+          {% else %}
           {{cell}}
-{% endif %}
-   </td>
-      {% endif %}
+          {% endif %}
+        </td>
+        {% endif %}
         {% endfor %}
       </tr>
-    {% endfor %}
+      {% endfor %}
   </table>
 
 </div>

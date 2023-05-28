@@ -2,38 +2,45 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-    <h3 style="text-align:center;">Проект {{project}} - Ресурс {{role}}</h3>
+<h3 style="text-align:center;">Проект {{project}} - Ресурс {{role}}</h3>
 
-        <table border=2 width=100% style="position:relative;top=0; text-align:center;">
-          <thead>
-            <tr><th colspan=13>
-                 <a href="/djr/0/{{r}}/{{j}}" style="color:white">
-                     Загрузки</a>
-                </th></tr><tr><th>ФИО
-{% include 'moon.html' %}
+<table border=2 width=100% style="position:relative;top:0; text-align:center;">
+  <thead>
+    <tr>
+      <th colspan=13>
+        <a href="/djr/0/{{r}}/{{j}}" style="color:white">
+          Загрузки</a>
+      </th>
+    </tr>
+    <tr>
+      <th>ФИО
+        {% include 'moon.html' %}
 
-{% for tt in w3 %}
-<tr>
-{% for t in tt %}
+        {% for tt in w3 %}
+    <tr>
+      {% for t in tt %}
 
 
 
 
-  <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
-  {{t.val}}
-</td>{% endfor %}</tr>
-{% endfor %}
-<tr height=20px>
-      <td colspan=13  style="text-align:center; vertical-align:top;padding=0;spacing:">
-  <form id="f10"  method="POST">
-  {% csrf_token %}
-            <input type = hidden name="html" value='ujr'>
+      <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
+        {{t.val}}
+      </td>{% endfor %}
+    </tr>
+    {% endfor %}
+    <tr height=20px>
+      <td colspan=13 style="text-align:center; vertical-align:top;padding:0;">
+        <form id="f10" method="POST">
+          {% csrf_token %}
+          <input type=hidden name="html" value='ujr'>
 
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button></form>
-{%  include 'script.html'  %}
-</td></tr>
-        </table>
-      
-    {% include 'js.html' %}
+          <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
+        </form>
+        {% include 'script.html' %}
+      </td>
+    </tr>
+</table>
+
+{% include 'js.html' %}
 {% include 'menu.html' %}
 {% endblock %}

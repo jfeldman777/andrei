@@ -658,7 +658,7 @@ def djr(request, p, r, j):
 
     a_w2 = [0] * 12
     dem_rj = rj_load_(role, project)  # ----------------
-    
+
     d = date.today().replace(day=15)
     for i in range(12):
         color="white"
@@ -683,7 +683,7 @@ def djr(request, p, r, j):
         diff = pr_dif_(person, role)
         d = date.today().replace(day=15)
         for i in range(12):
-       
+
             color = "white"
             if mj_outside(d, project):
                 color = "lightgrey"
@@ -693,7 +693,7 @@ def djr(request, p, r, j):
                 color = "pink"                        
             elif a_w3[i]>0:
                 color = "lightblue"
-                
+
                 
             try:
                 p = person.id
@@ -834,6 +834,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
 
 def ar(request, p, r, j):
     person, role, project = get_prj(-1, r, -1)
+
     people_rr = people_of_rr(role)
     people_rv = people_of_rv(role)
     w3 = []
@@ -866,28 +867,24 @@ def ar(request, p, r, j):
             elif dem_rj[i+2]>0:
                 color = "lightblue"
             a_w2[i + 1] = {"val": dem_rj[i + 2],
+                           "j": project.id,
+                           "r": role.id,
                            "color": color,
                            "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
-
-                           }  # 9898
+                           }
             d = inc(d)
         w2.append(a_w2)  # --------
 
         supp = ['Поставка'] + rj_task_(role, project)
         delta = ['Дельта'] + rj_delta_(role, project)
 
-
-
-
-
-
         p100 = project.title
         for person in people_rv:
+            diff = pr_dif_(person, role)
             b_w3 = [0] * 12
             a_w3 = prj_task_(person, role, project)
-            print(a_w3)
-            diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
+
             for i in range(12):
                 color = "white"
                 if mj_outside(d, project):
@@ -909,7 +906,6 @@ def ar(request, p, r, j):
                 }
                 ##########################################################################3333333
                 d = inc(d)
-
             c_w3 = [p100, {"val": person.fio}] + b_w3
             p100 = -1
             w3.append(c_w3)
@@ -927,7 +923,6 @@ def ar(request, p, r, j):
 
     moon12["project"] = project
     moon12["role"] = role
-
     moon12["r"] = r
     moon12["j"] = 0
     moon12["p"] = 0
@@ -996,14 +991,7 @@ def dr(request, p, r, j):
             d = date.today().replace(day=15)
 
             for i in range(12):
-#                color = "white"
-#                if mj_outside(d, project):
-#                    color = "lightgrey"
-#                    if delta[i] < 0:
-#                        color = "#B266FF"
-#                elif delta[i] < 0:
-#                    color = "pink"
-#                    
+               
                 color = "white"
                 if mj_outside(d, project):
                     color = "lightgrey"

@@ -3,112 +3,145 @@
 {% block content %}
 {% include 'scroll.html' %}
 <table border=2 width=100%>
-<tr><td colspan=2><h3  style="text-align:center;">{{project}} -
-  {{role}}
-</h3>
-  <tr style="text-align:center;"><td  width=50%> <div class="table-container-2">
-    <table border=2 style="position:relative;top=0;"  width=100% class="balance"><thead>
-        <tr><th colspan=13>Балансировка</th></tr><tr><th>---
-{% include 'moon.html' %}
-{% for tt in w1 %}
-<tr>
-{% for t in tt %}
-<td>
-  {% if t|isstr:'Дельта' %}
-  <a href="/djr/0/{{r}}/{{j}}/">{{t}}</a>
-  {% else %}
-  {{t}}
-  {% endif %}
-</td>
-{% endfor %}
+  <tr>
+    <td colspan=2>
+      <h3 style="text-align:center;">{{project}} -
+        {{role}}
+      </h3>
+  <tr style="text-align:center;">
+    <td width=50%>
+      <div class="table-container-2">
+        <table border=2 style="position:relative;top:0;" width=100% class="balance">
+          <thead>
+            <tr>
+              <th colspan=13>Балансировка</th>
+            </tr>
+            <tr>
+              <th>---
+                {% include 'moon.html' %}
+                {% for tt in w1 %}
+            <tr>
+              {% for t in tt %}
+              <td>
+                {% if t|isstr:'Дельта' %}
+                <a href="/djr/0/{{r}}/{{j}}/">{{t}}</a>
+                {% else %}
+                {{t}}
+                {% endif %}
+              </td>
+              {% endfor %}
 
-</tr>
+            </tr>
 
-{% endfor %}
-
-
-
-
-
-        </tbody>
-      </table></div>
-  </td>
-    <td width=50% style="vertical-align:top;"><div class="table-container-2">
-      <table border=2 width=100% style="position:relative;top=0;"><thead>
-        <tr><th colspan=13>
-          <a href="/mmjr/{{p}}/{{r}}/{{j}}" style="color:white;">Потребность</a>
-        </th></tr>
-        <tr>
-        {% include 'moon.html' %}
-        <tr>
-        {% for t in w2 %}
- <td class="good2" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
-
-          {{t.val}}
-</td>
-{% endfor %}
-
-</tr>
-<tr><td colspan=13 style="text-align:center;">
-  <form id="f20"  method="POST">
-  {% csrf_token %}
-      <input type = hidden name="html" value='ajr'>
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button>
-</form>
-{%  include 'script2.html'  %}
-
-</td></tr>
-
-        </table></div>
-
-    </td></tr>
-    <tr style="text-align:center;">
-
-      <td width=50%>
-         <div class="table-container">
-        <table border=2 width=100% style="position:relative;top=0;"><thead>
-            <tr><th colspan=13>
-              <a href="/ujr/0/{{r}}/{{j}}" style="color:white;">
-              Загрузки</a>
-            </th></tr><tr><th>ФИО
-{% include 'moon.html' %}
-
-{% for tt in w3 %}
-<tr>
-{% for t in tt %}
-
- <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
-  {{t.val}}
-</td>{% endfor %}</tr>
-{% endfor %}
-<tr><td colspan=13 style="text-align:center;">
+            {% endfor %}
 
 
-  <form id="f10"  method="POST">
-  {% csrf_token %}
-            <input type = hidden name="html" value='ajr'>
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button></form>
-{%  include 'script.html'  %}
-    </td></tr></tbody>
+
+
+
+            </tbody>
         </table>
-      </td>
-      <td  width=50% style="vertical-align:top;">     <div class="table-container">
-      <table border=2 style="position:relative;top=0;vertical-align:top;"
-       width=100% class="dif"><thead>
-          <tr><th colspan=13>Ресурсы (остаточная доступность)</th></tr><tr><th>ФИО
-{% include 'moon.html' %}
-{% for dem in w4 %}
-<tr>
-{% for t in dem %}
-<td>{{t}}</td>{% endfor %}
-</tr>
+      </div>
+    </td>
+    <td width=50% style="vertical-align:top;">
+      <div class="table-container-2">
+        <table border=2 width=100% style="position:relative;top:0;">
+          <thead>
+            <tr>
+              <th colspan=13>
+                <a href="/mmjr/{{p}}/{{r}}/{{j}}" style="color:white;">Потребность</a>
+              </th>
+            </tr>
+            <tr>
+              {% include 'moon.html' %}
+            <tr>
+              {% for t in w2 %}
+              <td class="good2" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
 
-{% endfor %}
-      </table>
+                {{t.val}}
+              </td>
+              {% endfor %}
+
+            </tr>
+            <tr>
+              <td colspan=13 style="text-align:center;">
+                <form id="f20" method="POST">
+                  {% csrf_token %}
+                  <input type=hidden name="html" value='ajr'>
+                  <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
+                </form>
+                {% include 'script2.html' %}
+
+              </td>
+            </tr>
+
+        </table>
+      </div>
+
+    </td>
+  </tr>
+  <tr style="text-align:center;">
+
+    <td width=50%>
+      <div class="table-container">
+        <table border=2 width=100% style="position:relative;top:0;">
+          <thead>
+            <tr>
+              <th colspan=13>
+                <a href="/ujr/0/{{r}}/{{j}}" style="color:white;">
+                  Загрузки</a>
+              </th>
+            </tr>
+            <tr>
+              <th>ФИО
+                {% include 'moon.html' %}
+
+                {% for tt in w3 %}
+            <tr>
+              {% for t in tt %}
+
+              <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+                {{t.val}}
+              </td>{% endfor %}
+            </tr>
+            {% endfor %}
+            <tr>
+              <td colspan=13 style="text-align:center;">
+
+
+                <form id="f10" method="POST">
+                  {% csrf_token %}
+                  <input type=hidden name="html" value='ajr'>
+                  <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
+                </form>
+                {% include 'script.html' %}
+              </td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+    <td width=50% style="vertical-align:top;">
+      <div class="table-container">
+        <table border=2 style="position:relative;top:0;vertical-align:top;" width=100% class="dif">
+          <thead>
+            <tr>
+              <th colspan=13>Ресурсы (остаточная доступность)</th>
+            </tr>
+            <tr>
+              <th>ФИО
+                {% include 'moon.html' %}
+                {% for dem in w4 %}
+            <tr>
+              {% for t in dem %}
+              <td>{{t}}</td>{% endfor %}
+            </tr>
+
+            {% endfor %}
+        </table>
     </td>
 
-    </tr>
-  </table>
-    {% include 'js.html' %}
+  </tr>
+</table>
+{% include 'js.html' %}
 {% include 'menu.html' %}
 {% endblock %}

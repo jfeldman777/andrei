@@ -4,38 +4,42 @@
 {% include 'menu.html' %}
 {% include 'js.html' %}
 <h2>Относительная нехватка ресурсов {{hh}} вперед</h2>
-<div style=" top:50; width: 100%; align:center;   padding: 2px;">
-    <table border=2 style="position:relative;top=0;text-align:center;"  width=100% >
-      <thead>
-        <tr><th>
+<div style=" top:50; width: 100%; text-align:center;   padding: 2px;">
+  <table border=2 style="position:relative;top:0;text-align:center;" width=100%>
+    <thead>
+      <tr>
+        <th>
           проект\ресурс</th>
-          {% for t in txy %}
-<th><a href="{{t.link}}"  style="color:white;" class="br">
-  {{t.val}}
-</th>
-      {% endfor %}</tr></thead><tbody>
+        {% for t in txy %}
+        <th><a href="{{t.link}}" style="color:white;" class="br">
+            {{t.val}}
+        </th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
       {% for xy in tab %}
-<tr>
-  {% for x in xy %}
-    
-    {% if forloop.first %}
-      <td  style="background-color:{{x.color}};" ><a href="{{x.link}}" class="bj">
-    {%  else %}
-    
-  <td  style="background-color:{{x.color}};" ><a href="{{x.link}}" class="brj">
-      {% endif %}
-{{x.val}}
-      
-      </a>
-      
-  </td>
-  {% endfor %}
-    </tr>
-{% endfor %}
-</tbody>
-      </table>
+      <tr>
+        {% for x in xy %}
 
-      </div>
+        {% if forloop.first %}
+        <td style="background-color:{{x.color}};"><a href="{{x.link}}" class="bj">
+            {% else %}
+
+        <td style="background-color:{{x.color}};"><a href="{{x.link}}" class="brj">
+            {% endif %}
+            {{x.val}}
+
+          </a>
+
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
 
 
 

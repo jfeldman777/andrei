@@ -5,7 +5,7 @@
 {% include 'menu.html' %}
 <h3 style="text-align:center;">Проект {{project}}</h3>
 
-        <table border=2 width=100% style="position:relative;top=0;text-align:center;">
+        <table border=2 width=100% style="position:relative;top:0;text-align:center;">
           <thead>
             <tr><th colspan=13>
                 <a href="/dj/0/0/{{j}}/" style="color:white">
@@ -25,7 +25,7 @@
     {% endif %}
   {% else %}
 
-  <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}}">
+  <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
     {{t.val}}
   </td>
 {% endif %} 
@@ -39,7 +39,7 @@
   <form id="f10"  method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='uj'>
-  <button type="submit" class="button3"  disabled="true">Сохранить изменения</button></form>
+  <button type="submit" class="button3 fixed-button1"  disabled="true">Сохранить изменения</button></form>
 {%  include 'script.html'  %}
 </td></tr>
         </table>
