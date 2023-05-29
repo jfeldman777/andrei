@@ -60,7 +60,16 @@
               </th>
             </tr>
             <tr>
-              <th>{{role}}
+              <th>
+                        <form id="f20" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='ar'>
+        <button type="submit" class="button3" disabled="true">Сохранить</button>
+      </form>
+      {% include 'script2.html' %}
+
+
+                  
                 {% include 'moon.html' %}
                 {% for dem in w2 %}
             <tr>
@@ -87,13 +96,6 @@
 
         </table>
       </div>
-      <form id="f20" method="POST">
-        {% csrf_token %}
-        <input type=hidden name="html" value='ar'>
-        <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
-      </form>
-      {% include 'script2.html' %}
-
 
 
 
@@ -109,14 +111,23 @@
         <table border=2 width=100% style="position:relative;top:0;background-color:white;">
           <thead>
             <tr>
+
               <th colspan=13>
                 <a href="/ur/0/{{r}}/0/" style="color:white;" class="uuu">
                   Загрузки</a>
               </th>
+                
             </tr>
 
             <tr>
-              <th>{{role}}
+              <th>
+                  <form id="f10" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='ar'>
+        <input type=hidden name="r" value='{{r}}'>
+        <button type="submit" class="button3 " disabled="true">Сохранить</button>
+      </form>
+      {% include 'script.html' %}
                 {% include 'moon.html' %}
           </thead>
           <tbody>
@@ -150,13 +161,6 @@
         </table>
 
       </div>
-      <form id="f10" method="POST">
-        {% csrf_token %}
-        <input type=hidden name="html" value='ar'>
-        <input type=hidden name="r" value='{{r}}'>
-        <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения </button>
-      </form>
-      {% include 'script.html' %}
 
     </td>
 

@@ -13,7 +13,15 @@
     <tr>
       <th colspan=13>Потребность</th>
     </tr>
-    <th rowspan=2>{{project}}
+    <th rowspan=2><form id="f20" method="POST" style="text-align:center;">
+  {% csrf_token %}
+  <input type=hidden name="html" value='mmjr'>
+  <div style="text-align:center;">
+    <button type="submit" class="button3 " disabled="true">Сохранить</button>
+  </div>
+</form>
+{% include 'script2.html' %}
+
       {% include 'moon.html' %}
       {% for dem in w2 %}
       <tr>
@@ -27,14 +35,6 @@
       </tbody>
 
 </table>
-<form id="f20" method="POST" style="text-align:center;">
-  {% csrf_token %}
-  <input type=hidden name="html" value='mmjr'>
-  <div style="text-align:center;">
-    <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
-  </div>
-</form>
-{% include 'script2.html' %}
 
 
 

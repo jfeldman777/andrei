@@ -91,7 +91,13 @@
               </th>
             </tr>
             <tr>
-              <th>ФИО
+              <th>
+                  <form id="f10" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='ajr'>
+        <button type="submit" class="button3" disabled="true">Сохранить</button>
+      </form>
+      {% include 'script.html' %}
                 {% include 'moon.html' %}
 
                 {% for tt in w3 %}
@@ -108,12 +114,7 @@
         </table>
       </div>
 
-      <form id="f10" method="POST">
-        {% csrf_token %}
-        <input type=hidden name="html" value='ajr'>
-        <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
-      </form>
-      {% include 'script.html' %}
+
 
     </td>
     <td width=50% style="vertical-align:top;">

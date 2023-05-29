@@ -56,7 +56,15 @@
               <th>
             </tr>
             <tr>
-              <th>{{project}}</th>
+              <th>
+                  
+      <form id="f20" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='aj'>
+        <button type="submit" class="button3" disabled="true"> Сохранить</button>
+      </form>
+      {% include 'script2.html' %}
+                </th>
 
 
 
@@ -74,12 +82,6 @@
         </table>
       </div>
 
-      <form id="f20" method="POST">
-        {% csrf_token %}
-        <input type=hidden name="html" value='aj'>
-        <button type="submit" class="button3 fixed-button2" disabled="true"> Сохранить изменения</button>
-      </form>
-      {% include 'script2.html' %}
 
 
 
@@ -102,7 +104,12 @@
               </th>
             </tr>
             <tr>
-              <th>{{project}}
+              <th>      <form id="f10" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='aj'>
+        <button type="submit" class="button3" disabled="true">Сохранить</button>
+      </form>
+      {% include 'script.html' %}
                 {% include 'moon.html' %}
 
 
@@ -130,12 +137,7 @@
             {% endfor %}</tbody>
         </table>
       </div>
-      <form id="f10" method="POST">
-        {% csrf_token %}
-        <input type=hidden name="html" value='aj'>
-        <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
-      </form>
-      {% include 'script.html' %}
+
 
 
 

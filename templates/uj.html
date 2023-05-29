@@ -18,7 +18,12 @@
       </th>
     </tr>
     <tr>
-      <th>ФИО
+      <th><form id="f10" method="POST">
+  {% csrf_token %}
+  <input type=hidden name="html" value='uj'>
+  <button type="submit" class="button3" disabled="true">Сохранить</button>
+</form>
+{% include 'script.html' %}
         {% include 'moon.html' %}
 
         {% for tt in w3 %}
@@ -45,12 +50,7 @@
     {% endfor %}
     </tbody>
 </table>
-<form id="f10" method="POST">
-  {% csrf_token %}
-  <input type=hidden name="html" value='uj'>
-  <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
-</form>
-{% include 'script.html' %}
+
 
 
 {% include 'js.html' %}

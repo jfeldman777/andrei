@@ -59,7 +59,13 @@
                 </a>
               </th>
             </tr>
-            <th>{{role}}
+            <th>   
+                <form id="f20" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='dr'>
+        <button type="submit" class="button3" disabled="true">Сохранить</button>
+      </form>
+      {% include 'script2.html' %}
               {% include 'moon.html' %}
               {% for dem in w2 %}
               <tr>
@@ -85,12 +91,7 @@
 
         </table>
       </div>
-      <form id="f20" method="POST">
-        {% csrf_token %}
-        <input type=hidden name="html" value='dr'>
-        <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
-      </form>
-      {% include 'script2.html' %}
+
 
 
 
@@ -114,7 +115,13 @@
               </th>
             </tr>
             <tr>
-              <th>{{role}}
+              <th>   
+                  <form id="f10" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='dr'>
+        <button type="submit" class="button3" disabled="true"> Сохранить</button>
+      </form>
+      {% include 'script.html' %}
                 {% include 'moon.html' %}
           </thead>
           <tbody>
@@ -138,12 +145,7 @@
           </tbody>
         </table>
       </div>
-      <form id="f10" method="POST">
-        {% csrf_token %}
-        <input type=hidden name="html" value='dr'>
-        <button type="submit" class="button3 fixed-button1" disabled="true"> Сохранить изменения</button>
-      </form>
-      {% include 'script.html' %}
+
 
     </td>
     <td width=50%>
