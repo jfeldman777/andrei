@@ -6,7 +6,7 @@ from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
 
-import tkinter as tk
+
 
 def up(a, b):
     return f"надо:{a}/есть:{b}"
@@ -350,9 +350,7 @@ def date12():
 
 
 def atest(request):
-    root = tk.Tk()
-    sh = root.winfo_screenheight()
-    print(sh)
+
     
     return render(request, 'a_test.html')
 
