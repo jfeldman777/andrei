@@ -9,7 +9,12 @@
   <thead>
 
     <tr>
-      <th>ФИО
+      <th>
+<form id="f10" method="POST">
+  {% csrf_token %}
+  <input type=hidden name="html" value='mrom'>
+  <button type="submit" class="button3" disabled="true">Сохранить</button>
+</form>
 
         {% include 'moon.html' %}
         {% for tt in dif14 %}
@@ -42,12 +47,7 @@
     {% endfor %}
 </table>
 
-<form id="f10" method="POST">
-  {% csrf_token %}
-  <input type=hidden name="html" value='mrom'>
-  <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
-</form>
-{% include 'script3.html' %}
+{% include 'script.html' %}
 
 
 

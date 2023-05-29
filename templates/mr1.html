@@ -11,7 +11,14 @@
       <th colspan=13>Ресурсный пул (максимальная доступность)</th>
     </tr>
     <tr>
-      <th rowspan=2>ФИО</th>
+      <th rowspan=2>
+         <form id="f10" method="POST">
+  {% csrf_token %}
+  <input type=hidden name="html" value=''>
+
+  <button type="submit" class="button3" disabled="true">Сохранить</button>
+</form>
+        </th>
     </tr>
     {% include 'moon.html' %}
     {% for tt in dif14 %}
@@ -23,7 +30,11 @@
       <td>{{t}}</td>
 
       {% else %}
-      <td style="background-color:{{t.color}};" class="good" key="{{t.link}}">
+      <td style="background-color:{{t.color}};" class="good" 
+          action = "/sm/"
+          fname="f10"
+          
+          key="{{t.link}}">
 
 
 
@@ -39,13 +50,8 @@
     </tr>
     {% endfor %}
 </table>
-<form id="f10" method="POST">
-  {% csrf_token %}
-  <input type=hidden name="html" value=''>
 
-  <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
-</form>
-{% include 'script3.html' %}
+{% include 'script.html' %}
 
 
 
