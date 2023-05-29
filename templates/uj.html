@@ -4,48 +4,55 @@
 {% include 'scroll.html' %}
 {% include 'menu.html' %}
 <h3 style="text-align:center;">
-    <a href="/dj/0/0/{{j}}/" class="uuu">
+  <a href="/dj/0/0/{{j}}/" class="uuu">
     {{project}}</a>
-        </h3>
+</h3>
 
-        <table border=2 width=100% style="position:relative;top:0;text-align:center;">
-          <thead>
-            <tr><th colspan=13>
-                <a href="/dj/0/0/{{j}}/" style="color:white">
-                Загрузки
-                </a>
-                </th></tr><tr><th>ФИО
-{% include 'moon.html' %}
+<table border=2 width=100% style="position:relative;top:0;text-align:center;">
+  <thead>
+    <tr>
+      <th colspan=13>
+        <a href="/dj/0/0/{{j}}/" style="color:white">
+          Загрузки
+        </a>
+      </th>
+    </tr>
+    <tr>
+      <th>ФИО
+        {% include 'moon.html' %}
 
-{% for tt in w3 %}
-<tr>
-{% for t in tt %}
-    
-     {% if forloop.first %}
-{% if t|negative %}{% else %}
-  <td colspan=13>{{t.val}}</td></tr>
-            <tr>
-    {% endif %}
-  {% else %}
+        {% for tt in w3 %}
+    <tr>
+      {% for t in tt %}
 
-  <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
-    {{t.val}}
-  </td>
-{% endif %} 
-    
+      {% if forloop.first %}
+      {% if t|negative %}{% else %}
+      <td colspan=13>{{t.val}}</td>
+    </tr>
+    <tr>
+      {% endif %}
+      {% else %}
 
-    
-    {% endfor %}</tr>
-{% endfor %}
-</tbody>
-        </table>
-  <form id="f10"  method="POST">
+      <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
+        {{t.val}}
+      </td>
+      {% endif %}
+
+
+
+      {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<form id="f10" method="POST">
   {% csrf_token %}
-            <input type = hidden name="html" value='uj'>
-  <button type="submit" class="button3 fixed-button1"  disabled="true">Сохранить изменения</button></form>
-{%  include 'script.html'  %}
+  <input type=hidden name="html" value='uj'>
+  <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
+</form>
+{% include 'script.html' %}
 
 
-    {% include 'js.html' %}
+{% include 'js.html' %}
 
 {% endblock %}

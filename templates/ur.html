@@ -2,42 +2,51 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-<h3 style="text-align:center;"><a href="/dr/0/{{r}}/0/" class="uuu" >{{role}}</a></h3>
+<h3 style="text-align:center;"><a href="/dr/0/{{r}}/0/" class="uuu">{{role}}</a></h3>
 
-        <table border=2 width=100% style="position:relative;top:0;background-color:white;text-align:center" class=in><thead>
-            <tr><th colspan=13>
-                 <a href="/dr/0/{{r}}/0/" style="color:white">
-                Загрузки
-                </a>
-                </th></tr><tr><th>{{role}}
-{% include 'moon.html' %}</thead><tbody>
-{% for tt in w3 %}
-<tr>
-{% for t in tt %}
+<table border=2 width=100% style="position:relative;top:0;background-color:white;text-align:center" class=in>
+  <thead>
+    <tr>
+      <th colspan=13>
+        <a href="/dr/0/{{r}}/0/" style="color:white">
+          Загрузки
+        </a>
+      </th>
+    </tr>
+    <tr>
+      <th>{{role}}
+        {% include 'moon.html' %}
+  </thead>
+  <tbody>
+    {% for tt in w3 %}
+    <tr>
+      {% for t in tt %}
 
-  {% if forloop.first %}
-{% if t|negative %}{% else %}
-  <td colspan=13>{{t.val}}</td></tr>
-            <tr>
-    {% endif %}
-  {% else %}
+      {% if forloop.first %}
+      {% if t|negative %}{% else %}
+      <td colspan=13>{{t.val}}</td>
+    </tr>
+    <tr>
+      {% endif %}
+      {% else %}
 
 
-  <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
-    {{t.val}}
-  </td>
-{% endif %}
-{% endfor %}</tr>
-{% endfor %}
-</tbody>
-        </table>
-          <form id="f10"  method="POST">
-          {% csrf_token %}
-                    <input type = hidden name="html" value='ur'>
-          <button type="submit" class="button3 fixed-button1"  disabled="true"> Сохранить изменения</button>
-        </form>
-        {%  include 'script.html'  %}
+      <td class="good" key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
+        {{t.val}}
+      </td>
+      {% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<form id="f10" method="POST">
+  {% csrf_token %}
+  <input type=hidden name="html" value='ur'>
+  <button type="submit" class="button3 fixed-button1" disabled="true"> Сохранить изменения</button>
+</form>
+{% include 'script.html' %}
 
-    {% include 'js.html' %}
-    {% include 'menu.html' %}
+{% include 'js.html' %}
+{% include 'menu.html' %}
 {% endblock %}

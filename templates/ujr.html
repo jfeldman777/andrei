@@ -3,7 +3,8 @@
 {% block content %}
 {% include 'scroll.html' %}
 <h3 style="text-align:center;">
-    <a href="/djr/0/{{role.id}}/{{project.id}}/" class="uuu">{{project}} - {{role}}</a></h3>
+  <a href="/djr/0/{{role.id}}/{{project.id}}/" class="uuu">{{project}} - {{role}}</a>
+</h3>
 
 <table border=2 width=100% style="position:relative;top:0; text-align:center;">
   <thead>
@@ -29,15 +30,15 @@
       </td>{% endfor %}
     </tr>
     {% endfor %}
-        </tbody>
+    </tbody>
 </table>
-        <form id="f10" method="POST">
-          {% csrf_token %}
-          <input type=hidden name="html" value='ujr'>
+<form id="f10" method="POST">
+  {% csrf_token %}
+  <input type=hidden name="html" value='ujr'>
 
-          <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
-        </form>
-        {% include 'script.html' %}
+  <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
+</form>
+{% include 'script.html' %}
 
 
 {% include 'js.html' %}

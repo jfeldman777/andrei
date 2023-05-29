@@ -37,22 +37,17 @@
       {% endfor %}
 
     </tr>
-
     {% endfor %}
-
-    <tr>
-      <td colspan=13 style="text-align:center;">
-        <form id="f10" method="POST">
-          {% csrf_token %}
-          <input type=hidden name="html" value=''>
-
-          <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
-        </form>
-        {% include 'script3.html' %}
-
-      </td>
-    </tr>
 </table>
+<form id="f10" method="POST">
+  {% csrf_token %}
+  <input type=hidden name="html" value=''>
+
+  <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
+</form>
+{% include 'script3.html' %}
+
+
 
 {% include 'js.html' %}
 {% endblock %}

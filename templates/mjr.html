@@ -6,63 +6,77 @@
 
 <h3 style="text-align:center;">{{role}}</h3>
 
-      <table border=2 style="position:relative;top:0;text-align:center;"  width=100% class="dif" >
-          <tr><td colspan=13>Ресурсный пул (максимальная доступность)<td></tr><tr><td rowspan=2><b>ФИО</b></td></tr>
-{% include 'moon.html' %}
-{% for tt in dif14 %}
-<tr>
-{% for t in tt %}
+<table border=2 style="position:relative;top:0;text-align:center;" width=100% class="dif">
+  <tr>
+    <td colspan=13>Ресурсный пул (максимальная доступность)
+    <td>
+  </tr>
+  <tr>
+    <td rowspan=2><b>ФИО</b></td>
+  </tr>
+  {% include 'moon.html' %}
+  {% for tt in dif14 %}
+  <tr>
+    {% for t in tt %}
 
-{% if forloop.first %}
+    {% if forloop.first %}
 
-  <td>{{t}}</td>
+    <td>{{t}}</td>
 
-{% else %}
-  <td class="good" key="{{t.link}}">
-{{t.title}}
-</td>
-{% endif %}
-{% endfor %}
+    {% else %}
+    <td class="good" key="{{t.link}}">
+      {{t.title}}
+    </td>
+    {% endif %}
+    {% endfor %}
 
-</tr>
+  </tr>
 
-{% endfor %}
+  {% endfor %}
 
-<tr><td colspan=13 style="text-align:center;">
-  <form id="f10" action="/smr/" method="POST">
-  {% csrf_token %}
-            <input type = hidden name="html" value='mjr'>
-<input type = hidden name="r" value='{{r}}'>
-  <button type="submit" class="button3 fixed-button1"  disabled="true">Сохранить изменения</button>
-</form>
-{%  include 'script.html'  %}
+  <tr>
+    <td colspan=13 style="text-align:center;">
+      <form id="f10" action="/smr/" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='mjr'>
+        <input type=hidden name="r" value='{{r}}'>
+        <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
+      </form>
+      {% include 'script.html' %}
 
-</td></tr>
-      </table>
- <table border=2 style="position:relative;top:0;text-align:center;"  width=100% class="dif" >
-          <tr><td colspan=13>Ресурсный пул (оставшаяся доступность)<td></tr><tr><td rowspan=2><b>ФИО</b></td></tr>
-{% include 'moon.html' %}
-{% for tt in dif15 %}
-<tr>
-{% for t in tt %}
+    </td>
+  </tr>
+</table>
+<table border=2 style="position:relative;top:0;text-align:center;" width=100% class="dif">
+  <tr>
+    <td colspan=13>Ресурсный пул (оставшаяся доступность)
+    <td>
+  </tr>
+  <tr>
+    <td rowspan=2><b>ФИО</b></td>
+  </tr>
+  {% include 'moon.html' %}
+  {% for tt in dif15 %}
+  <tr>
+    {% for t in tt %}
 
-{% if forloop.first %}
+    {% if forloop.first %}
 
-  <td>{{t}}</td>
+    <td>{{t}}</td>
 
-{% else %}
-  <td class="good" key="{{t.link}}" >
-{{t.title}}
-</td>
-{% endif %}
-{% endfor %}
+    {% else %}
+    <td class="good" key="{{t.link}}">
+      {{t.title}}
+    </td>
+    {% endif %}
+    {% endfor %}
 
-</tr>
+  </tr>
 
-{% endfor %}
+  {% endfor %}
 
 
 </table>
 
-    {% include 'js.html' %}
+{% include 'js.html' %}
 {% endblock %}

@@ -2,36 +2,41 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'menu.html' %}
-<h3 style="text-align:center;" >{{role }}- 
-    <a href="/dj/0/0/{{j}}/" class="mmb">{{project}}</a></h3>
+<h3 style="text-align:center;">{{role }}-
+  <a href="/dj/0/0/{{j}}/" class="mmb">{{project}}</a>
+</h3>
 
 
 
-    <table border=2 style="position:relative;top:0;text-align:center;"  width=100% ><thead>
-        <tr><th colspan=13>Потребность</th></tr><th rowspan=2>{{project}}
-        {% include 'moon.html' %}
-        {% for dem in w2 %}
-        <tr>
+<table border=2 style="position:relative;top:0;text-align:center;" width=100%>
+  <thead>
+    <tr>
+      <th colspan=13>Потребность</th>
+    </tr>
+    <th rowspan=2>{{project}}
+      {% include 'moon.html' %}
+      {% for dem in w2 %}
+      <tr>
         {% for t in dem %}
 
         <td class="good2" key="{{t.link}}" title="{{t.up}}" style="background-color: {{t.color}}">
-      {{t.val}}
-      </td>
-{% endfor %}
-</tr>        {% endfor %}
-        </tbody>
- 
-        </table>
-  <form id="f20"  method="POST"  style="text-align:center;">
+          {{t.val}}
+        </td>
+        {% endfor %}
+      </tr> {% endfor %}
+      </tbody>
+
+</table>
+<form id="f20" method="POST" style="text-align:center;">
   {% csrf_token %}
-            <input type = hidden name="html" value='mmjr'>
-<div style="text-align:center;">
-  <button type="submit" class="button3 fixed-button2"  disabled="true">Сохранить изменения</button>
-</div>
+  <input type=hidden name="html" value='mmjr'>
+  <div style="text-align:center;">
+    <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
+  </div>
 </form>
-{%  include 'script2.html'  %}
-   
+{% include 'script2.html' %}
 
 
-    {% include 'js.html' %}
+
+{% include 'js.html' %}
 {% endblock %}
