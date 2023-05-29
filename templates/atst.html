@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+{% load static %}
+
+<style>
+
+    
+#drag-container {
+  margin-bottom: 20px;
+}
+
+#drag-button {
+  padding: 10px 20px;
+  background-color: red;
+  color: #000000;
+  cursor: move;
+}
+
+#drop-container {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed #D5D8DC;
+  padding: 20px;
+  text-align: center;
+}
+
+    
+</style>
+
+    <div id="drag-container">
+  <button id="drag-button" draggable="true">Drag and Drop Button</button>
+</div>
+
+<div id="drop-container">
+  <p>Drop Here</p>
+</div>
+
+<script>
+var dragButton = document.getElementById('drag-button');
+var dropContainer = document.getElementById('drop-container');
+
+dragButton.addEventListener('dragstart', function(event) {
+  event.dataTransfer.setData('text/plain', 'Dragged Button');
+});
+
+dropContainer.addEventListener('dragover', function(event) {
+  event.preventDefault();
+});
+
+dropContainer.addEventListener('drop', function(event) {
+  event.preventDefault();
+  var draggedData = event.dataTransfer.getData('text/plain');
+  event.target.textContent = draggedData;
+});
+
+</script>
+    
+
+
+{% endblock %}

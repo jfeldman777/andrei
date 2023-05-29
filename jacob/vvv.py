@@ -351,8 +351,10 @@ def date12():
 
 def atest(request):
 
+    a =  outsrc(2, 2)
+    b =  vacancia(2,2)
     
-    return render(request, 'a_test.html')
+    return render(request, 'a_test.html',{"a":a,"b":b})
 
 
 def alf(request):
@@ -831,8 +833,9 @@ def ar(request, p, r, j):
     moon12 = moon()
     projects = Project.objects.all()
 
-    zo = ['АУТСОРС'] + outsrc(role, project)
-    zv = ['ВАКАНСИЯ'] + vacancia(role, project)
+
+    
+    print
     # W222222222222222222222222222222
     
     x = [0] * 12
@@ -842,6 +845,9 @@ def ar(request, p, r, j):
         x = diff
         w4.append([person.fio] + x)    
     for project in projects:
+        zo = ['АУТСОРС'] + outsrc(role, project)
+        zv = ['ВАКАНСИЯ'] + vacancia(role, project)
+        
         p200 = project.title
         a_w2 = [{"val": project.title, "j": project.id, "r": r}] + [0] * 12
         dem_rj = [project.title] + ['Потребность'] + rj_load_(role, project)  #
@@ -900,6 +906,7 @@ def ar(request, p, r, j):
         w1.append(dem_rj)  ##########################################77777
         w1.append([-1] + supp)  ###############--
         w1.append([-1] + zo)  ################
+        print(zo,zv)
         w1.append([-1] + zv)  #####################
         w1.append([-1] + delta)  ############################
 
