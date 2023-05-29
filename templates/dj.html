@@ -63,7 +63,7 @@
         <input type=hidden name="html" value='dj'>
         <button type="submit" class="button3" disabled="true">Сохранить</button>
       </form>
-      {% include 'script2.html' %}
+  
 
                 {% include 'moon.html' %}
                 {% for dem in w2 %}
@@ -71,7 +71,10 @@
               {% for t in dem %}
 
 
-              <td class="good2" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+              <td class="good" 
+                  fname="f20"
+                  action="/s2/"
+                  key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
                 {{t.val}}
 
               </td>

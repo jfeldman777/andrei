@@ -4,7 +4,7 @@ const f2='f20'
 const s2 = '/s2/'
 
 
-
+var element2=0;
 
   $('td.good2').click(function () {
 
@@ -17,24 +17,24 @@ const s2 = '/s2/'
     var ID = new Date().getTime();
     $(this).html('<input type="text" id=' + ID + ' size="1" maxlength="4" value="' + x + '">');
 
-    var element = document.getElementById(ID);
-    element.focus()
+    element2 = document.getElementById(ID);
+    element2.focus()
 
 
     $(this).on('keypress', '#' + ID, function (event) {
       if (event.which === 13) { // 13 соответствует клавише Enter
-        element.blur();
+        element2.blur();
       }
     });
 
 
 
 
-    $('td input').focusout(function () {
+   element2.focusout(function () {
       var newValue = $(this).val();
       $(this).parent().text(newValue + '@');
 
-      var form = document.getElementById("f20");
+   form2 = document.getElementById("f20");
       form.action = "/s2/"
 
 

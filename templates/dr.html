@@ -65,7 +65,7 @@
         <input type=hidden name="html" value='dr'>
         <button type="submit" class="button3" disabled="true">Сохранить</button>
       </form>
-      {% include 'script2.html' %}
+
               {% include 'moon.html' %}
               {% for dem in w2 %}
               <tr>
@@ -77,7 +77,10 @@
                   </a>
                   {% else %}
 
-                <td class="good2" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+                <td class="good" 
+                    action="/s2/"
+                    fname="f20"
+                    key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
                   {{t.val}}
                   {% endif %}
                 </td>
@@ -135,7 +138,10 @@
             <tr>
               {% endif %}
               {% else %}
-              <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+              <td class="good" 
+                  action="/s1/"
+                  fname="f10"
+                  key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
               {% endif %}

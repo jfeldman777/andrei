@@ -63,7 +63,7 @@
         <input type=hidden name="html" value='aj'>
         <button type="submit" class="button3" disabled="true"> Сохранить</button>
       </form>
-      {% include 'script2.html' %}
+     
                 </th>
 
 
@@ -73,7 +73,10 @@
               {% for dem in w2 %}
             <tr>
               {% for t in dem %}
-              <td class="good2 " key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
+              <td class="good " 
+                  action="/s2/"
+                  fname="f20"
+                  key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
               {% endfor %}
@@ -109,7 +112,7 @@
         <input type=hidden name="html" value='aj'>
         <button type="submit" class="button3" disabled="true">Сохранить</button>
       </form>
-      {% include 'script.html' %}
+     
                 {% include 'moon.html' %}
 
 
@@ -128,7 +131,11 @@
               {% else %}
 
 
-              <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+              <td class="good" 
+                  action="/s1/"
+                  fname="f10"
+                  key="{{t.link}}" 
+                  title="{{t.up}};" style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
               {% endif %}
@@ -185,6 +192,7 @@
   </tbody>
 </table>
 </div>
+ {% include 'script.html' %}
 {% include 'js.html' %}
 {% include 'menu.html' %}
 {% endblock %}

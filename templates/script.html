@@ -1,12 +1,16 @@
 <script>
-const t1='td.good'
-const f1='f10'
+var f1='f10'
 const s1 = '/s1/'
-
+var element;
+    var a ="/s1/";
 
   $('td.good').click(function () {
 
     var p = $(this).attr("key");
+    a =  $(this).attr("action");
+    f1 =   $(this).attr("fname"); 
+      
+      
     var originalValue = $(this).text();
 
     var x = $.trim(originalValue);
@@ -15,25 +19,29 @@ const s1 = '/s1/'
     var ID = new Date().getTime();
     $(this).html('<input type="text" id=' + ID + ' size="1" maxlength="4" value="' + x + '">');
 
-    var element = document.getElementById(ID);
-    element.focus()
+ element = document.getElementById(ID);
+    element.focus();
+      
 
 
     $(this).on('keypress', '#' + ID, function (event) {
+       
       if (event.which === 13) { // 13 соответствует клавише Enter
         element.blur();
+  
       }
     });
 
 
 
 
-    $('td input').focusout(function () {
+  $('td input').focusout(function () {
+
       var newValue = $(this).val();
       $(this).parent().text(newValue + '@');
 
-      var form = document.getElementById("f10");
-      form.action = "/s1/"
+      var form = document.getElementById(f1);
+      form.action = a
 
 
       button = form.querySelector(".button3");
