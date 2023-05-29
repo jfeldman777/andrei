@@ -118,7 +118,7 @@
         <input type=hidden name="html" value='dj'>
         <button type="submit" class="button3" disabled="true">Сохранить</button>
       </form>
-      {% include 'script.html' %}
+   
                 {% include 'moon.html' %}
                 {% for tt in w3 %}
             <tr>
@@ -135,7 +135,11 @@
 
 
 
-              <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+                
+              <td class="good" 
+                  action="/s1/"
+                  fname="f10"
+                  key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
 
@@ -195,6 +199,7 @@
 
   </tr>
 </table>
+   {% include 'script.html' %}
 {% include 'js.html' %}
 {% include 'menu.html' %}
 {% endblock %}

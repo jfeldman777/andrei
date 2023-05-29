@@ -906,7 +906,7 @@ def ar(request, p, r, j):
         w1.append(dem_rj)  ##########################################77777
         w1.append([-1] + supp)  ###############--
         w1.append([-1] + zo)  ################
-        print(zo,zv)
+
         w1.append([-1] + zv)  #####################
         w1.append([-1] + delta)  ############################
 
@@ -1086,14 +1086,7 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
-#                color = "white"
-#                if mj_outside(d, project):
-#                    color = "lightgrey"
-#                    if delta[i] < 0:
-#                        color = "#B266FF"
-#                elif delta[i] < 0:
-#                    color = "pink"
-                    
+
                 color = "white"
                 if mj_outside(d, project):
                     color = "lightgrey"
