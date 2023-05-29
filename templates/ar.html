@@ -2,16 +2,16 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-<table border=2 width=100% style=" height: 100vh;">
+<table border=2 width=100% style=" height: 100vh;" id=t00>
   <tr>
     <td colspan=2>
       <h3 style="text-align:center;">Все проекты - {{role}}</h3>
     <td>
   </tr>
-  <tr style="text-align:center;">
-    <td width=50%>
+  <tr style="text-align:center;" id=tr00>
+    <td width=50% id = td1>
       <div class="table-container">
-        <table border=2 class="balance" style="position:relative;top:0;background-color:white;" width=100%>
+        <table border=2 class="balance" style="position:relative;top:0;background-color:white;" width=100% id=t11>
 
           <thead>
             <tr>
@@ -21,7 +21,7 @@
             <tr>
               <th>{{role}}
                 {% include 'moon.html' %}
-            {% for dem in w1 %}
+                {% for dem in w1 %}
             <tr>
               {% for t in dem %}
               {% if forloop.first %}
@@ -33,7 +33,7 @@
               {% else %}
               <td>
                 {% if t|isstr:'Дельта' %}
-                <a href="/dr/0/{{r}}/0/">{{t}}</a>
+                <a href="/dr/0/{{r}}/0/" class="aad">{{t}}</a>
                 {% else %}
                 {{t}}
                 {% endif %}
@@ -44,18 +44,19 @@
             </tr>
 
             {% endfor %}
-          </tbody>
+            </tbody>
         </table>
       </div>
     </td>
-    <td width=50%>
+    <td width=50% id = td2>
       <div class="table-container">
-        <table border=2 width=100% style="position:relative;top:0;background-color:white;
-      ">
+        <table border=2 width=100% style="position:relative;top:0;background-color:white;" id=t12>
           <thead>
             <tr>
               <th colspan=13>
+                  <a href="/mmr/0/{{t.r}}/{{t.j}}/" style="color: white"  class="mmm">
                 Потребность
+                  </a>
               </th>
             </tr>
             <tr>
@@ -81,26 +82,22 @@
               {% endfor %}
             </tr> {% endfor %}
 
+            </tbody>
 
 
-            <tr>
-              <td colspan=13 style="text-align:center;">
-
-
-                <form id="f20" method="POST">
-                  {% csrf_token %}
-                  <input type=hidden name="html" value='ar'>
-                  <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
-                </form>
-                {% include 'script2.html' %}
-
-
-
-
-              </td>
-            </tr>
         </table>
       </div>
+      <form id="f20" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='ar'>
+        <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
+      </form>
+      {% include 'script2.html' %}
+
+
+
+
+
     </td>
   </tr>
   <tr style="text-align:center;">
@@ -113,7 +110,7 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/ur/0/{{r}}/0/" style="color:white;">
+                <a href="/ur/0/{{r}}/0/" style="color:white;" class="uuu">
                   Загрузки</a>
               </th>
             </tr>
@@ -147,31 +144,23 @@
             {% endfor %}
 
 
-            <tr>
-              <td colspan=13 style="text-align:center;">
-
-
-
-                <!-- <tr><td colspan=13> -->
-                <form id="f10" method="POST">
-                  {% csrf_token %}
-                  <input type=hidden name="html" value='ar'>
-                  <input type=hidden name="r" value='{{r}}'>
-                  <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения </button>
-                </form>
-                {% include 'script.html' %}
-                <!-- </td></tr> -->
-              </td>
-            </tr>
           </tbody>
 
 
         </table>
 
       </div>
+      <form id="f10" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='ar'>
+        <input type=hidden name="r" value='{{r}}'>
+        <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения </button>
+      </form>
+      {% include 'script.html' %}
+
     </td>
 
-      <td  width=50%>  
+    <td width=50%>
       <div class="table-container">
         <table border=2 style="position:relative;top:0;background-color:white;" width=100% class="dif">
           <thead>
@@ -192,9 +181,9 @@
             </tr>
 
             {% endfor %}
-</tbody>
-      </table><
-      /div>    
+            </<tbody>
+        </table>
+      </div>
     </td>
   </tr>
 </table>

@@ -2,12 +2,13 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'menu.html' %}
-<h3 style="text-align:center;" >Все ресурсы - <a href="/dj/0/0/{{j}}/">{{project}}</a></h3>
+<h3 style="text-align:center;" >Все ресурсы - 
+    <a href="/dr/0/{{r}}/{{j}}/" class="mmb">{{project}}</a></h3>
 
 
 
-    <table border=2 style="position:relative;top:0;text-align:center;"  width=100% >
-      <tr><td colspan=13>Потребность<td></tr><td rowspan=2><b>{{project}}</b>
+    <table border=2 style="position:relative;top:0;text-align:center;"  width=100% ><thead>
+        <tr><th colspan=13>Потребность</th></tr><tr><th rowspan=2>{{project}}
         {% include 'moon.html' %}
         {% for dem in w2 %}
         <tr>
@@ -18,8 +19,9 @@
       </td>
 {% endfor %}
 </tr>        {% endfor %}
-<tr style="text-align:center;">
-  <td colspan=13 style="text-align:center;">
+        </tbody>
+        </table>
+      
   <form id="f20" method="POST"  style="text-align:center;">
   {% csrf_token %}
             <input type = hidden name="html" value='mmr'>
@@ -29,8 +31,7 @@
 </div>
 </form>
 {%  include 'script2.html'  %}
-    </td></tr>
-        </table>
+ 
 
 
     {% include 'js.html' %}

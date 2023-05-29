@@ -17,17 +17,40 @@
   <style>
       .fixed-button1 {
   position: fixed;
-  top: 570px; /* расстояние от нижней границы экрана */
-  left: 20px; /* расстояние от правой границы экрана */
+  top: 320px; /* расстояние от нижней границы экрана */
+  left: 0px; /* расстояние от правой границы экрана */
   z-index: 9999; /* задает порядок отображения элемента, чтобы он был выше остальных элементов */
 }
       
     .fixed-button2 {
   position: fixed;
-  top: 20px; /* расстояние от нижней границы экрана */
-  right: 20px; /* расстояние от правой границы экрана */
+  top: 30px; /* расстояние от нижней границы экрана */
+  right: 0px; /* расстояние от правой границы экрана */
   z-index: 9999; /* задает порядок отображения элемента, чтобы он был выше остальных элементов */
 }
+      
+      ///////////////////////////////
+      
+      /* Button styles */
+button {
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px #E0E0E0;
+}
+
+      
+      
+      .pressed-button3 {
+  background-color: #1A5276;
+  color: #FFFFFF;
+}
+      
+      
+      
+      
       
     td.true {
       background-color: skyblue;
@@ -55,8 +78,10 @@ thead th {
 }
       
 .button3 {
-  background-color:rgba(0, 200, 0, 1);;
-  color: white;
+
+  background-color: #ABB2B9;
+  color: #000000;
+    
   border: none;
   padding: 8px 50px;
   border-radius: 5px;
@@ -64,14 +89,23 @@ thead th {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 100, 1);
 }
 .button3:hover {
-  background-color: #222222;
+/*  background-color: #222222;*/
+  background-color: #D5D8DC;
+  color: #000000;
 }
+
+.button3:active {
+  background-color: #1A5276;
+  color: #FFFFFF;
+  box-shadow: none; /* Remove box shadow when pressed */
+}      
+      
 
 body {
   background-color: #FFFFFF;
 }
 table {
-  margin-bottom: 1rem; /* add a margin to the bottom of the table */
+  margin-bottom:auto; /* add a margin to the bottom of the table */
   background-color: #FFFFFF;
 }
 

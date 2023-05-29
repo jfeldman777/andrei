@@ -5,6 +5,9 @@ from django.shortcuts import render
 from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
+
+import tkinter as tk
+
 def up(a, b):
     return f"надо:{a}/есть:{b}"
 
@@ -201,7 +204,7 @@ def pr_task_(person, role):
 
 def vacancia(role, project):
     try:
-        person = UserProfile.objects.filter(id=10)[0]
+        person = UserProfile.objects.filter(fio='ВАКАНСИЯ')[0]##АУТСОРС
     except:
         person = None    
     return prj_task_(person, role, project)
@@ -209,7 +212,7 @@ def vacancia(role, project):
 
 def outsrc(role, project): 
     try:
-        person = UserProfile.objects.filter(id=11)[0]
+        person = UserProfile.objects.filter(fio='АУТСОРС')[0]
     except:
         person = None
     return prj_task_(person, role, project)
@@ -229,13 +232,6 @@ def prm_task(request, p, r, y, m):
 
     context = {"t": t}
     return render(request, 'a_test.html', context)
-
-#
-#def prj_task(request, p, r, j):
-#    person, role, project = get_prj(p, r, j)
-#    res = prj_task_(person, role, project)
-#    context = {"t": res}
-#    return render(request, 'a_test.html', context)
 
 
 def prj_task_(p, r, j):
@@ -279,11 +275,6 @@ def rj_task_(r, j):
         d = inc(d)
     return res
 
-#
-#def pr_isfree(request, p, r):
-#    res = pr_isfree_(p, r)
-#    context = {"t": res}
-#    return render(request, 'a_test.html', context)
 
 
 def pr_isfree_(person, role):
@@ -359,12 +350,10 @@ def date12():
 
 
 def atest(request):
-    role=2
-    pp1 = set(UserProfile.objects.filter(Q(role=role)))
-    pp2 = set(UserProfile.objects.filter(Q(res=role)))
-    pps = pp1.union(pp2)
-    ppl = sorted(list(pps),key = lambda x: x.fio)    
-    print (ppl)
+    root = tk.Tk()
+    sh = root.winfo_screenheight()
+    print(sh)
+    
     return render(request, 'a_test.html')
 
 
@@ -926,6 +915,11 @@ def ar(request, p, r, j):
     moon12["r"] = r
     moon12["j"] = 0
     moon12["p"] = 0
+    
+    root = tk.Tk()
+# Получение высоты экрана
+    screen_height = root.winfo_screenheight()
+    moon12["sh"] = screen_height 
     return render(request, 'ar.html', moon12)
 
 

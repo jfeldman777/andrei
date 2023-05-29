@@ -4,146 +4,176 @@
 {% include 'scroll.html' %}
 
 <table border=2 width=100% style="vertical-align: top;" class=out>
-<tr><td colspan=2><h3 style="text-align:center;">Все проекты - {{role}}</h3>
+  <tr>
+    <td colspan=2>
+      <h3 style="text-align:center;">Все проекты - {{role}}</h3>
 
-  <td></tr>
-  <tr style="text-align:center;"><td  width=50%>
+    <td>
+  </tr>
+  <tr style="text-align:center;">
+    <td width=50%>
       <div class="table-container-2">
 
-    <table border=2 style="position:relative;top:0;background-color:white;" class="balance"
-      width=100% class=in><thead>
-        <tr><th colspan=13>Дельта</th></tr><tr><th>Проект</th>
-{% include 'moon.html' %}
-{% for dem in w1 %}
-<tr>
-{% for t in dem %}
-<td>
-    {% if forloop.first %}
-    <a href="/dj/0/0/{{t.j}}">
-{{t.val}}
-    </a>
-    {% else %}
-    {{t.val}}
-    {% endif %}
-</td>
-{% endfor %}
-
-</tr>
-
-{% endfor %}
-<tr><td colspan=13>
-<a href="/ar/0/{{r}}/0/">подробнее</a></td><tr>
-<tbody>
-    </table>
-    </div>
-  </td>
-    <td width=50%> <div class="table-container-2">
-      <table border=2 width=100% style="position:relative;top:0;background-color:white;"
-      class=in><thead>
-          <tr><th colspan=13>
-                  Потребность
-              <th></tr><th>{{role}}
-        {% include 'moon.html' %}
-        {% for dem in w2 %}
-        <tr>
-        {% for t in dem %}
-
-    {% if forloop.first %} <td>
-    <a href="/djr/0/{{t.r}}/{{t.j}}">
-{{t.val}}
-    </a>
-    {% else %}
-
- <td class="good2" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
-{{t.val}}
+        <table border=2 style="position:relative;top:0;background-color:white;" class="balance" width=100% class=in>
+          <thead>
+            <tr>
+              <th colspan=13>Дельта</th>
+            </tr>
+            <tr>
+              <th>Проект</th>
+              {% include 'moon.html' %}
+              {% for dem in w1 %}
+            <tr>
+              {% for t in dem %}
+              <td>
+                {% if forloop.first %}
+                <a href="/dj/0/0/{{t.j}}">
+                  {{t.val}}
+                </a>
+                {% else %}
+                {{t.val}}
                 {% endif %}
-</td>
+              </td>
+              {% endfor %}
 
+            </tr>
 
-
-{% endfor %}
-</tr>        {% endfor %}
-
-
-<tr><td colspan=13 style="text-align:center;">
-
-
-  <form id="f20"  method="POST">
-  {% csrf_token %}
-            <input type = hidden name="html" value='dr'>
-  <button type="submit" class="button3 fixed-button2"  disabled="true">Сохранить изменения</button></form>
-{%  include 'script2.html'  %}
-
-
-
-
-    </td></tr></tbody>
-
-        </table></div>
-
-    </td></tr>
-    <tr style="text-align:center;">
-
-      <td width=50%>
-
-          <div class="table-container">
-        <table border=2 width=100% style="position:relative;top:0;background-color:white;" class=in><thead>
-            <tr><th colspan=13>
-                
-                     <a href="/ur/0/{{r}}/0/" style="color:white;">
-              Загрузки</a>
-                
-                </th></tr><tr><th>{{role}}
-{% include 'moon.html' %}</thead><tbody>
-{% for tt in w3 %}
-<tr>
-{% for t in tt %}
-  {% if forloop.first %}
-{% if t|negative %}{% else %}
-  <td colspan=13>{{t}}</td></tr><tr>
-    {% endif %}
-  {% else %}
- <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
-    {{t.val}}
-  </td>
-{% endif %}
-{% endfor %}</tr>
-{% endfor %}<tr><td colspan=13 style="text-align:center;">
-
-          <form id="f10" method="POST">
-          {% csrf_token %}
-                    <input type = hidden name="html" value='dr'>
-          <button type="submit" class="button3 fixed-button1"  disabled="true"> Сохранить изменения</button>
-        </form>
-        {%  include 'script.html'  %}
-            </td></tr>
-</tbody>
-        </table></div>
-
-      <td  width=50%>  
-          <div class="table-container">
-      <table border=2 style="position:relative;top:0;background-color:white;"  width=100% class="dif in" >
-        <thead>
-          <tr><th colspan=13>Ресурсы (остаточная доступность)<th></tr><tr><th>ФИО
-{% include 'moon.html' %}
-</thead><tbody>
-{% for tt in w4 %}
-<tr>
-{% for t in tt %}
-  <td>
-{{t}}
-</td>
-{% endfor %}
-
-</tr>
-
-{% endfor %}
-</tbody>
-      </table><
-      /div>    
+            {% endfor %}
+            <tr>
+              <td colspan=13>
+                <a href="/ar/0/{{r}}/0/" class="dda">подробнее</a>
+              </td>
+            <tr>
+          <tbody>
+        </table>
+      </div>
     </td>
-    </tr>
-  </table>
-    {% include 'js.html' %}
-    {% include 'menu.html' %}
+    <td width=50%>
+      <div class="table-container-2">
+        <table border=2 width=100% style="position:relative;top:0;background-color:white;" class=in>
+          <thead>
+            <tr>
+              <th colspan=13>
+       <a href="/mmr/0/{{r}}/{{j}}/" style="color: white" class="mmm">
+                Потребность
+                  </a>
+                  </th>
+            </tr>
+            <th>{{role}}
+              {% include 'moon.html' %}
+              {% for dem in w2 %}
+              <tr>
+                {% for t in dem %}
+
+                {% if forloop.first %} <td>
+                  <a href="/djr/0/{{t.r}}/{{t.j}}">
+                    {{t.val}}
+                  </a>
+                  {% else %}
+
+                <td class="good2" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+                  {{t.val}}
+                  {% endif %}
+                </td>
+
+
+
+                {% endfor %}
+              </tr> {% endfor %}
+
+              </tbody>
+
+        </table>
+      </div>
+      <form id="f20" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='dr'>
+        <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
+      </form>
+      {% include 'script2.html' %}
+
+
+
+
+
+    </td>
+  </tr>
+  <tr style="text-align:center;">
+
+    <td width=50%>
+
+      <div class="table-container">
+        <table border=2 width=100% style="position:relative;top:0;background-color:white;" class=in>
+          <thead>
+            <tr>
+              <th colspan=13>
+
+                <a href="/ur/0/{{r}}/0/" style="color:white;" class="uuu">
+                  Загрузки</a>
+
+              </th>
+            </tr>
+            <tr>
+              <th>{{role}}
+                {% include 'moon.html' %}
+          </thead>
+          <tbody>
+            {% for tt in w3 %}
+            <tr>
+              {% for t in tt %}
+              {% if forloop.first %}
+              {% if t|negative %}{% else %}
+              <td colspan=13>{{t}}</td>
+            </tr>
+            <tr>
+              {% endif %}
+              {% else %}
+              <td class="good" key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+                {{t.val}}
+              </td>
+              {% endif %}
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <form id="f10" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='dr'>
+        <button type="submit" class="button3 fixed-button1" disabled="true"> Сохранить изменения</button>
+      </form>
+      {% include 'script.html' %}
+
+    </td>
+    <td width=50%>
+      <div class="table-container">
+        <table border=2 style="position:relative;top:0;background-color:white;" width=100% class="dif in">
+          <thead>
+            <tr>
+              <th colspan=13>Ресурсы (остаточная доступность)
+              <th>
+            </tr>
+            <tr>
+              <th>ФИО
+                {% include 'moon.html' %}
+                {% for tt in w4 %}
+            <tr>
+              {% for t in tt %}
+              <td>
+                {{t}}
+              </td>
+              {% endfor %}
+
+            </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </td>
+  </tr>
+</table>
+{% include 'js.html' %}
+{% include 'menu.html' %}
 {% endblock %}

@@ -24,7 +24,7 @@
               {% for t in tt %}
               <td>
                 {% if t|isstr:'Дельта' %}
-                <a href="/djr/0/{{r}}/{{j}}/">{{t}}</a>
+                <a href="/djr/0/{{r}}/{{j}}/" class="aad">{{t}}</a>
                 {% else %}
                 {{t}}
                 {% endif %}
@@ -49,7 +49,7 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/mmjr/{{p}}/{{r}}/{{j}}" style="color:white;">Потребность</a>
+                <a href="/mmjr/{{p}}/{{r}}/{{j}}" style="color:white;"  class="mmm">Потребность</a>
               </th>
             </tr>
             <tr>
@@ -63,20 +63,18 @@
               {% endfor %}
 
             </tr>
-            <tr>
-              <td colspan=13 style="text-align:center;">
-                <form id="f20" method="POST">
-                  {% csrf_token %}
-                  <input type=hidden name="html" value='ajr'>
-                  <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
-                </form>
-                {% include 'script2.html' %}
 
-              </td>
-            </tr>
-
+            </tbody>
         </table>
       </div>
+      <form id="f20" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='ajr'>
+        <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
+      </form>
+      {% include 'script2.html' %}
+
+
 
     </td>
   </tr>
@@ -88,7 +86,7 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/ujr/0/{{r}}/{{j}}" style="color:white;">
+                <a href="/ujr/0/{{r}}/{{j}}" style="color:white;" class="uuu">
                   Загрузки</a>
               </th>
             </tr>
@@ -105,20 +103,18 @@
               </td>{% endfor %}
             </tr>
             {% endfor %}
-            <tr>
-              <td colspan=13 style="text-align:center;">
 
-
-                <form id="f10" method="POST">
-                  {% csrf_token %}
-                  <input type=hidden name="html" value='ajr'>
-                  <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
-                </form>
-                {% include 'script.html' %}
-              </td>
-            </tr>
             </tbody>
         </table>
+      </div>
+
+      <form id="f10" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='ajr'>
+        <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
+      </form>
+      {% include 'script.html' %}
+
     </td>
     <td width=50% style="vertical-align:top;">
       <div class="table-container">
@@ -138,6 +134,7 @@
 
             {% endfor %}
         </table>
+      </div>
     </td>
 
   </tr>

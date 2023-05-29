@@ -2,7 +2,7 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'menu.html' %}
-<h3 style="text-align:center;" >Все ресурсы - <a href="/dj/0/0/{{j}}/">{{project}}</a></h3>
+<h3 style="text-align:center;" >Все ресурсы - <a href="/dj/0/0/{{j}}/" class="mmb">{{project}}</a></h3>
 
 
 
@@ -18,8 +18,10 @@
       </td>
 {% endfor %}
 </tr>        {% endfor %}
-<tr style="text-align:center;">
-  <td colspan=13 style="text-align:center;">
+        </tbody>
+        </table>
+      
+      
   <form id="f20" method="POST"  style="text-align:center;">
   {% csrf_token %}
             <input type = hidden name="html" value='mmj'>
@@ -28,8 +30,7 @@
 </div>
 </form>
 {%  include 'script2.html'  %}
-    </td></tr>
-        </table>
+
 
 
     {% include 'js.html' %}

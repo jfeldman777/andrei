@@ -2,7 +2,8 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-<h3 style="text-align:center;">Проект {{project}} - Ресурс {{role}}</h3>
+<h3 style="text-align:center;">
+    <a href="/djr/0/{{role.id}}/{{project.id}}/" class="uuu">{{project}} - {{role}}</a></h3>
 
 <table border=2 width=100% style="position:relative;top:0; text-align:center;">
   <thead>
@@ -28,8 +29,8 @@
       </td>{% endfor %}
     </tr>
     {% endfor %}
-    <tr height=20px>
-      <td colspan=13 style="text-align:center; vertical-align:top;padding:0;">
+        </tbody>
+</table>
         <form id="f10" method="POST">
           {% csrf_token %}
           <input type=hidden name="html" value='ujr'>
@@ -37,9 +38,7 @@
           <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
         </form>
         {% include 'script.html' %}
-      </td>
-    </tr>
-</table>
+
 
 {% include 'js.html' %}
 {% include 'menu.html' %}

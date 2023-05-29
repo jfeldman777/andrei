@@ -3,7 +3,10 @@
 {% block content %}
 {% include 'scroll.html' %}
 {% include 'menu.html' %}
-<h3 style="text-align:center;">Проект {{project}}</h3>
+<h3 style="text-align:center;">
+    <a href="/dj/0/0/{{j}}/" class="uuu">
+    {{project}}</a>
+        </h3>
 
         <table border=2 width=100% style="position:relative;top:0;text-align:center;">
           <thead>
@@ -34,15 +37,14 @@
     
     {% endfor %}</tr>
 {% endfor %}
-<tr><td colspan=13 style="text-align:right;">
-
+</tbody>
+        </table>
   <form id="f10"  method="POST">
   {% csrf_token %}
             <input type = hidden name="html" value='uj'>
   <button type="submit" class="button3 fixed-button1"  disabled="true">Сохранить изменения</button></form>
 {%  include 'script.html'  %}
-</td></tr>
-        </table>
+
 
     {% include 'js.html' %}
 

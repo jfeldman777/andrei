@@ -1,35 +1,47 @@
-{% extends 'base1.html' %}
+{% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
 {% load static %}
 <style>
-    .table-container {
-  position: relative;
+    .container1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
   overflow: auto;
-  height: 400px; /* Укажите желаемую высоту контейнера таблицы */
 }
 
-thead {
-  position: sticky;
-  top: 0;
-  background-color: #ffff00; /* Задайте желаемый цвет фона заголовка */
-  z-index: 1;
+.inner-table1 {
+
+  max-height: 50vh; /* Ограничение высоты таблицы до половины высоты экрана */
+  overflow: auto; /* Добавление полосы прокрутки при необходимости */
+    
+    
+  margin-top: auto; /* Чтобы таблицы прижимались к верху контейнера, если таблицы верхнего ряда маленькие */
+  margin-bottom: auto; /* Чтобы таблицы прижимались к верху контейнера, если таблицы верхнего ряда маленькие */
+  margin: auto; /* Чтобы таблицы были выровнены по центру контейнера, если таблицы верхнего ряда большие */
+}
+
+/* Применить стили к внешней таблице и внутренним таблицам */
+.outer-table1,
+.inner-table1 {
+  width: 100%;
 }
 
 </style>
-<script>
-    window.addEventListener('DOMContentLoaded', function() {
-  var tableContainer = document.querySelector('.table-container');
-  tableContainer.addEventListener('scroll', function() {
-    var scrollLeft = this.scrollLeft;
-    var thead = this.querySelector('thead');
-    thead.style.transform = 'translateX(' + -scrollLeft + 'px)';
-  });
-});
-</script>
 
-<div class="table-container">
-    <table>
+
+
+
+<h1>hello</h1>
+<div class="container1">
+  <table class="outer-table1">
+    <!-- Внешняя таблица -->
+    <tr>
+      <td>
+        <table class="inner-table1">
+    
         <thead>
         <tr>
             <th>Заголовок 1</th>
@@ -39,7 +51,7 @@ thead {
         </thead>
         <tbody>
         <tr>
-            <td>11</td>
+            <td>5555</td>
             <td>22</td>
             <td>33</td>
         </tr>        <tr>
@@ -133,6 +145,332 @@ thead {
         </tr>
         </tbody>
     </table>
+  
+      </td>
+        <td>
+             
+      <table class="inner-table1">
+        <thead>
+        <tr>
+            <th>Заголовок 1</th>
+            <th>Заголовок 2</th>
+            <th>Заголовок 3</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>16666</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>
+        </tbody>
+    </table>
+        
+        
+        
+        </td>
+        
+        </tr>
+        <tr>
+        
+      <td>
+        <table class="inner-table1">
+ <table>
+        <thead>
+        <tr>
+            <th>Заголовок 1</th>
+            <th>Заголовок 2</th>
+            <th>Заголовок 3</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>7777</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>
+        </tbody>
+    </table>
+          </td><td>
+        
+        
+              <table class="inner-table1">
+        <thead>
+        <tr>
+            <th>Заголовок 1</th>
+            <th>Заголовок 2</th>
+            <th>Заголовок 3</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1888881</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>        <tr>
+            <td>11</td>
+            <td>22</td>
+            <td>33</td>
+        </tr>
+        </tbody>
+    </table>
+            
+            </td>
+   </tr>
+  </table>
+</div>
+
+
+
+
+
+
+<div class="table-container">
+    
+    
+    
+    
+   
 </div>
 
 {% endblock %}
