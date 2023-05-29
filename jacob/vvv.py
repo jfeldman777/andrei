@@ -914,10 +914,7 @@ def ar(request, p, r, j):
     moon12["j"] = 0
     moon12["p"] = 0
     
-    root = tk.Tk()
-# Получение высоты экрана
-    screen_height = root.winfo_screenheight()
-    moon12["sh"] = screen_height 
+
     return render(request, 'ar.html', moon12)
 
 
