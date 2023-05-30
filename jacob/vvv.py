@@ -9,7 +9,11 @@ from django.db.models import Q
 
 
 def up(a, b):
-    return f"надо:{a}/есть:{b}"
+    if b<0:
+        c='unlimited'
+    else:
+        c=b
+    return f"надо:{a}/есть:{c}"
 
 def eva(request, fun):
     return eval(f"{fun}(request)")
@@ -1423,51 +1427,51 @@ def mjr(request, p, r, j):  # максимальна доступность од
     moon12["role"] = role
 
     return render(request, 'mjr.html', moon12)
-
-
-def mr2(request, p, r, j):  # максимальна доступность одного ресурса и Остаточная доступность
-    moon12 = moon()
-    dif14 = []
-    dif15 = []
-    try:
-        role = Role.objects.filter(id=r)[0]
-    except:
-        role = None
-    
-    
-    people_rr = people_of_rr(role)
-
-    for person in people_rr:
-        dif = pr_isfree_(person, role)
-
-        dif100 = [0] * 12
-        da = date.today().replace(day=15)
-        for i in range(12):
-            dif100[i] = {"link": f"{person.id}.0.0.{da.year}-{da.month}-15",
-                         "up": up(1, 2),
-                         "title": dif[i]}  # 9898
-            da = inc(da)
-        dif14.append([person.fio] + dif100)  ######################
-
-    for person in people_rr:
-        dif = pr_dif_(person, role)
-
-        dif100 = [0] * 12
-        da = date.today().replace(day=15)
-        for i in range(12):
-            dif100[i] = {"link": f"{person.id}.0.0.{da.year}-{da.month}-15",
-
-                         "title": dif[i]}  # 9898
-            da = inc(da)
-        dif15.append([person.fio] + dif100)  ######################
-
-    moon12["dif14"] = dif14
-
-    moon12["dif15"] = dif15
-    moon12["r"] = r
-    moon12["role"] = role
-
-    return render(request, 'mr2.html', moon12)
+#
+#
+#def mr2(request, p, r, j):  # максимальна доступность одного ресурса и Остаточная доступность
+#    moon12 = moon()
+#    dif14 = []
+#    dif15 = []
+#    try:
+#        role = Role.objects.filter(id=r)[0]
+#    except:
+#        role = None
+#    
+#    
+#    people_rr = people_of_rr(role)
+#
+#    for person in people_rr:
+#        dif = pr_isfree_(person, role)
+#
+#        dif100 = [0] * 12
+#        da = date.today().replace(day=15)
+#        for i in range(12):
+#            dif100[i] = {"link": f"{person.id}.0.0.{da.year}-{da.month}-15",
+#                         "up": up(1, 2),
+#                         "title": dif[i]}  # 9898
+#            da = inc(da)
+#        dif14.append([person.fio] + dif100)  ######################
+#
+#    for person in people_rr:
+#        dif = pr_dif_(person, role)
+#
+#        dif100 = [0] * 12
+#        da = date.today().replace(day=15)
+#        for i in range(12):
+#            dif100[i] = {"link": f"{person.id}.0.0.{da.year}-{da.month}-15",
+#
+#                         "title": dif[i]}  # 9898
+#            da = inc(da)
+#        dif15.append([person.fio] + dif100)  ######################
+#
+#    moon12["dif14"] = dif14
+#
+#    moon12["dif15"] = dif15
+#    moon12["r"] = r
+#    moon12["role"] = role
+#
+#    return render(request, 'mr2.html', moon12)
 
 
 def mr1(request, p, r, j):  # максимальна доступность одного ресурса и Остаточная доступность
