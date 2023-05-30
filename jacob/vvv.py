@@ -5,15 +5,13 @@ from django.shortcuts import render
 from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
-
+import csv
 
 
 def up(a, b):
     if b<0:
-        c='unlimited'
-    else:
-        c=b
-    return f"надо:{a}/есть:{c}"
+        return f"надо:{a}"
+    return f"надо:{a}/есть:{b}"
 
 def eva(request, fun):
     return eval(f"{fun}(request)")
