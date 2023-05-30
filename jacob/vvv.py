@@ -566,7 +566,7 @@ def uj(request, p, r, j):
 
     moon12["w3"] = w3
 
-    moon12["role"] = role
+    moon12["role"] = "Все ресурсы"
 
     moon12["project"] = project
     moon12["id"] = j
@@ -917,7 +917,7 @@ def ar(request, p, r, j):
     moon12["w1"] = w1  ###############################
     moon12["w3"] = w3
 
-    moon12["project"] = project
+    moon12["project"] = "Все проекты"
     moon12["role"] = role
     moon12["r"] = r
     moon12["j"] = 0
@@ -1027,7 +1027,7 @@ def dr(request, p, r, j):
     moon12["r"] = r
     moon12["j"] = 0
     moon12["p"] = 0
-    moon12["project"] = project
+    moon12["project"] = "Все проекты"
 
     return render(request, 'dr.html', moon12)
 
@@ -1222,7 +1222,7 @@ def aj(request, p, r, j):  # Альфа, один проект
     moon12["w3"] = w3
     moon12["w4"] = w4
 
-    moon12["role"] = role
+    moon12["role"] = "Все ресурсы"
 
     moon12["project"] = project
     moon12["id"] = j
@@ -1303,7 +1303,7 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
 
     moon12["w2"] = w2
 
-    moon12["role"] = role
+    moon12["role"] = "Все ресурсы"
 
     moon12["project"] = project
     moon12["j"] = j
@@ -1344,7 +1344,7 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
 
     moon12["role"] = role
 
-    moon12["project"] = project
+    moon12["project"] = "Все проекты"
     moon12["j"] = j
     moon12["r"] = r
     moon12["id"] = j
@@ -1652,6 +1652,7 @@ def s1(request):
     p = 0
     r = 0
     j = 0
+    html=''
     if request.method == "POST":
         form = Form(request.POST)
         if form.is_valid():

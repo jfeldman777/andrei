@@ -1,50 +1,53 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'menu.html' %}
-<h3 style="text-align: center;">Портфель проектов</h3>
-<div style=" top:50; width: 100%; text-align:center;   padding: 2px;">
-  <table border=1 style="position:relative;top:0;text-align:center;" width=100%>
-    <thead>
+{% load static %}
+{% include 'scroll.html' %}
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>Дорожная карта</h4>
+</div>
+<table border=1 style="position:absolute;top:80px;left:0;text-align:center;" width=100% class="dif">
+  <thead>
 
-      <tr width=100% style="text-align: center;  padding: 5px;">
-        <th colspan="17">Проекты</th>
-      </tr>
-      <th style="text-align: center; ">РП</th>
-      <th style="text-align: center;  padding: 5px;"> <a href="/form/" style="color:white;">
-          Название</a>
-      </th>
-      <th style="text-align: center;  padding: 5px;">Начало</th>
-      <th style="text-align: center;  padding: 5px;">Окончание</th>
-      <th style="text-align: center;  padding: 5px;">Длит<br>(мес)</th>
+    <tr width=100% style="text-align: center;  padding: 5px;">
+      <th colspan="17">Проекты</th>
+    </tr>
+    <th style="text-align: center; ">Руководители</th>
+    <th style="text-align: center;  padding: 5px;"> <a href="/form/" style="color:white;">
+        Название</a>
+    </th>
+    <th style="text-align: center;  padding: 5px;">Начало</th>
+    <th style="text-align: center;  padding: 5px;">Окончание</th>
+    <th style="text-align: center;  padding: 5px;">Длит<br>(мес)</th>
 
-      {% include 'moon.html' %}
+    {% include 'moon.html' %}
 
 
-      {% for row in matrix %}
-      <tr style="text-align: center;  padding: 5px;">
-        {% for cell in row %}
-        {% if cell|isBool %}
-        <td class="{% if cell %}true{% else %}false{% endif %}">
-          {% if cell %}*{% else %}-{% endif %}
-        </td>
+    {% for row in matrix %}
+    <tr style="text-align: center;  padding: 5px;">
+      {% for cell in row %}
+      {% if cell|isBool %}
+      <td class="{% if cell %}true{% else %}false{% endif %}">
+        {% if cell %}*{% else %}-{% endif %}
+      </td>
+      {% else %}
+      <td style="text-align: center; ">
+        {% if cell|isObject %}
+        <a href="/form/{{cell.id}}/">
+
+
+          {{cell.title}}
+        </a>
         {% else %}
-        <td style="text-align: center; ">
-          {% if cell|isObject %}
-          <a href="/form/{{cell.id}}/">
-
-
-            {{cell.title}}
-          </a>
-          {% else %}
-          {{cell}}
-          {% endif %}
-        </td>
+        {{cell}}
         {% endif %}
-        {% endfor %}
-      </tr>
+      </td>
+      {% endif %}
       {% endfor %}
-  </table>
+    </tr>
+    {% endfor %}
+</table>
 
 </div>
 

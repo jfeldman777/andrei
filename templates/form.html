@@ -2,17 +2,23 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-{% include 'menu.html' %}
+{% include 'menu2.html' %}
 
-<h3 style="align-items: left">Проект</h3><div style="text-align: center">
-<!-- my_template.html -->    <table border=1 style="position:relative;top:0;background-color:white;" 
-      width=40% class=in>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_table }}<tr><td>
-    <button type="submit"  class="button3">Сохранить</button></td></tr>
-</form>
-</table>
+<div class="bar">
+    <h4>Проект:</h4>
 </div>
+
+
+<table border=2 width=30% style="position:absolute;top:80px;padding:5px;text-align:right;" id=t00>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_table }}<tr>
+            <td colspan="2">
+                <button type="submit" class="button3">Изменить или создать</button>
+            </td>
+        </tr>
+    </form>
+</table>
+
 
 {% endblock %}

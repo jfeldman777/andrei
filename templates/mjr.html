@@ -24,10 +24,7 @@
     <td>{{t}}</td>
 
     {% else %}
-    <td class="good"
-        action="/sm/"
-        fname="f10"        
-        key="{{t.link}}">
+    <td class="good" action="/sm/" fname="f10" key="{{t.link}}">
       {{t.title}}
     </td>
     {% endif %}
@@ -45,7 +42,7 @@
         <input type=hidden name="r" value='{{r}}'>
         <button type="submit" class="button3 fixed-button1" disabled="true">Сохранить изменения</button>
       </form>
-   
+
 
     </td>
   </tr>
@@ -80,6 +77,6 @@
 
 
 </table>
-   {% include 'script.html' %}
+{% include 'script.html' %}
 {% include 'js.html' %}
 {% endblock %}

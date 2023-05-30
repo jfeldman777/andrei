@@ -1,16 +1,16 @@
 <script>
-var f1='f10'
-const s1 = '/s1/'
-var element;
-    var a ="/s1/";
+  var f1 = 'f10'
+  const s1 = '/s1/'
+  var element;
+  var a = "/s1/";
 
   $('td.good').click(function () {
 
     var p = $(this).attr("key");
-    a =  $(this).attr("action");
-    f1 =   $(this).attr("fname"); 
-      
-      
+    a = $(this).attr("action");
+    f1 = $(this).attr("fname");
+
+
     var originalValue = $(this).text();
 
     var x = $.trim(originalValue);
@@ -19,29 +19,29 @@ var element;
     var ID = new Date().getTime();
     $(this).html('<input type="text" id=' + ID + ' size="1" maxlength="4" value="' + x + '">');
 
- element = document.getElementById(ID);
+    element = document.getElementById(ID);
     element.focus();
-      
+
 
 
     $(this).on('keypress', '#' + ID, function (event) {
-       
+
       if (event.which === 13) { // 13 соответствует клавише Enter
         element.blur();
-  
+
       }
     });
 
 
 
 
-  $('td input').focusout(function () {
+    $('td input').focusout(function () {
 
       var newValue = $(this).val();
-      
+
       var iV = parseInt(newValue)
-      if(iV == NaN || iV < 0) return;
-      
+      if (iV == NaN || iV < 0) return;
+
       $(this).parent().text(newValue + '@');
 
       var form = document.getElementById(f1);

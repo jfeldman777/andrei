@@ -2,19 +2,21 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-{% include 'menu.html' %}
-
-<h3 style="text-align: center;">Ресурсы (максимальная доступность)</h3>
-<table border=1 style="position:relative;top:0;text-align:center;" width=100% class="dif">
+{% include 'scroll.html' %}
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>Ресурсы (максимальная доступность)</h4>
+</div>
+<table border=1 style="position:absolute;top:80px;left:0;text-align:center;" width=100% class="dif">
   <thead>
 
     <tr>
       <th>
-<form id="f10" method="POST">
-  {% csrf_token %}
-  <input type=hidden name="html" value='mrom'>
-  <button type="submit" class="button3" disabled="true">Сохранить</button>
-</form>
+        <form id="f10" method="POST">
+          {% csrf_token %}
+          <input type=hidden name="html" value='mrom'>
+          <button type="submit" class="button3" disabled="true">Сохранить</button>
+        </form>
 
         {% include 'moon.html' %}
         {% for tt in dif14 %}
@@ -34,11 +36,7 @@
 
 
       {% else %}
-      <td style="background-color:{{t.color}};" class="good" 
-          
-        action = "/sm/"
-          fname="f10"
-          key="{{t.link}}">
+      <td style="background-color:{{t.color}};" class="good" action="/sm/" fname="f10" key="{{t.link}}">
 
         {{t.val}}{% if t.fire %}
         <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
@@ -52,8 +50,5 @@
 </table>
 
 {% include 'script.html' %}
-
-
-
 {% include 'js.html' %}
 {% endblock %}

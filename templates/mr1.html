@@ -2,26 +2,29 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-{% include 'menu.html' %}
-<h3>{{role}}</h3>
-
-<table border=1 style="position:relative;top:0;text-align:center;" width=100% class="dif">
+{% include 'scroll.html' %}
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>Ресурс: {{role}} (максимальная доступность)</h4>
+</div>
+<table border=1 style="position:absolute;top:80px;left:0;text-align:center;" width=100% class="dif">
   <thead>
     <tr>
-      <th colspan=13> <a href="/mrom/" style="color: white"  class="mmm">
+      <th colspan=13>
+        <a href="/mrom/" style="color: white" class="mmm">
           Ресурсный пул (максимальная доступность)
-          </a>
-        </th>
+        </a>
+      </th>
     </tr>
     <tr>
       <th rowspan=2>
-         <form id="f10" method="POST">
-  {% csrf_token %}
-  <input type=hidden name="html" value=''>
+        <form id="f10" method="POST">
+          {% csrf_token %}
+          <input type=hidden name="html" value=''>
 
-  <button type="submit" class="button3" disabled="true">Сохранить</button>
-</form>
-        </th>
+          <button type="submit" class="button3" disabled="true">Сохранить</button>
+        </form>
+      </th>
     </tr>
     {% include 'moon.html' %}
     {% for tt in dif14 %}
@@ -33,11 +36,7 @@
       <td>{{t}}</td>
 
       {% else %}
-      <td style="background-color:{{t.color}};" class="good" 
-          action = "/sm/"
-          fname="f10"
-          
-          key="{{t.link}}">
+      <td style="background-color:{{t.color}};" class="good" action="/sm/" fname="f10" key="{{t.link}}">
 
 
 
@@ -55,8 +54,5 @@
 </table>
 
 {% include 'script.html' %}
-
-
-
 {% include 'js.html' %}
 {% endblock %}

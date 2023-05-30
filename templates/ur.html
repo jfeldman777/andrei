@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
+
+
 {% block content %}
 {% include 'scroll.html' %}
-<h3 style="text-align:center;"><a href="/dr/0/{{r}}/0/" class="uuu">
-    {{role}}</a></h3>
 
-<table border=1 width=100% style="position:relative;top:0;background-color:white;text-align:center" class=in>
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>Все проекты - Ресурс: {{role}}</h4>
+</div>
+<table border=1 style="position:absolute;top:80px;text-align:center;" width=100%>
   <thead>
     <tr>
       <th colspan=13>
@@ -16,12 +20,12 @@
     </tr>
     <tr>
       <th>
-          <form id="f10" method="POST">
-  {% csrf_token %}
-  <input type=hidden name="html" value='ur'>
-  <button type="submit" class="button3" disabled="true"> Сохранить</button>
-</form>
-{% include 'script.html' %}
+        <form id="f10" method="POST">
+          {% csrf_token %}
+          <input type=hidden name="html" value='ur'>
+          <button type="submit" class="button3" disabled="true"> Сохранить</button>
+        </form>
+
         {% include 'moon.html' %}
   </thead>
   <tbody>
@@ -38,10 +42,8 @@
       {% else %}
 
 
-      <td class="good" 
-          action="/s1/"
-          fname="f10"
-          key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
+      <td class="good" action="/s1/" fname="f10" key="{{t.link}}" title="{{t.up}}"
+        style="background-color:{{t.color}};">
         {{t.val}}
       </td>
       {% endif %}
@@ -50,8 +52,7 @@
     {% endfor %}
   </tbody>
 </table>
-
+{% include 'script.html' %}
 
 {% include 'js.html' %}
-{% include 'menu.html' %}
 {% endblock %}

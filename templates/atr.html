@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'menu.html' %}
-<h3 style="text-align:center;">Ресурсы</h3>
-<table border="2" cellspacing="0" cellpadding="5" style="position:relative;text-align: center;">
+{% include 'scroll.html' %}
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>Руководители ресурсных пулов</h4>
+</div>
+<table border="1" cellspacing="0" cellpadding="5" width=100%
+  style="position:absolute;top:80px;left:0;text-align: center; background-color:#FFF;">
+
   <thead>
     <tr>
       <th>Руководители ресурсных пулов</th>
@@ -11,9 +16,8 @@
       <th>доступность максимальная</th>
       <th>доступность оставшаяся</th>
       <th>баланс </th>
-<!--      <th>дельта </th>-->
       <th>назначения</th>
-  
+
     </tr>
 
     <tr>
@@ -44,14 +48,8 @@
           смотреть
         </a>
       </td>
-<!--
-        <td style="text-align: center; ">
-        <a href="/dr/0/{{cell.r}}/0/">
-          смотреть
-        </a>
-      </td>
--->
-        <td style="text-align: center; ">
+
+      <td style="text-align: center; ">
         <a href="/ur/0/{{cell.r}}/0/">
           изменить
         </a>

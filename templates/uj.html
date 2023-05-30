@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
+
+
 {% block content %}
 {% include 'scroll.html' %}
-{% include 'menu.html' %}
-<h3 style="text-align:center;">
-  <a href="/dj/0/0/{{j}}/" class="uuu">
-    {{project}}</a>
-</h3>
 
-<table border=1 width=100% style="position:relative;top:0;text-align:center;">
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>Проект: {{project}} - Все ресурсы</h4>
+</div>
+
+<!-- <table border=1 width=100% style=" height: 100vh; position:absolute;top:78px" id=t00> -->
+<table border=1 style="position:absolute;top:80px;text-align:center;" width=100%>
   <thead>
     <tr>
       <th colspan=13>
@@ -18,12 +21,13 @@
       </th>
     </tr>
     <tr>
-      <th><form id="f10" method="POST">
-  {% csrf_token %}
-  <input type=hidden name="html" value='uj'>
-  <button type="submit" class="button3" disabled="true">Сохранить</button>
-</form>
-{% include 'script.html' %}
+      <th>
+        <form id="f10" method="POST">
+          {% csrf_token %}
+          <input type=hidden name="html" value='uj'>
+          <button type="submit" class="button3" disabled="true">Сохранить</button>
+        </form>
+
         {% include 'moon.html' %}
 
         {% for tt in w3 %}
@@ -38,10 +42,8 @@
       {% endif %}
       {% else %}
 
-      <td class="good" 
-          action="/s1/"
-          fname="f10"
-          key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
+      <td class="good" action="/s1/" fname="f10" key="{{t.link}}" title="{{t.up}}"
+        style="background-color:{{t.color}};">
         {{t.val}}
       </td>
       {% endif %}
@@ -54,7 +56,7 @@
     </tbody>
 </table>
 
-
+{% include 'script.html' %}
 
 {% include 'js.html' %}
 

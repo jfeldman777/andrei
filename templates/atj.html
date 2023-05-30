@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
+{% include 'scroll.html' %}
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>Руководители проектов</h4>
+</div>
 
-{% include 'menu.html' %}
 
-<h3 style="text-align:center;">Проекты</h3>
-<table border="2" cellspacing="0" cellpadding="5" style="position:relative;text-align: center; background-color:#FFF;">
+
+<table border="1" cellspacing="0" cellpadding="5" width=100%
+  style="position:absolute;top:80px;left:0;text-align: center; background-color:#FFF;">
   <thead>
     <tr>
       <th>Руководители проектов</th>
       <th>проекты</th>
       <th>потребность в ресурсах</th>
       <th>баланс </th>
-<!--      <th>дельта </th>-->
+
       <th>назначения</th>
     </tr>
 
@@ -39,14 +44,8 @@
         </a>
       </td>
 
-<!--
+
       <td style="text-align: center; ">
-        <a href="/dj/0/0/{{cell.j}}">
-          смотреть
-        </a>
-      </td>
--->
-        <td style="text-align: center; ">
         <a href="/uj/0/0/{{cell.j}}">
           изменить
         </a>

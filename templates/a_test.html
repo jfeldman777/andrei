@@ -2,67 +2,144 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-{% extends 'base.html' %}
-{% load custom_filters %}
-{% block content %}
-{% load static %}
 
 <style>
+    .bar {
+        position: fixed;
+        /* This will make the navbar stick to the top */
+        top: 40px;
+        /* This positions the navbar at the very top of the page */
+        left: 0;
+        /* This positions the navbar at the very top of the page */
 
-    
-#drag-container {
-  margin-bottom: 20px;
-}
+        width: 100%;
+        /* This will stretch the navbar across the entire width of the screen */
+        overflow: hidden;
+        background-color: rgba(0, 255, 255, 1);
+        z-index: 1;
+    }
 
-#drag-button {
-  padding: 10px 20px;
-  background-color: red;
-  color: #000000;
-  cursor: move;
-}
 
-#drop-container {
-  width: 200px;
-  height: 200px;
-  border: 2px dashed #D5D8DC;
-  padding: 20px;
-  text-align: center;
-}
+    .navbar {
+        position: fixed;
+        /* This will make the navbar stick to the top */
+        top: 0;
+        /* This positions the navbar at the very top of the page */
+        left: 0;
+        /* This positions the navbar at the very top of the page */
 
-    
+        width: 100%;
+        /* This will stretch the navbar across the entire width of the screen */
+        overflow: hidden;
+        background-color: rgba(0, 0, 255, 1);
+        z-index: 2;
+    }
+
+    .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 0px 0px;
+        text-decoration: none;
+    }
+
+    .dropdown {
+        float: left;
+        overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 0px 0px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+    }
+
+    .navbar a:hover,
+    .dropdown:hover .dropbtn {
+        background-color: cornflowerblue;
+        shape-outside: content-box;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        /* This will position the dropdown content relative to the viewport */
+        top: 30px;
+        /* This positions the dropdown content just below the navbar and the dropdown button */
+        right: inherit;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+
+
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 0px 0px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 </style>
+<div class="navbar">
+    <div style="color:white">Инструмент ресурсного планирования</div>
 
-    <div id="drag-container">
-  <button id="drag-button" draggable="true">Drag and Drop Button</button>
+    <div class="dropdown">
+        <button class="dropbtn">Проекты
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+        </div>
+
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Ресурсы
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+        </div>
+
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Балансы
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+        </div>
+
+    </div>
+    <a href="#about">Домой</a>
 </div>
-
-<div id="drop-container">
-  <p>Drop Here</p>
+<div class="bar">
+    <h4>Проект: Телескоп - Ресурс: Аналитик</h4>
 </div>
-
-<script>
-var dragButton = document.getElementById('drag-button');
-var dropContainer = document.getElementById('drop-container');
-
-dragButton.addEventListener('dragstart', function(event) {
-  event.dataTransfer.setData('text/plain', 'Dragged Button');
-});
-
-dropContainer.addEventListener('dragover', function(event) {
-  event.preventDefault();
-});
-
-dropContainer.addEventListener('drop', function(event) {
-  event.preventDefault();
-  var draggedData = event.dataTransfer.getData('text/plain');
-  event.target.textContent = draggedData;
-});
-
-</script>
-    
-
-
-{% endblock %}
-
 
 {% endblock %}

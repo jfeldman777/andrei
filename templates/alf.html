@@ -2,79 +2,82 @@
 {% load custom_filters %}
 {% load static %}
 {% block content %}
-{% include 'menu.html' %}
-<hr>
-<h3>Инструмент ресурсного планирования</h3>
-<ol>
+{% include 'menu2.html' %}
+<div class="bar">
+    <h4>Главная страница</h4>
+</div>
+<div style="position:absolute;top:80px;left:0;">
+    <ol>
 
-    <li>Проекты
-        <ol>
-            <li>(*)<a href="/admin/" class="home01">Добавить, изменить, удалить</a></li>
-            <li><a href="/prjlist/" class="home2"> Портфель проектов</a></li>
-        </ol>
+        <li>Проекты
+            <ol>
+                <li>(*)<a href="/admin/" class="home01">Добавить, изменить, удалить</a></li>
+                <li><a href="/prjlist/" class="home2"> Портфель проектов</a></li>
+            </ol>
 
-    </li>
-    <li>
-        Люди
-        <ol>
-            <li>(*)<a href="/admin/">Добавить, изменить, удалить</a></li>
-            <li>(*)<a href="/admin/">Назначить человека на роль</a></li>
+        </li>
+        <li>
+            Люди
+            <ol>
+                <li>(*)<a href="/admin/">Добавить, изменить, удалить</a></li>
+                <li>(*)<a href="/admin/">Назначить человека на роль</a></li>
 
-        </ol>
+            </ol>
 
-    </li>
-    <li> Ресурсы (роли)
-        <ol>
-            <li>(*)<a href="/admin/">Добавить, изменить, удалить</a></li>
+        </li>
+        <li> Ресурсы (роли)
+            <ol>
+                <li>(*)<a href="/admin/">Добавить, изменить, удалить</a></li>
 
-            <li><a href="/mro/" class="home3">Увидеть остаточную доступность всех</a></li>
+                <li><a href="/mro/" class="home3">Увидеть остаточную доступность всех</a></li>
 
-            <li><a href="/mrom/" class="home4">Увидеть максимальную доступность всех</a>
-            </li>
+                <li><a href="/mrom/" class="home4">Увидеть максимальную доступность всех</a>
+                </li>
 
-        </ol>
-    </li>
+            </ol>
+        </li>
 
-    <li>Руководитель проекта<ol>
+        <li>Руководитель проекта<ol>
 
-            <li>
-                <a href="/atj/" class="home5"> Выставить потребность по ресурсам </a>
-            </li>
-
-
-        </ol>
-
-    </li>
-    <li>Руководитель ресурса<ol>
-            <li><a href="/atr/" class="home6">
-                    Выставить максимальную доступность</a>
-
-            </li>
+                <li>
+                    <a href="/atj/" class="home5"> Выставить потребность по ресурсам </a>
+                </li>
 
 
+            </ol>
 
-        </ol>
+        </li>
+        <li>Руководитель ресурса<ol>
+                <li><a href="/atr/" class="home6">
+                        Выставить максимальную доступность</a>
 
-
-    </li>
-    <li>
-        Потребности, назначения, балансировка
+                </li>
 
 
 
-        <ol>
-            <li><a href="/b/1" class="home7">на один месяц вперед</a></li>
+            </ol>
 
-            <li><a href="/b/3" class="home8">на три месяца вперед</a></li>
-            <li><a href="/b/6" class="home9">на полгода вперед</a></li>
 
-            <li><a href="/b/12" class="home10">на год вперед</a>
-            </li>
+        </li>
+        <li>
+            Потребности, назначения, балансировка
 
-        </ol>
-    </li>
 
-</ol>
-</form>
+
+            <ol>
+                <li><a href="/b/1" class="home7">на один месяц вперед</a></li>
+
+                <li><a href="/b/3" class="home8">на три месяца вперед</a></li>
+                <li><a href="/b/6" class="home9">на полгода вперед</a></li>
+
+                <li><a href="/b/12" class="home10">на год вперед</a>
+                </li>
+
+            </ol>
+        </li>
+
+    </ol>
+    </form>
+</div>
 </div>
 {% endblock %}

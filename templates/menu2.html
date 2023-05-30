@@ -1,141 +1,142 @@
-
 <style>
-.under-table{
-  position: fixed;
-  bottom: 0;
-  left:0;
+    .bar {
+        position: fixed;
+        /* This will make the navbar stick to the top */
+        top: 42px;
+        /* This positions the navbar at the very top of the page */
+        left: 0;
+        /* This positions the navbar at the very top of the page */
 
-}
-  .button-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  .top-left-button {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
-
-  .top-right-button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-  }
+        width: 100%;
+        /* This will stretch the navbar across the entire width of the screen */
+        overflow: hidden;
+        background-color: white;
+        z-index: 100;
+        font-family: cursive;
+        padding: inherit;
+    }
 
 
-    .hidden {
-  display: none;
-}
+    .navbar {
+        position: fixed;
+        /* This will make the navbar stick to the top */
+        top: 0;
+        /* This positions the navbar at the very top of the page */
+        left: 0;
+        /* This positions the navbar at the very top of the page */
 
+        width: 100%;
+        /* This will stretch the navbar across the entire width of the screen */
+        overflow: hidden;
+        background-color: rgba(0, 0, 255, 1);
+        z-index: 200;
+    }
+
+    .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 0px 0px;
+        text-decoration: none;
+    }
+
+    .dropdown {
+        float: left;
+        overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 0px 0px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+    }
+
+
+    .navbar a:hover,
+    .dropdown:hover .dropbtn {
+        background-color: cornflowerblue;
+        shape-outside: content-box;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        /* This will position the dropdown content relative to the viewport */
+        top: 30px;
+        /* This positions the dropdown content just below the navbar and the dropdown button */
+        right: inherit;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+
+
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 0px 0px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 </style>
-<div class="button-container">
-  <button class="top-left-button"
-id="toggleButton"
-onclick="const menu = document.getElementById('qqq');
-menu.classList.toggle('hidden');">Меню</button>
-<button class="top-right-button" onclick="location.href='/'">Домой</button>
-</div>
+{% load static %}
+<div class="navbar">
 
 
-<div id="qqq">
-<nav class="navbar" style="position:absolute;top:0;left:0;">
-  <div class="container">
-    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <!-- Остальные элементы навбара -->
+    <div style="color:white">Инструмент ресурсного планирования</div>
 
-<!-- Header -->
-<header class="navbar navbar-expand-lg navbar-end mb-3" >
-  <div class="container">
-    <div class="navbar-nav-wrap">
+    <div class="dropdown">
+        <button class="dropbtn">Проекты
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/prjlist/" style="padding:10px;">Дорожная карта</a>
+            <a href="/atj/" style="padding:10px;">Руководители проектов</a>
 
-      <!-- Toggle -->
-      <button type="button" class="navbar-toggler ms-auto" data-bs-toggle="collapse" data-bs-target="#navbarNavMenu"
-       aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbarNavMenu">
-        <span class="navbar-toggler-default">
-          <i class="bi-list"></i>
-        </span>
-        <span class="navbar-toggler-toggled">
-          <i class="bi-x"></i>
-        </span>
-      </button>
-      <!-- End Toggle -->
-
-      <nav class="navbar-nav-wrap-col collapse navbar-collapse" id="navbarNavMenu">
-        <!-- Navbar -->
-
-
-        <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdownSubMenu"
-            role="button" data-bs-toggle="dropdown" aria-expanded="false">Проекты</a>
-
-            <div class="dropdown-menu" aria-labelledby="dropdownSubMenu"
-            style="min-width: 230px;">
-              <a class="dropdown-item" href="/prjlist/">Портфель</a>
-
-
-              <a class="dropdown-item" href="/atj/">Руководители</a>
-
-            </div>
-          </li>
-          <!-- Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#"
-            id="dropdownSubMenu" role="button" data-bs-toggle="dropdown"
-             aria-expanded="false">Ресурсы</a>
-
-            <div class="dropdown-menu" aria-labelledby="dropdownSubMenu"
-             style="min-width: 230px;">
-              <a class="dropdown-item" href="/mro/" >Все ресурсы оставшиеся</a>
-
-
-
-              <a class="dropdown-item" href="/mrom/">Все ресурсы максимальные</a>
-
-              <a class="dropdown-item" href="/atr/">Руководители</a>
-            </div>
-          </li>
-          <!-- End Dropdown -->
-
-
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdownSubMenu"
-            role="button" data-bs-toggle="dropdown" aria-expanded="false">Балансы</a>
-
-            <div class="dropdown-menu" aria-labelledby="dropdownSubMenu"
-            style="min-width: 230px;">
-              <a class="dropdown-item" href="/b/1">за месяц</a>
-
-                <a class="dropdown-item" href="/b/3">за три</a>
-
-                  <a class="dropdown-item" href="/b/6">за шесть</a>
-
-                    <a class="dropdown-item" href="/b/12">за двенадцать</a>
-
-            </div>
-          </li>
-
-
-        </ul>
-        <!-- End Navbar -->
-      </nav>
+        </div>
 
     </div>
-  </div>
-</header>
-<!-- End Header -->
+    <div class="dropdown">
+        <button class="dropbtn">Ресурсы
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/mrom/" style="padding:10px;">Максимальная доступность</a>
+            <a href="/mro/" style="padding:10px;">Остаточная доступность</a>
+            <a href="/atr/" style="padding:10px;">Руководители ресурсных пулов</a>
+        </div>
 
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Балансы
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/b/1/" style="padding:10px;">на месяц</a>
+            <a href="/b/3/" style="padding:10px;">на 3 месяца</a>
+            <a href="/b/6/" style="padding:10px;">на 6 месяцев</a>
+            <a href="/b/12/" style="padding:10px;">на 12 месяцев</a>
+        </div>
+
+    </div>
+    <a href="/">Домой</a>
 </div>
-</nav>
-      </div>

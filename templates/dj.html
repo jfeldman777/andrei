@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
+
+
 {% block content %}
 {% include 'scroll.html' %}
 
-<table border=1 width=100%>
-  <tr>
-    <td colspan=2>
-      <h3 style="text-align:center;">Все ресурсы - {{project}}</h3>
-    <td>
-  </tr>
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>Проект: {{project}} - Все ресурсы</h4>
+</div>
+<table border=1 width=100% style=" height: 100vh; position:absolute;top:78px" id=t00>
   <tr style="text-align:center;">
     <td width=50%>
 
@@ -40,7 +41,7 @@
 
             {% endfor %}<tr>
               <td colspan=13>
-                <a href="/aj/0/0/{{j}}/" class="dda" >подробнее</a>
+                <a href="/aj/0/0/{{j}}/" class="dda">подробнее</a>
               </td>
             <tr>
               </tbody>
@@ -53,17 +54,17 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/mmj/{{p}}/{{r}}/{{j}}" style="color:white;"  class="mmm">Потребность</a>
+                <a href="/mmj/{{p}}/{{r}}/{{j}}" style="color:white;" class="mmm">Потребность</a>
               <th>
             </tr>
             <tr>
-              <th rowspan=2>   
-                  <form id="f20" method="POST">
-        {% csrf_token %}
-        <input type=hidden name="html" value='dj'>
-        <button type="submit" class="button3" disabled="true">Сохранить</button>
-      </form>
-  
+              <th rowspan=2>
+                <form id="f20" method="POST">
+                  {% csrf_token %}
+                  <input type=hidden name="html" value='dj'>
+                  <button type="submit" class="button3" disabled="true">Сохранить</button>
+                </form>
+
 
                 {% include 'moon.html' %}
                 {% for dem in w2 %}
@@ -71,12 +72,7 @@
               {% for t in dem %}
 
 
-              <td class="good" 
-                  fname="f20"
-                  action="/s2/"
-                  key="{{t.link}}"
-                  
-                  style="background-color:{{t.color}};">
+              <td class="good" fname="f20" action="/s2/" key="{{t.link}}" style="background-color:{{t.color}};">
                 {{t.val}}
 
               </td>
@@ -114,13 +110,13 @@
             </tr>
             <tr>
               <th rowspan=2>
-                  
-                        <form id="f10" method="POST">
-        {% csrf_token %}
-        <input type=hidden name="html" value='dj'>
-        <button type="submit" class="button3" disabled="true">Сохранить</button>
-      </form>
-   
+
+                <form id="f10" method="POST">
+                  {% csrf_token %}
+                  <input type=hidden name="html" value='dj'>
+                  <button type="submit" class="button3" disabled="true">Сохранить</button>
+                </form>
+
                 {% include 'moon.html' %}
                 {% for tt in w3 %}
             <tr>
@@ -137,11 +133,9 @@
 
 
 
-                
-              <td class="good" 
-                  action="/s1/"
-                  fname="f10"
-                  key="{{t.link}}" title="{{t.up}};" style="background-color:{{t.color}};">
+
+              <td class="good" action="/s1/" fname="f10" key="{{t.link}}" title="{{t.up}};"
+                style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
 
@@ -201,7 +195,7 @@
 
   </tr>
 </table>
-   {% include 'script.html' %}
+{% include 'script.html' %}
 {% include 'js.html' %}
-{% include 'menu.html' %}
+
 {% endblock %}

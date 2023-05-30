@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
+
+
 {% block content %}
 {% include 'scroll.html' %}
-<h3 style="text-align:center;">
-  <a href="/djr/0/{{role.id}}/{{project.id}}/" class="uuu">{{project}} - {{role}}</a>
-</h3>
 
-<table border=1 width=100% style="position:relative;top:0; text-align:center;">
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
+</div>
+<table border=1 style="position:absolute;top:80px;text-align:center;" width=100%>
   <thead>
     <tr>
       <th colspan=13>
@@ -15,13 +18,14 @@
       </th>
     </tr>
     <tr>
-      <th><form id="f10" method="POST">
-  {% csrf_token %}
-  <input type=hidden name="html" value='ujr'>
+      <th>
+        <form id="f10" method="POST">
+          {% csrf_token %}
+          <input type=hidden name="html" value='ujr'>
 
-  <button type="submit" class="button3 " disabled="true">Сохранить</button>
-</form>
-{% include 'script.html' %}
+          <button type="submit" class="button3 " disabled="true">Сохранить</button>
+        </form>
+
         {% include 'moon.html' %}
 
         {% for tt in w3 %}
@@ -31,10 +35,8 @@
 
 
 
-      <td class="good" 
-          action="/s1/"
-          fname="f20"
-          key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}};">
+      <td class="good" action="/s1/" fname="f10" key="{{t.link}}" title="{{t.up}}"
+        style="background-color:{{t.color}};">
         {{t.val}}
       </td>{% endfor %}
     </tr>
@@ -43,7 +45,7 @@
 </table>
 
 
-
+{% include 'script.html' %}
 {% include 'js.html' %}
-{% include 'menu.html' %}
+
 {% endblock %}
