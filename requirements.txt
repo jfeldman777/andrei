@@ -31,7 +31,6 @@ pandas==2.0.1
 pluggy==1.0.0
 psycopg2==2.9.6
 pycparser==2.21
-pypiwin32==223
 PyQt5==5.15.9
 PyQt5-Qt5==5.15.2
 PyQt5-sip==12.12.1
