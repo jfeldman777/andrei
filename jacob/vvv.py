@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
-import csv
+
 
 
 def up(a, b):
