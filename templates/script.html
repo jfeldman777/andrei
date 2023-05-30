@@ -38,6 +38,10 @@ var element;
   $('td input').focusout(function () {
 
       var newValue = $(this).val();
+      
+      var iV = parseInt(newValue)
+      if(iV == NaN || iV < 0) return;
+      
       $(this).parent().text(newValue + '@');
 
       var form = document.getElementById(f1);
