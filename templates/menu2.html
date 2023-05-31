@@ -16,37 +16,30 @@
         padding: inherit;
     }
 
+ 
 
     .navbar {
         position: fixed;
-        /* This will make the navbar stick to the top */
         top: 0;
-        /* This positions the navbar at the very top of the page */
         left: 0;
-        /* This positions the navbar at the very top of the page */
-
         width: 100%;
-        /* This will stretch the navbar across the entire width of the screen */
         overflow: hidden;
         background-color: rgba(0, 0, 255, 1);
         z-index: 200;
- 
-        justify-content: flex-end;
+        display: flex;
+        justify-content: flex-end; 
     }
 
-    .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    background-color: rgba(0, 0, 255, 1);
-    z-index: 200;
-    display: flex;
-    justify-content: flex-end;
-}
+    .navbar .site-name{
+        color:white;
+        font-weight: bold;
+        position:absolute;
+        top:8px;
+        left:12px; 
+     /* display: flex;
+     justify-content: normal;  */
 
-
+    }
 
     .navbar a {
         float: left;
@@ -116,11 +109,13 @@
     }
 </style>
 {% load static %}
+
+
 <div class="navbar">
+        <div class="site-name">
+    Инструмент ресурсного планирования</div>
+
     <a href="/">на Главную страницу</a>
-
-    <div style="color:white; font-weight: bold;">Инструмент ресурсного планирования</div>
-
     <div class="dropdown">
         <button class="dropbtn">Проекты
             <i class="fa fa-caret-down"></i>
