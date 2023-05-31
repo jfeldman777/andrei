@@ -1,25 +1,19 @@
 <style>
     .bar {
         position: fixed;
-        /* This will make the navbar stick to the top */
         top: 42px;
-        /* This positions the navbar at the very top of the page */
         left: 0;
-        /* This positions the navbar at the very top of the page */
-
         width: 100%;
-        /* This will stretch the navbar across the entire width of the screen */
         overflow: hidden;
         background-color: white;
         z-index: 100;
-        /* font-family: cursive; */
         padding: inherit;
     }
 
  
 
     .navbar {
-        position: fixed;
+         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
@@ -36,8 +30,8 @@
         position:absolute;
         top:8px;
         left:12px; 
-     /* display: flex;
-     justify-content: normal;  */
+     display: flex;
+     justify-content: normal;
 
     }
 
@@ -56,34 +50,37 @@
         overflow: hidden;
     }
 
-    .dropdown .dropbtn {
-        font-size: 16px;
+    .dropdown    .dropbtn {
+        overflow: hidden;
         border: none;
         outline: none;
         color: white;
         padding: 0px 0px;
-        background-color: inherit;
-        font-family: inherit;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
         margin: 0;
+
+        background-color:  rgba(0, 0, 255, 1);
+box-shadow: none;
+        
+      
     }
 
-
     .navbar a:hover,
-    .dropdown:hover .dropbtn {
-        /* background-color: cornflowerblue; */
+    .dropdown:hover  {
+        background-color:  rgba(0, 0, 255, 1);
         shape-outside: content-box;
+      
     }
 
     .dropdown-content {
         display: none;
         position: fixed;
-        /* This will position the dropdown content relative to the viewport */
         top: 30px;
-        /* This positions the dropdown content just below the navbar and the dropdown button */
         right: inherit;
         background-color: #f9f9f9;
         min-width: 200px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 1);
         z-index: 1;
     }
 
