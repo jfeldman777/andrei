@@ -126,8 +126,7 @@ language_code = 'ru'
 gettext.bindtextdomain('django', 'locale')
 gettext.textdomain('django')
 
-import locale
-locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
+
 
 
 TIME_ZONE = 'UTC'
