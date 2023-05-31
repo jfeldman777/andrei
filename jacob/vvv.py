@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
+import locale
+from django.utils.translation import gettext_lazy as _
 
 
 

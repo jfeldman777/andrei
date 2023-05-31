@@ -109,8 +109,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 if IS_HEROKU:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+LANGUAGE_CODE = 'ru' #'en-us'    
+import locale
 
-LANGUAGE_CODE = 'en-us'
+# Set the Russian locale
+locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
+
+
 
 TIME_ZONE = 'UTC'
 
