@@ -109,11 +109,23 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 if IS_HEROKU:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-LANGUAGE_CODE = 'ru' #'en-us'    
-import locale
 
-# Set the Russian locale
-locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+    ('en', _('English')),
+    ('ru', _('Russian')),
+]    
+    
+    
+    
+    
+import gettext
+language_code = 'ru'
+gettext.bindtextdomain('django', 'locale')
+gettext.textdomain('django')
+
 
 
 
