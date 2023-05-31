@@ -5,20 +5,33 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('jacob', '0008_project_general_alter_project_people'),
+        ("jacob", "0008_project_general_alter_project_people"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Less',
+            name="Less",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField()),
-                ('load', models.FloatField(default=0)),
-                ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jacob.userprofile')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("start_date", models.DateField()),
+                ("end_date", models.DateField()),
+                ("load", models.FloatField(default=0)),
+                (
+                    "person",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="jacob.userprofile",
+                    ),
+                ),
             ],
         ),
     ]

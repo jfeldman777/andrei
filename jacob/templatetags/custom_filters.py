@@ -4,6 +4,7 @@ from ..models import Role
 
 register = template.Library()
 
+
 @register.filter
 def isnumeric(value):
     try:
@@ -12,9 +13,10 @@ def isnumeric(value):
     except ValueError:
         return False
 
+
 @register.filter
-def isstr(value,s):
-    if str(value)==s:
+def isstr(value, s):
+    if str(value) == s:
         return True
     return False
 
@@ -26,6 +28,7 @@ def isNotRole(value):
     else:
         return False
 
+
 # @register.filter
 # def isObject(value):
 #     if type(value) == str or float or int:
@@ -35,9 +38,12 @@ def isNotRole(value):
 def positive(value):
     return float(value) > 0
 
+
 @register.filter
 def zero(value):
     return value == 0
+
+
 @register.filter
 def negative(value):
     try:
@@ -45,9 +51,11 @@ def negative(value):
     except:
         return False
 
+
 @register.filter
 def isBool(value):
-    return type(value)==bool
+    return type(value) == bool
+
 
 @register.filter
 def isObject(value):
@@ -55,18 +63,20 @@ def isObject(value):
         return True
     return False
 
-@register.filter(name='increment')
+
+@register.filter(name="increment")
 def increment(value, amount=1):
     return value + amount
+
 
 @register.filter
 def in_list(value, arg):
     """Check if value is present in a comma-separated list."""
-    return str(value) in arg.split(',')
+    return str(value) in arg.split(",")
 
 
 @register.filter
-def gt(value,x):
-    if (value) <=x:
+def gt(value, x):
+    if (value) <= x:
         return False
     return True

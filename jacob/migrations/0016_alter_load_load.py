@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('jacob', '0015_less_role'),
+        ("jacob", "0015_less_role"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='load',
-            name='load',
+            model_name="load",
+            name="load",
             field=models.IntegerField(default=0),
         ),
     ]

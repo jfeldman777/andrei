@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('jacob', '0016_alter_load_load'),
+        ("jacob", "0016_alter_load_load"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='less',
-            name='load',
+            model_name="less",
+            name="load",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='task',
-            name='load',
+            model_name="task",
+            name="load",
             field=models.IntegerField(default=0),
         ),
     ]

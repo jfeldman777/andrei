@@ -5,15 +5,16 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('jacob', '0013_userprofile_res'),
+        ("jacob", "0013_userprofile_res"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='task',
-            name='role',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='jacob.role'),
+            model_name="task",
+            name="role",
+            field=models.ForeignKey(
+                default=1, on_delete=django.db.models.deletion.CASCADE, to="jacob.role"
+            ),
         ),
     ]
