@@ -112,7 +112,7 @@ if IS_HEROKU:
 
 from django.utils.translation import gettext_lazy as _
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'#'en-us'
 LANGUAGES = [
     ('en', _('English')),
     ('ru', _('Russian')),
@@ -126,7 +126,8 @@ language_code = 'ru'
 gettext.bindtextdomain('django', 'locale')
 gettext.textdomain('django')
 
-
+import locale
+locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
 
 TIME_ZONE = 'UTC'
