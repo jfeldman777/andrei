@@ -5,22 +5,10 @@ from django.shortcuts import render
 from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
-import locale
 from django.utils.translation import gettext_lazy as _
+from .utils import *
+from .db import *
 
-
-def up(a, b):
-    if b < 0:
-        return f"надо:{a}"
-    return f"надо:{a}/есть:{b}"
-
-
-def eva(request, fun):
-    return eval(f"{fun}(request)")
-
-
-def eva2(request, fun):
-    return eval(f"{fun}(request,2,2,2)")
 
 
 def demm(r, j, n):
@@ -131,26 +119,7 @@ def get_prj(p, r, j):
     return (person, role, project)
 
 
-def people_of_rv(role):
-    pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
-    pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
-    pps = pp1.union(pp2)
-    ppl = sorted(list(pps), key=lambda x: x.fio)
-    try:
-        ou = UserProfile.objects.filter(id=11)[0]
-        ov = UserProfile.objects.filter(id=10)[0]
-    except:
-        ou = None
-        ov = None
-    return ppl + [ou, ov]
 
-
-def people_of_rr(role):
-    pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
-    pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
-    pps = pp1.union(pp2)
-    ppl = sorted(list(pps), key=lambda x: x.fio)
-    return ppl
 
 
 def prm_isfree_(p, r, y, m):
@@ -208,26 +177,7 @@ def pr_task_(person, role):
     return res
 
 
-def is_virt(person):
-    if person.fio in ("ВАКАНСИЯ", "АУТСОРС"):
-        return True
-    return False
 
-
-def vacancia(role, project):
-    try:
-        person = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]  ##АУТСОРС
-    except:
-        person = None
-    return prj_task_(person, role, project)
-
-
-def outsrc(role, project):
-    try:
-        person = UserProfile.objects.filter(fio="АУТСОРС")[0]
-    except:
-        person = None
-    return prj_task_(person, role, project)
 
 
 def prm_task(request, p, r, y, m):
@@ -329,13 +279,6 @@ def rj_isfree_(role, project):
     return res
 
 
-#
-# def rj_load(request, r, j):
-#    person, role, project = get_prj(-1, r, j)
-#    res = rj_load_(role, project)
-#    context = {"t": res}
-#    return render(request, 'a_test.html', context)
-
 
 def rj_load_(r, j):
     d = date.today().replace(day=15)
@@ -359,15 +302,7 @@ def rj_delta_(r, j):
     return c
 
 
-def date0():
-    d = date.today().replace(day=15)
-    return d
 
-
-def date12():
-    d = date.today().replace(day=15)
-    d = inc_n(d, 12)
-    return d
 
 
 def atest(request):
