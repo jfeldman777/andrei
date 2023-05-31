@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'menu.html' %}
-<h1>{{role}}</h1>
+{% load static %}
+{% include 'scroll.html' %}
+{% include 'menu2.html' %}
 
-
-<table border=1 style="position:relative;top:0;text-align:center;" width=100% class="dif">
+<div class="bar">
+  <h4>Ресурс: {{role}} (оставшаяся доступность)</h4>
+</div>
+<table border=1 style="position:absolute;top:80px;left:0;text-align:center;" width=100% class="dif">
+    <thead>
   <tr>
-    <td colspan=13>Ресурсный пул (оставшаяся доступность)</td>
-  </tr>
-  <tr>
-    <td rowspan=2>
-      <b>ФИО</b>
-    </td>
+    <th rowspan=2>
+      ФИО
+    </th>
   </tr>
   {% include 'moon.html' %}
   {% for tt in dif15 %}

@@ -15,12 +15,12 @@ urlpatterns = [
     path('eva2/<str:fun>/', vvv.eva2, name='eva2'), 
     
     path('b/<int:n>/', vvv.b, name='b'),        
-    path('mjr/<int:p>/<int:r>/<int:j>/', vvv.mjr, name='mjr'),
+
     path('ur/<int:p>/<int:r>/<int:j>/', vvv.ur, name='ur'),
     path('uj/<int:p>/<int:r>/<int:j>/', vvv.uj, name='uj'),
     path('ujr/<int:p>/<int:r>/<int:j>/', vvv.ujr, name='ujr'),     
     path('mr1/<int:p>/<int:r>/<int:j>/', vvv.mr1, name='mr1'),
-#    path('mr2/<int:p>/<int:r>/<int:j>/', vvv.mr2, name='mr2'),
+    path('mr2/<int:p>/<int:r>/<int:j>/', vvv.mr2, name='mr2'),
     path('mmj/<int:p>/<int:r>/<int:j>/', vvv.mmj, name='mmj'),
     path('mmr/<int:p>/<int:r>/<int:j>/', vvv.mmr, name='mmr'),
     path('mmjr/<int:p>/<int:r>/<int:j>/', vvv.mmjr, name='mmjr'),
