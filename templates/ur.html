@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
-
-
 {% block content %}
+{% load static %}
 {% include 'scroll.html' %}
-
 {% include 'menu2.html' %}
 <div class="bar">
   <h4>Все проекты - Ресурс: {{role}}</h4>
@@ -35,7 +33,13 @@
 
       {% if forloop.first %}
       {% if t|negative %}{% else %}
-      <td colspan=13>{{t.val}}</td>
+      <td colspan=13>{{t.val}}
+        {% if t.fire %}
+        <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
+
+        {% endif%}
+        
+        </td>
     </tr>
     <tr>
       {% endif %}

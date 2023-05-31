@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
-
-
 {% block content %}
+{% load static %}
 {% include 'scroll.html' %}
-
 {% include 'menu2.html' %}
 <div class="bar">
   <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
@@ -38,6 +36,9 @@
       <td class="good" action="/s1/" fname="f10" key="{{t.link}}" title="{{t.up}}"
         style="background-color:{{t.color}};">
         {{t.val}}
+          {% if t.fire %}
+        <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
+        {% endif%}
       </td>{% endfor %}
     </tr>
     {% endfor %}

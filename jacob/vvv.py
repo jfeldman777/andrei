@@ -156,6 +156,8 @@ def people_of_rr(role):
 def prm_isfree_(p, r, y, m):
     d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
     person, role, project = get_prj(p, r, -1)
+    if is_virt(person):
+        return 99999
     if person.role == role:
         t = 100
     elif role in person.res:
@@ -205,6 +207,11 @@ def pr_task_(person, role):
         d = inc(d)
     return res
 
+
+def is_virt(person):
+    if person.fio in ('ВАКАНСИЯ','АУТСОРС'):
+        return True
+    return False
 
 def vacancia(role, project):
     try:
@@ -282,6 +289,9 @@ def rj_task_(r, j):
 
 
 def pr_isfree_(person, role):
+    if is_virt(person):
+        return [99999]*12
+    
     res = [0] * 12
     d = date.today().replace(day=15)  # .replace(year=y).replace(month=m).replace(day=15)
     t = -1
@@ -304,6 +314,8 @@ def pr_isfree_(person, role):
 
 
 def rj_isfree_(role, project):
+    if is_virt(person):
+        return [99999]*12
     people = people_of_rr(role)
     res = [0] * 12
     for person in people:
@@ -479,7 +491,8 @@ def ujr(request, p, r, j):
                     max(-delta[i], 0)
                     , df),
                 "val": a_w3[i],
-                "color": color
+                "color": color,
+                   "fire": df<0
 
             }
             d = inc(d)
@@ -534,8 +547,8 @@ def uj(request, p, r, j):
                                max(-delta[i], 0)
                                , diff[i]),
                            "val": a_w3[i],
-                           "color": color
-
+                           "color": color,
+                           "fire": diff[i]<0
                            }
                 d = inc(d)
 
@@ -568,6 +581,7 @@ def ur(request, p, r, j):
         delta = rj_delta_(role, project)
         p100 = {"val": project.title}
         for person in people:
+         
             b_w3 = [0] * 12
             a_w3 = prj_task_(person, role, project)
             diff = pr_dif_(person, role)
@@ -588,7 +602,8 @@ def ur(request, p, r, j):
                                max(-delta[i], 0)
                                , diff[i]),
                            "val": a_w3[i],
-                           "color": color
+                           "color": color,
+                            "fire": diff[i]<0
 
                            }
                 d = inc(d)
