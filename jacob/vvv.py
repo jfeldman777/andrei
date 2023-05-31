@@ -409,29 +409,6 @@ def atr(request):
     return render(request, 'atr.html', context)
 
 
-def att(request):
-    projects = Project.objects.all().order_by('general')
-    data = []
-    for p in projects:
-        x = {"j": p.id,
-             "project": p.title,
-             "name": p.general.fio}
-        data.append(x)
-    context = {"data": data}
-
-    roles = Role.objects.all().order_by('general')
-    data2 = []
-    for p in roles:
-        u = UserProfile.objects.get(user=p.general)
-        x = {
-            "title": p.title, "r": p.id,
-            "name": u.fio}
-        data2.append(x)
-    context["data2"] = data2
-
-    return render(request, 'att.html', context)
-
-
 def a00(request):
     return render(request, 'a00.html')
 
@@ -1379,53 +1356,6 @@ def sm(request):
         return mr1(request, p,r,j)
     return mrom(request)  # s
     
-#########################################################################Альфа, один ресурс, все проекты
-def mjr(request, p, r, j):  # максимальна доступность одного ресурса и Остаточная доступность
-    moon12 = moon()
-    dif14 = []
-    dif15 = []
-    try:
-        role = Role.objects.filter(id=r)[0]
-    except:
-        role = None
-    
-    people_rr = people_of_rr(role)
-    people_rv = people_of_rv(role)
-
-    for person in people_rr:
-        dif = pr_isfree_(person, role)
-
-        dif100 = [0] * 12
-        da = date.today().replace(day=15)
-        for iF in range(12):
-            dif100[i] = {"link": f"{person.id}.{r}.0.{da.year}-{da.month}-15",
-
-                         "title": dif[i]}  # 9898
-            da = inc(da)
-        dif14.append([person.fio] + dif100)  ######################
-
-    for person in people_rr:
-        dif = pr_dif_(person, role)
-
-        dif100 = [0] * 12
-        da = date.today().replace(day=15)
-        for i in range(12):
-            dif100[i] = {"link": f"{person.id}.{r}.0.{da.year}-{da.month}-15",
-
-                         "title": dif[i]}  # 9898
-            da = inc(da)
-        dif15.append([person.fio] + dif100)  ######################
-
-    moon12["dif14"] = dif14
-
-    moon12["dif15"] = dif15
-    moon12["r"] = r
-    moon12["j"] = j
-    moon12["p"] = p
-    moon12["role"] = role
-
-    return render(request, 'mjr.html', moon12)
-
 
 def mr2(request, p, r, j):  # максимальна доступность одного ресурса и Остаточная доступность
     moon12 = moon()
