@@ -34,26 +34,7 @@ def outsrc(role:object, project:object)->List[int]:
     return task_person_role_project(person, role, project)
 
 
-'''
-НЕехватка ресурсов - роль - проект - время-месяцев - суммарно по месяцам
-'''
-def demm(r:object, j:object, n:int)->int:
-    rjd = needs_role_project(r, j)
-    sum = 0
-    for i in range(n):
-        sum += rjd[i]
-    if sum == 0:
-        return 1 #чтобы не делить на ноль
-    return sum
 
-
-def dell(r, j, n):
-    rjd = delta_role_project(r, j)
-    sum = 0
-    for i in range(n):
-        if rjd[i] < 0:
-            sum -= rjd[i]
-    return sum
 
 
 def b(request, n):
@@ -91,191 +72,6 @@ def b(request, n):
     context = {"tab": xy, "txy": txy, "n": n, "hh": n2txt(n)}
 
     return render(request, "b.html", context)
-
-def prm_isfree_(p, r, y, m):
-    d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
-    person, role, project = get_prj(p, r, -1)
-    if is_virtual(person):
-        return 99999
-    if person.role == role:
-        t = 100
-    elif role in person.res:
-        t = 0
-    task = Less.objects.filter(person=person, role=role, start_date__lte=d).order_by(
-        "-start_date"
-    )
-    try:
-        t = task[0].load
-    except:
-        pass
-    return t
-
-
-def rj_dif_(p, r, j):
-    res = [0] * 12
-    load = pr_isfree_(p, r)
-    task = rj_task_(r, j)
-    for i in range(12):
-        res[i] = load[i] - task[i]
-
-    return res
-
-
-def pr_dif_(p, r):
-    c = [0] * 12
-    a = pr_task_(p, r)
-    b = pr_isfree_(p, r)
-    try:
-        for i in range(12):
-            c[i] = b[i] - a[i]
-    except:
-        return None
-    return c
-
-
-def pr_task_(person, role):
-    d = date.today().replace(day=15)
-    res = [0] * 12
-    for i in range(12):
-        tasks = Task.objects.filter(person=person, role=role, month=d)
-        for task in tasks:
-            try:
-                res[i] += task.load
-            except:
-                pass
-        d = inc(d)
-    return res
-
-
-
-
-
-def prm_task(request, p, r, y, m):
-    d = date(y, m, 15)
-    t = 0
-    person, role, project = get_prj(p, r, -1)
-
-    tasks = Task.objects.filter(person=person, role=role, month=d)
-    for task in tasks:
-        try:
-            t += task.load
-        except:
-            pass
-
-    context = {"t": t}
-    return render(request, "a_test.html", context)
-
-'''
-Задачи = утвержденные загрузки- суммарно = при фиксированных параметрах - вектор - нв 12 месяцев
-'''
-def task_person_role_project(p:object, r:object, j:object)->List[int]:
-    d = date.today().replace(day=15)
-    res = [0] * 12
-    for i in range(12):
-        t = Task.objects.filter(person=p, project=j, role=r, month=d)
-        try:
-            res[i] += t[0].load
-        except:
-            pass
-        d = inc(d)
-    return res
-
-
-def task_role_project_including_virtuals(r, j):
-    d = date.today().replace(day=15)
-    res = [0] * 12
-    for i in range(12):
-        tasks = Task.objects.filter(project=j, role=r, month=d)
-        for t in tasks:
-            try:
-                res[i] += t.load
-            except:
-                pass
-        d = inc(d)
-    return res
-
-
-def rj_task_(r, j):
-    d = date.today().replace(day=15)
-    res = [0] * 12
-    for i in range(12):
-        tasks = Task.objects.filter(project=j, role=r, month=d)
-        for t in tasks:
-            if t.person.id not in (10, 11):
-                try:
-                    res[i] += t.load
-                except:
-                    pass
-        d = inc(d)
-    return res
-
-
-def pr_isfree_(person, role):
-    if is_virtual(person):
-        return [999999] * 12
-
-    res = [0] * 12
-    d = date.today().replace(
-        day=15
-    )  # .replace(year=y).replace(month=m).replace(day=15)
-    t = -1
-    if person == None:
-        return None
-    if person.role == role:
-        t = 100
-    elif person.res.filter(id=role.id).exists():
-        t = 0
-
-    for i in range(12):
-        task = Less.objects.filter(
-            person=person, role=role, start_date__lte=d
-        ).order_by("-start_date")
-        try:
-            t = task[0].load
-        except:
-            pass
-        res[i] = t
-        d = inc(d)
-    return res
-
-
-def rj_isfree_(role, project):
-    if is_virtual(person):
-        return [99999] * 12
-    people = real_people(role)
-    res = [0] * 12
-    for person in people:
-        isfree = pr_isfree_(person, role)
-        for i in range(12):
-            res[i] += isfree[i]
-    return res
-
-
-
-def needs_role_project(r, j):
-    d = date.today().replace(day=15)
-    res = [0] * 12
-    for i in range(12):
-        t = Load.objects.filter(project=j, role=r, month=d)
-        try:
-            res[i] = t[0].load
-        except:
-            pass
-        d = inc(d)
-    return res
-
-
-
-'''
-нехватка ресурса - роль и проект - на 12 месяцев
-'''
-def delta_role_project(r:object, j:object)->List[int]:
-    a = needs_role_project(r, j)
-    b = task_role_project_including_virtuals(r, j)
-    c = [0] * 12
-    for i in range(12):
-        c[i] = b[i] - a[i]
-    return c
 
 
 
@@ -364,7 +160,7 @@ def moon()->List[object]:
 
 
 def ujr(request, p, r, j):
-    person, role, project = get_prj(-1, r, j)
+    person, role, project = get_prj_triplet(-1, r, j)
     w3 = []
 
     moon12 = moon()
@@ -386,7 +182,7 @@ def ujr(request, p, r, j):
             p = 0
         for i in range(12):
             color = "white"
-            if mj_outside(d, project):
+            if mon_outside_prj(d, project):
                 color = "lightgrey"
                 if delta[i] < 0:
                     color = "#B266FF"
@@ -423,7 +219,7 @@ def ujr(request, p, r, j):
 
 
 def uj(request, p, r, j):
-    person, role, project = get_prj(-1, -1, j)
+    person, role, project = get_prj_triplet(-1, -1, j)
     w3 = []
 
     moon12 = moon()
@@ -443,7 +239,7 @@ def uj(request, p, r, j):
             d = date.today().replace(day=15)
             for i in range(12):
                 color = "white"
-                if mj_outside(d, project):
+                if mon_outside_prj(d, project):
                     color = "lightgrey"
                     if delta[i] < 0:
                         color = "#B266FF"
@@ -476,7 +272,7 @@ def uj(request, p, r, j):
 
 
 def ur(request, p, r, j):
-    person, role, project = get_prj(-1, r, -1)
+    person, role, project = get_prj_triplet(-1, r, -1)
     w3 = []
 
     moon12 = moon()
@@ -494,7 +290,7 @@ def ur(request, p, r, j):
             d = date.today().replace(day=15)
             for i in range(12):
                 color = "white"
-                if mj_outside(d, project):
+                if mon_outside_prj(d, project):
                     color = "lightgrey"
                     if delta[i] < 0:
                         color = "#B266FF"
@@ -528,7 +324,7 @@ def ur(request, p, r, j):
 
 
 def djr(request, p, r, j):
-    person, role, project = get_prj(-1, r, j)
+    person, role, project = get_prj_triplet(-1, r, j)
 
     w4 = []
     w3 = []
@@ -551,7 +347,7 @@ def djr(request, p, r, j):
     d = date.today().replace(day=15)
     for i in range(12):
         color = "white"
-        if mj_outside(d, project):
+        if mon_outside_prj(d, project):
             color = "lightgrey"
         elif dem_rj[i] > 0:
             color = "lightblue"
@@ -573,7 +369,7 @@ def djr(request, p, r, j):
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
-            if mj_outside(d, project):
+            if mon_outside_prj(d, project):
                 color = "lightgrey"
                 if delta[i] < 0:
                     color = "#B266FF"
@@ -619,14 +415,14 @@ def djr(request, p, r, j):
 
 # Дельта, один проект, один ресурс
 def ajr(request, p, r, j):  # Альфа, один проект, один ресуря
-    person, role, project = get_prj(-1, r, j)
+    person, role, project = get_prj_triplet(-1, r, j)
 
     w4 = []
     w3 = []
     w2 = []
     w1 = []
     moon12 = moon()
-    supp = [-1, "Поставка"] + rj_task_(role, project)
+    supp = [-1, "Поставка"] + task_role_project(role, project)
     delta = ["Дельта"] + delta_role_project(role, project)
     zo = ["АУТСОРС"] + outsrc(role, project)
     zv = ["ВАКАНСИЯ"] + vacancia(role, project)
@@ -644,7 +440,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
     d = date.today().replace(day=15)
     for i in range(12):
         color = "white"
-        if mj_outside(d, project):
+        if mon_outside_prj(d, project):
             color = "lightgrey"
         elif dem_rj[i + 1] > 0:
             color = "lightblue"
@@ -657,7 +453,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
         d = inc(d)
     w2 = a_w2
 
-    supp = ["Поставка"] + rj_task_(role, project)
+    supp = ["Поставка"] + task_role_project(role, project)
     delta = ["Дельта"] + delta_role_project(role, project)
 
     for person in people_rv:
@@ -669,7 +465,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
-            if mj_outside(d, project):
+            if mon_outside_prj(d, project):
                 color = "lightgrey"
                 if delta[i + 1] < 0:
                     color = "#B266FF"
@@ -712,7 +508,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
 
 
 def ar(request, p, r, j):
-    person, role, project = get_prj(-1, r, -1)
+    person, role, project = get_prj_triplet(-1, r, -1)
 
     people_rr = real_people(role)
     people_rv = real_and_virtual_people(role)
@@ -722,9 +518,6 @@ def ar(request, p, r, j):
     w4 = []
     moon12 = moon()
     projects = Project.objects.all()
-
-    print
-    # W222222222222222222222222222222
 
     x = [0] * 12
 
@@ -743,7 +536,7 @@ def ar(request, p, r, j):
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
-            if mj_outside(d, project):
+            if mon_outside_prj(d, project):
                 color = "lightgrey"
             elif dem_rj[i + 2] > 0:
                 color = "lightblue"
@@ -757,7 +550,7 @@ def ar(request, p, r, j):
             d = inc(d)
         w2.append(a_w2)  # --------
 
-        supp = ["Поставка"] + rj_task_(role, project)
+        supp = ["Поставка"] + task_role_project(role, project)
         delta = ["Дельта"] + delta_role_project(role, project)
 
         p100 = project.title
@@ -769,7 +562,7 @@ def ar(request, p, r, j):
 
             for i in range(12):
                 color = "white"
-                if mj_outside(d, project):
+                if mon_outside_prj(d, project):
                     color = "lightgrey"
                     if delta[i + 1] < 0:
                         color = "#B266FF"
@@ -812,7 +605,7 @@ def ar(request, p, r, j):
 
 
 def dr(request, p, r, j):
-    person, role, project = get_prj(-1, r, -1)
+    person, role, project = get_prj_triplet(-1, r, -1)
 
     people_rr = real_people(role)
     people_rv = real_and_virtual_people(role)
@@ -847,7 +640,7 @@ def dr(request, p, r, j):
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
-            if mj_outside(d, project):
+            if mon_outside_prj(d, project):
                 color = "lightgrey"
             elif dem_rj[i + 2] > 0:
                 color = "lightblue"
@@ -872,7 +665,7 @@ def dr(request, p, r, j):
 
             for i in range(12):
                 color = "white"
-                if mj_outside(d, project):
+                if mon_outside_prj(d, project):
                     color = "lightgrey"
                     if delta[i] < 0:
                         color = "#B266FF"
@@ -914,7 +707,7 @@ def dr(request, p, r, j):
 
 
 def dj(request, p, r, j):  # Дельта, один проект все ресурсы
-    person, role, project = get_prj(-1, -1, j)
+    person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []
     w2 = []
@@ -941,7 +734,7 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
-            if mj_outside(d, project):
+            if mon_outside_prj(d, project):
                 color = "lightgrey"
             elif dem_rj[i] > 0:
                 color = "lightblue"
@@ -973,7 +766,7 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
             d = date.today().replace(day=15)
             for i in range(12):
                 color = "white"
-                if mj_outside(d, project):
+                if mon_outside_prj(d, project):
                     color = "lightgrey"
                     if delta[i] < 0:
                         color = "#B266FF"
@@ -1016,7 +809,7 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
 
 
 def aj(request, p, r, j):  # Альфа, один проект
-    person, role, project = get_prj(-1, -1, j)
+    person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []
     w2 = []
@@ -1030,14 +823,14 @@ def aj(request, p, r, j):  # Альфа, один проект
     for role in roles:
         zo = ["АУТСОРС"] + outsrc(role, project)
         zv = ["ВАКАНСИЯ"] + vacancia(role, project)
-        supp = ["Поставка"] + rj_task_(role, project)
+        supp = ["Поставка"] + task_role_project(role, project)
         delta = ["Дельта"] + delta_role_project(role, project)
         dem_rj = needs_role_project(role, project)  # ----------------
 
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
-            if mj_outside(d, project):
+            if mon_outside_prj(d, project):
                 color = "lightgrey"
             elif dem_rj[i] > 0:
                 color = "lightblue"
@@ -1066,7 +859,7 @@ def aj(request, p, r, j):  # Альфа, один проект
             d = date.today().replace(day=15)
             for i in range(12):
                 color = "white"
-                if mj_outside(d, project):
+                if mon_outside_prj(d, project):
                     color = "lightgrey"
                     if delta[i + 1] < 0:
                         color = "#B266FF"
@@ -1111,7 +904,7 @@ def aj(request, p, r, j):  # Альфа, один проект
 
 
 def mmjr(request, p, r, j):  # Потребность на малом экране
-    person, role, project = get_prj(-1, r, j)
+    person, role, project = get_prj_triplet(-1, r, j)
     if role == None:
         return alf(request)
     w2 = []
@@ -1125,7 +918,7 @@ def mmjr(request, p, r, j):  # Потребность на малом экран
     d = date.today().replace(day=15)
     for i in range(12):
         color = "white"
-        if mj_outside(d, project):
+        if mon_outside_prj(d, project):
             color = "lightgrey"
         elif dem_rj[i] > 0:
             color = "lightblue"
@@ -1149,7 +942,7 @@ def mmjr(request, p, r, j):  # Потребность на малом экран
 
 
 def mmj(request, p, r, j):  # Потребность на малом экране
-    person, role, project = get_prj(-1, -1, j)
+    person, role, project = get_prj_triplet(-1, -1, j)
 
     w2 = []
     moon12 = moon()
@@ -1164,7 +957,7 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
-            if mj_outside(d, project):
+            if mon_outside_prj(d, project):
                 color = "lightgrey"
             elif dem_rj[i] > 0:
                 color = "lightblue"
@@ -1188,7 +981,7 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
 
 
 def mmr(request, p, r, j):  # Потребность на малом экране
-    person, role, project = get_prj(-1, r, -1)
+    person, role, project = get_prj_triplet(-1, r, -1)
 
     w2 = []
     moon12 = moon()
@@ -1203,7 +996,7 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
-            if mj_outside(d, project):
+            if mon_outside_prj(d, project):
                 color = "lightgrey"
             elif dem_rj[i] > 0:
                 color = "lightblue"
@@ -1226,33 +1019,6 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
     return render(request, "mmr.html", moon12)
 
 
-def sm(request):
-    html = ""
-    id = 1
-    r = 1
-    p = 1
-    j = 1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        if form.is_valid():
-            html = request.POST.get("html")
-            for k, v in request.POST.items():
-                if "." in k:
-                    p, r, j, d = k.split(".")
-
-                    try:
-                        role = Role.objects.get(id=r)
-                        person = UserProfile.objects.get(id=p)
-
-                        create_or_update_res_max(person, role, d, v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-    if html == "":
-        return mr1(request, p, r, j)
-    return mrom(request)  # s
 
 
 def mr2(
@@ -1415,120 +1181,6 @@ def mro(request):  # Остаточная доступость по всем р�
 
     return render(request, "mro.html", moon12)
 
-
-#
-
-
-
-
-
-
-
-
-
-def s1(request):
-    p = 0
-    r = 0
-    j = 0
-    html = ""
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k, v in request.POST.items():
-                html = request.POST.get("html")
-                if "." in k:
-                    p, r, j, d = k.split(".")
-                    try:
-                        project = Project.objects.get(id=j)
-                        role = Role.objects.get(id=r)
-                        person = UserProfile.objects.get(id=p)
-                        create_or_update_task(
-                            person, role, project, d, v
-                        )  ##################################
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return eval(f"{html}(request,{p},{r},{j})")
-
-
-def s2(request):
-    p = 0
-    j = 0
-    r = 0
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k, v in request.POST.items():
-                html = request.POST.get("html")
-                if "." in k:
-                    p, r, j, d = k.split(".")
-
-                    try:
-                        person = None
-                        role = Role.objects.get(id=r)
-                        project = Project.objects.get(id=j)
-                        create_or_update_needs(person, role, project, d, v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-    return eval(f"{html}(request,{p},{r},{j})")
-
-
-def sj(request):
-    j = 1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            for k, v in request.POST.items():
-                sid = request.POST.get("id")
-                j = int(sid)
-                project = Project.objects.get(id=j)
-
-                if "." in k:
-                    r, d = k.split(".")
-                    role = Role.objects.get(id=r)
-                    person = None
-                    try:
-                        tjLoad(person, role, project, d, v)
-
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-        return aj(request, j)  #
-
-
-def smj(request):
-    p = -1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            for k, v in request.POST.items():
-                sid = request.POST.get("id")
-                j = int(sid)
-                project = Project.objects.get(id=j)
-
-                if "." in k:
-                    r, d = k.split(".")
-                    role = Role.objects.get(id=r)
-                    person = None
-                    try:
-                        tjLoad(person, role, project, d, v)
-
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-        return mmj(request, p, r, j)
 
 
 def project_timeline(request:object)->any:  # все проекты (портфель)

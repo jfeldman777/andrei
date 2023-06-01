@@ -4,18 +4,19 @@
 {% include 'scroll.html' %}
 {% include 'menu2.html' %}
 <div class="bar">
-  <h4>Руководители ресурсных пулов</h4>
+  <h4>
+    Все ресурсные пулы</h4>
 </div>
 <table border="1" cellspacing="0" cellpadding="5" 
   style="position:absolute;top:80px;left:0;text-align: center; background-color:#FFF;">
 
   <thead>
     <tr>
-      <th>Руководители ресурсных пулов</th>
-      <th>Ресурсы</th>
-      <th>Доступность максимальная</th>
-      <th>Доступность оставшаяся</th>
-      <th>Баланс </th>
+      <th>Руководитель</th>
+      <th>Ресурсный пул</th>
+      <th>Максимальная доступность</th>
+      <th>Остаточная доступность</th>
+      <th>Балансы </th>
       <th>Назначения</th>
 
     </tr>
@@ -45,7 +46,7 @@
       </td>
       <td style="text-align: center; ">
         <a href="/ar/0/{{cell.r}}/0/">
-          смотреть
+          изменить
         </a>
       </td>
 
