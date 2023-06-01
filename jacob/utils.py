@@ -14,11 +14,12 @@ from datetime import date, timedelta
 '''
 Всплывающая подсказка
 '''
-def up(a:int, b:int)->str:
-    if b < 0 or b >9000:
+def up(a: int, b: int) -> str:
+    if not isinstance(a, int):
+        return ""
+    if b < 0 or b > 88888:
         return f"надо:{a}"
     return f"надо:{a}/есть:{b}"
-
 
 '''
 Используется при тестировании для стандартизации вызова
