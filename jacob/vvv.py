@@ -1598,3 +1598,18 @@ def pref(p):
     L.append(p.start_date)
     L.append(p.end_date)
     return L
+
+'''
+Загрузка одно человека по разным ролям суммарно превысила 100% (булев вектор)
+'''
+def person_more_100(person:object)->List[bool]:
+    sum = [0] * 12
+    roles = {person.role}.union(person.res.all())
+    for role in roles:
+        isfree = pr_isfree_(person, role)
+        for i in range(12):
+            sum[i] += isfree[i]
+    res = [True] * 12
+    for i in range(12):
+        res[i] = sum[i] > 100
+    return res
