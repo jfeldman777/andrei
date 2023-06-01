@@ -8,8 +8,30 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from .utils import *
 from .db import *
+from typing import List, Union,Dict,Callable
 
 
+'''
+Объект Вакансия
+'''
+def vacancia(role, project):
+    person = None
+    try:
+        person = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]  ##АУТСОРС
+    except:
+        pass
+    return prj_task_(person, role, project)
+
+'''
+Объект Аутсорс
+'''
+def outsrc(role, project):
+    person = None
+    try:
+        person = UserProfile.objects.filter(fio="АУТСОРС")[0]
+    except:
+        pass
+    return prj_task_(person, role, project)
 
 def demm(r, j, n):
     rjd = rj_load_(r, j)
@@ -28,14 +50,6 @@ def dell(r, j, n):
         if rjd[i] < 0:
             sum -= rjd[i]
     return sum
-
-
-def n2txt(n):
-    if n == 1:
-        return "на 1 месяц"
-    if n == 3:
-        return "на 3 месяца"
-    return f"на {n} месяцев"
 
 
 def b(request, n):
@@ -88,35 +102,6 @@ def p_101(person):
     return res
 
 
-def mj_outside(m, j):
-    if j == None:
-        return True
-    d1 = j.start_date
-    d2 = j.end_date
-    return not (d1 <= m and m <= d2)
-
-
-def get_prj(p, r, j):
-    role = None
-    if r > 0:
-        try:
-            role = Role.objects.filter(id=r)[0]
-        except:
-            pass
-    person = None
-    if p > 0:
-        try:
-            person = UserProfile.objects.filter(id=p)[0]
-        except:
-            pass
-    project = None
-    if j > 0:
-        try:
-            project = Project.objects.filter(id=j)[0]
-        except:
-            pass
-
-    return (person, role, project)
 
 
 
@@ -270,7 +255,7 @@ def pr_isfree_(person, role):
 def rj_isfree_(role, project):
     if is_virt(person):
         return [99999] * 12
-    people = people_of_rr(role)
+    people = real_people(role)
     res = [0] * 12
     for person in people:
         isfree = pr_isfree_(person, role)
@@ -367,11 +352,6 @@ def a00(request):
     return render(request, "a00.html")
 
 
-def zero(name):
-    sum = [name] + [0] * 12
-    return sum
-
-
 def diffx(person, role):
     return pr_dif_(person, role)
 
@@ -397,7 +377,7 @@ def ujr(request, p, r, j):
     moon12 = moon()
     delta = rj_delta_(role, project)
 
-    people = people_of_rv(role)
+    people = real_and_virtual_people(role)
     dem_rj = rj_load_(role, project)  # ----------------
 
     for person in people:
@@ -459,7 +439,7 @@ def uj(request, p, r, j):
     for role in roles:
         delta = rj_delta_(role, project)
 
-        people = people_of_rv(role)
+        people = real_and_virtual_people(role)
         dem_rj = rj_load_(role, project)  # ----------------
         p100 = {"val": role.title}
         for person in people:
@@ -508,7 +488,7 @@ def ur(request, p, r, j):
 
     moon12 = moon()
 
-    people = people_of_rv(role)
+    people = real_and_virtual_people(role)
     projects = Project.objects.all()
 
     for project in projects:
@@ -566,8 +546,8 @@ def djr(request, p, r, j):
 
     w4 = []
 
-    people_rv = people_of_rv(role)
-    people_rr = people_of_rr(role)
+    people_rv = real_and_virtual_people(role)
+    people_rr = real_people(role)
 
     for person in people_rr:  # 7777777777777777777777777777777777777777
         w4.append([person.fio] + pr_dif_(person, role))
@@ -659,8 +639,8 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
     zv = ["ВАКАНСИЯ"] + vacancia(role, project)
     w4 = []
 
-    people_rr = people_of_rr(role)
-    people_rv = people_of_rv(role)
+    people_rr = real_people(role)
+    people_rv = real_and_virtual_people(role)
 
     for person in people_rr:  # 7777777777777777777777777777777777777777
         w4.append([person.fio] + pr_dif_(person, role))
@@ -741,8 +721,8 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
 def ar(request, p, r, j):
     person, role, project = get_prj(-1, r, -1)
 
-    people_rr = people_of_rr(role)
-    people_rv = people_of_rv(role)
+    people_rr = real_people(role)
+    people_rv = real_and_virtual_people(role)
     w3 = []
     w2 = []
     w1 = []
@@ -841,8 +821,8 @@ def ar(request, p, r, j):
 def dr(request, p, r, j):
     person, role, project = get_prj(-1, r, -1)
 
-    people_rr = people_of_rr(role)
-    people_rv = people_of_rv(role)
+    people_rr = real_people(role)
+    people_rv = real_and_virtual_people(role)
     w3 = []
     w2 = []
     w1 = []
@@ -952,8 +932,8 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
 
     roles = Role.objects.all()
     for role in roles:
-        people_rr = people_of_rr(role)
-        people_rv = people_of_rv(role)
+        people_rr = real_people(role)
+        people_rv = real_and_virtual_people(role)
         p6 = role.title
         for person in people_rr:  # 7777777777777777777777777777777777777777
             diff = pr_dif_(person, role)
@@ -1079,8 +1059,8 @@ def aj(request, p, r, j):  # Альфа, один проект
 
         p100 = role.title
         p200 = role.title
-        people_rr = people_of_rr(role)
-        people_rv = people_of_rv(role)
+        people_rr = real_people(role)
+        people_rv = real_and_virtual_people(role)
         for person in people_rr:  #
             diff = pr_dif_(person, role)
             w4.append([p200, person.fio] + diff)
@@ -1293,7 +1273,7 @@ def mr2(
     except:
         role = None
 
-    people_rr = people_of_rr(role)
+    people_rr = real_people(role)
 
     for person in people_rr:
         dif = pr_isfree_(person, role)
@@ -1343,8 +1323,8 @@ def mr1(
     except:
         role = None
 
-    people_rr = people_of_rr(role)
-    people_rv = people_of_rv(role)
+    people_rr = real_people(role)
+    people_rv = real_and_virtual_people(role)
 
     for person in people_rr:
         dif = pr_isfree_(person, role)
@@ -1390,7 +1370,7 @@ def mrom(request):  # Максимальная доступнасть по вс�
 
     for role in roles:
         p9 = role.title
-        people_rr = people_of_rr(role)
+        people_rr = real_people(role)
 
         px = {"val": role.title, "r": role.id}  #######################
         for person in people_rr:
@@ -1430,8 +1410,8 @@ def mro(request):  # Остаточная доступость по всем р�
     roles = Role.objects.all()
     for role in roles:
         p9 = role.title
-        people_rr = people_of_rr(role)
-        people_rv = people_of_rv(role)
+        people_rr = real_people(role)
+        people_rv = real_and_virtual_people(role)
         px = role.title
         for person in people_rr:
             dif = [person.fio] + diffx(person, role)
@@ -1446,32 +1426,8 @@ def mro(request):  # Остаточная доступость по всем р�
 #
 
 
-def mon_bar():
-    dat = []
-    d = date.today().replace(day=15)
-    for i in range(12):
-        dat.append({"year": d.year, "month": d.month})
-        d = inc(d)
-
-    return dat
 
 
-def inc(d):
-    y, m = d.year, d.month
-    m += 1
-    if m > 12:
-        m = 1
-        y += 1
-    return date(y, m, 15)
-
-
-################################################
-
-
-def inc_n(d, n):
-    for i in range(n):
-        d = inc(d)
-    return d
 
 
 def tr(person, role, m, l):  # Доступность
@@ -1637,21 +1593,7 @@ def prjlist(request):  # все проекты (портфель)
     return render(request, "prjlist.html", moon12)
 
 
-def dif(d1, d2):
-    return (d2.year - d1.year) * 12 + d2.month - d1.month + 1
 
-
-def mon_bool(dmin, dmax, dstart, dend):
-    L = []
-    d = dmin.replace(day=15)
-    d2 = dmax.replace(day=15)
-    d3 = dstart.replace(day=15)
-    d4 = dend.replace(day=15)
-    while d <= d2:
-        b = d3 <= d <= d4
-        L.append(b)
-        d = inc(d)
-    return L
 
 
 def pref(p):

@@ -7,7 +7,10 @@ from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
-def people_of_rv(role):
+from .vvv import *
+from .utils import *
+
+def real_and_virtual_people(role:object)->List[object]:
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
     pps = pp1.union(pp2)
@@ -21,7 +24,7 @@ def people_of_rv(role):
     return ppl + [ou, ov]
 
 
-def people_of_rr(role):
+def real_people(role):
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
     pps = pp1.union(pp2)
@@ -35,17 +38,26 @@ def is_virt(person):
     return False
 
 
-def vacancia(role, project):
-    try:
-        person = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]  ##АУТСОРС
-    except:
-        person = None
-    return prj_task_(person, role, project)
 
 
-def outsrc(role, project):
-    try:
-        person = UserProfile.objects.filter(fio="АУТСОРС")[0]
-    except:
-        person = None
-    return prj_task_(person, role, project)
+def get_prj(p, r, j):
+    role = None
+    if r > 0:
+        try:
+            role = Role.objects.filter(id=r)[0]
+        except:
+            pass
+    person = None
+    if p > 0:
+        try:
+            person = UserProfile.objects.filter(id=p)[0]
+        except:
+            pass
+    project = None
+    if j > 0:
+        try:
+            project = Project.objects.filter(id=j)[0]
+        except:
+            pass
+
+    return (person, role, project)
