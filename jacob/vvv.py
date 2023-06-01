@@ -437,7 +437,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
     a_w2 = [0] * 12
     dem_rj = ["Потребность"] + needs_role_project(role, project)  # ----------------
 
-    d = date.today().replace(day=15)
+    d = date0()
     for i in range(12):
         color = "white"
         if mon_outside_prj(d, project):

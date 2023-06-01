@@ -17,8 +17,8 @@ def real_and_virtual_people(role:object)->List[object]:
     pps = pp1.union(pp2)
     ppl = sorted(list(pps), key=lambda x: x.fio)
     try:
-        ou = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]
-        ov = UserProfile.objects.filter(fio="АУТСОРС")[0]
+        ov = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]
+        ou = UserProfile.objects.filter(fio="АУТСОРС")[0]
     except:
         ou = None
         ov = None
