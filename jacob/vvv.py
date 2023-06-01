@@ -12,39 +12,43 @@ from typing import List, Union,Dict,Callable
 
 
 '''
-Объект Вакансия
+Объект Вакансия - загрузка на год
 '''
-def vacancia(role, project):
+def vacancia(role:object, project:object)->List[int]:
     person = None
     try:
         person = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]  ##АУТСОРС
     except:
         pass
-    return prj_task_(person, role, project)
+    return task_person_role_project(person, role, project)
 
 '''
-Объект Аутсорс
+Объект Аутсорс - загрузка на год
 '''
-def outsrc(role, project):
+def outsrc(role:object, project:object)->List[int]:
     person = None
     try:
         person = UserProfile.objects.filter(fio="АУТСОРС")[0]
     except:
         pass
-    return prj_task_(person, role, project)
+    return task_person_role_project(person, role, project)
 
-def demm(r, j, n):
-    rjd = rj_load_(r, j)
+
+'''
+НЕехватка ресурсов - роль - проект - время-месяцев - суммарно по месяцам
+'''
+def demm(r:object, j:object, n:int)->int:
+    rjd = needs_role_project(r, j)
     sum = 0
     for i in range(n):
         sum += rjd[i]
     if sum == 0:
-        return 1
+        return 1 #чтобы не делить на ноль
     return sum
 
 
 def dell(r, j, n):
-    rjd = rj_delta_(r, j)
+    rjd = delta_role_project(r, j)
     sum = 0
     for i in range(n):
         if rjd[i] < 0:
@@ -88,29 +92,10 @@ def b(request, n):
 
     return render(request, "b.html", context)
 
-
-def p_101(person):
-    sum = [0] * 12
-    roles = {person.role}.union(person.res.all())
-    for role in roles:
-        isfree = pr_isfree_(person, role)
-        for i in range(12):
-            sum[i] += isfree[i]
-    res = [True] * 12
-    for i in range(12):
-        res[i] = sum[i] > 100
-    return res
-
-
-
-
-
-
-
 def prm_isfree_(p, r, y, m):
     d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
     person, role, project = get_prj(p, r, -1)
-    if is_virt(person):
+    if is_virtual(person):
         return 99999
     if person.role == role:
         t = 100
@@ -180,8 +165,10 @@ def prm_task(request, p, r, y, m):
     context = {"t": t}
     return render(request, "a_test.html", context)
 
-
-def prj_task_(p, r, j):
+'''
+Задачи = утвержденные загрузки- суммарно = при фиксированных параметрах - вектор - нв 12 месяцев
+'''
+def task_person_role_project(p:object, r:object, j:object)->List[int]:
     d = date.today().replace(day=15)
     res = [0] * 12
     for i in range(12):
@@ -194,7 +181,7 @@ def prj_task_(p, r, j):
     return res
 
 
-def rj_task_v(r, j):
+def task_role_project_including_virtuals(r, j):
     d = date.today().replace(day=15)
     res = [0] * 12
     for i in range(12):
@@ -224,8 +211,8 @@ def rj_task_(r, j):
 
 
 def pr_isfree_(person, role):
-    if is_virt(person):
-        return [99999] * 12
+    if is_virtual(person):
+        return [999999] * 12
 
     res = [0] * 12
     d = date.today().replace(
@@ -253,7 +240,7 @@ def pr_isfree_(person, role):
 
 
 def rj_isfree_(role, project):
-    if is_virt(person):
+    if is_virtual(person):
         return [99999] * 12
     people = real_people(role)
     res = [0] * 12
@@ -265,7 +252,7 @@ def rj_isfree_(role, project):
 
 
 
-def rj_load_(r, j):
+def needs_role_project(r, j):
     d = date.today().replace(day=15)
     res = [0] * 12
     for i in range(12):
@@ -278,9 +265,13 @@ def rj_load_(r, j):
     return res
 
 
-def rj_delta_(r, j):
-    a = rj_load_(r, j)
-    b = rj_task_v(r, j)
+
+'''
+нехватка ресурса - роль и проект - на 12 месяцев
+'''
+def delta_role_project(r:object, j:object)->List[int]:
+    a = needs_role_project(r, j)
+    b = task_role_project_including_virtuals(r, j)
     c = [0] * 12
     for i in range(12):
         c[i] = b[i] - a[i]
@@ -297,6 +288,9 @@ def atest(request):
     return render(request, "a_test.html", {"a": a, "b": b})
 
 
+'''
+домашняя страница
+'''
 def alf(request):
     return render(request, "x_home.html", {})
 
@@ -319,9 +313,6 @@ def alff(request, id=None):
         form = ProjectForm(instance=instance)
     return render(request, "form.html", {"form": form})
 
-
-#################################
-###########################
 
 
 def atj(request):
@@ -355,8 +346,10 @@ def a00(request):
 def diffx(person, role):
     return pr_dif_(person, role)
 
-
-def moon():
+'''
+Заголовок - 12 месяцев
+'''
+def moon()->List[object]:
     y_data = []
     m_data = []
     ym = []
@@ -375,16 +368,16 @@ def ujr(request, p, r, j):
     w3 = []
 
     moon12 = moon()
-    delta = rj_delta_(role, project)
+    delta = delta_role_project(role, project)
 
     people = real_and_virtual_people(role)
-    dem_rj = rj_load_(role, project)  # ----------------
+    dem_rj = needs_role_project(role, project)  # ----------------
 
     for person in people:
         if person == None:
             break
         b_w3 = [0] * 12
-        a_w3 = prj_task_(person, role, project)
+        a_w3 = task_person_role_project(person, role, project)
         diff = pr_dif_(person, role)
         d = date.today().replace(day=15)
         try:
@@ -437,15 +430,15 @@ def uj(request, p, r, j):
 
     roles = Role.objects.all()
     for role in roles:
-        delta = rj_delta_(role, project)
+        delta = delta_role_project(role, project)
 
         people = real_and_virtual_people(role)
-        dem_rj = rj_load_(role, project)  # ----------------
+        dem_rj = needs_role_project(role, project)  # ----------------
         p100 = {"val": role.title}
         for person in people:
             diff = pr_dif_(person, role)
             b_w3 = [0] * 12
-            a_w3 = prj_task_(person, role, project)
+            a_w3 = task_person_role_project(person, role, project)
 
             d = date.today().replace(day=15)
             for i in range(12):
@@ -492,11 +485,11 @@ def ur(request, p, r, j):
     projects = Project.objects.all()
 
     for project in projects:
-        delta = rj_delta_(role, project)
+        delta = delta_role_project(role, project)
         p100 = {"val": project.title}
         for person in people:
             b_w3 = [0] * 12
-            a_w3 = prj_task_(person, role, project)
+            a_w3 = task_person_role_project(person, role, project)
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
@@ -542,7 +535,7 @@ def djr(request, p, r, j):
     w2 = []
     w1 = []
     moon12 = moon()
-    delta = rj_delta_(role, project)
+    delta = delta_role_project(role, project)
 
     w4 = []
 
@@ -553,7 +546,7 @@ def djr(request, p, r, j):
         w4.append([person.fio] + pr_dif_(person, role))
 
     a_w2 = [0] * 12
-    dem_rj = rj_load_(role, project)  # ----------------
+    dem_rj = needs_role_project(role, project)  # ----------------
 
     d = date.today().replace(day=15)
     for i in range(12):
@@ -575,7 +568,7 @@ def djr(request, p, r, j):
         if person == None:
             break
         b_w3 = [0] * 12
-        a_w3 = prj_task_(person, role, project)
+        a_w3 = task_person_role_project(person, role, project)
         diff = pr_dif_(person, role)
         d = date.today().replace(day=15)
         for i in range(12):
@@ -634,7 +627,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
     w1 = []
     moon12 = moon()
     supp = [-1, "Поставка"] + rj_task_(role, project)
-    delta = ["Дельта"] + rj_delta_(role, project)
+    delta = ["Дельта"] + delta_role_project(role, project)
     zo = ["АУТСОРС"] + outsrc(role, project)
     zv = ["ВАКАНСИЯ"] + vacancia(role, project)
     w4 = []
@@ -646,7 +639,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
         w4.append([person.fio] + pr_dif_(person, role))
 
     a_w2 = [0] * 12
-    dem_rj = ["Потребность"] + rj_load_(role, project)  # ----------------
+    dem_rj = ["Потребность"] + needs_role_project(role, project)  # ----------------
 
     d = date.today().replace(day=15)
     for i in range(12):
@@ -665,13 +658,13 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
     w2 = a_w2
 
     supp = ["Поставка"] + rj_task_(role, project)
-    delta = ["Дельта"] + rj_delta_(role, project)
+    delta = ["Дельта"] + delta_role_project(role, project)
 
     for person in people_rv:
         if person == None:
             break
         b_w3 = [0] * 12
-        a_w3 = prj_task_(person, role, project)
+        a_w3 = task_person_role_project(person, role, project)
         diff = pr_dif_(person, role)
         d = date.today().replace(day=15)
         for i in range(12):
@@ -745,7 +738,7 @@ def ar(request, p, r, j):
 
         p200 = project.title
         a_w2 = [{"val": project.title, "j": project.id, "r": r}] + [0] * 12
-        dem_rj = [project.title] + ["Потребность"] + rj_load_(role, project)  #
+        dem_rj = [project.title] + ["Потребность"] + needs_role_project(role, project)  #
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -765,13 +758,13 @@ def ar(request, p, r, j):
         w2.append(a_w2)  # --------
 
         supp = ["Поставка"] + rj_task_(role, project)
-        delta = ["Дельта"] + rj_delta_(role, project)
+        delta = ["Дельта"] + delta_role_project(role, project)
 
         p100 = project.title
         for person in people_rv:
             diff = pr_dif_(person, role)
             b_w3 = [0] * 12
-            a_w3 = prj_task_(person, role, project)
+            a_w3 = task_person_role_project(person, role, project)
             d = date.today().replace(day=15)
 
             for i in range(12):
@@ -849,7 +842,7 @@ def dr(request, p, r, j):
             }
         ] + [0] * 12
 
-        dem_rj = [project.title] + ["Потребность"] + rj_load_(role, project)  #
+        dem_rj = [project.title] + ["Потребность"] + needs_role_project(role, project)  #
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -868,12 +861,12 @@ def dr(request, p, r, j):
             d = inc(d)
         w2.append(a_w2)  # --------
 
-        delta = rj_delta_(role, project)
+        delta = delta_role_project(role, project)
 
         for person in people_rv:
             diff = pr_dif_(person, role)
             b_w3 = [0] * 12
-            a_w3 = prj_task_(person, role, project)
+            a_w3 = task_person_role_project(person, role, project)
 
             d = date.today().replace(day=15)
 
@@ -940,10 +933,10 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
             w4.append([p6, person.fio] + diff)
             p6 = -1
 
-        delta = rj_delta_(role, project)
+        delta = delta_role_project(role, project)
 
         a_w2 = [0] * 12
-        dem_rj = rj_load_(role, project)  # ----------------
+        dem_rj = needs_role_project(role, project)  # ----------------
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -975,7 +968,7 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
         p100 = role.title
         for person in people_rv:
             b_w3 = [0] * 12
-            a_w3 = prj_task_(person, role, project)
+            a_w3 = task_person_role_project(person, role, project)
             diff = pr_dif_(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
@@ -1038,8 +1031,8 @@ def aj(request, p, r, j):  # Альфа, один проект
         zo = ["АУТСОРС"] + outsrc(role, project)
         zv = ["ВАКАНСИЯ"] + vacancia(role, project)
         supp = ["Поставка"] + rj_task_(role, project)
-        delta = ["Дельта"] + rj_delta_(role, project)
-        dem_rj = rj_load_(role, project)  # ----------------
+        delta = ["Дельта"] + delta_role_project(role, project)
+        dem_rj = needs_role_project(role, project)  # ----------------
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -1068,7 +1061,7 @@ def aj(request, p, r, j):  # Альфа, один проект
         for person in people_rv:  #
             diff = pr_dif_(person, role)
             b_w3 = [0] * 12
-            a_w3 = prj_task_(person, role, project)
+            a_w3 = task_person_role_project(person, role, project)
 
             d = date.today().replace(day=15)
             for i in range(12):
@@ -1124,10 +1117,10 @@ def mmjr(request, p, r, j):  # Потребность на малом экран
     w2 = []
     moon12 = moon()
 
-    delta = rj_delta_(role, project)
+    delta = delta_role_project(role, project)
 
     a_w2 = [0] * 12
-    dem_rj = rj_load_(role, project)  # ----------------
+    dem_rj = needs_role_project(role, project)  # ----------------
 
     d = date.today().replace(day=15)
     for i in range(12):
@@ -1163,10 +1156,10 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
 
     roles = Role.objects.all()
     for role in roles:
-        delta = rj_delta_(role, project)
+        delta = delta_role_project(role, project)
 
         a_w2 = [0] * 12
-        dem_rj = rj_load_(role, project)  # ----------------
+        dem_rj = needs_role_project(role, project)  # ----------------
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -1202,10 +1195,10 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
 
     projects = Project.objects.all()
     for project in projects:
-        delta = rj_delta_(role, project)
+        delta = delta_role_project(role, project)
 
         a_w2 = [0] * 12
-        dem_rj = rj_load_(role, project)  # ----------------
+        dem_rj = needs_role_project(role, project)  # ----------------
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -1328,7 +1321,7 @@ def mr1(
 
     for person in people_rr:
         dif = pr_isfree_(person, role)
-        is100 = p_101(person)
+        is100 = person_more_100(person)
 
         dif100 = [0] * 12
         da = date.today().replace(day=15)
@@ -1374,11 +1367,11 @@ def mrom(request):  # Максимальная доступнасть по вс�
 
         px = {"val": role.title, "r": role.id}  #######################
         for person in people_rr:
-            is100 = p_101(person)
+            is100 = person_more_100(person)
 
             dif2 = [{"val": person.fio}] + [0] * 12
             dif = [person.fio] + pr_isfree_(person, role)
-            d = date.today().replace(day=15)
+            d = date0()
             for i in range(12):
                 if arr[person.id][role.id][i] > 100:
                     color = "pink"

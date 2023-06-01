@@ -32,7 +32,7 @@ def real_people(role):
     return ppl
 
 
-def is_virt(person):
+def is_virtual(person):
     if person.fio in ("ВАКАНСИЯ", "АУТСОРС"):
         return True
     return False
