@@ -27,9 +27,9 @@ urlpatterns = [
     path("djr/<int:p>/<int:r>/<int:j>/", vvv.djr, name="djr"),
     path("mro/", vvv.mro, name="mro"),
     path("mrom/", vvv.mrom, name="mrom"),
-    path("prjlist/", vvv.prjlist, name="prjlist"),
+    path("prjlist/", vvv.project_timeline, name="prjlist"),
     path("atj/", vvv.atj, name="atj"),
     path("atr/", vvv.atr, name="atr"),
     path("test/", vvv.atest, name="test"),
-    path("", vvv.alf, name="alf"),
+    path("", vvv.home, name="home"),
 ]

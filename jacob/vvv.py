@@ -291,7 +291,7 @@ def atest(request):
 '''
 домашняя страница
 '''
-def alf(request):
+def home(request):
     return render(request, "x_home.html", {})
 
 
@@ -1245,7 +1245,7 @@ def sm(request):
                         role = Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
 
-                        tr(person, role, d, v)
+                        create_or_update_res_max(person, role, d, v)
                     except:
                         pass
         else:
@@ -1423,42 +1423,7 @@ def mro(request):  # Остаточная доступость по всем р�
 
 
 
-def tr(person, role, m, l):  # Доступность
-    try:
-        instance = Less.objects.get(person=person, role=role, start_date=m)
-    except:
-        instance = None
-    if instance:
-        instance.load = l
-        instance.save()
-    else:
-        instance = Less.objects.create(person=person, role=role, start_date=m, load=l)
 
-
-def tjTask(p, r, j, d, l):  # Загрузка
-    try:
-        instance = Task.objects.get(person=p, project=j, role=r, month=d)
-    except:
-        instance = None
-    if instance:
-        instance.load = l
-        instance.save()
-    else:
-        instance = Task.objects.create(person=p, role=r, project=j, month=d, load=l)
-
-
-def tjLoad(person, role, project, m, v):  # Потребность
-    try:
-        instance = Load.objects.get(project=project, role=role, month=m)
-    except:
-        instance = None
-
-    if instance:
-        instance.load = float(v)
-        instance.save()
-
-    else:
-        instance = Load.objects.create(project=project, role=role, month=m, load=v)
 
 
 def s1(request):
@@ -1477,7 +1442,7 @@ def s1(request):
                         project = Project.objects.get(id=j)
                         role = Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
-                        tjTask(
+                        create_or_update_task(
                             person, role, project, d, v
                         )  ##################################
                     except:
@@ -1504,7 +1469,7 @@ def s2(request):
                         person = None
                         role = Role.objects.get(id=r)
                         project = Project.objects.get(id=j)
-                        tjLoad(person, role, project, d, v)
+                        create_or_update_needs(person, role, project, d, v)
                     except:
                         pass
         else:
@@ -1566,37 +1531,27 @@ def smj(request):
         return mmj(request, p, r, j)
 
 
-def prjlist(request):  # все проекты (портфель)
-    dmin = date.today()
-    dmin = dmin.replace(day=15)
-    dmax = inc_n(dmin, 11)
+def project_timeline(request:object)->any:  # все проекты (портфель)
+    
     moon12 = moon()
     projects = Project.objects.all().order_by("general", "start_date")
-
     data = []
     for p in projects:
-        data.append(
-            pref(p)
-            + [dif(p.start_date, p.end_date)]
-            + mon_bool(dmin, dmax, p.start_date, p.end_date)
-        )
-
+        data.append(project_timeline_line(p))
     moon12["matrix"] = data
-
     return render(request, "prjlist.html", moon12)
 
-
-
-
-
-def pref(p):
+def project_timeline_line(p):
+    dmin = date.today()
+    dmin = dmin.replace(day=15)
+    dmax = inc_n(dmin, 11)    
     L = []
     L.append(p.general.fio)
-
     L.append({"title": p.title, "id": p.id})  # 989898
-
     L.append(p.start_date)
     L.append(p.end_date)
+    L+=[dif(p.start_date, p.end_date)] + mon_bool(dmin, dmax, p.start_date, p.end_date)
+
     return L
 
 '''
