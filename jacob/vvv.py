@@ -1,14 +1,35 @@
+from .db import delta_role_project, task_person_role_project,real_and_virtual_people,real_people
 from .models import Less
 from .forms import EntryForm, ProjectForm
 from datetime import *
-from django.shortcuts import render
 from django.forms import Form
 from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from .utils import *
-from .db import *
+from .db import needs_role_project,get_prj_triplet,rest_of_time,task_role_project,time_available_person_role
+from .db import delta_on_span,needs_on_span
 from typing import List, Union,Dict,Callable
+from django.shortcuts import render, get_object_or_404, redirect
+
+'''
+отсюда можно запускать тесты
+'''
+def atest(request:object)->object:
+    a = outsrc(2, 2)
+    b = vacancia(2, 2)
+
+    return render(request, "a_test.html", {"a": a, "b": b})
+
+def a00(request:object)->object:
+    return render(request, "a00.html")
+
+
+'''
+домашняя страница
+'''
+def home(request):
+    return render(request, "x_home.html", {})
 
 
 '''
@@ -16,10 +37,7 @@ from typing import List, Union,Dict,Callable
 '''
 def vacancia(role:object, project:object)->List[int]:
     person = None
-    try:
-        person = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]  ##АУТСОРС
-    except:
-        pass
+    person = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]  ##АУТСОРС
     return task_person_role_project(person, role, project)
 
 '''
@@ -33,11 +51,11 @@ def outsrc(role:object, project:object)->List[int]:
         pass
     return task_person_role_project(person, role, project)
 
+'''
+вход в балансы за х месяцев
+'''
 
-
-
-
-def b(request, n):
+def b(request:object, n:int)->object:
     projects = Project.objects.all()
     roles = Role.objects.all()
     xy = [0] * len(projects)
@@ -53,7 +71,7 @@ def b(request, n):
         for j in range(len(roles)):
             project = projects[i]
             role = roles[j]
-            x = round(100 * dell(role, project, n) / demm(role, project, n))
+            x = round(100 * delta_on_span(role, project, n) / needs_on_span(role, project, n))
 
             if 20 > x > 0:
                 color = "yellow"
@@ -73,28 +91,10 @@ def b(request, n):
 
     return render(request, "b.html", context)
 
-
-
-
-
-def atest(request):
-    a = outsrc(2, 2)
-    b = vacancia(2, 2)
-
-    return render(request, "a_test.html", {"a": a, "b": b})
-
-
 '''
-домашняя страница
+форма для изменение или создания проекта (если номер не указан)
 '''
-def home(request):
-    return render(request, "x_home.html", {})
-
-
-from django.shortcuts import render, get_object_or_404, redirect
-
-
-def alff(request, id=None):
+def project_form(request, id=None):
     instance = None
     if id:
         instance = get_object_or_404(Project, id=id)
@@ -109,9 +109,12 @@ def alff(request, id=None):
         form = ProjectForm(instance=instance)
     return render(request, "form.html", {"form": form})
 
+'''
+Все проекты в одной таблице
 
+'''
 
-def atj(request):
+def all_projects(request:object)->object:
     projects = Project.objects.all().order_by("general")
     data = []
     for p in projects:
@@ -121,8 +124,10 @@ def atj(request):
 
     return render(request, "atj.html", context)
 
-
-def atr(request):
+'''
+Все ресурсы в одной таблице
+'''
+def all_resources(request:object)->object:
     context = {}
     roles = Role.objects.all().order_by("general")
     data2 = []
@@ -135,12 +140,7 @@ def atr(request):
     return render(request, "atr.html", context)
 
 
-def a00(request):
-    return render(request, "a00.html")
 
-
-def diffx(person, role):
-    return pr_dif_(person, role)
 
 '''
 Заголовок - 12 месяцев
@@ -159,7 +159,7 @@ def moon()->List[object]:
     ##################################################################
 
 
-def ujr(request, p, r, j):
+def ujr(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     w3 = []
 
@@ -174,8 +174,8 @@ def ujr(request, p, r, j):
             break
         b_w3 = [0] * 12
         a_w3 = task_person_role_project(person, role, project)
-        diff = pr_dif_(person, role)
-        d = date.today().replace(day=15)
+        diff = rest_of_time(person, role)
+        d = date0()
         try:
             p = person.id
         except:
@@ -218,7 +218,7 @@ def ujr(request, p, r, j):
     return render(request, "ujr.html", moon12)
 
 
-def uj(request, p, r, j):
+def uj(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w3 = []
 
@@ -232,7 +232,7 @@ def uj(request, p, r, j):
         dem_rj = needs_role_project(role, project)  # ----------------
         p100 = {"val": role.title}
         for person in people:
-            diff = pr_dif_(person, role)
+            diff = rest_of_time(person, role)
             b_w3 = [0] * 12
             a_w3 = task_person_role_project(person, role, project)
 
@@ -271,7 +271,7 @@ def uj(request, p, r, j):
     return render(request, "uj.html", moon12)
 
 
-def ur(request, p, r, j):
+def ur(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
     w3 = []
 
@@ -286,8 +286,8 @@ def ur(request, p, r, j):
         for person in people:
             b_w3 = [0] * 12
             a_w3 = task_person_role_project(person, role, project)
-            diff = pr_dif_(person, role)
-            d = date.today().replace(day=15)
+            diff = rest_of_time(person, role)
+            d = date0()
             for i in range(12):
                 color = "white"
                 if mon_outside_prj(d, project):
@@ -339,12 +339,12 @@ def djr(request, p, r, j):
     people_rr = real_people(role)
 
     for person in people_rr:  # 7777777777777777777777777777777777777777
-        w4.append([person.fio] + pr_dif_(person, role))
+        w4.append([person.fio] + rest_of_time(person, role))
 
     a_w2 = [0] * 12
     dem_rj = needs_role_project(role, project)  # ----------------
 
-    d = date.today().replace(day=15)
+    d = date0()
     for i in range(12):
         color = "white"
         if mon_outside_prj(d, project):
@@ -365,7 +365,7 @@ def djr(request, p, r, j):
             break
         b_w3 = [0] * 12
         a_w3 = task_person_role_project(person, role, project)
-        diff = pr_dif_(person, role)
+        diff = rest_of_time(person, role)
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
@@ -414,7 +414,7 @@ def djr(request, p, r, j):
 
 
 # Дельта, один проект, один ресурс
-def ajr(request, p, r, j):  # Альфа, один проект, один ресуря
+def ajr(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, j)
 
     w4 = []
@@ -432,7 +432,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
     people_rv = real_and_virtual_people(role)
 
     for person in people_rr:  # 7777777777777777777777777777777777777777
-        w4.append([person.fio] + pr_dif_(person, role))
+        w4.append([person.fio] + rest_of_time(person, role))
 
     a_w2 = [0] * 12
     dem_rj = ["Потребность"] + needs_role_project(role, project)  # ----------------
@@ -461,7 +461,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
             break
         b_w3 = [0] * 12
         a_w3 = task_person_role_project(person, role, project)
-        diff = pr_dif_(person, role)
+        diff = rest_of_time(person, role)
         d = date.today().replace(day=15)
         for i in range(12):
             color = "white"
@@ -507,7 +507,7 @@ def ajr(request, p, r, j):  # Альфа, один проект, один рес
     return render(request, "ajr.html", moon12)
 
 
-def ar(request, p, r, j):
+def ar(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
 
     people_rr = real_people(role)
@@ -522,7 +522,7 @@ def ar(request, p, r, j):
     x = [0] * 12
 
     for person in people_rr:
-        diff = pr_dif_(person, role)
+        diff = rest_of_time(person, role)
         x = diff
         w4.append([person.fio] + x)
     for project in projects:
@@ -555,7 +555,7 @@ def ar(request, p, r, j):
 
         p100 = project.title
         for person in people_rv:
-            diff = pr_dif_(person, role)
+            diff = rest_of_time(person, role)
             b_w3 = [0] * 12
             a_w3 = task_person_role_project(person, role, project)
             d = date.today().replace(day=15)
@@ -618,7 +618,7 @@ def dr(request, p, r, j):
     x = [0] * 12
 
     for person in people_rr:
-        diff = pr_dif_(person, role)
+        diff = rest_of_time(person, role)
         x = diff
         w4.append([person.fio] + x)
 
@@ -657,7 +657,7 @@ def dr(request, p, r, j):
         delta = delta_role_project(role, project)
 
         for person in people_rv:
-            diff = pr_dif_(person, role)
+            diff = rest_of_time(person, role)
             b_w3 = [0] * 12
             a_w3 = task_person_role_project(person, role, project)
 
@@ -706,7 +706,7 @@ def dr(request, p, r, j):
     return render(request, "dr.html", moon12)
 
 
-def dj(request, p, r, j):  # Дельта, один проект все ресурсы
+def dj(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []
@@ -722,7 +722,7 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
         people_rv = real_and_virtual_people(role)
         p6 = role.title
         for person in people_rr:  # 7777777777777777777777777777777777777777
-            diff = pr_dif_(person, role)
+            diff = rest_of_time(person, role)
             w4.append([p6, person.fio] + diff)
             p6 = -1
 
@@ -762,7 +762,7 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
         for person in people_rv:
             b_w3 = [0] * 12
             a_w3 = task_person_role_project(person, role, project)
-            diff = pr_dif_(person, role)
+            diff = rest_of_time(person, role)
             d = date.today().replace(day=15)
             for i in range(12):
                 color = "white"
@@ -808,7 +808,7 @@ def dj(request, p, r, j):  # Дельта, один проект все ресу
     return render(request, "dj.html", moon12)
 
 
-def aj(request, p, r, j):  # Альфа, один проект
+def aj(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []
@@ -848,11 +848,11 @@ def aj(request, p, r, j):  # Альфа, один проект
         people_rr = real_people(role)
         people_rv = real_and_virtual_people(role)
         for person in people_rr:  #
-            diff = pr_dif_(person, role)
+            diff = rest_of_time(person, role)
             w4.append([p200, person.fio] + diff)
             p200 = -1
         for person in people_rv:  #
-            diff = pr_dif_(person, role)
+            diff = rest_of_time(person, role)
             b_w3 = [0] * 12
             a_w3 = task_person_role_project(person, role, project)
 
@@ -903,7 +903,7 @@ def aj(request, p, r, j):  # Альфа, один проект
     return render(request, "aj.html", moon12)  # АЛьфа, один проект все ресурсы
 
 
-def mmjr(request, p, r, j):  # Потребность на малом экране
+def mmjr(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     if role == None:
         return alf(request)
@@ -941,7 +941,7 @@ def mmjr(request, p, r, j):  # Потребность на малом экран
     return render(request, "mmjr.html", moon12)
 
 
-def mmj(request, p, r, j):  # Потребность на малом экране
+def mmj(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
 
     w2 = []
@@ -980,7 +980,7 @@ def mmj(request, p, r, j):  # Потребность на малом экран�
     return render(request, "mmj.html", moon12)
 
 
-def mmr(request, p, r, j):  # Потребность на малом экране
+def mmr(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
 
     w2 = []
@@ -993,7 +993,7 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
         a_w2 = [0] * 12
         dem_rj = needs_role_project(role, project)  # ----------------
 
-        d = date.today().replace(day=15)
+        d = date0()
         for i in range(12):
             color = "white"
             if mon_outside_prj(d, project):
@@ -1021,9 +1021,7 @@ def mmr(request, p, r, j):  # Потребность на малом экран�
 
 
 
-def mr2(
-    request, p, r, j
-):  # максимальна доступность одного ресурса и Остаточная доступность
+def mr2(request:object, p:int, r:int, j:int)->object:
     moon12 = moon()
     dif14 = []
     dif15 = []
@@ -1035,7 +1033,7 @@ def mr2(
     people_rr = real_people(role)
 
     for person in people_rr:
-        dif = pr_isfree_(person, role)
+        dif = time_available_person_role(person, role)
 
         dif100 = [0] * 12
         da = date.today().replace(day=15)
@@ -1049,7 +1047,7 @@ def mr2(
         dif14.append([person.fio] + dif100)  ######################
 
     for person in people_rr:
-        dif = pr_dif_(person, role)
+        dif = rest_of_time(person, role)
 
         dif100 = [0] * 12
         da = date.today().replace(day=15)
@@ -1070,9 +1068,7 @@ def mr2(
     return render(request, "mr2.html", moon12)
 
 
-def mr1(
-    request, p, r, j
-):  # максимальна доступность одного ресурса и Остаточная доступность
+def mr1(request:object, p:int, r:int, j:int)->object:
     moon12 = moon()
     dif14 = []
     dif15 = []
@@ -1086,7 +1082,7 @@ def mr1(
     people_rv = real_and_virtual_people(role)
 
     for person in people_rr:
-        dif = pr_isfree_(person, role)
+        dif = time_available_person_role(person, role)
         is100 = person_more_100(person)
 
         dif100 = [0] * 12
@@ -1110,7 +1106,7 @@ def mr1(
 
 
 #
-def mrom(request):  # Максимальная доступнасть по всем ресурсам
+def mrom(request:object)->object:  # Максимальная доступнасть по всем ресурсам
     moon12 = moon()
     dif14 = []
 
@@ -1122,7 +1118,7 @@ def mrom(request):  # Максимальная доступнасть по вс�
     for p in my:
         arr[p.id] = [0] * 1000
         for r in roles:
-            t = pr_isfree_(p, r)
+            t = time_available_person_role(p, r)
             arr[p.id][r.id] = [0] * 12
             for i in range(12):
                 arr[p.id][r.id][i] += t[i]
@@ -1136,7 +1132,7 @@ def mrom(request):  # Максимальная доступнасть по вс�
             is100 = person_more_100(person)
 
             dif2 = [{"val": person.fio}] + [0] * 12
-            dif = [person.fio] + pr_isfree_(person, role)
+            dif = [person.fio] + time_available_person_role(person, role)
             d = date0()
             for i in range(12):
                 if arr[person.id][role.id][i] > 100:
@@ -1161,11 +1157,11 @@ def mrom(request):  # Максимальная доступнасть по вс�
 
 
 #
-def mro(request):  # Остаточная доступость по всем ресурсам
+def mro(request:object)->object:  # Остаточная доступость по всем ресурсам
     moon12 = moon()
     dif14 = []
 
-    project = Project.objects.all()
+    project = None #Project.objects.all()
     roles = Role.objects.all()
     for role in roles:
         p9 = role.title
@@ -1173,7 +1169,7 @@ def mro(request):  # Остаточная доступость по всем р�
         people_rv = real_and_virtual_people(role)
         px = role.title
         for person in people_rr:
-            dif = [person.fio] + diffx(person, role)
+            dif = [person.fio] + rest_of_time(person, role)
             dif14.append([px] + dif)
             px = -1
 
@@ -1183,7 +1179,7 @@ def mro(request):  # Остаточная доступость по всем р�
 
 
 
-def project_timeline(request:object)->any:  # все проекты (портфель)
+def project_timeline(request:object)->object:  # все проекты (портфель)
     
     moon12 = moon()
     projects = Project.objects.all().order_by("general", "start_date")
@@ -1213,7 +1209,7 @@ def person_more_100(person:object)->List[bool]:
     sum = [0] * 12
     roles = {person.role}.union(person.res.all())
     for role in roles:
-        isfree = pr_isfree_(person, role)
+        isfree = time_available_person_role(person, role)
         for i in range(12):
             sum[i] += isfree[i]
     res = [True] * 12

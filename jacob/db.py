@@ -8,6 +8,8 @@ from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
+
+from typing import List, Union,Dict,Callable
 from .vvv import *
 from .utils import *
 
@@ -15,7 +17,7 @@ def real_and_virtual_people(role:object)->List[object]:
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
     pps = pp1.union(pp2)
-    ppl = sorted(list(pps), key=lambda x: x.fio)
+    ppl = sorted(list(pps), key=lambda x:x.fio)
     try:
         ov = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]
         ou = UserProfile.objects.filter(fio="АУТСОРС")[0]
@@ -25,7 +27,7 @@ def real_and_virtual_people(role:object)->List[object]:
     return ppl + [ou, ov]
 
 
-def real_people(role):
+def real_people(role:object)->List[UserProfile]:
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
     pps = pp1.union(pp2)
@@ -33,7 +35,7 @@ def real_people(role):
     return ppl
 
 
-def is_virtual(person):
+def is_virtual(person:UserProfile)->bool:
     if person.fio in ("ВАКАНСИЯ", "АУТСОРС"):
         return True
     return False
@@ -41,7 +43,7 @@ def is_virtual(person):
 
 
 
-def get_prj_triplet(p:int, r:int, j:int)->tuple:
+def get_prj_triplet(p:int, r:int, j:int)->tuple[any,any,any]:
     role = None
     if r > 0:
         try:
@@ -103,9 +105,9 @@ def create_or_update_needs(person:object, role:object, project:object, m:date, v
 
 
 
-def rj_dif_(p, r, j):
+def rest_of_time(p:object, r:object, j:object)->List[int]:
     res = [0] * 12
-    load = pr_isfree_(p, r)
+    load = time_available_person_role(p, r)
     task = task_role_project(r, j)
     for i in range(12):
         res[i] = load[i] - task[i]
@@ -113,10 +115,10 @@ def rj_dif_(p, r, j):
     return res
 
 
-def pr_dif_(p, r):
+def rest_of_time(p, r):
     c = [0] * 12
-    a = pr_task_(p, r)
-    b = pr_isfree_(p, r)
+    a = task_person_role(p, r)
+    b = time_available_person_role(p, r)
     try:
         for i in range(12):
             c[i] = b[i] - a[i]
@@ -125,7 +127,7 @@ def pr_dif_(p, r):
     return c
 
 
-def pr_task_(person, role):
+def task_person_role(person:object, role:object)->List[int]:
     d = date.today().replace(day=15)
     res = [0] * 12
     for i in range(12):
@@ -138,7 +140,7 @@ def pr_task_(person, role):
         d = inc(d)
     return res
 
-def prm_isfree_(p, r, y, m):
+def time_available_in_mon(p:int, r:int, y:int, m:int)->int:
     d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
     person, role, project = get_prj_triplet(p, r, -1)
     if is_virtual(person):
@@ -160,7 +162,7 @@ def prm_isfree_(p, r, y, m):
 '''
 НЕехватка ресурсов - роль - проект - время-месяцев - суммарно по месяцам
 '''
-def demm(r:object, j:object, n:int)->int:
+def needs_on_span(r:object, j:object, n:int)->int:
     rjd = needs_role_project(r, j)
     sum = 0
     for i in range(n):
@@ -170,7 +172,7 @@ def demm(r:object, j:object, n:int)->int:
     return sum
 
 
-def dell(r, j, n):
+def delta_on_span(r, j, n):
     rjd = delta_role_project(r, j)
     sum = 0
     for i in range(n):
@@ -359,14 +361,12 @@ def task_role_project(r, j):
     return res
 
 
-def pr_isfree_(person, role):
+def time_available_person_role(person:object, role:object)->List[int]:
     if is_virtual(person):
         return [999999] * 12
 
     res = [0] * 12
-    d = date.today().replace(
-        day=15
-    )  # .replace(year=y).replace(month=m).replace(day=15)
+    d = date0()
     t = -1
     if person == None:
         return None
@@ -388,13 +388,13 @@ def pr_isfree_(person, role):
     return res
 
 
-def rj_isfree_(role, project):
-    if is_virtual(person):
-        return [99999] * 12
+def time_available_role(role:object)->List[int]:   
     people = real_people(role)
     res = [0] * 12
     for person in people:
-        isfree = pr_isfree_(person, role)
+        if is_virtual(person):
+            continue
+        isfree = time_available_person_role(person, role)
         for i in range(12):
             res[i] += isfree[i]
     return res

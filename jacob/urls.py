@@ -1,14 +1,15 @@
 from django.urls import path
 from . import vvv
+from . import db
 
 urlpatterns = [
-    path("form/<int:id>/", vvv.alff, name="alff_with_id"),
-    path("form/", vvv.alff, name="alff"),
-    path("smj/", vvv.smj, name="smj"),
-    path("sm/", vvv.sm, name="sm"),
-    path("s2/", vvv.s2, name="s2"),
-    path("s1/", vvv.s1, name="s1"),
-    path("sj/", vvv.sj, name="sj"),
+    path("form/<int:id>/", vvv.project_form, name="project_form_with_id"),
+    path("form/", vvv.project_form, name="project_form"),
+    path("smj/", db.smj, name="smj"),
+    path("sm/", db.sm, name="sm"),
+    path("s2/", db.s2, name="s2"),
+    path("s1/", db.s1, name="s1"),
+    path("sj/", db.sj, name="sj"),
     path("eva2/<str:fun>/", vvv.eva2, name="eva2"),
     path("b/<int:n>/", vvv.b, name="b"),
     path("ur/<int:p>/<int:r>/<int:j>/", vvv.ur, name="ur"),
@@ -28,8 +29,8 @@ urlpatterns = [
     path("mro/", vvv.mro, name="mro"),
     path("mrom/", vvv.mrom, name="mrom"),
     path("prjlist/", vvv.project_timeline, name="prjlist"),
-    path("atj/", vvv.atj, name="atj"),
-    path("atr/", vvv.atr, name="atr"),
+    path("atj/", vvv.all_projects, name="atj"),
+    path("atr/", vvv.all_resources, name="atr"),
     path("test/", vvv.atest, name="test"),
     path("", vvv.home, name="home"),
 ]
