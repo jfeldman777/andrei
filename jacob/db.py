@@ -159,21 +159,10 @@ def time_available_in_mon(p:int, r:int, y:int, m:int)->int:
     return t
 
 
-'''
-НЕехватка ресурсов - роль - проект - время-месяцев - суммарно по месяцам
-'''
-def needs_on_span(r:object, j:object, n:int)->int:
-    rjd = needs_role_project(r, j)
-    sum = 0
-    for i in range(n):
-        sum += rjd[i]
-    if sum == 0:
-        return 1 #чтобы не делить на ноль
-    return sum
 
 
-def delta_on_span(r, j, n):
-    rjd = delta_role_project(r, j)
+def delta_on_span(p,r, j, n):
+    rjd = delta_role_project_12(r, j)
     sum = 0
     for i in range(n):
         if rjd[i] < 0:
@@ -401,7 +390,7 @@ def time_available_role(role:object)->List[int]:
 
 #rj_task_
 
-def needs_role_project(r:object, j:object)->List[int]:
+def needs_role_project_12(p:object,r:object, j:object)->List[int]:
     d = date0()
     res = [0] * 12
     for i in range(12):
@@ -418,8 +407,8 @@ def needs_role_project(r:object, j:object)->List[int]:
 '''
 нехватка ресурса - роль и проект - на 12 месяцев
 '''
-def delta_role_project(r:object, j:object)->List[int]:
-    a = needs_role_project(r, j)
+def delta_role_project_12(r:object, j:object)->List[int]:
+    a = needs_role_project_12(-1,r, j)
     b = task_role_project_including_virtuals(r, j)
     c = [0] * 12
     for i in range(12):

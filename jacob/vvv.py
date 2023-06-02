@@ -1,4 +1,4 @@
-from .db import delta_role_project, task_person_role_project,real_and_virtual_people,real_people
+from .db import  task_person_role_project,real_and_virtual_people,real_people
 from .models import Less
 from .forms import EntryForm, ProjectForm
 from datetime import *
@@ -7,8 +7,8 @@ from .models import Load, Role, Project, UserProfile, Task
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from .utils import *
-from .db import needs_role_project,get_prj_triplet,rest_of_time,task_role_project,time_available_person_role
-from .db import delta_on_span,needs_on_span
+from .db import get_prj_triplet,rest_of_time,task_role_project,time_available_person_role,task_role_project_including_virtuals
+from .db import delta_role_project_12,needs_role_project_12
 from typing import List, Union,Dict,Callable
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -51,11 +51,46 @@ def outsrc(role:object, project:object)->List[int]:
         pass
     return task_person_role_project(person, role, project)
 
+
+
+#'''
+#нехватка ресурса - роль и проект - на 12 месяцев
+#'''
+#def delta_role_project(r:object, j:object)->List[int]:
+#    a = needs_role_project_12(-1,r, j)
+#    b = task_role_project_including_virtuals(r, j)
+#    c = [0] * 12
+#    for i in range(12):
+#        c[i] = b[i] - a[i]
+#    return c
+
+
+
+def delta_on_span(r, j, n):
+    rjd = delta_role_project_12(r, j)
+    sum = 0
+    for i in range(n):
+        if rjd[i] < 0:
+            sum -= rjd[i]
+    return sum
+
+'''
+НЕехватка ресурсов - роль - проект - время-месяцев - суммарно по месяцам
+'''
+def needs_on_span(r:object, j:object, n:int)->int:
+    rjd = needs_role_project_12(-1,r, j)
+    sum = 0
+    for i in range(n):
+        sum += rjd[i]
+    if sum == 0:
+        return 1 #чтобы не делить на ноль
+    return sum
+
 '''
 вход в балансы за х месяцев
 '''
 
-def b(request:object, n:int)->object:
+def balance_map(request:object, n:int)->object:
     projects = Project.objects.all()
     roles = Role.objects.all()
     xy = [0] * len(projects)
@@ -159,15 +194,15 @@ def moon()->List[object]:
     ##################################################################
 
 
-def ujr(request:object, p:int, r:int, j:int)->object:
+def assign_role_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     w3 = []
 
     moon12 = moon()
-    delta = delta_role_project(role, project)
+    delta = delta_role_project_12(role, project)
 
     people = real_and_virtual_people(role)
-    dem_rj = needs_role_project(role, project)  # ----------------
+    dem_rj = needs_role_project_12(person,role, project)  # ----------------
 
     for person in people:
         if person == None:
@@ -218,7 +253,7 @@ def ujr(request:object, p:int, r:int, j:int)->object:
     return render(request, "ujr.html", moon12)
 
 
-def uj(request:object, p:int, r:int, j:int)->object:
+def assign_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w3 = []
 
@@ -226,10 +261,10 @@ def uj(request:object, p:int, r:int, j:int)->object:
 
     roles = Role.objects.all()
     for role in roles:
-        delta = delta_role_project(role, project)
+        delta = delta_role_project_12(role, project)
 
         people = real_and_virtual_people(role)
-        dem_rj = needs_role_project(role, project)  # ----------------
+        dem_rj = needs_role_project_12(person,role, project)  # ----------------
         p100 = {"val": role.title}
         for person in people:
             diff = rest_of_time(person, role)
@@ -271,7 +306,7 @@ def uj(request:object, p:int, r:int, j:int)->object:
     return render(request, "uj.html", moon12)
 
 
-def ur(request:object, p:int, r:int, j:int)->object:
+def assign_role(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
     w3 = []
 
@@ -281,7 +316,7 @@ def ur(request:object, p:int, r:int, j:int)->object:
     projects = Project.objects.all()
 
     for project in projects:
-        delta = delta_role_project(role, project)
+        delta = delta_role_project_12(role, project)
         p100 = {"val": project.title}
         for person in people:
             b_w3 = [0] * 12
@@ -323,7 +358,7 @@ def ur(request:object, p:int, r:int, j:int)->object:
     return render(request, "ur.html", moon12)
 
 
-def djr(request, p, r, j):
+def delta_role_project(request, p, r, j):
     person, role, project = get_prj_triplet(-1, r, j)
 
     w4 = []
@@ -331,7 +366,7 @@ def djr(request, p, r, j):
     w2 = []
     w1 = []
     moon12 = moon()
-    delta = delta_role_project(role, project)
+    delta = delta_role_project_12(role, project)
 
     w4 = []
 
@@ -342,7 +377,7 @@ def djr(request, p, r, j):
         w4.append([person.fio] + rest_of_time(person, role))
 
     a_w2 = [0] * 12
-    dem_rj = needs_role_project(role, project)  # ----------------
+    dem_rj = needs_role_project_12(person,role, project)   # ----------------
 
     d = date0()
     for i in range(12):
@@ -414,7 +449,7 @@ def djr(request, p, r, j):
 
 
 # Дельта, один проект, один ресурс
-def ajr(request:object, p:int, r:int, j:int)->object:
+def all_role_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, j)
 
     w4 = []
@@ -423,7 +458,7 @@ def ajr(request:object, p:int, r:int, j:int)->object:
     w1 = []
     moon12 = moon()
     supp = [-1, "Поставка"] + task_role_project(role, project)
-    delta = ["Дельта"] + delta_role_project(role, project)
+    delta = ["Дельта"] + delta_role_project_12(role, project)
     zo = ["АУТСОРС"] + outsrc(role, project)
     zv = ["ВАКАНСИЯ"] + vacancia(role, project)
     w4 = []
@@ -435,7 +470,7 @@ def ajr(request:object, p:int, r:int, j:int)->object:
         w4.append([person.fio] + rest_of_time(person, role))
 
     a_w2 = [0] * 12
-    dem_rj = ["Потребность"] + needs_role_project(role, project)  # ----------------
+    dem_rj = ["Потребность"] + needs_role_project_12(person,role, project)  # ----------------
 
     d = date0()
     for i in range(12):
@@ -454,7 +489,7 @@ def ajr(request:object, p:int, r:int, j:int)->object:
     w2 = a_w2
 
     supp = ["Поставка"] + task_role_project(role, project)
-    delta = ["Дельта"] + delta_role_project(role, project)
+    delta = ["Дельта"] + delta_role_project_12(role, project)
 
     for person in people_rv:
         if person == None:
@@ -507,7 +542,7 @@ def ajr(request:object, p:int, r:int, j:int)->object:
     return render(request, "ajr.html", moon12)
 
 
-def ar(request:object, p:int, r:int, j:int)->object:
+def all_role(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
 
     people_rr = real_people(role)
@@ -531,7 +566,7 @@ def ar(request:object, p:int, r:int, j:int)->object:
 
         p200 = project.title
         a_w2 = [{"val": project.title, "j": project.id, "r": r}] + [0] * 12
-        dem_rj = [project.title] + ["Потребность"] + needs_role_project(role, project)  #
+        dem_rj = [project.title] + ["Потребность"] + needs_role_project_12(person, role, project)  #
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -551,7 +586,7 @@ def ar(request:object, p:int, r:int, j:int)->object:
         w2.append(a_w2)  # --------
 
         supp = ["Поставка"] + task_role_project(role, project)
-        delta = ["Дельта"] + delta_role_project(role, project)
+        delta = ["Дельта"] + delta_role_project_12(role, project)
 
         p100 = project.title
         for person in people_rv:
@@ -604,7 +639,7 @@ def ar(request:object, p:int, r:int, j:int)->object:
     return render(request, "ar.html", moon12)
 
 
-def dr(request, p, r, j):
+def delta_role(request, p, r, j):
     person, role, project = get_prj_triplet(-1, r, -1)
 
     people_rr = real_people(role)
@@ -635,7 +670,7 @@ def dr(request, p, r, j):
             }
         ] + [0] * 12
 
-        dem_rj = [project.title] + ["Потребность"] + needs_role_project(role, project)  #
+        dem_rj = [project.title] + ["Потребность"] + needs_role_project_12(person,role, project)   #
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -654,7 +689,7 @@ def dr(request, p, r, j):
             d = inc(d)
         w2.append(a_w2)  # --------
 
-        delta = delta_role_project(role, project)
+        delta = delta_role_project_12(role, project)
 
         for person in people_rv:
             diff = rest_of_time(person, role)
@@ -706,7 +741,7 @@ def dr(request, p, r, j):
     return render(request, "dr.html", moon12)
 
 
-def dj(request:object, p:int, r:int, j:int)->object:
+def delta_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []
@@ -726,10 +761,10 @@ def dj(request:object, p:int, r:int, j:int)->object:
             w4.append([p6, person.fio] + diff)
             p6 = -1
 
-        delta = delta_role_project(role, project)
+        delta = delta_role_project_12(role, project)
 
         a_w2 = [0] * 12
-        dem_rj = needs_role_project(role, project)  # ----------------
+        dem_rj = needs_role_project_12(person,role, project)  # ----------------
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -808,7 +843,7 @@ def dj(request:object, p:int, r:int, j:int)->object:
     return render(request, "dj.html", moon12)
 
 
-def aj(request:object, p:int, r:int, j:int)->object:
+def all_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []
@@ -824,8 +859,8 @@ def aj(request:object, p:int, r:int, j:int)->object:
         zo = ["АУТСОРС"] + outsrc(role, project)
         zv = ["ВАКАНСИЯ"] + vacancia(role, project)
         supp = ["Поставка"] + task_role_project(role, project)
-        delta = ["Дельта"] + delta_role_project(role, project)
-        dem_rj = needs_role_project(role, project)  # ----------------
+        delta = ["Дельта"] + delta_role_project_12(role, project)
+        dem_rj = needs_role_project_12(person,role, project)   # ----------------
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -903,19 +938,19 @@ def aj(request:object, p:int, r:int, j:int)->object:
     return render(request, "aj.html", moon12)  # АЛьфа, один проект все ресурсы
 
 
-def mmjr(request:object, p:int, r:int, j:int)->object:
+def needs_role_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     if role == None:
         return alf(request)
     w2 = []
     moon12 = moon()
 
-    delta = delta_role_project(role, project)
+    delta = delta_role_project_12(role, project)
 
     a_w2 = [0] * 12
-    dem_rj = needs_role_project(role, project)  # ----------------
+    dem_rj = needs_role_project_12(person,role, project)   # ----------------
 
-    d = date.today().replace(day=15)
+    d = date0()
     for i in range(12):
         color = "white"
         if mon_outside_prj(d, project):
@@ -941,7 +976,7 @@ def mmjr(request:object, p:int, r:int, j:int)->object:
     return render(request, "mmjr.html", moon12)
 
 
-def mmj(request:object, p:int, r:int, j:int)->object:
+def needs_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
 
     w2 = []
@@ -949,10 +984,10 @@ def mmj(request:object, p:int, r:int, j:int)->object:
 
     roles = Role.objects.all()
     for role in roles:
-        delta = delta_role_project(role, project)
+        delta = delta_role_project_12(role, project)
 
         a_w2 = [0] * 12
-        dem_rj = needs_role_project(role, project)  # ----------------
+        dem_rj = needs_role_project_12(person,role, project)  # ----------------
 
         d = date.today().replace(day=15)
         for i in range(12):
@@ -980,7 +1015,7 @@ def mmj(request:object, p:int, r:int, j:int)->object:
     return render(request, "mmj.html", moon12)
 
 
-def mmr(request:object, p:int, r:int, j:int)->object:
+def needs_role(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
 
     w2 = []
@@ -988,10 +1023,10 @@ def mmr(request:object, p:int, r:int, j:int)->object:
 
     projects = Project.objects.all()
     for project in projects:
-        delta = delta_role_project(role, project)
+        delta = delta_role_project_12(role, project)
 
         a_w2 = [0] * 12
-        dem_rj = needs_role_project(role, project)  # ----------------
+        dem_rj = needs_role_project_12(person,role, project)   # ----------------
 
         d = date0()
         for i in range(12):
@@ -1021,7 +1056,7 @@ def mmr(request:object, p:int, r:int, j:int)->object:
 
 
 
-def mr2(request:object, p:int, r:int, j:int)->object:
+def rest_role(request:object, p:int, r:int, j:int)->object:
     moon12 = moon()
     dif14 = []
     dif15 = []
@@ -1036,7 +1071,7 @@ def mr2(request:object, p:int, r:int, j:int)->object:
         dif = time_available_person_role(person, role)
 
         dif100 = [0] * 12
-        da = date.today().replace(day=15)
+        da = date0()
         for i in range(12):
             dif100[i] = {
                 "link": f"{person.id}.0.0.{da.year}-{da.month}-15",
@@ -1068,7 +1103,7 @@ def mr2(request:object, p:int, r:int, j:int)->object:
     return render(request, "mr2.html", moon12)
 
 
-def mr1(request:object, p:int, r:int, j:int)->object:
+def available_role(request:object, p:int, r:int, j:int)->object:
     moon12 = moon()
     dif14 = []
     dif15 = []
@@ -1106,7 +1141,7 @@ def mr1(request:object, p:int, r:int, j:int)->object:
 
 
 #
-def mrom(request:object)->object:  # Максимальная доступнасть по всем ресурсам
+def available_all(request:object)->object:  # Максимальная доступнасть по всем ресурсам
     moon12 = moon()
     dif14 = []
 
@@ -1157,7 +1192,7 @@ def mrom(request:object)->object:  # Максимальная доступнас
 
 
 #
-def mro(request:object)->object:  # Остаточная доступость по всем ресурсам
+def rest_all(request:object)->object:  # Остаточная доступость по всем ресурсам
     moon12 = moon()
     dif14 = []
 
