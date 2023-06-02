@@ -193,7 +193,9 @@ def moon()->List[object]:
     return {"yy": y_data, "mm": m_data, "ym": ym}
     ##################################################################
 
-
+'''
+назначения - один ресурс - один проект
+'''
 def assign_role_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     w3 = []
@@ -251,8 +253,9 @@ def assign_role_project(request:object, p:int, r:int, j:int)->object:
     moon12["r"] = r
     moon12["j"] = j
     return render(request, "ujr.html", moon12)
-
-
+'''
+назначения - один проект
+'''
 def assign_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w3 = []
@@ -305,7 +308,9 @@ def assign_project(request:object, p:int, r:int, j:int)->object:
     moon12["j"] = j
     return render(request, "uj.html", moon12)
 
-
+'''
+назначения - один ресурс
+'''
 def assign_role(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
     w3 = []
@@ -356,8 +361,9 @@ def assign_role(request:object, p:int, r:int, j:int)->object:
     moon12["r"] = r
 
     return render(request, "ur.html", moon12)
-
-
+'''
+дельта - один ресурс - один проект
+'''
 def delta_role_project(request, p, r, j):
     person, role, project = get_prj_triplet(-1, r, j)
 
@@ -447,8 +453,9 @@ def delta_role_project(request, p, r, j):
     moon12["p"] = 0
     return render(request, "djr.html", moon12)
 
-
-# Дельта, один проект, один ресурс
+'''
+балансы - один ресурс - один проект
+'''
 def all_role_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, j)
 
@@ -541,7 +548,9 @@ def all_role_project(request:object, p:int, r:int, j:int)->object:
     moon12["p"] = 0
     return render(request, "ajr.html", moon12)
 
-
+'''
+балансы - один ресурс
+'''
 def all_role(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
 
@@ -637,8 +646,9 @@ def all_role(request:object, p:int, r:int, j:int)->object:
     moon12["p"] = 0
 
     return render(request, "ar.html", moon12)
-
-
+'''
+дельта - один ресурс
+'''
 def delta_role(request, p, r, j):
     person, role, project = get_prj_triplet(-1, r, -1)
 
@@ -739,8 +749,10 @@ def delta_role(request, p, r, j):
     moon12["project"] = "Все проекты"
 
     return render(request, "dr.html", moon12)
+'''
 
-
+дельта - один проект
+'''
 def delta_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
@@ -842,7 +854,9 @@ def delta_project(request:object, p:int, r:int, j:int)->object:
     moon12["p"] = 0
     return render(request, "dj.html", moon12)
 
-
+'''
+балансы - один проект
+'''
 def all_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
@@ -936,8 +950,9 @@ def all_project(request:object, p:int, r:int, j:int)->object:
 
     moon12["p"] = 0
     return render(request, "aj.html", moon12)  # АЛьфа, один проект все ресурсы
-
-
+'''
+потребность - один ресурс - один проект
+'''
 def needs_role_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     if role == None:
@@ -975,7 +990,9 @@ def needs_role_project(request:object, p:int, r:int, j:int)->object:
     moon12["id"] = j
     return render(request, "mmjr.html", moon12)
 
-
+'''
+потребность - прект один  -ресурсы все
+'''
 def needs_project(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
 
@@ -1014,7 +1031,9 @@ def needs_project(request:object, p:int, r:int, j:int)->object:
     moon12["id"] = j
     return render(request, "mmj.html", moon12)
 
-
+'''
+потребность - ресурс один - проекты все
+'''
 def needs_role(request:object, p:int, r:int, j:int)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
 
@@ -1054,8 +1073,9 @@ def needs_role(request:object, p:int, r:int, j:int)->object:
     return render(request, "mmr.html", moon12)
 
 
-
-
+''' 
+доступность остаточная - персональная - один вид ресурса
+'''
 def rest_role(request:object, p:int, r:int, j:int)->object:
     moon12 = moon()
     dif14 = []
@@ -1102,7 +1122,9 @@ def rest_role(request:object, p:int, r:int, j:int)->object:
 
     return render(request, "mr2.html", moon12)
 
-
+'''
+доступность максимальная - персональная - один вид ресурса
+'''
 def available_role(request:object, p:int, r:int, j:int)->object:
     moon12 = moon()
     dif14 = []
@@ -1140,7 +1162,9 @@ def available_role(request:object, p:int, r:int, j:int)->object:
     return render(request, "mr1.html", moon12)
 
 
-#
+'''
+показать максимальную доступность по всем персонам и ролям
+'''
 def available_all(request:object)->object:  # Максимальная доступнасть по всем ресурсам
     moon12 = moon()
     dif14 = []
@@ -1191,7 +1215,9 @@ def available_all(request:object)->object:  # Максимальная дост�
     return render(request, "mrom.html", moon12)
 
 
-#
+'''
+показать остаток ресурса по всем персонам и ролям
+'''
 def rest_all(request:object)->object:  # Остаточная доступость по всем ресурсам
     moon12 = moon()
     dif14 = []
@@ -1213,7 +1239,9 @@ def rest_all(request:object)->object:  # Остаточная доступост
     return render(request, "mro.html", moon12)
 
 
-
+'''
+портфель проектов
+'''
 def project_timeline(request:object)->object:  # все проекты (портфель)
     
     moon12 = moon()
@@ -1224,6 +1252,9 @@ def project_timeline(request:object)->object:  # все проекты (порт
     moon12["matrix"] = data
     return render(request, "prjlist.html", moon12)
 
+'''
+одна строка в портфель проектов
+'''
 def project_timeline_line(p):
     dmin = date.today()
     dmin = dmin.replace(day=15)
