@@ -109,6 +109,11 @@ class RoleForm(forms.ModelForm):
         label="название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
     )
 
+    general = forms.ModelChoiceField(
+        queryset=UserProfile.objects.filter(virtual=False),
+        label="руководитель",
+        empty_label=None
+    )
     class Meta:
         model = Role
         fields = ["id", "title", "general",]
