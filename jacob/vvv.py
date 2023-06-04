@@ -1334,8 +1334,8 @@ def rest_all(request:object)->object:  # Остаточная доступост
 '''
 портфель проектов
 '''
-def table_timline(request:object)->object:  # все проекты (портфель)
-    
+
+def table_timline(request:object)->object:  # все проекты (портфель)    
     moon12 = moon()
     projects = Project.objects.all().order_by("general", "start_date")
     data = []
