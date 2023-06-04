@@ -133,4 +133,7 @@ class ProjectForm(forms.ModelForm):
             "general": "руководитель",
         }
 
+    def __init__(self, *args, **kwargs):
+        super(UserAndProfileForm, self).__init__(*args, **kwargs)
+        self.fields['password'].initial = UserProfile.objects.filter(virtual=False)
         # Дополнительные поля формы
