@@ -126,14 +126,14 @@ class ProjectForm(forms.ModelForm):
         label="название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
     )
 
+    general = forms.ModelChoiceField(
+        queryset=UserProfile.objects.filter(virtual=False),
+        label="руководитель",
+        empty_label=None
+    )
     class Meta:
         model = Project
         fields = ["id", "title", "general", "start_date", "end_date"]
         labels = {
             "general": "руководитель",
         }
-
-    def __init__(self, *args, **kwargs):
-        super(UserAndProfileForm, self).__init__(*args, **kwargs)
-        self.fields['password'].initial = UserProfile.objects.filter(virtual=False)
-        # Дополнительные поля формы
