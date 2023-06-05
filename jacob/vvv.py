@@ -6,10 +6,11 @@ from .db import task_person_role_project_12, real_and_virtual_people, real_peopl
 from .utils import *
 from datetime import date
 from .models import UserProfile
-# import locale
-#
-# # Set the locale to Russian
-# locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
+
+
+from django.urls import resolve
+
+
 '''
 отсюда можно запускать тесты
 '''
@@ -557,8 +558,6 @@ def all_role_project(request:object, p:int, r:int, j:int)->object:
     w2 = []
     w1 = []
     moon12 = moon()
-    supp = [-1, "Поставка"] + task_role_project_12(role, project)
-    delta = ["Дельта"] + delta_role_project_12(role, project)
     zo = ["АУТСОРС"] + outsrc(role, project)
     zv = ["ВАКАНСИЯ"] + vacancia(role, project)
     w4 = []

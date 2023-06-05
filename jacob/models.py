@@ -66,3 +66,8 @@ class Task(models.Model):
 
     def __str__(self):
         return f"{self.project}:{self.month}({self.person})={self.load} "
+
+class Wish(models.Model):
+    mywish = models.CharField(max_length=80, default="?")
+    project = models.ForeignKey(to=Project, on_delete=models.CASCADE)
+    role = models.ForeignKey(to=Role, on_delete=models.CASCADE)

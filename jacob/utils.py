@@ -29,10 +29,10 @@ def eva2(request: object, fun: str) -> Callable:
     return eval(f"{fun}(*arguments)")
 
 
+from django.urls import get_resolver
+from django.urls import get_resolver, get_callable
+from django.urls import reverse
 
-'''
-дата 15го этого месяца
-'''
 def date0()->date:
     d = date.today().replace(day=15)
     return d

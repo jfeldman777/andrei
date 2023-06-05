@@ -1,6 +1,9 @@
 from .utils import *
-from .vvv import *
 
+# from .vvv import assign_role,assign_project,assign_role_project,
+# from .vvv import needs_project,needs_role,needs_role_project
+# from .vvv import delta_project,delta_role,delta_role_project,all_role,all_project,all_role_project,available_all
+# from .vvv import available_role,rest_role,rest_all,table_timeline,table_projects,table_resources,people,roles
 
 def real_and_virtual_people(role:object)->List[object]:
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
@@ -201,7 +204,7 @@ def save_task(request):
         else:
             print(form.errors)
 
-    return eval(f"{html}(request,{p},{r},{j})")
+    return redirect(f"/{html}/{p}/{r}/{j}")
 
 
 def save_needs(request):
@@ -225,7 +228,8 @@ def save_needs(request):
                         pass
         else:
             print(form.errors)
-    return eval(f"{html}(request,{p},{r},{j})")
+
+    return redirect(f"/{html}/{p}/{r}/{j}")
 
 
 
@@ -260,12 +264,12 @@ def task_role_project_including_virtuals_12(r, j):
 
 
 def task_role_project_12(r, j):
-    d = date.today().replace(day=15)
+    d = date0()
     res = [0] * 12
     for i in range(12):
         tasks = Task.objects.filter(project=j, role=r, month=d)
         for t in tasks:
-            if t.person.id not in (10, 11):
+            if not t.person.virtual:
                 try:
                     res[i] += t.load
                 except:
