@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+{% include 'scroll.html' %}
+{% include 'menu2.html' %}
+<div class="bar">
+  <h4>
+    Сотрудники</h4>
+</div>
+<table border="1" cellspacing="0" cellpadding="5" 
+  style="position:absolute;top:80px;left:0;text-align: center; background-color:#FFF;">
+
+  <thead>
+    <tr>
+      <th>
+          <a href="/person_form/" style="color:white;">
+         ФИО
+        </a>
+        </th>
+      <th>Роль</th>
+      <th>Еще роли</th>
+
+    </tr>
+    </thead><tbody>
+    <tr>
+      {% for cell in data2 %}
+      <td style="text-align: center; ">
+<a href="/person_form/{{cell.id}}/">
+        {{ cell.fio }}
+          </a>
+      </td>
+      <td style="text-align: center; ">
+
+        {{ cell.role }}
+
+      </td>
+      <td style="text-align: center; ">
+   {% for choice in cell.res.all %}
+      {{ choice }}
+   {% endfor %}
+      </td>
+
+  
+
+
+    </tr>
+    {% endfor %}</tbody>
+</table>
+
+{% endblock %}

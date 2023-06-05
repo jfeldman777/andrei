@@ -13,20 +13,24 @@
   <thead>
     <tr>
       <th>Руководитель</th>
-      <th>Ресурсный пул</th>
+      <th>
+          <a href=# style="color:white;">
+          Ресурсный пул
+        </a>
+        </th>
       <th>Максимальная доступность</th>
       <th>Остаточная доступность</th>
       <th>Балансы </th>
       <th>Назначения</th>
 
     </tr>
-
+    </thead><tbody>
     <tr>
       {% for cell in data2 %}
       <td style="text-align: center; ">
-
+<a href=#>
         {{ cell.name }}
-
+          </a>
       </td>
       <td style="text-align: center; ">
 
@@ -58,7 +62,7 @@
 
 
     </tr>
-    {% endfor %}
+    {% endfor %}</tbody>
 </table>
 
 {% endblock %}
