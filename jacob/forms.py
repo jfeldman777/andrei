@@ -110,8 +110,7 @@ class RoleForm(forms.ModelForm):
     )
 
     general = forms.ModelChoiceField(
-        queryset=UserProfile.objects.filter(virtual=False),
-        label="руководитель",
+        queryset = User.objects.filter(userprofile__virtual=False),
         empty_label=None
     )
     class Meta:
