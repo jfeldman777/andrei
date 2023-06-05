@@ -1,26 +1,36 @@
 import os
-import django_heroku
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
 
+load_dotenv()
 # ...
 
 SECURE_PROXY_SSL_HEADER = None
 
 # ...
-
+IS_HEROKU = False
 IS_HEROKU = os.getenv("IS_HEROKU")
+print(IS_HEROKU)
+if IS_HEROKU:
+    import django_heroku
 
-from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-from dotenv import load_dotenv
 
-load_dotenv()
+
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = ["andrei2.herokuapp.com", "127.0.0.1", "testserver", "localhost"]
-
+#
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'locahost'  # SMTP server address
+# EMAIL_PORT = 1025  # SMTP server port (usually 25 or 587)
+# EMAIL_HOST_USER = 'your_email@example.com'  # SMTP server username
+# EMAIL_HOST_PASSWORD = ''  # SMTP server password
+# EMAIL_USE_TLS = False  # Use TLS encryption (optional)
+# DEFAULT_FROM_EMAIL = 'your_email@example.com'  # Default sender email address
 
 # Application definition
 
@@ -69,13 +79,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "andrei2.wsgi.application"
 
+#
+#DATABASES = {
+#    "default": {
+#        "ENGINE": "django.db.backends.sqlite3",
+#        "NAME": BASE_DIR / "db.sqlite3",
+#    }
+#}
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5433',
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -128,3 +150,11 @@ USE_I18N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+if IS_HEROKU:
+    try:
+        import dj_database_url
+        db_from_env = dj_database_url.config(conn_max_age=600)  #, ssl_require=True)
+        DATABASES['default'].update(db_from_env)
+    except:
+        pass
