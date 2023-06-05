@@ -91,9 +91,12 @@ class UserAndProfileForm(forms.ModelForm):
     )
 
 
-    role = forms.ModelChoiceField(queryset=Role.objects.all())  # Assuming Role model is defined
-    fio = forms.CharField()
-    res = forms.ModelMultipleChoiceField(queryset=Role.objects.all())
+    role = forms.ModelChoiceField(queryset=Role.objects.all(),
+                                  label="основная роль"
+    )  # Assuming Role model is defined
+    fio = forms.CharField(label="ФИО")
+    res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
+                                         label="дополнительные роли")
 
 
     class Meta:
@@ -111,7 +114,7 @@ class RoleForm(forms.ModelForm):
 
     general = forms.ModelChoiceField(
         queryset = User.objects.filter(userprofile__virtual=False),
-        empty_label=None
+        label= "руководитель ресурсного пула"
     )
     class Meta:
         model = Role
