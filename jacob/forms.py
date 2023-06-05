@@ -50,12 +50,9 @@ from django import forms
 from .models import Project
 
 class User2Form(forms.ModelForm):
-    res = forms.ModelChoiceField(
-        label="дополнительные роли",
-        required=False,
-        queryset=Role.objects.all(),
-        empty_label="выбрать роль",
-    )
+
+    res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),   required=False,
+                                         label="дополнительные роли")
     class Meta:
         model = UserProfile
         fields = ["id", "user", "role", "fio", "res"]

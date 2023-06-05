@@ -149,7 +149,7 @@ def project_form(request, id=None):
 '''
 форма для изменение или создания человека (если номер не указан)
 '''
-def person_form(request, id=None):
+def person_form(request, id):
     instance = None
     if id:
         instance = get_object_or_404(UserProfile, id=id)
@@ -157,18 +157,12 @@ def person_form(request, id=None):
     if request.method == "POST":
         form = User2Form(request.POST, instance=instance)
         if form.is_valid():
-            user_profile = form.save(commit=False)
-            selected_roles = form.cleaned_data.get('res', None)
-
-            if selected_roles is not None:
-                if not isinstance(selected_roles, list):
-                    selected_roles = [selected_roles]
-
-                user_profile.res.set(selected_roles)
-
-            user_profile.save()
+            user = form.save(commit=False)
+            user.role_id = form.cleaned_data['role'].id  # Set the foreign key using an ID
+            user.save()
+            user.res.set(form.cleaned_data['res'])  # Set the many-to-many relationship
+            user.save()
             return redirect("people")
-
     else:
         form = User2Form(instance=instance)
     return render(request, "form.html",  {"form": form,"title":"Сотрудник"})
@@ -255,7 +249,7 @@ def people(request:object)->object:
     people = UserProfile.objects.filter(virtual='False').order_by("fio")
     data2 = []
     for p in people:
-        x = {"fio": p.fio, "role": p.role, "res": p.res,"id":p.id}
+        x = {"fio": p.fio, "role": p.role, "res": p.res.all,"id":p.id}
         data2.append(x)
     context["data2"] = data2
 
