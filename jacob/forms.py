@@ -51,17 +51,17 @@ from .models import Project
 
 class User2Form(forms.ModelForm):
     res = forms.ModelChoiceField(
-        label="Дополнительно",
+        label="дополнительные роли",
         required=False,
         queryset=Role.objects.all(),
-        empty_label="выбрать ресурс",
+        empty_label="выбрать роль",
     )
     class Meta:
         model = UserProfile
         fields = ["id", "user", "role", "fio", "res"]
         labels = {
-              "role":"профессия",
-            "res":"дополнительно",
+              "role":"основная роль",
+
             "fio":"ФИО",
             "user":"логин"
             

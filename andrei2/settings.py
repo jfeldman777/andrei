@@ -152,6 +152,9 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 if IS_HEROKU:
-    import dj_database_url
-    db_from_env = dj_database_url.config(conn_max_age=600)  #, ssl_require=True)
-    DATABASES['default'].update(db_from_env)
+    try:
+        import dj_database_url
+        db_from_env = dj_database_url.config(conn_max_age=600)  #, ssl_require=True)
+        DATABASES['default'].update(db_from_env)
+    except:
+        pass
