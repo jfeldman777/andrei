@@ -5,6 +5,7 @@ from .db import get_prj_triplet, rest_of_time_pr_12, time_available_person_role_
 from .db import task_person_role_project_12, real_and_virtual_people, real_people
 from .utils import *
 from datetime import date
+from .models import UserProfile
 '''
 отсюда можно запускать тесты
 '''
