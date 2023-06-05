@@ -295,7 +295,6 @@ def assign_role_project(request:object, p:int, r:int, j:int)->object:
 
     moon12 = moon()
     delta = delta_role_project_12(role, project)
-
     people = real_and_virtual_people(role)
     dem_rj = needs_role_project_12(person,role, project)  # ----------------
 
@@ -358,9 +357,9 @@ def assign_project(request:object, p:int, r:int, j:int)->object:
     roles = Role.objects.all()
     for role in roles:
         delta = delta_role_project_12(role, project)
-
         people = real_and_virtual_people(role)
         dem_rj = needs_role_project_12(person,role, project)  # ----------------
+        
         p100 = {"val": role.title}
         for person in people:
             diff = rest_of_time_pr_12(person, role)
@@ -446,11 +445,8 @@ def assign_role(request:object, p:int, r:int, j:int)->object:
             w3.append(c_w3)
 
     moon12["w3"] = w3
-
     moon12["role"] = role
-
     moon12["project"] = project
-
     moon12["r"] = r
 
     return render(request, "ur.html", moon12)
@@ -824,11 +820,8 @@ def delta_role(request, p, r, j):
             p100 = -1
             w3.append(c_w3)
 
-        delta2 = [{"val": x} for x in delta]
-        # w1.append([project.title]+delta)############################
-        w1.append(
-            [{"j": project.id, "val": project.title}] + delta2
-        )  ############################
+        delta2 = [{"val": x} for x in delta]        
+        w1.append([{"j": project.id, "val": project.title}] + delta2)  
 
     moon12["w4"] = w4  ########################################
     moon12["w2"] = w2  #####################
@@ -854,7 +847,6 @@ def delta_project(request:object, p:int, r:int, j:int)->object:
     w1 = []
     moon12 = moon()
 
-    w4 = []
 
     roles = Role.objects.all()
     for role in roles:
@@ -957,8 +949,6 @@ def all_project(request:object, p:int, r:int, j:int)->object:
     w2 = []
     w1 = []
     moon12 = moon()
-
-    w4 = []
 
     roles = Role.objects.all()
     a_w2 = [0] * 12
