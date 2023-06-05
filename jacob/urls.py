@@ -51,7 +51,7 @@ urlpatterns = [
     path("mro/", vvv.rest_all, name="mro"),
  
     
-    path("prjlist/", vvv.table_timline, name="prjlist"),
+    path("prjlist/", vvv.table_timeline, name="prjlist"),
     path("atj/", vvv.table_projects, name="atj"),
     path("atr/", vvv.table_resources, name="atr"),
     path("people/", vvv.people, name="people"),

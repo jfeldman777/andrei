@@ -6,6 +6,10 @@ from .db import task_person_role_project_12, real_and_virtual_people, real_peopl
 from .utils import *
 from datetime import date
 from .models import UserProfile
+# import locale
+#
+# # Set the locale to Russian
+# locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
 '''
 отсюда можно запускать тесты
 '''
@@ -1326,7 +1330,7 @@ def rest_all(request:object)->object:  # Остаточная доступост
 портфель проектов
 '''
 
-def table_timline(request:object)->object:  # все проекты (портфель)    
+def table_timeline(request:object)->object:  # все проекты (портфель)
     moon12 = moon()
     projects = Project.objects.all().order_by("general", "start_date")
     data = []
@@ -1335,18 +1339,29 @@ def table_timline(request:object)->object:  # все проекты (портф�
     moon12["matrix"] = data
     return render(request, "prjlist.html", moon12)
 
+
+import babel.dates
+from datetime import date
 '''
 одна строка в портфель проектов
 '''
+import babel
 def project_timeline_line(p):
+
     dmin = date.today()
     dmin = dmin.replace(day=15)
     dmax = inc_n(dmin, 11)    
     L = []
     L.append(p.general.fio)
     L.append({"title": p.title, "id": p.id})  # 989898
-    L.append(p.start_date)
-    L.append(p.end_date)
+
+    formatted_date = babel.dates.format_date(p.start_date, "d MMM YY", locale='ru')
+    L.append( formatted_date)
+
+    formatted_date = babel.dates.format_date(p.end_date, "d MMM YY", locale='ru')
+    L.append( formatted_date)
+
+
     L+=[dif(p.start_date, p.end_date)] + mon_bool(dmin, dmax, p.start_date, p.end_date)
 
     return L

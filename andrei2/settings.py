@@ -11,7 +11,7 @@ SECURE_PROXY_SSL_HEADER = None
 # ...
 IS_HEROKU = False
 IS_HEROKU = os.getenv("IS_HEROKU")
-print(IS_HEROKU)
+
 if IS_HEROKU:
     import django_heroku
 
