@@ -20,7 +20,7 @@ left:20px;
         </a>
         </th>
       <th>Роль</th>
-      <th>Еще роли</th>
+      <th colspan="5">Еще роли</th>
 
     </tr>
     </thead><tbody>
@@ -34,10 +34,10 @@ left:20px;
       <td style="text-align: center; ">
 
         {{ cell.role }}
-
+   {% for choice in cell.res %}
       </td>
       <td style="text-align: center; ">
-   {% for choice in cell.res.all %}
+
       {{ choice }}
    {% endfor %}
       </td>
