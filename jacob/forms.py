@@ -49,10 +49,6 @@ class EntryForm(forms.Form):
 from django import forms
 from .models import Project
 
-class UsernameChoiceField(forms.ModelChoiceField):
-    def label_from_instance(self, obj):
-        return obj.username
-
 class User2Form(forms.ModelForm):
     res = forms.ModelMultipleChoiceField(
         queryset=Role.objects.all(),

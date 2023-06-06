@@ -261,7 +261,7 @@ def roles(request:object)->object:
     roles = Role.objects.all().order_by("general")
     data2 = []
     for p in roles:
-        x = {"title": p.title, "id": p.id, "general": p.general}
+        x = {"title": p.title, "id": p.id, "general": p.general.userprofile.fio}
         data2.append(x)
     context["data2"] = data2
 
