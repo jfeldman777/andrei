@@ -1,18 +1,19 @@
 from django.urls import path
 from . import vvv
 from . import db
+from . import  view_forms
 
 urlpatterns = [
-    path("project_form/<int:id>/", vvv.project_form, name="project_form_with_id"),
-    path("project_form/", vvv.project_form, name="project_form"),
+    path("project_form/<int:id>/", view_forms.project_form, name="project_form_with_id"),
+    path("project_form/", view_forms.project_form, name="project_form"),
     
-    path("role_form/<int:id>/", vvv.role_form, name="role_form_with_id"),
-    path("role_form/", vvv.role_form, name="role_form"),
+    path("role_form/<int:id>/", view_forms.role_form, name="role_form_with_id"),
+    path("role_form/", view_forms.role_form, name="role_form"),
     
-    path("person_form/<int:id>/", vvv.person_form, name="person_form_with_id"),
-    path("person_form/", vvv.create_user_and_profile, name="person_form"),
+    path("person_form/<int:id>/", view_forms.person_form, name="person_form_with_id"),
+    path("person_form/", view_forms.create_user_and_profile, name="person_form"),
 
-    path("keys_form/", vvv.keys_form, name="keys_form"),
+    path("keys_form/", view_forms.keys_form, name="keys_form"),
     
 
     path("sm/", db.save_max, name="sm"),    

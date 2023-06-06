@@ -93,6 +93,7 @@ class UserAndProfileForm(forms.ModelForm):
     )  # Assuming Role model is defined
     fio = forms.CharField(label="ФИО")
     res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
+                                         required=False,
                                          label="Дополнительные роли")
 
 
