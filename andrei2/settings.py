@@ -22,7 +22,8 @@ if IS_HEROKU:
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True
 
-ALLOWED_HOSTS = ["andrei2.herokuapp.com", "127.0.0.1", "testserver", "localhost"]
+ALLOWED_HOSTS = ["andrei2.herokuapp.com", "andrei.herokuapp.com",
+                 "127.0.0.1", "testserver", "localhost"]
 #
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'locahost'  # SMTP server address
