@@ -2,7 +2,7 @@ from .utils import *
 
 # from .vvv import assign_role,assign_project,assign_role_project,
 # from .vvv import needs_project,needs_role,needs_role_project
-from .vvv import delta_project,delta_role,delta_role_project,all_role,all_project,all_role_project,available_all
+# from .vvv import delta_project,delta_role,delta_role_project,all_role,all_project,all_role_project,available_all
 # from .vvv import available_role,rest_role,rest_all,table_timeline,table_projects,table_resources,people,roles
 
 def real_and_virtual_people(role:object)->List[object]:
