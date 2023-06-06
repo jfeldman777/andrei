@@ -114,6 +114,7 @@ class RoleForm(forms.ModelForm):
         queryset=UserProfile.objects.filter(virtual=False),
         label= "Руководитель ресурсного пула",
         empty_label=None,
+        required=False
     )
 
 
