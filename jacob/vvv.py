@@ -58,16 +58,7 @@ def outsrc(role:object, project:object)->List[int]:
 def delta_on_span(r, j, n):
     rjd = delta_role_project_12(r, j,n)
     s = -sum(filter(lambda x: x < 0, rjd))
-    print(99,s)
-
-
-    summa = 0
-    for i in range(n):
-        if rjd[i] < 0:
-            summa -= rjd[i]
-
-    print(88,summa)
-    return summa
+    return s
 
 '''
 НЕехватка ресурсов - роль - проект - время-месяцев - суммарно по месяцам
@@ -126,12 +117,9 @@ def balance_map(request:object, n:int)->object:
 
 def table_projects(request:object)->object:
     projects = Project.objects.all().order_by("general")
-    data = []
-    for p in projects:
-        x = {"j": p.id, "project": p.title, "name": p.general.fio}
-        data.append(x)
+    data = [{"j": p.id, "project": p.title, "name": p.general.fio}
+        for p in projects]
     context = {"data": data}
-
     return render(request, "atj.html", context)
 
 '''
@@ -140,38 +128,25 @@ def table_projects(request:object)->object:
 def table_resources(request:object)->object:
     context = {}
     roles = Role.objects.all().order_by("general")
-    data2 = []
-    for p in roles:
-        u = UserProfile.objects.get(user=p.general)
-        x = {"title": p.title, "r": p.id, "name": u.fio}
-        data2.append(x)
+    data2 = [{"title": p.title, "r": p.id, "name":UserProfile.objects.get(user=p.general).fio}
+                    for p in roles]
     context["data2"] = data2
-
     return render(request, "atr.html", context)
 def people(request:object)->object:
     context = {}
     people = UserProfile.objects.filter(virtual='False').order_by("fio")
-    data2 = []
-    for p in people:
-        x = {"fio": p.fio, "role": p.role, "res": p.res.all,"id":p.id}
-        data2.append(x)
+    data2 = [{"fio": p.fio, "role": p.role, "res": p.res.all,"id":p.id}
+                            for p in people]
     context["data2"] = data2
-
     return render(request, "people.html", context)
 
 def roles(request:object)->object:
     context = {}
     roles = Role.objects.all().order_by("general")
-    data2 = []
-    for p in roles:
-        x = {"title": p.title, "id": p.id, "general": p.general.userprofile.fio}
-        data2.append(x)
+    data2 = [{"title": p.title, "id": p.id, "general": p.general.userprofile.fio}
+                        for p in roles]
     context["data2"] = data2
-
     return render(request, "roles.html", context)
-
-
-
 '''
 Заголовок - 12 месяцев
 '''
@@ -191,14 +166,14 @@ def moon()->List[object]:
 '''
 назначения - один ресурс - один проект
 '''
-def assign_role_project(request:object, p:int, r:int, j:int)->object:
+def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     w3 = []
 
     moon12 = moon()
-    delta = delta_role_project_12(role, project)
+    delta = delta_role_project_12(role, project,n)
     people = real_and_virtual_people(role)
-    dem_rj = needs_role_project_12(person,role, project)  # ----------------
+    dem_rj = needs_role_project_12(person,role, project,n)  # ----------------
 
     for person in people:
         if person == None:
@@ -239,9 +214,7 @@ def assign_role_project(request:object, p:int, r:int, j:int)->object:
         w3.append(c_w3)
 
     moon12["w3"] = w3
-
     moon12["role"] = role
-
     moon12["project"] = project
     moon12["id"] = j
     moon12["j"] = j
@@ -249,7 +222,7 @@ def assign_role_project(request:object, p:int, r:int, j:int)->object:
 '''
 назначения - один проект
 '''
-def assign_project(request:object, p:int, r:int, j:int)->object:
+def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w3 = []
 
@@ -257,18 +230,18 @@ def assign_project(request:object, p:int, r:int, j:int)->object:
 
     roles = Role.objects.all()
     for role in roles:
-        delta = delta_role_project_12(role, project)
+        delta = delta_role_project_12(role, project,n)
         people = real_and_virtual_people(role)
-        dem_rj = needs_role_project_12(person,role, project)  # ----------------
+        dem_rj = needs_role_project_12(person,role, project,n)  # ----------------
         
         p100 = {"val": role.title}
         for person in people:
-            diff = rest_of_time_pr_12(person, role)
-            b_w3 = [0] * 12
+            diff = rest_of_time_pr_12(person, role,n)
+            b_w3 = [0] * n
             a_w3 = task_person_role_project_12(person, role, project)
 
             d = date0()
-            for i in range(12):
+            for i in range(n):
                 color = "white"
                 if mon_outside_prj(d, project):
                     color = "lightgrey"
@@ -292,9 +265,7 @@ def assign_project(request:object, p:int, r:int, j:int)->object:
             w3.append(c_w3)
 
     moon12["w3"] = w3
-
     moon12["role"] = "Все ресурсы"
-
     moon12["project"] = project
     moon12["id"] = j
     moon12["r"] = 0
@@ -304,12 +275,10 @@ def assign_project(request:object, p:int, r:int, j:int)->object:
 '''
 назначения - один ресурс
 '''
-def assign_role(request:object, p:int, r:int, j:int)->object:
+def assign_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
     w3 = []
-
     moon12 = moon()
-
     people = real_and_virtual_people(role)
     projects = Project.objects.all()
 
@@ -317,9 +286,9 @@ def assign_role(request:object, p:int, r:int, j:int)->object:
         delta = delta_role_project_12(role, project)
         p100 = {"val": project.title}
         for person in people:
-            b_w3 = [0] * 12
-            a_w3 = task_person_role_project_12(person, role, project)
-            diff = rest_of_time_pr_12(person, role)
+            b_w3 = [0] * n
+            a_w3 = task_person_role_project_12(person, role, project,n)
+            diff = rest_of_time_pr_12(person, role,n)
             d = date0()
             for i in range(12):
                 color = "white"
@@ -354,7 +323,7 @@ def assign_role(request:object, p:int, r:int, j:int)->object:
 '''
 дельта - один ресурс - один проект
 '''
-def delta_role_project(request, p, r, j):
+def delta_role_project(request, p, r, j,n=12):
     person, role, project = get_prj_triplet(-1, r, j)
 
     w4 = []
@@ -362,7 +331,7 @@ def delta_role_project(request, p, r, j):
     w2 = []
     w1 = []
     moon12 = moon()
-    delta = delta_role_project_12(role, project)
+    delta = delta_role_project_12(role, project,n)
 
     w4 = []
 
@@ -376,7 +345,7 @@ def delta_role_project(request, p, r, j):
     dem_rj = needs_role_project_12(person,role, project)   # ----------------
 
     d = date0()
-    for i in range(12):
+    for i in range(n):
         color = "white"
         if mon_outside_prj(d, project):
             color = "lightgrey"
@@ -394,11 +363,11 @@ def delta_role_project(request, p, r, j):
     for person in people_rv:
         if person == None:
             break
-        b_w3 = [0] * 12
-        a_w3 = task_person_role_project_12(person, role, project)
-        diff = rest_of_time_pr_12(person, role)
+        b_w3 = [0] * n
+        a_w3 = task_person_role_project_12(person, role, project,n)
+        diff = rest_of_time_pr_12(person, role,n)
         d = date0()
-        for i in range(12):
+        for i in range(n):
             color = "white"
             if mon_outside_prj(d, project):
                 color = "lightgrey"
@@ -433,9 +402,7 @@ def delta_role_project(request, p, r, j):
     moon12["w2"] = w2
     moon12["w3"] = w3
     moon12["w4"] = w4
-
     moon12["role"] = role
-
     moon12["project"] = project
     moon12["id"] = j
     moon12["r"] = r
@@ -462,7 +429,7 @@ def all_role_project(request:object, p:int, r:int, j:int)->object:
     people_rv = real_and_virtual_people(role)
 
     for person in people_rr:  # 7777777777777777777777777777777777777777
-        w4.append([person.fio] + rest_of_time_pr_12(person, role))
+        w4.append([person.fio] + rest_of_time_pr_12(person, role,n))
 
     a_w2 = [0] * 12
     dem_rj = ["Потребность"] + needs_role_project_12(person,role, project)  # ----------------
@@ -637,7 +604,7 @@ def all_role(request:object, p:int, r:int, j:int)->object:
 '''
 дельта - один ресурс
 '''
-def delta_role(request, p, r, j):
+def delta_role(request, p, r, j,n=12):
     person, role, project = get_prj_triplet(-1, r, -1)
 
     people_rr = real_people(role)
@@ -648,10 +615,10 @@ def delta_role(request, p, r, j):
     w4 = []
     moon12 = moon()
 
-    x = [0] * 12
+    x = [0] * n
 
     for person in people_rr:
-        diff = rest_of_time_pr_12(person, role)
+        diff = rest_of_time_pr_12(person, role,n)
         x = diff
         w4.append([person.fio] + x)
 
@@ -666,12 +633,12 @@ def delta_role(request, p, r, j):
                 "j": project.id,
                 "r": role.id,
             }
-        ] + [0] * 12
+        ] + [0] * n
 
         dem_rj = [project.title] + ["Потребность"] + needs_role_project_12(person,role, project)   #
 
         d = date0()
-        for i in range(12):
+        for i in range(n):
             color = "white"
             if mon_outside_prj(d, project):
                 color = "lightgrey"
@@ -690,9 +657,9 @@ def delta_role(request, p, r, j):
         delta = delta_role_project_12(role, project)
 
         for person in people_rv:
-            diff = rest_of_time_pr_12(person, role)
+            diff = rest_of_time_pr_12(person, role,n)
             b_w3 = [0] * 12
-            a_w3 = task_person_role_project_12(person, role, project)
+            a_w3 = task_person_role_project_12(person, role, project,n)
 
             d = date0()
 
@@ -738,7 +705,7 @@ def delta_role(request, p, r, j):
 
 дельта - один проект
 '''
-def delta_project(request:object, p:int, r:int, j:int)->object:
+def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []
@@ -759,11 +726,11 @@ def delta_project(request:object, p:int, r:int, j:int)->object:
 
         delta = delta_role_project_12(role, project)
 
-        a_w2 = [0] * 12
-        dem_rj = needs_role_project_12(person,role, project)  # ----------------
+        a_w2 = [0] * n
+        dem_rj = needs_role_project_12(person,role, project,n)  # ----------------
 
         d = date0()
-        for i in range(12):
+        for i in range(n):
             color = "white"
             if mon_outside_prj(d, project):
                 color = "lightgrey"
@@ -792,10 +759,10 @@ def delta_project(request:object, p:int, r:int, j:int)->object:
         p100 = role.title
         for person in people_rv:
             b_w3 = [0] * 12
-            a_w3 = task_person_role_project_12(person, role, project)
+            a_w3 = task_person_role_project_12(person, role, project,n)
             diff = rest_of_time_pr_12(person, role)
             d = date0()
-            for i in range(12):
+            for i in range(n):
                 color = "white"
                 if mon_outside_prj(d, project):
                     color = "lightgrey"
@@ -841,7 +808,7 @@ def delta_project(request:object, p:int, r:int, j:int)->object:
 '''
 балансы - один проект
 '''
-def all_project(request:object, p:int, r:int, j:int)->object:
+def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []
@@ -850,16 +817,16 @@ def all_project(request:object, p:int, r:int, j:int)->object:
     moon12 = moon()
 
     roles = Role.objects.all()
-    a_w2 = [0] * 12
+    a_w2 = [0] * n
     for role in roles:
-        zo = ["АУТСОРС"] + outsrc(role, project)
-        zv = ["ВАКАНСИЯ"] + vacancia(role, project)
-        supp = ["Поставка"] + task_role_project_12(role, project)
-        delta = ["Дельта"] + delta_role_project_12(role, project)
-        dem_rj = needs_role_project_12(person,role, project)   # ----------------
+        zo = ["АУТСОРС"] + outsrc(role, project,n)
+        zv = ["ВАКАНСИЯ"] + vacancia(role, project,n)
+        supp = ["Поставка"] + task_role_project_12(role, project,n)
+        delta = ["Дельта"] + delta_role_project_12(role, project,n)
+        dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
 
         d = date0()
-        for i in range(12):
+        for i in range(n):
             color = "white"
             if mon_outside_prj(d, project):
                 color = "lightgrey"
@@ -935,7 +902,7 @@ def all_project(request:object, p:int, r:int, j:int)->object:
 '''
 потребность - один ресурс - один проект
 '''
-def needs_role_project(request:object, p:int, r:int, j:int)->object:
+def needs_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     if role == None:
         return home(request)
@@ -944,11 +911,11 @@ def needs_role_project(request:object, p:int, r:int, j:int)->object:
 
     delta = delta_role_project_12(role, project)
 
-    a_w2 = [0] * 12
-    dem_rj = needs_role_project_12(person,role, project)   # ----------------
+    a_w2 = [0] * n
+    dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
 
     d = date0()
-    for i in range(12):
+    for i in range(n):
         color = "white"
         if mon_outside_prj(d, project):
             color = "lightgrey"
@@ -975,7 +942,7 @@ def needs_role_project(request:object, p:int, r:int, j:int)->object:
 '''
 потребность - прект один  -ресурсы все
 '''
-def needs_project(request:object, p:int, r:int, j:int)->object:
+def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
 
     w2 = []
@@ -985,11 +952,11 @@ def needs_project(request:object, p:int, r:int, j:int)->object:
     for role in roles:
         delta = delta_role_project_12(role, project)
 
-        a_w2 = [0] * 12
-        dem_rj = needs_role_project_12(person,role, project)  # ----------------
+        a_w2 = [0] * n
+        dem_rj = needs_role_project_12(person,role, project,n)  # ----------------
 
         d = date.today().replace(day=15)
-        for i in range(12):
+        for i in range(n):
             color = "white"
             if mon_outside_prj(d, project):
                 color = "lightgrey"
@@ -1016,7 +983,7 @@ def needs_project(request:object, p:int, r:int, j:int)->object:
 '''
 потребность - ресурс один - проекты все
 '''
-def needs_role(request:object, p:int, r:int, j:int)->object:
+def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
 
     w2 = []
@@ -1024,13 +991,13 @@ def needs_role(request:object, p:int, r:int, j:int)->object:
 
     projects = Project.objects.all()
     for project in projects:
-        delta = delta_role_project_12(role, project)
+        delta = delta_role_project_12(role, project,n)
 
-        a_w2 = [0] * 12
-        dem_rj = needs_role_project_12(person,role, project)   # ----------------
+        a_w2 = [0] * n
+        dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
 
         d = date0()
-        for i in range(12):
+        for i in range(n):
             color = "white"
             if mon_outside_prj(d, project):
                 color = "lightgrey"
@@ -1058,7 +1025,7 @@ def needs_role(request:object, p:int, r:int, j:int)->object:
 ''' 
 доступность остаточная - персональная - один вид ресурса
 '''
-def rest_role(request:object, p:int, r:int, j:int)->object:
+def rest_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12 = moon()
     dif14 = []
     dif15 = []
@@ -1070,11 +1037,11 @@ def rest_role(request:object, p:int, r:int, j:int)->object:
     people_rr = real_people(role)
 
     for person in people_rr:
-        dif = time_available_person_role_12(person, role)
+        dif = time_available_person_role_12(person, role,n)
 
-        dif100 = [0] * 12
+        dif100 = [0] * n
         da = date0()
-        for i in range(12):
+        for i in range(n):
             dif100[i] = {
                 "link": f"{person.id}.0.0.{da.year}-{da.month}-15",
                 "up": up(1, 2),
@@ -1084,11 +1051,11 @@ def rest_role(request:object, p:int, r:int, j:int)->object:
         dif14.append([person.fio] + dif100)  ######################
 
     for person in people_rr:
-        dif = rest_of_time_pr_12(person, role)
+        dif = rest_of_time_pr_12(person, role,n)
 
-        dif100 = [0] * 12
+        dif100 = [0] * n
         da = date0()
-        for i in range(12):
+        for i in range(n):
             dif100[i] = {
                 "link": f"{person.id}.0.0.{da.year}-{da.month}-15",
                 "title": dif[i],
@@ -1107,7 +1074,7 @@ def rest_role(request:object, p:int, r:int, j:int)->object:
 '''
 доступность максимальная - персональная - один вид ресурса
 '''
-def available_role(request:object, p:int, r:int, j:int)->object:
+def available_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12 = moon()
     dif14 = []
     dif15 = []
@@ -1121,12 +1088,12 @@ def available_role(request:object, p:int, r:int, j:int)->object:
     people_rv = real_and_virtual_people(role)
 
     for person in people_rr:
-        dif = time_available_person_role_12(person, role)
+        dif = time_available_person_role_12(person, role,n)
         is100 = person_more_100_12(person)
 
-        dif100 = [0] * 12
+        dif100 = [0] * n
         da = date0()
-        for i in range(12):
+        for i in range(n):
             dif100[i] = {
                 "link": f"{person.id}.{r}.0.{da.year}-{da.month}-15",
                 "fire": is100[i],
@@ -1147,7 +1114,7 @@ def available_role(request:object, p:int, r:int, j:int)->object:
 '''
 показать максимальную доступность по всем персонам и ролям
 '''
-def available_all(request:object)->object:  # Максимальная доступнасть по всем ресурсам
+def available_all(request:object,n:int=12)->object:  # Максимальная доступнасть по всем ресурсам
     moon12 = moon()
     dif14 = []
 
@@ -1160,8 +1127,8 @@ def available_all(request:object)->object:  # Максимальная дост�
         arr[p.id] = [0] * 1000
         for r in roles:
             t = time_available_person_role_12(p, r)
-            arr[p.id][r.id] = [0] * 12
-            for i in range(12):
+            arr[p.id][r.id] = [0] * n
+            for i in range(n):
                 arr[p.id][r.id][i] += t[i]
 
     for role in roles:
@@ -1200,7 +1167,7 @@ def available_all(request:object)->object:  # Максимальная дост�
 '''
 показать остаток ресурса по всем персонам и ролям
 '''
-def rest_all(request:object)->object:  # Остаточная доступость по всем ресурсам
+def rest_all(request:object,n:int=12)->object:  # Остаточная доступость по всем ресурсам
     moon12 = moon()
     dif14 = []
 
@@ -1225,7 +1192,7 @@ def rest_all(request:object)->object:  # Остаточная доступост
 портфель проектов
 '''
 
-def table_timeline(request:object)->object:  # все проекты (портфель)
+def table_timeline(request:object,n:int=12)->object:  # все проекты (портфель)
     moon12 = moon()
     projects = Project.objects.all().order_by("general", "start_date")
     data = []
@@ -1241,11 +1208,11 @@ from datetime import date
 одна строка в портфель проектов
 '''
 import babel
-def project_timeline_line(p):
+def project_timeline_line(p,n=12):
 
     dmin = date.today()
     dmin = dmin.replace(day=15)
-    dmax = inc_n(dmin, 11)    
+    dmax = inc_n(dmin, n-1)
     L = []
     L.append(p.general.fio)
     L.append({"title": p.title, "id": p.id})  # 989898
