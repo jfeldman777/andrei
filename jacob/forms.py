@@ -49,20 +49,48 @@ class EntryForm(forms.Form):
 from django import forms
 from .models import Project
 
-class User2Form(forms.ModelForm):
+class UsernameChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.username
 
-    res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),   required=False,
-                                         label="дополнительные роли")
+class User2Form(forms.ModelForm):
+    res = forms.ModelMultipleChoiceField(
+        queryset=Role.objects.all(),
+        required=False,
+        label="Дополнительные роли",
+    )
+
     class Meta:
         model = UserProfile
-        fields = ["id", "user", "role", "fio", "res"]
+        fields = ["id", "fio", "role", "res"]
         labels = {
-              "role":"основная роль",
+            "role": "Основная роль",
+            "fio": "ФИО",
+         }
 
-            "fio":"ФИО",
-            "user":"логин"
-            
-        }
+
+#
+# class User2Form(forms.ModelForm):
+#     user = forms.CharField(
+#         widget=forms.TextInput(attrs={'readonly': 'readonly'}),
+#         label='Логин',
+#     )
+#     res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),   required=False,
+#                                          label="Дополнительные роли")
+#     class Meta:
+#         model = UserProfile
+#         fields = ["id", "user", "role", "fio", "res"]
+#         labels = {
+#               "role":"Основная роль",
+#
+#             "fio":"ФИО",
+#             "user":"Логин"
+#
+#         }
+#     def __init__(self, *args, **kwargs):
+#             super(User2Form, self).__init__(*args, **kwargs)
+#             if self.instance and self.instance.pk:
+#                 self.fields['user'].initial = self.instance.user.username
 
 from django import forms
 from django.contrib.auth.models import User
@@ -73,7 +101,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'password', 'first_name', 'last_name', 'email']
         widgets = {
-            'password': forms.PasswordInput(),
+            'Пароль': forms.PasswordInput(),
         }
 
 class UserProfileForm(forms.ModelForm):
@@ -84,16 +112,16 @@ class UserProfileForm(forms.ModelForm):
 class UserAndProfileForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.TextInput(attrs={'readonly': 'readonly'}),
-        label='Password'
+        label='Пароль'
     )
 
 
     role = forms.ModelChoiceField(queryset=Role.objects.all(),
-                                  label="основная роль"
+                                  label="Основная роль"
     )  # Assuming Role model is defined
     fio = forms.CharField(label="ФИО")
     res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
-                                         label="дополнительные роли")
+                                         label="Дополнительные роли")
 
 
     class Meta:
@@ -106,38 +134,38 @@ class UserAndProfileForm(forms.ModelForm):
 class RoleForm(forms.ModelForm):
 
     title = forms.CharField(
-        label="название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
+        label="Название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
     )
 
     general = forms.ModelChoiceField(
         queryset = User.objects.filter(userprofile__virtual=False),
-        label= "руководитель ресурсного пула"
+        label= "Руководитель ресурсного пула"
     )
     class Meta:
         model = Role
         fields = ["id", "title", "general",]
         labels = {
-            "general": "руководитель",
-            "title":"роль"
+            "general": "Руководитель",
+            "title":"Роль"
         }
 
 
 
 class ProjectForm(forms.ModelForm):
-    start_date = forms.DateField(label="начало", widget=forms.SelectDateWidget)
-    end_date = forms.DateField(label="окончание", widget=forms.SelectDateWidget)
+    start_date = forms.DateField(label="Начало", widget=forms.SelectDateWidget)
+    end_date = forms.DateField(label="Окончание", widget=forms.SelectDateWidget)
     title = forms.CharField(
-        label="название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
+        label="Название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
     )
 
     general = forms.ModelChoiceField(
         queryset=UserProfile.objects.filter(virtual=False),
-        label="руководитель",
+        label="Руководитель",
         empty_label=None
     )
     class Meta:
         model = Project
         fields = ["id", "title", "general", "start_date", "end_date"]
         labels = {
-            "general": "руководитель",
+            "general": "Руководитель",
         }
