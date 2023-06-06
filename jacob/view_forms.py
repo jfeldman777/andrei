@@ -5,6 +5,7 @@ from .forms import UserAndProfileForm, RoleForm, User2Form, KeysForm, ProjectFor
 from .models import UserProfile,Role, Project
 
 def create_user_and_profile(request):
+    button = "Создать"
     instance = None
     if request.method == "POST":
         form = UserAndProfileForm(request.POST, instance=instance)
@@ -29,15 +30,17 @@ def create_user_and_profile(request):
     else:
         form = UserAndProfileForm()
 
-    return render(request, 'form.html', {'form': form})
+    return render(request, 'form.html', {'form': form,"button":button})
 
 
 '''
 форма для изменение или создания роли (если номер не указан)
 '''
 def role_form(request, id=None):
+    button = "Создать"
     instance = None
     if id:
+        button = "Изменить"
         instance = get_object_or_404(Role, id=id)
 
     if request.method == "POST":
@@ -48,11 +51,14 @@ def role_form(request, id=None):
 
     else:
         form = RoleForm(instance=instance)
-    return render(request, "form.html", {"form": form,"title":"Роль"})
+    return render(request, "form.html", {"form": form,"title":"Роль","button":button})
 
 
 def keys_form(request, id=None):
+    button = "Создать"
     instance = None
+    if id:
+        button = "Изменить"
     if request.method == "POST":
         form = KeysForm(request.POST, instance=instance)
         if form.is_valid():
@@ -68,15 +74,17 @@ def keys_form(request, id=None):
             return redirect("people")
     else:
         form = KeysForm()
-    return render(request, "form.html",  {"form": form, "title": "Сотрудник"})
+    return render(request, "form.html",  {"form": form, "title": "Сотрудник","button":button})
 
 '''
 форма для изменение или создания проекта (если номер не указан)
 '''
 
 def project_form(request, id=None):
+    button = "Создать"
     instance = None
     if id:
+        button = "Изменить"
         instance = get_object_or_404(Project, id=id)
 
     if request.method == "POST":
@@ -90,15 +98,17 @@ def project_form(request, id=None):
             initial_data = {'general': instance.general.fio}
         form = ProjectForm(instance=instance, initial=initial_data)
 
-    return render(request, "form.html", {"form": form,"title":"Проект"})
+    return render(request, "form.html", {"form": form,"title":"Проект","button":button})
 
 
 '''
 форма для изменения человека 
 '''
 def person_form(request, id):
+    button = "Создать"
     instance = None
     if id:
+        button = "Изменить"
         instance = get_object_or_404(UserProfile, id=id)
 
     if request.method == "POST":
@@ -113,4 +123,4 @@ def person_form(request, id):
             return redirect("people")
     else:
         form = User2Form(instance=instance)
-    return render(request, "form.html",  {"form": form,"title":"Сотрудник"})
+    return render(request, "form.html",  {"form": form,"title":"Сотрудник","button":button})
