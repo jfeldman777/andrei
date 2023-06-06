@@ -32,8 +32,11 @@ left:20px;
           </a>
       </td>
       <td style="text-align: center; ">
-
+{% if cell.role %}
         {{ cell.role }}
+          {% else %}
+          ?
+          {% endif %}
    {% for choice in cell.res %}
       </td>
       <td style="text-align: center; ">
