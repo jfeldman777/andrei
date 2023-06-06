@@ -64,30 +64,6 @@ class User2Form(forms.ModelForm):
             "fio": "ФИО",
          }
 
-
-#
-# class User2Form(forms.ModelForm):
-#     user = forms.CharField(
-#         widget=forms.TextInput(attrs={'readonly': 'readonly'}),
-#         label='Логин',
-#     )
-#     res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),   required=False,
-#                                          label="Дополнительные роли")
-#     class Meta:
-#         model = UserProfile
-#         fields = ["id", "user", "role", "fio", "res"]
-#         labels = {
-#               "role":"Основная роль",
-#
-#             "fio":"ФИО",
-#             "user":"Логин"
-#
-#         }
-#     def __init__(self, *args, **kwargs):
-#             super(User2Form, self).__init__(*args, **kwargs)
-#             if self.instance and self.instance.pk:
-#                 self.fields['user'].initial = self.instance.user.username
-
 from django import forms
 from django.contrib.auth.models import User
 from .models import UserProfile
@@ -157,7 +133,7 @@ class ProjectForm(forms.ModelForm):
     general = forms.ModelChoiceField(
         queryset=UserProfile.objects.filter(virtual=False),
         label="Руководитель",
-        empty_label=None
+        empty_label=None,
     )
     class Meta:
         model = Project

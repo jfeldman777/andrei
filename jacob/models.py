@@ -21,7 +21,7 @@ class UserProfile(models.Model):
     virtual = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.username
+        return self.fio
 
 
 class Project(models.Model):

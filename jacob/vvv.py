@@ -133,6 +133,10 @@ def role_form(request, id=None):
 '''
 форма для изменение или создания проекта (если номер не указан)
 '''
+
+
+from .forms import ProjectForm
+
 def project_form(request, id=None):
     instance = None
     if id:
@@ -143,10 +147,19 @@ def project_form(request, id=None):
         if form.is_valid():
             form.save()
             return redirect("prjlist")
-
     else:
-        form = ProjectForm(instance=instance)
+        initial_data = {}
+        if instance is not None:
+            initial_data = {'general': instance.general.fio}
+        form = ProjectForm(instance=instance, initial=initial_data)
+
     return render(request, "form.html", {"form": form,"title":"Проект"})
+
+
+
+
+
+
 '''
 форма для изменение или создания человека (если номер не указан)
 '''
@@ -168,7 +181,7 @@ def person_form(request, id):
         form = User2Form(instance=instance)
     return render(request, "form.html",  {"form": form,"title":"Сотрудник"})
 
-from .forms import UserAndProfileForm, RoleForm, User2Form, KeysForm
+from .forms import UserAndProfileForm, RoleForm, User2Form, KeysForm, ProjectForm
 
 
 def create_user_and_profile(request):
@@ -341,7 +354,6 @@ def assign_role_project(request:object, p:int, r:int, j:int)->object:
 
     moon12["project"] = project
     moon12["id"] = j
-    moon12["r"] = r
     moon12["j"] = j
     return render(request, "ujr.html", moon12)
 '''
