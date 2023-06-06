@@ -1,7 +1,7 @@
 from django.forms import Form
 from django.shortcuts import redirect
 
-from .db import create_or_update_needs, create_or_update_task, create_or_update_res_max
+from .create_update import create_or_update_needs, create_or_update_task, create_or_update_res_max
 from .models import Role, Project, UserProfile
 
 

@@ -1,3 +1,5 @@
+from typing import List
+
 from django.shortcuts import redirect, get_object_or_404
 
 from .db import delta_role_project_12, needs_role_project_12, person_more_100_12, task_role_project_12

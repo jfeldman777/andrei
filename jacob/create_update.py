@@ -1,3 +1,5 @@
+from datetime import date
+
 from .models import Load, Task, Less
 
 
@@ -23,6 +25,7 @@ def create_or_update_task(p:object, r:object, j:object, d:date, l:int)->None:  #
         instance.save()
     else:
         instance = Task.objects.create(person=p, role=r, project=j, month=d, load=l)
+
 
 
 def create_or_update_needs(person:object, role:object, project:object, m:date, v:int)->None:  # Потребность tjLoad

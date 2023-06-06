@@ -66,10 +66,10 @@ def rest_of_time_pr_12(p, r,n=12):
     return c
 
 
-def task_person_role_12(person:object, role:object)->List[int]:
-    d = date.today().replace(day=15)
-    res = [0] * 12
-    for i in range(12):
+def task_person_role_12(person:object, role:object,n:int=12)->List[int]:
+    d = date0()
+    res = [0] * n
+    for i in range(n):
         tasks = Task.objects.filter(person=person, role=role, month=d)
         for task in tasks:
             try:
