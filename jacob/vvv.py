@@ -54,12 +54,18 @@ def outsrc(role:object, project:object)->List[int]:
 
 
 def delta_on_span(r, j, n):
-    rjd = delta_role_project_12(r, j)
-    sum = 0
+    rjd = delta_role_project_12(r, j,n)
+    s = -sum(filter(lambda x: x < 0, rjd))
+    print(99,s)
+
+
+    summa = 0
     for i in range(n):
         if rjd[i] < 0:
-            sum -= rjd[i]
-    return sum
+            summa -= rjd[i]
+
+    print(88,summa)
+    return summa
 
 '''
 НЕехватка ресурсов - роль - проект - время-месяцев - суммарно по месяцам
@@ -112,14 +118,6 @@ def balance_map(request:object, n:int)->object:
     context = {"tab": xy, "txy": txy, "n": n, "hh": n2txt(n)}
 
     return render(request, "b.html", context)
-
-
-
-
-
-
-
-
 
 '''
 Все проекты в одной таблице

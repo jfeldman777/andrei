@@ -2,7 +2,7 @@ from .utils import *
 
 # from .vvv import assign_role,assign_project,assign_role_project,
 # from .vvv import needs_project,needs_role,needs_role_project
-# from .vvv import delta_project,delta_role,delta_role_project,all_role,all_project,all_role_project,available_all
+from .vvv import delta_project,delta_role,delta_role_project,all_role,all_project,all_role_project,available_all
 # from .vvv import available_role,rest_role,rest_all,table_timeline,table_projects,table_resources,people,roles
 
 def real_and_virtual_people(role:object)->List[object]:
@@ -143,7 +143,7 @@ def time_available_in_mon(p:int, r:int, y:int, m:int)->int:
 
 
 def delta_on_span(p,r, j, n):
-    rjd = delta_role_project_12(r, j)
+    rjd = delta_role_project_12(r, j,n)
     sum = 0
     for i in range(n):
         if rjd[i] < 0:
@@ -236,10 +236,10 @@ def save_needs(request):
 '''
 Задачи = утвержденные загрузки- суммарно = при фиксированных параметрах - вектор - нв 12 месяцев
 '''
-def task_person_role_project_12(p:object, r:object, j:object)->List[int]:
-    d = date.today().replace(day=15)
-    res = [0] * 12
-    for i in range(12):
+def task_person_role_project_12(p:object, r:object, j:object,n:int=12)->List[int]:
+    d = date0()
+    res = [0] * n
+    for i in range(n):
         t = Task.objects.filter(person=p, project=j, role=r, month=d)
         try:
             res[i] += t[0].load
@@ -249,10 +249,10 @@ def task_person_role_project_12(p:object, r:object, j:object)->List[int]:
     return res
 
 
-def task_role_project_including_virtuals_12(r, j):
-    d = date.today().replace(day=15)
-    res = [0] * 12
-    for i in range(12):
+def task_role_project_including_virtuals_12(r, j,n=12):
+    d = date0()
+    res = [0] * n
+    for i in range(n):
         tasks = Task.objects.filter(project=j, role=r, month=d)
         for t in tasks:
             try:
@@ -263,10 +263,10 @@ def task_role_project_including_virtuals_12(r, j):
     return res
 
 
-def task_role_project_12(r, j):
+def task_role_project_12(r, j,n=12):
     d = date0()
-    res = [0] * 12
-    for i in range(12):
+    res = [0] * n
+    for i in range(n):
         tasks = Task.objects.filter(project=j, role=r, month=d)
         for t in tasks:
             if not t.person.virtual:
@@ -278,11 +278,11 @@ def task_role_project_12(r, j):
     return res
 
 
-def time_available_person_role_12(person:object, role:object)->List[int]:
+def time_available_person_role_12(person:object, role:object,n:int=12)->List[int]:
     if is_virtual(person):
-        return [999999] * 12
+        return [999999] * n
 
-    res = [0] * 12
+    res = [0] * n
     d = date0()
     t = -1
     if person == None:
@@ -292,7 +292,7 @@ def time_available_person_role_12(person:object, role:object)->List[int]:
     elif person.res.filter(id=role.id).exists():
         t = 0
 
-    for i in range(12):
+    for i in range(n):
         task = Less.objects.filter(
             person=person, role=role, start_date__lte=d
         ).order_by("-start_date")
@@ -304,23 +304,10 @@ def time_available_person_role_12(person:object, role:object)->List[int]:
         d = inc(d)
     return res
 
-#
-#def time_available_role(role:object)->List[int]:   
-#    people = real_people(role)
-#    res = [0] * 12
-#    for person in people:
-#        if is_virtual(person):
-#            continue
-#        isfree = time_available_person_role_12(person, role)
-#        for i in range(12):
-#            res[i] += isfree[i]
-#    return res
-
-
-def needs_role_project_12(p:object,r:object, j:object)->List[int]:
+def needs_role_project_12(p:object,r:object, j:object,n:int=12)->List[int]:
     d = date0()
-    res = [0] * 12
-    for i in range(12):
+    res = [0] * n
+    for i in range(n):
         t = Load.objects.filter(project=j, role=r, month=d)
         try:
             res[i] = t[0].load
@@ -334,27 +321,26 @@ def needs_role_project_12(p:object,r:object, j:object)->List[int]:
 '''
 нехватка ресурса - роль и проект - на 12 месяцев
 '''
-def delta_role_project_12(r:object, j:object)->List[int]:
-    a = needs_role_project_12(-1,r, j)
-    b = task_role_project_including_virtuals_12(r, j)
-    c = [0] * 12
-    for i in range(12):
+def delta_role_project_12(r:object, j:object,n:int=12)->List[int]:
+    a = needs_role_project_12(-1,r, j,n)
+    b = task_role_project_including_virtuals_12(r, j,n)
+    c = [0] * n
+    for i in range(n):
         c[i] = b[i] - a[i]
     return c
 
 '''
 Загрузка одно человека по разным ролям суммарно превысила 100% (булев вектор)
 '''
-def person_more_100_12(person:object)->List[bool]:
-    sum = [0] * 12
+def person_more_100_12(person:object,n:int=12)->List[bool]:
+    sum = [0] * n
     roles = {person.role}.union(person.res.all())
     for role in roles:
-        isfree = time_available_person_role_12(person, role)
-        for i in range(12):
+        isfree = time_available_person_role_12(person, role,n)
+        for i in range(n):
             sum[i] += isfree[i]
-    res = [True] * 12
-    for i in range(12):
-        res[i] = sum[i] > 100
+
+    res = [sum[i] > 100 for i in range(n)]
     return res
 
 
