@@ -15,9 +15,9 @@ class Role(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.ForeignKey(to=Role, on_delete=models.CASCADE)
+    role = models.ForeignKey(to=Role, on_delete=models.CASCADE,blank=True,null=True)
     fio = models.CharField(max_length=30, default="?")
-    res = models.ManyToManyField(Role, related_name="they", default=None)
+    res = models.ManyToManyField(Role, related_name="they" ,blank=True,null=True)
     virtual = models.BooleanField(default=False)
 
     def __str__(self):
