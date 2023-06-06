@@ -19,7 +19,6 @@ def create_user_and_profile(request):
                                                      )
             else:
                 user_profile = UserProfile.objects.create(user=user,
-                                                          role=None,
                                                           fio=form.cleaned_data['fio'],
                                                           )
 
