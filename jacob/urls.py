@@ -1,6 +1,6 @@
 from django.urls import path
 from . import vvv
-from . import db
+from . import save_forms
 from . import  view_forms
 
 urlpatterns = [
@@ -16,9 +16,9 @@ urlpatterns = [
     path("keys_form/", view_forms.keys_form, name="keys_form"),
     
 
-    path("sm/", db.save_max, name="sm"),    
-    path("s2/", db.save_needs, name="s2"),
-    path("s1/", db.save_task, name="s1"),
+    path("sm/", save_forms.save_max, name="sm"),
+    path("s2/", save_forms.save_needs, name="s2"),
+    path("s1/", save_forms.save_task, name="s1"),
     
 
     path("eva2/<str:fun>/", vvv.eva2, name="eva2"),

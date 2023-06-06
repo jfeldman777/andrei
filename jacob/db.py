@@ -2,7 +2,6 @@ from .utils import *
 
 # from .vvv import assign_role,assign_project,assign_role_project,
 # from .vvv import needs_project,needs_role,needs_role_project
-from .vvv import delta_project,delta_role,delta_role_project,all_role,all_project,all_role_project,available_all
 # from .vvv import available_role,rest_role,rest_all,table_timeline,table_projects,table_resources,people,roles
 
 def real_and_virtual_people(role:object)->List[object]:
@@ -150,88 +149,6 @@ def delta_on_span(p,r, j, n):
             sum -= rjd[i]
     return sum
 
-def save_max(request):
-    html = ""
-    id = 1
-    r = 1
-    p = 1
-    j = 1
-    if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = Form(request.POST)
-        if form.is_valid():
-            html = request.POST.get("html")
-            for k, v in request.POST.items():
-                if "." in k:
-                    p, r, j, d = k.split(".")
-
-                    try:
-                        role = Role.objects.get(id=r)
-                        person = UserProfile.objects.get(id=p)
-
-                        create_or_update_res_max(person, role, d, v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-    if html == "":
-        return available_role(request, p, r, j)
-    return available_all(request)  # s
-
-
-
-def save_task(request):
-    p = 0
-    r = 0
-    j = 0
-    html = ""
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k, v in request.POST.items():
-                html = request.POST.get("html")
-                if "." in k:
-                    p, r, j, d = k.split(".")
-                    try:
-                        project = Project.objects.get(id=j)
-                        role = Role.objects.get(id=r)
-                        person = UserProfile.objects.get(id=p)
-                        create_or_update_task(
-                            person, role, project, d, v
-                        )  ##################################
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return redirect(f"/{html}/{p}/{r}/{j}")
-
-
-def save_needs(request):
-    p = 0
-    j = 0
-    r = 0
-    if request.method == "POST":
-        form = Form(request.POST)
-        if form.is_valid():
-            for k, v in request.POST.items():
-                html = request.POST.get("html")
-                if "." in k:
-                    p, r, j, d = k.split(".")
-
-                    try:
-                        person = None
-                        role = Role.objects.get(id=r)
-                        project = Project.objects.get(id=j)
-                        create_or_update_needs(person, role, project, d, v)
-                    except:
-                        pass
-        else:
-            print(form.errors)
-
-    return redirect(f"/{html}/{p}/{r}/{j}")
-
-
 
 '''
 Задачи = утвержденные загрузки- суммарно = при фиксированных параметрах - вектор - нв 12 месяцев
@@ -324,9 +241,7 @@ def needs_role_project_12(p:object,r:object, j:object,n:int=12)->List[int]:
 def delta_role_project_12(r:object, j:object,n:int=12)->List[int]:
     a = needs_role_project_12(-1,r, j,n)
     b = task_role_project_including_virtuals_12(r, j,n)
-    c = [0] * n
-    for i in range(n):
-        c[i] = b[i] - a[i]
+    c = [b[i]-a[i] for i in range(n)]
     return c
 
 '''
