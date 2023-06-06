@@ -5,24 +5,28 @@ from .forms import UserAndProfileForm, RoleForm, User2Form, KeysForm, ProjectFor
 from .models import UserProfile,Role, Project
 
 def create_user_and_profile(request):
-    if request.method == 'POST':
-        form = UserAndProfileForm(request.POST)
+    instance = None
+    if request.method == "POST":
+        form = UserAndProfileForm(request.POST, instance=instance)
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
-
-            user_profile = UserProfile.objects.create(user=user,
+            if form.cleaned_data['role']:
+                user_profile = UserProfile.objects.create(user=user,
                                                       role=form.cleaned_data['role'],
                                                       fio=form.cleaned_data['fio'],
                                                      )
+            else:
+                user_profile = UserProfile.objects.create(user=user,
+                                                          role=None,
+                                                          fio=form.cleaned_data['fio'],
+                                                          )
+
             selected_roles = form.cleaned_data.get('res', [])
             user_profile.res.set(selected_roles)
 
             return redirect("people")
-
-
-
     else:
         form = UserAndProfileForm()
 
