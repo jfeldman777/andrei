@@ -102,7 +102,8 @@ def person_form(request, id):
         form = User2Form(request.POST, instance=instance)
         if form.is_valid():
             user = form.save(commit=False)
-            user.role_id = form.cleaned_data['role'].id  # Set the foreign key using an ID
+            if form.cleaned_data['role']:
+                user.role_id = form.cleaned_data['role'].id  # Set the foreign key using an ID
             user.save()
             user.res.set(form.cleaned_data['res'])  # Set the many-to-many relationship
             user.save()
