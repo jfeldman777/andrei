@@ -71,13 +71,11 @@ def delta_on_span(r, j, n):
 НЕехватка ресурсов - роль - проект - время-месяцев - суммарно по месяцам
 '''
 def needs_on_span(r:object, j:object, n:int)->int:
-    rjd = needs_role_project_12(-1,r, j)
-    sum = 0
-    for i in range(n):
-        sum += rjd[i]
-    if sum == 0:
+    rjd = needs_role_project_12(-1,r, j,n)
+    s = sum(rjd)
+    if s == 0:
         return 1 #чтобы не делить на ноль
-    return sum
+    return s
 
 '''
 вход в балансы за х месяцев

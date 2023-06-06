@@ -57,53 +57,12 @@ def get_prj_triplet(p:int, r:int, j:int)->tuple[any,any,any]:
     return (person, role, project)
 
 
-def create_or_update_res_max(person:object, role:object, m:date, l:int)->None:  # Доступность
-    try:
-        instance = Less.objects.get(person=person, role=role, start_date=m)
-    except:
-        instance = None
-    if instance:
-        instance.load = l
-        instance.save()
-    else:
-        instance = Less.objects.create(person=person, role=role, start_date=m, load=l)
 
+def rest_of_time_pr_12(p, r,n=12):
+    a = task_person_role_12(p, r,n)
+    b = time_available_person_role_12(p, r,n)
+    c = [b[i]-a[i] for i in range(n)]
 
-def create_or_update_task(p:object, r:object, j:object, d:date, l:int)->None:  # Загрузка tjTask
-    try:
-        instance = Task.objects.get(person=p, project=j, role=r, month=d)
-    except:
-        instance = None
-    if instance:
-        instance.load = l
-        instance.save()
-    else:
-        instance = Task.objects.create(person=p, role=r, project=j, month=d, load=l)
-
-
-def create_or_update_needs(person:object, role:object, project:object, m:date, v:int)->None:  # Потребность tjLoad
-    try:
-        instance = Load.objects.get(project=project, role=role, month=m)
-    except:
-        instance = None
-
-    if instance:
-        instance.load = float(v)
-        instance.save()
-
-    else:
-        instance = Load.objects.create(project=project, role=role, month=m, load=v)
-
-
-def rest_of_time_pr_12(p, r):
-    c = [0] * 12
-    a = task_person_role_12(p, r)
-    b = time_available_person_role_12(p, r)
-    try:
-        for i in range(12):
-            c[i] = b[i] - a[i]
-    except:
-        return None
     return c
 
 
@@ -143,13 +102,8 @@ def time_available_in_mon(p:int, r:int, y:int, m:int)->int:
 
 def delta_on_span(p,r, j, n):
     rjd = delta_role_project_12(r, j,n)
-    sum = 0
-    for i in range(n):
-        if rjd[i] < 0:
-            sum -= rjd[i]
-    return sum
-
-
+    s = -sum(filter(lambda x:x<0,rjd))
+    return s
 '''
 Задачи = утвержденные загрузки- суммарно = при фиксированных параметрах - вектор - нв 12 месяцев
 '''
