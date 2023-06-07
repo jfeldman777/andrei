@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import formset_factory
-from .models import Role, Project,UserProfile
+from .models import Role, Project,UserProfile,Grade,Wish
 from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth.models import User
 
@@ -146,3 +146,20 @@ class ProjectForm(forms.ModelForm):
         labels = {
             "general": "Руководитель",
         }
+
+class GradeForm(forms.ModelForm):
+    person = forms.CharField(
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}),
+        label='Сотрудник'
+    )
+    role = forms.CharField(
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}),
+        label='Роль'
+    )
+    class Meta:
+        model = Grade
+        fields = ['person','role','mygrade']
+        labels = {
+            "mygrade": "Грейд",
+        }
+

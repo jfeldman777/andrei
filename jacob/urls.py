@@ -14,6 +14,8 @@ urlpatterns = [
     path("person_form/", view_forms.create_user_and_profile, name="person_form"),
 
     path("keys_form/", view_forms.keys_form, name="keys_form"),
+
+    path("grade_form/<int:pid>/<int:rid>/", view_forms.grade_form, name="grade_form"),
     
 
     path("sm/", save_forms.save_max, name="sm"),

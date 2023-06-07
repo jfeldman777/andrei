@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, get_object_or_404, render
 
 
-from .forms import UserAndProfileForm, RoleForm, User2Form, KeysForm, ProjectForm
-from .models import UserProfile,Role, Project
+from .forms import UserAndProfileForm, RoleForm, User2Form, KeysForm, ProjectForm, GradeForm
+from .models import UserProfile, Role, Project, Grade
+
 
 def create_user_and_profile(request):
     button = "Создать"
@@ -34,8 +35,26 @@ def create_user_and_profile(request):
 
 
 '''
-форма для изменение или создания роли (если номер не указан)
+форма для 
 '''
+def grade_form(request, pid,rid):
+    form = None
+    button = "Сохранить"
+    person = UserProfile.objects.get(id = pid)
+    role = Role.objects.get(id = rid)
+    if request.method == "POST":
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            grade=form.cleaned_data['mygrade']
+            Grade.objects.update_or_crteate(person=pid,role=rid,mygrade=grade)
+            return redirect("people")
+        else:
+            print(form.errors)
+
+    initial_data = {'person': person,'role':role}
+    form = GradeForm(initial=initial_data)
+    return render(request, "form.html", {"form": form,"title":"Грейд","button":button})
+
 def role_form(request, id=None):
     button = "Создать"
     instance = None
@@ -44,15 +63,14 @@ def role_form(request, id=None):
         instance = get_object_or_404(Role, id=id)
 
     if request.method == "POST":
-        form = RoleForm(request.POST, instance=instance)
+        form = GradeForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect("roles")
+            return redirect("people")
 
     else:
         form = RoleForm(instance=instance)
     return render(request, "form.html", {"form": form,"title":"Роль","button":button})
-
 
 def keys_form(request, id=None):
     button = "Создать"

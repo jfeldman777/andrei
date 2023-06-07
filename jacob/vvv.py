@@ -7,8 +7,7 @@ from .db import get_prj_triplet, rest_of_time_pr_12, time_available_person_role_
 from .db import task_person_role_project_12, real_and_virtual_people, real_people
 from .utils import *
 from datetime import date
-from .models import UserProfile
-
+from .models import UserProfile, Grade
 
 from django.urls import resolve
 
@@ -130,14 +129,35 @@ def table_resources(request:object)->object:
                     for p in roles]
     context["data2"] = data2
     return render(request, "atr.html", context)
-def people(request:object)->object:
+# def people(request:object)->object:
+#     context = {}
+#     people = UserProfile.objects.filter(virtual='False').order_by("fio")
+#     data2 = [{"fio": p.fio, "role": p.role, "res": p.res.all,"id":p.id, }
+#                             for p in people]
+#     context["data2"] = data2
+#     return render(request, "people.html", context)
+
+
+
+def people(request):
     context = {}
-    people = UserProfile.objects.filter(virtual='False').order_by("fio")
-    data2 = [{"fio": p.fio, "role": p.role, "res": p.res.all,"id":p.id}
-                            for p in people]
+    profiles = UserProfile.objects.filter(virtual=False).order_by("fio")
+    data2 = []
+    for profile in profiles:
+        try:
+            grade1 = profile.role.grade.mygrade
+        except:
+            grade1 = '-'
+        profile_data = {"fio": profile.fio, "role": profile.role,
+                        "grade":grade1,
+                        "res": [], "id": profile.id}
+        for role in profile.res.all():
+            grade = Grade.objects.filter(role=role).first()
+            grade_value = grade.mygrade if grade else '-'
+            profile_data["res"].append({"role": str(role), "grade": grade_value})
+        data2.append(profile_data)
     context["data2"] = data2
     return render(request, "people.html", context)
-
 def roles(request:object)->object:
     context = {}
     roles = Role.objects.all().order_by("general")

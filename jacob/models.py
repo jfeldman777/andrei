@@ -54,7 +54,7 @@ class Less(models.Model):
     role = models.ForeignKey(to=Role, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return f"{self.person.user.last_name}({self.start_date})={self.load} "
+        return f"{self.person.fio}({self.start_date})={self.load} "
 
 
 class Task(models.Model):
@@ -71,3 +71,16 @@ class Wish(models.Model):
     mywish = models.CharField(max_length=80, default="?")
     project = models.ForeignKey(to=Project, on_delete=models.CASCADE)
     role = models.ForeignKey(to=Role, on_delete=models.CASCADE)
+
+class Grade(models.Model):
+    GRADE_CHOICES = [
+        ('0', '0'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+    ]
+
+    person = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    mygrade = models.CharField(max_length=2, choices=GRADE_CHOICES,default='0')
+
