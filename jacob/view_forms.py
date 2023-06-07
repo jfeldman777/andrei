@@ -37,23 +37,43 @@ def create_user_and_profile(request):
 '''
 форма для 
 '''
-def grade_form(request, pid,rid):
-    form = None
-    button = "Сохранить"
-    person = UserProfile.objects.get(id = pid)
-    role = Role.objects.get(id = rid)
+# def grade_form(request, pid,rid):
+#     form = None
+#     button = "Сохранить"
+#     person = UserProfile.objects.get(id = pid)
+#     role = Role.objects.get(id = rid)
+#     if request.method == "POST":
+#         form = GradeForm(request.POST)
+#
+#         grade = form.data['mygrade']
+#
+#         Grade.update_or_create(person=person,role=role,mygrade=grade)
+#         return redirect("people")
+#
+#
+#     initial_data = {'person': person,'role':role}
+#     form = GradeForm(initial=initial_data)
+#     return render(request, "form.html", {"form": form,"title":"Грейд","button":button})
+
+def grade_form(request, pid, rid):
+    person = UserProfile.objects.get(id=pid)
+    role = Role.objects.get(id=rid)
+
     if request.method == "POST":
         form = GradeForm(request.POST)
         if form.is_valid():
-            grade=form.cleaned_data['mygrade']
-            Grade.objects.update_or_crteate(person=pid,role=rid,mygrade=grade)
+            grade = form.cleaned_data['mygrade']
+            Grade.objects.update_or_create(
+                person=person,
+                role=role,
+                defaults={'mygrade': grade},
+            )
             return redirect("people")
-        else:
-            print(form.errors)
+    else:
+        initial_data = {'person': person, 'role': role}  # Use instances here for form initialization
+        form = GradeForm(initial=initial_data)
 
-    initial_data = {'person': person,'role':role}
-    form = GradeForm(initial=initial_data)
-    return render(request, "form.html", {"form": form,"title":"Грейд","button":button})
+    return render(request, "form.html", {"form": form, "title":"Грейд", "button":"Сохранить"})
 
 def role_form(request, id=None):
     button = "Создать"
