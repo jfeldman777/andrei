@@ -40,7 +40,7 @@ def role_form(request, id=None):
     button = "Создать"
     instance = None
     if id:
-        button = "Изменить"
+        button = "Сохранить"
         instance = get_object_or_404(Role, id=id)
 
     if request.method == "POST":
@@ -58,7 +58,7 @@ def keys_form(request, id=None):
     button = "Создать"
     instance = None
     if id:
-        button = "Изменить"
+        button = "Сохранить"
     if request.method == "POST":
         form = KeysForm(request.POST, instance=instance)
         if form.is_valid():
@@ -84,7 +84,7 @@ def project_form(request, id=None):
     button = "Создать"
     instance = None
     if id:
-        button = "Изменить"
+        button = "Сохранить"
         instance = get_object_or_404(Project, id=id)
 
     if request.method == "POST":
@@ -108,7 +108,7 @@ def person_form(request, id):
     button = "Создать"
     instance = None
     if id:
-        button = "Изменить"
+        button = "Сохранить"
         instance = get_object_or_404(UserProfile, id=id)
 
     if request.method == "POST":

@@ -17,10 +17,8 @@ from django.urls import resolve
 отсюда можно запускать тесты
 '''
 def atest(request:object)->object:
-    a = outsrc(2, 2)
-    b = vacancia(2, 2)
 
-    return render(request, "a_test.html", {"a": a, "b": b})
+    return render(request, "navig.html")
 
 def a00(request:object)->object:
     return render(request, "a00.html")
