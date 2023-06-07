@@ -6,80 +6,97 @@
 <div class="bar">
     <h4>Главная страница</h4>
 </div>
-<div style="position:absolute;top:80px;left:0;">
-    <ol>
+<div style="position:absolute; top:80px; left:0; width:90%; horizontal-align:center; 
+           border: none; 
+           ">
+    <table style="border: none; border-collapse: collapse;" >       
+ 
+        <tr  style="vertical-align:top; text-align:left;">
+            
+      <td style="border-collapse: collapse;   border: none; ">
+        <h5  style="text-align:left; padding:10px;margin-left:20px;"> Проекты</h5>
+              <ul style="text-align:left;">
+                <li><a href="/prjlist/" class="home2"> Дорожная карта</a></li>
+                 <li><a href="/atj/" class="home2"> Все проекты</a></li>
+                <li><a href="/project_form/" class="home01">Добавить новый проект</a></li>
+                <li><a href="/atj/" class="home2"> Редактировать карточку проекта</a></li>
+            </ul>
 
-        <li>Проекты
-            <ol>
-                <li><a href="/project_form/" class="home01">Добавить проект</a></li>
-                <li><a href="/prjlist/" class="home2"> Портфель проектов, изменить проект</a></li>
-            </ol>
+    </td>       
+            
+            
+            <td style="border-collapse: collapse;   border: none; ">
 
-        </li>
-        <li>
-            Сотрудники
-            <ol>
-                <li><a href="/person_form/">Добавить сотрудника</a></li>
-                <li><a href="/people/">Изменить данные сотрудника, в том числе его роли</a></li>
+        <h5  style="text-align:left; padding:10px;margin-left:20px;">            Сотрудники</h5>
+            <ul style="text-align:left;">
+                <li><a href="/people/">Все сотрудники</a></li>
+                <li><a href="/person_form/">Добавить нового сотрудника</a></li>
+                <li><a href="/people/">Редактировать карточку сотрудника</a></li>
 
-            </ol>
+            </ul>
+    </td>
 
-        </li>
-        <li> Ресурсы (роли)
-            <ol>
+
+       <td style="border-collapse: collapse;   border: none; ">
+       <h5  style="text-align:left; padding:10px;margin-left:20px;"> Ресурсы</h5>
+               <ul style="text-align:left;">
+
+                 <li><a href="/mrom/" class="home4">Максимальная доступность ресурсов</a>
+                <li><a href="/mro/" class="home3">Остаточная доступность ресурсов</a></li>
+                <li><a href="/roles/">Все ресурсные пулы</a></li>
                 <li><a href="/role_form/">Добавить роль </a></li>
-
                 <li><a href="/roles/">Изменить роль</a></li>
+              
 
-                <li><a href="/mro/" class="home3">Увидеть остаточную доступность всех</a></li>
 
-                <li><a href="/mrom/" class="home4">Увидеть максимальную доступность всех</a>
+        </td>
+        </tr><tr style="vertical-align:top; text-align:left;">
+
+<td style="border-collapse: collapse;   border: none; ">
+       <h5  style="text-align:left; padding:10px;margin-left:20px;"> Руководитель проекта</h5>
+   <ul style="text-align:left;">
+                  <li>
+                    <a href="/b/6/" class="home5"> Сформировать потребность </a>  </li> <li>
+                    <a href="/b/6/" class="home5"> Сбалансировать спрос </a>  </li> <li>
+                    <a href="/b/6/" class="home5"> Посмотреть загрузку </a>                </li>
+
+
+            </ul>
+        </td>
+          <td style="border-collapse: collapse;   border: none; ">
+
+       <h5  style="text-align:left; padding:10px;margin-left:20px;">
+            Балансы</h5>
+
+
+
+           <ul style="text-align:left;">
+                <li><a href="/b/1" class="home7">За месяц</a></li>
+
+                <li><a href="/b/3" class="home8">За 3 месяца</a></li>
+                <li><a href="/b/6" class="home9">За 6 месяцев</a></li>
+
+                <li><a href="/b/12" class="home10">За 12 месяцев</a>
                 </li>
 
-            </ol>
-        </li>
+            </ul>
 
-        <li>Руководитель проекта<ol>
-
-                <li>
-                    <a href="/atj/" class="home5"> Выставить потребность по ресурсам </a>
-                </li>
+</td>
+ <td style="border-collapse: collapse;   border: none; ">
 
 
-            </ol>
+                 <h5  style="text-align:left; padding:10px;margin-left:20px;"> Руководитель ресурса</h5>
+            <ul style="text-align:left;">
+                <li><a href="/atr/" class="home6">Определить доступность ресурсов</a></li>
+  <li><a href="/b/6/" class="home6">Сбалансировать спрос по пулу</a></li>
+  <li><a href="/b/6/" class="home6">Определить загрузку</a></li>
 
-        </li>
-        <li>Руководитель ресурса<ol>
-                <li><a href="/atr/" class="home6">
-                        Выставить максимальную доступность</a>
-
-                </li>
+            </ul>
 
 
 
-            </ol>
-
-
-        </li>
-        <li>
-            Потребности, назначения, балансировка
-
-
-
-            <ol>
-                <li><a href="/b/1" class="home7">На один месяц вперед</a></li>
-
-                <li><a href="/b/3" class="home8">На три месяца вперед</a></li>
-                <li><a href="/b/6" class="home9">На полгода вперед</a></li>
-
-                <li><a href="/b/12" class="home10">На год вперед</a>
-                </li>
-
-            </ol>
-        </li>
-
-    </ol>
-    </form>
-</div>
+    </ul>
+            </td></tr>
+            </table>
 </div>
 {% endblock %}
