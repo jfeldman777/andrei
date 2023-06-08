@@ -164,8 +164,10 @@ class ImmutableModelChoiceField(forms.ModelChoiceField):
 
 
 class GradeForm(forms.ModelForm):
-    person = ImmutableModelChoiceField(queryset=UserProfile.objects.all(),required=False)
-    role = ImmutableModelChoiceField(queryset=Role.objects.all(),required=False)
+    person = ImmutableModelChoiceField(queryset=UserProfile.objects.all(),required=False,
+                                       label='Сотрудник')
+    role = ImmutableModelChoiceField(queryset=Role.objects.all(),required=False,
+                                     label='Роль')
 
     class Meta:
         model = Grade
