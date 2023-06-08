@@ -224,7 +224,7 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 grade = Grade.objects.get(person=person, role=role).mygrade
             except:
                 grade = '0'
-            up1=f"({grade})"
+            up1=f" ({grade})"
         c_w3 = [{"val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
@@ -282,7 +282,7 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                     grade = Grade.objects.get(person=person, role=role).mygrade
                 except:
                     grade = '0'
-                up1=f"({grade})"
+                up1=f" ({grade})"
             c_w3 = [p100,{"val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
@@ -339,7 +339,7 @@ def assign_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                     grade = Grade.objects.get(person=person, role=role).mygrade
                 except:
                     grade = '0'
-                up1=f"({grade})"
+                up1=f" ({grade})"
             c_w3 = [p100,{"val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
@@ -429,7 +429,7 @@ def delta_role_project(request, p, r, j,n=12):
                 grade = Grade.objects.get(person=person, role=role).mygrade
             except:
                 grade = '0'
-            up1=f"({grade})"
+            up1=f" ({grade})"
         c_w3 = [{"val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
@@ -522,7 +522,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 grade = Grade.objects.get(person=person, role=role).mygrade
             except:
                 grade = '0'
-            up1=f"({grade})"
+            up1=f" ({grade})"
         c_w3 = [{"val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
@@ -627,7 +627,7 @@ def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                     grade = Grade.objects.get(person=person, role=role).mygrade
                 except:
                     grade = '0'
-                up1 = f"({grade})"
+                up1 = f" ({grade})"
             c_w3 = [p100,{"val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
@@ -738,7 +738,7 @@ def delta_role(request, p, r, j,n=12):
                     grade = Grade.objects.get(person=person, role=role).mygrade
                 except:
                     grade = '0'
-                up1 = f"({grade})"
+                up1 = f" ({grade})"
             c_w3 = [p100,{"val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
@@ -844,7 +844,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                     grade = Grade.objects.get(person=person, role=role).mygrade
                 except:
                     grade = '0'
-                up1 = f"({grade})"
+                up1 = f" ({grade})"
             c_w3 = [p100,{"val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
@@ -944,7 +944,7 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                     grade = Grade.objects.get(person=person, role=role).mygrade
                 except:
                     grade = '0'
-                up1=f"({grade})"
+                up1=f" ({grade})"
             c_w3 = [p100,{"val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)

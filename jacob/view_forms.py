@@ -69,10 +69,10 @@ def role_form(request, id=None):
         instance = get_object_or_404(Role, id=id)
 
     if request.method == "POST":
-        form = GradeForm(request.POST, instance=instance)
+        form = RoleForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect("people")
+            return redirect("roles")
 
     else:
         form = RoleForm(instance=instance)
