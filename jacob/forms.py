@@ -147,16 +147,31 @@ class ProjectForm(forms.ModelForm):
             "general": "Руководитель",
         }
 
+class ImmutableModelChoiceField(forms.ModelChoiceField):
+    def widget_attrs(self, widget):
+        attrs = super().widget_attrs(widget)
+        attrs['disabled'] = 'disabled'  # Disables the field
+        return attrs
+
+    def to_python(self, value):
+        if value in self.empty_values:
+            return None
+        try:
+            value = self.queryset.get(pk=value)
+        except (ValueError, TypeError, self.queryset.model.DoesNotExist):
+            return None
+        return value
+
+
 class GradeForm(forms.ModelForm):
-    person = forms.ModelChoiceField(queryset=UserProfile.objects.all(),
-        widget=forms.Select(attrs={'readonly': True}))
-    role = forms.ModelChoiceField(queryset=Role.objects.all(),
-        widget=forms.Select(attrs={'readonly': True}))
+    person = ImmutableModelChoiceField(queryset=UserProfile.objects.all(),required=False)
+    role = ImmutableModelChoiceField(queryset=Role.objects.all(),required=False)
 
     class Meta:
         model = Grade
-        fields = ['person','role','mygrade']
+        fields = ['person', 'role', 'mygrade']
         labels = {
             "mygrade": "Грейд",
+            "role":"Роль",
+            "person":"Cотрудник"
         }
-
