@@ -45,7 +45,7 @@ left:20px;
    {% for choice in cell.res %}
       </td>
       <td style="text-align: center; ">
-          <a href="/grade_form/{{cell.id}}/{{choice.role_id}}/">
+          <a href="/grade_form/{{cell.id}}/{{choice.id}}/">
       {{ choice.role }}
        {% if choice.role %}
               ({{choice.grade}})

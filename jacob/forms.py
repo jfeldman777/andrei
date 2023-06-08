@@ -148,14 +148,11 @@ class ProjectForm(forms.ModelForm):
         }
 
 class GradeForm(forms.ModelForm):
-    person = forms.CharField(
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}),
-        label='Сотрудник'
-    )
-    role = forms.CharField(
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}),
-        label='Роль'
-    )
+    person = forms.ModelChoiceField(queryset=UserProfile.objects.all(),
+        widget=forms.Select(attrs={'readonly': True}))
+    role = forms.ModelChoiceField(queryset=Role.objects.all(),
+        widget=forms.Select(attrs={'readonly': True}))
+
     class Meta:
         model = Grade
         fields = ['person','role','mygrade']

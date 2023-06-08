@@ -20,7 +20,7 @@ urlpatterns = [
 
     path("sm/", save_forms.save_max, name="sm"),
     path("s2/", save_forms.save_needs, name="s2"),
-    path("s1/", save_forms.save_task, name="s1"),
+    path("assign_workload/", save_forms.save_task, name="assign_workload"),
     
 
     path("eva2/<str:fun>/", vvv.eva2, name="eva2"),

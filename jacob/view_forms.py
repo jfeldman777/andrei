@@ -58,7 +58,10 @@ def create_user_and_profile(request):
 def grade_form(request, pid, rid):
     person = UserProfile.objects.get(id=pid)
     role = Role.objects.get(id=rid)
-
+    try:
+        grade = Grade.objects.filter(person=person,role=role).first().mygrade
+    except:
+        grade = '0'
     if request.method == "POST":
         form = GradeForm(request.POST)
         if form.is_valid():
@@ -70,7 +73,7 @@ def grade_form(request, pid, rid):
             )
             return redirect("people")
     else:
-        initial_data = {'person': person, 'role': role}  # Use instances here for form initialization
+        initial_data = {'person': person, 'role': role,'mygrade':grade}  # Use instances here for form initialization
         form = GradeForm(initial=initial_data)
 
     return render(request, "form.html", {"form": form, "title":"Грейд", "button":"Сохранить"})

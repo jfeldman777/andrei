@@ -145,16 +145,16 @@ def people(request):
     data2 = []
     for profile in profiles:
         try:
-            grade1 = profile.role.grade.mygrade
+            grade1 = Grade.objects.filter(person=profile,role=profile.role).first().mygrade
         except:
-            grade1 = '-'
+            grade1 = '0'
         profile_data = {"fio": profile.fio, "role": profile.role,
                         "grade":grade1,
                         "res": [], "id": profile.id}
         for role in profile.res.all():
-            grade = Grade.objects.filter(role=role).first()
-            grade_value = grade.mygrade if grade else '-'
-            profile_data["res"].append({"role": str(role), "grade": grade_value})
+            grade = Grade.objects.filter(person=profile,role=role).first()
+            grade_value = grade.mygrade if grade else '0'
+            profile_data["res"].append({"role": str(role), "grade": grade_value, "id":role.id})
         data2.append(profile_data)
     context["data2"] = data2
     return render(request, "people.html", context)
