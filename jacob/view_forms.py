@@ -31,29 +31,12 @@ def create_user_and_profile(request):
     else:
         form = UserAndProfileForm()
 
-    return render(request, 'form.html', {'form': form,"button":button})
+    return render(request, 'form.html', {'form': form,"button":button,"title":"Новый сотрудник"})
 
 
 '''
 форма для 
 '''
-# def grade_form(request, pid,rid):
-#     form = None
-#     button = "Сохранить"
-#     person = UserProfile.objects.get(id = pid)
-#     role = Role.objects.get(id = rid)
-#     if request.method == "POST":
-#         form = GradeForm(request.POST)
-#
-#         grade = form.data['mygrade']
-#
-#         Grade.update_or_create(person=person,role=role,mygrade=grade)
-#         return redirect("people")
-#
-#
-#     initial_data = {'person': person,'role':role}
-#     form = GradeForm(initial=initial_data)
-#     return render(request, "form.html", {"form": form,"title":"Грейд","button":button})
 
 def grade_form(request, pid, rid):
     person = UserProfile.objects.get(id=pid)
