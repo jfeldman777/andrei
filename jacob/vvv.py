@@ -41,7 +41,7 @@ def vacancia(role:object, project:object,n:int=12)->List[int]:
 '''
 Объект Аутсорс - загрузка на год
 '''
-def outsrc(role:object, project:object,n:=12)->List[int]:
+def outsrc(role:object, project:object,n:int=12)->List[int]:
     person = None
     try:
         person = UserProfile.objects.filter(fio="АУТСОРС")[0]
