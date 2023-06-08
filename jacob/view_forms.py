@@ -31,7 +31,7 @@ def create_user_and_profile(request):
     else:
         form = UserAndProfileForm()
 
-    return render(request, 'form.html', {'form': form,"button":button,"title":"Новый сотрудник"})
+    return render(request, 'form.html', {'form': form,"button":button,"title":"Добавить нового сотрудника"})
 
 
 '''
@@ -147,4 +147,4 @@ def person_form(request, id):
             return redirect("people")
     else:
         form = User2Form(instance=instance)
-    return render(request, "form.html",  {"form": form,"title":"Сотрудник","button":button})
+    return render(request, "form.html",  {"form": form,"title":"Редактировать карточку сотрудника","button":button})

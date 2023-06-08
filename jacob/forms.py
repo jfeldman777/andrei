@@ -53,15 +53,15 @@ class User2Form(forms.ModelForm):
     res = forms.ModelMultipleChoiceField(
         queryset=Role.objects.all(),
         required=False,
-        label="Дополнительные роли",
+        label="Дополнительный ресурсный пул",
     )
 
     class Meta:
         model = UserProfile
         fields = ["id", "fio", "role", "res"]
         labels = {
-            "role": "Основная роль",
-            "fio": "ФИО",
+            "role": "Ресурсный пул",
+            "fio": "Сотрудник",
          }
 
 from django import forms
@@ -71,36 +71,48 @@ from .models import UserProfile
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'password', 'first_name', 'last_name', 'email']
+        fields = ['username', 'password', 'email']
         widgets = {
             'Пароль': forms.PasswordInput(),
         }
-
+        labels = {
+            "username": "Логин",
+            "fio": "Сотрудник"
+        }
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['role', 'fio', 'res', 'virtual']
+        labels = {
+            "username": "Логин",
+            "fio": "Сотрудник"
+        }
 
 class UserAndProfileForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.TextInput(attrs={'readonly': 'readonly'}),
         label='Пароль'
     )
-
+    labels = {
+        "username": "Логин",
+    }
 
     role = forms.ModelChoiceField(queryset=Role.objects.all(),blank=True,required=False,
-                                  label="Основная роль"
+                                  label="Ресурсный пул"
     )  # Assuming Role model is defined
-    fio = forms.CharField(label="ФИО")
+    fio = forms.CharField(label="Сотрудник")
     res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
                                          required=False,
-                                         label="Дополнительные роли")
+                                         label="Дополнительный ресурсный пул")
 
 
     class Meta:
         model = User
-        fields = ['username', 'password', 'first_name', 'last_name', 'email']
-
+        fields = ['username', 'password', 'email']
+        labels = {
+            "username": "Логин",
+            'email':"Электронная почта"
+        }
     def __init__(self, *args, **kwargs):
             super(UserAndProfileForm, self).__init__(*args, **kwargs)
             self.fields['password'].initial = User.objects.make_random_password()
