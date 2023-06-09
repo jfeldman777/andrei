@@ -1,11 +1,8 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
-
-
 {% block content %}
 {% include 'scroll.html' %}
-
-{% include 'menu2.html' %}
+{% load static %}
 <div class="bar">
   <h4>Все проекты - Ресурс: {{role}}</h4>
 </div>
@@ -195,7 +192,6 @@
     </td>
   </tr>
 </table>
-{% include 'script.html' %}
-{% include 'js.html' %}
+
 
 {% endblock %}

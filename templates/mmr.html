@@ -1,11 +1,8 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
-
-
 {% block content %}
 {% include 'scroll.html' %}
-
-{% include 'menu2.html' %}
+{% load static %}
 <div class="bar">
   <h4>
   Ресурсный пул: {{role}} - Потребность</h4>
@@ -46,6 +43,5 @@
     </tbody>
 </table>
 
-{% include 'script.html' %}
 
 {% endblock %}

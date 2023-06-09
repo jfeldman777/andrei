@@ -2,7 +2,7 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-{% include 'menu2.html' %}
+{% load static %}
 <div class="bar">
   <h4>Относительная нехватка ресурсов {{hh}} вперед</h4>
 </div>
@@ -45,6 +45,4 @@ left:20px;
 
 </div>
 
-
-{% include 'js.html' %}
 {% endblock %}

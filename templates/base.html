@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+
 {% load bootstrap4 %}
 
 <html>
@@ -8,7 +9,7 @@
   <title>{% block title %}Инструмент ресурсного планирования{% endblock %}</title>
   <!-- <link rel="stylesheet" href="scroll.css"> -->
   {% bootstrap_css %}
-  {% load custom_filters %}
+
 
 
 
@@ -77,6 +78,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      z-index:60
     }
 
     .table-container {
@@ -140,11 +142,13 @@
 <body>
 
   <main class="container mt-5">
-
+{% include 'menu2.html' %}
     {% block content %}
     {% endblock %}
   </main>
   {% bootstrap_javascript %}
+{% include 'js.html' %}
+{% include 'script.html' %}
 </body>
 
 </html>
