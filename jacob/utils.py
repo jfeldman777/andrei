@@ -36,21 +36,21 @@ from django.urls import reverse
 def date0()->date:
     d = date.today().replace(day=15)
     return d
+#
+# '''
+# дата через год 15го числа
+# '''
+# def date12()->date:
+#     d = date.today().replace(day=15)
+#     d = inc_n(d, 12)
+#     return d
 
-'''
-дата через год 15го числа
-'''
-def date12()->date:
-    d = date.today().replace(day=15)
-    d = inc_n(d, 12)
-    return d
-
-'''
-Имя и 12 нулей
-'''
-def zero(name: str) -> List[Union[int, str]]:
-    sum = [name] + [0] * 12
-    return sum
+# '''
+# Имя и 12 нулей
+# '''
+# def zero(name: str) -> List[Union[int, str]]:
+#     sum = [name] + [0] * 12
+#     return sum
 
 from datetime import date, timedelta
 from typing import List, Dict

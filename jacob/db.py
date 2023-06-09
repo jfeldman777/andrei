@@ -100,13 +100,6 @@ def time_available_in_mon(p:int, r:int, y:int, m:int)->int:
 
 
 
-def delta_on_span(p,r, j, n):
-    rjd = delta_role_project_12(r, j,n)
-    s = -sum(filter(lambda x:x<0,rjd))
-    return s
-'''
-Задачи = утвержденные загрузки- суммарно = при фиксированных параметрах - вектор - нв 12 месяцев
-'''
 def task_person_role_project_12(p:object, r:object, j:object,n:int=12)->List[int]:
     d = date0()
     res = [0] * n

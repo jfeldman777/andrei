@@ -231,6 +231,7 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     moon12["w3"] = w3
     moon12["role"] = role
+    moon12["r"] = r
     moon12["project"] = project
     moon12["id"] = j
     moon12["j"] = j
@@ -291,7 +292,7 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["role"] = "Все ресурсы"
     moon12["project"] = project
     moon12["id"] = j
-    moon12["r"] = 0
+    moon12["r"] = r
     moon12["j"] = j
     return render(request, "uj.html", moon12)
 
@@ -348,7 +349,7 @@ def assign_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["role"] = role
     moon12["project"] = project
     moon12["r"] = r
-
+    moon12["j"] = j
     return render(request, "ur.html", moon12)
 '''
 дельта - один ресурс - один проект
