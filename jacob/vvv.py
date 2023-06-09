@@ -117,7 +117,7 @@ def table_projects(request:object)->object:
     data = [{"j": p.id, "project": p.title, "name": p.general.fio}
         for p in projects]
     context = {"data": data}
-    return render(request, "atj.html", context)
+    return render(request, "tab_j.html", context)
 
 '''
 Все ресурсы в одной таблице
@@ -128,7 +128,7 @@ def table_resources(request:object)->object:
     data2 = [{"title": p.title, "r": p.id, "name":UserProfile.objects.get(user=p.general).fio}
                     for p in roles]
     context["data2"] = data2
-    return render(request, "atr.html", context)
+    return render(request, "tab_r.html", context)
 
 
 def people(request):
@@ -235,7 +235,7 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["project"] = project
     moon12["id"] = j
     moon12["j"] = j
-    return render(request, "ujr.html", moon12)
+    return render(request, "tasks_jr.html", moon12)
 '''
 назначения - один проект
 '''
@@ -294,7 +294,7 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["id"] = j
     moon12["r"] = r
     moon12["j"] = j
-    return render(request, "uj.html", moon12)
+    return render(request, "tasks_j.html", moon12)
 
 '''
 назначения - один ресурс
@@ -350,7 +350,7 @@ def assign_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["project"] = project
     moon12["r"] = r
     moon12["j"] = j
-    return render(request, "ur.html", moon12)
+    return render(request, "tasks_r.html", moon12)
 '''
 дельта - один ресурс - один проект
 '''
@@ -446,7 +446,7 @@ def delta_role_project(request, p, r, j,n=12):
     moon12["r"] = r
     moon12["j"] = j
     moon12["p"] = 0
-    return render(request, "djr.html", moon12)
+    return render(request, "delta_jr.html", moon12)
 
 '''
 балансы - один ресурс - один проект
@@ -545,7 +545,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["r"] = r
     moon12["j"] = j
     moon12["p"] = 0
-    return render(request, "ajr.html", moon12)
+    return render(request, "balance_jr.html", moon12)
 
 '''
 балансы - один ресурс
@@ -651,7 +651,7 @@ def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["j"] = 0
     moon12["p"] = 0
 
-    return render(request, "ar.html", moon12)
+    return render(request, "balance_r.html", moon12)
 '''
 дельта - один ресурс
 '''
@@ -758,7 +758,7 @@ def delta_role(request, p, r, j,n=12):
     moon12["p"] = 0
     moon12["project"] = "Все проекты"
 
-    return render(request, "dr.html", moon12)
+    return render(request, "delta_r.html", moon12)
 '''
 
 дельта - один проект
@@ -868,7 +868,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["r"] = 0
 
     moon12["p"] = 0
-    return render(request, "dj.html", moon12)
+    return render(request, "delta_j.html", moon12)
 
 '''
 балансы - один проект
@@ -970,7 +970,7 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["j"] = j
 
     moon12["p"] = 0
-    return render(request, "aj.html", moon12)  # АЛьфа, один проект все ресурсы
+    return render(request, "balance_j.html", moon12)  # АЛьфа, один проект все ресурсы
 '''
 потребность - один ресурс - один проект
 '''
@@ -1009,7 +1009,7 @@ def needs_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["j"] = j
     moon12["r"] = r
     moon12["id"] = j
-    return render(request, "mmjr.html", moon12)
+    return render(request, "needs_jr.html", moon12)
 
 '''
 потребность - прект один  -ресурсы все
@@ -1050,7 +1050,7 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["j"] = j
     moon12["r"] = 0
     moon12["id"] = j
-    return render(request, "mmj.html", moon12)
+    return render(request, "needs_j.html", moon12)
 
 '''
 потребность - ресурс один - проекты все
@@ -1091,7 +1091,7 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["j"] = j
     moon12["r"] = r
     moon12["id"] = j
-    return render(request, "mmr.html", moon12)
+    return render(request, "needs_r.html", moon12)
 
 
 ''' 
@@ -1141,7 +1141,7 @@ def rest_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["r"] = r
     moon12["role"] = role
 
-    return render(request, "mr2.html", moon12)
+    return render(request, "rest_r.html", moon12)
 
 '''
 доступность максимальная - персональная - один вид ресурса
@@ -1180,7 +1180,7 @@ def available_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["r"] = r
     moon12["role"] = role
 
-    return render(request, "mr1.html", moon12)
+    return render(request, "max_r.html", moon12)
 
 
 '''
@@ -1233,7 +1233,7 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
 
     moon12["dif14"] = dif14  ########################################
 
-    return render(request, "mrom.html", moon12)
+    return render(request, "max.html", moon12)
 
 
 '''
@@ -1257,7 +1257,7 @@ def rest_all(request:object,n:int=12)->object:  # Остаточная дост�
 
     moon12["dif14"] = dif14
 
-    return render(request, "mro.html", moon12)
+    return render(request, "rest.html", moon12)
 
 
 '''

@@ -4,24 +4,23 @@
 {% include 'scroll.html' %}
 {% load static %}
 <div class="bar">
-  <h4>Проект: {{project}} - Все ресурсы</h4>
+  <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
 </div>
-
-<table border=1 style="position:absolute;top:80px;text-align:center;" >
+<table border=1 style="position:absolute;top:80px;text-align:center;">
   <thead>
     <tr>
       <th colspan=13>
-        <a href="/dj/0/0/{{j}}/" style="color:white">
-          Загрузки
-        </a>
+        <a href="/djr/0/{{r}}/{{j}}" style="color:white">
+          Загрузки</a>
       </th>
     </tr>
     <tr>
       <th>
         <form id="f10" method="POST">
           {% csrf_token %}
-          <input type=hidden name="html" value='uj'>
-          <button type="submit" class="button3" disabled="true">Сохранить</button>
+          <input type=hidden name="html" value='tasks_jr'>
+
+          <button type="submit" class="button3 " disabled="true">Сохранить</button>
         </form>
 
         {% include 'moon.html' %}
@@ -30,13 +29,8 @@
     <tr>
       {% for t in tt %}
 
-      {% if forloop.first %}
-      {% if t|negative %}{% else %}
-      <td colspan=13>{{t.val}}</td>
-    </tr>
-    <tr>
-      {% endif %}
-      {% else %}
+
+
 
       <td class="good" action="/assign_workload/" fname="f10" key="{{t.link}}" title="{{t.up}}"
         style="background-color:{{t.color}};">
@@ -44,17 +38,11 @@
           {% if t.fire %}
         <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
         {% endif%}
-      </td>
-      {% endif %}
-
-
-
-      {% endfor %}
+      </td>{% endfor %}
     </tr>
     {% endfor %}
     </tbody>
 </table>
-
 
 
 {% endblock %}
