@@ -28,7 +28,7 @@
               {% for t in dem %}
               <td>
                 {% if forloop.first %}
-                <a href="/dj/0/0/{{t.j}}">
+                <a href="/delta_j/0/0/{{t.j}}">
                   {{t.val}}
                 </a>
                 {% else %}
@@ -42,7 +42,7 @@
             {% endfor %}
             <tr>
               <td colspan=13>
-                <a href="/ar/0/{{r}}/0/" class="dda">подробнее</a>
+                <a href="/balance_r/0/{{r}}/0/" class="dda">подробнее</a>
               </td>
             <tr>
           <tbody>
@@ -55,7 +55,7 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/mmr/0/{{r}}/{{j}}/" style="color: white" class="mmm">
+                <a href="/needs_r/0/{{r}}/{{j}}/" style="color: white" class="mmm">
                   Потребность
                 </a>
               </th>
@@ -73,7 +73,7 @@
                 {% for t in dem %}
 
                 {% if forloop.first %} <td>
-                  <a href="/djr/0/{{t.r}}/{{t.j}}">
+                  <a href="/delta_jr/0/{{t.r}}/{{t.j}}">
                     {{t.val}}
                   </a>
                   {% else %}
@@ -110,7 +110,7 @@
             <tr>
               <th colspan=13>
 
-                <a href="/ur/0/{{r}}/0/" style="color:white;" class="uuu">
+                <a href="/tasks_r/0/{{r}}/0/" style="color:white;" class="uuu">
                   Загрузки</a>
 
               </th>

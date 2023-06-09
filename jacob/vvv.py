@@ -98,7 +98,7 @@ def balance_map(request:object, n:int)->object:
 
             xy[i][j + 1] = {
                 "val": f"{x}%",
-                "link": f"/djr/0/{roles[j].id}/{projects[i].id}/",
+                "link": f"/delta_jr/0/{roles[j].id}/{projects[i].id}/",
                 "color": color,
                 "i": project.id,
                 "j": role.id,

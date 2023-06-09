@@ -24,7 +24,7 @@
               {% for t in tt %}
               <td>
                 {% if t|isstr:'Дельта' %}
-                <a href="/djr/0/{{r}}/{{j}}/" class="aad">{{t}}</a>
+                <a href="/delta_jr/0/{{r}}/{{j}}/" class="aad">{{t}}</a>
                 {% else %}
                 {{t}}
                 {% endif %}
@@ -49,7 +49,7 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/mmjr/{{p}}/{{r}}/{{j}}" style="color:white;" class="mmm">Потребность</a>
+                <a href="/needs_jr/{{p}}/{{r}}/{{j}}" style="color:white;" class="mmm">Потребность</a>
               </th>
             </tr>
             <tr>
@@ -86,7 +86,7 @@ r
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/ujr/0/{{r}}/{{j}}" style="color:white;" class="uuu">
+                <a href="/tasks_jr/0/{{r}}/{{j}}" style="color:white;" class="uuu">
                   Загрузки</a>
               </th>
             </tr>

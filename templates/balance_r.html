@@ -33,7 +33,7 @@
               {% else %}
               <td>
                 {% if t|isstr:'Дельта' %}
-                <a href="/dr/0/{{r}}/0/" class="aad">{{t}}</a>
+                <a href="/delta_r/0/{{r}}/0/" class="aad">{{t}}</a>
                 {% else %}
                 {{t}}
                 {% endif %}
@@ -54,7 +54,7 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/mmr/0/{{t.r}}/{{t.j}}/" style="color: white" class="mmm">
+                <a href="/needs_r/0/{{t.r}}/{{t.j}}/" style="color: white" class="mmm">
                   Потребность
                 </a>
               </th>
@@ -76,7 +76,7 @@
               {% for t in dem %}
               {% if forloop.first %}
               <td>
-                <a href="/mmjr/0/{{t.r}}/{{t.j}}/">
+                <a href="/needs_jr/0/{{t.r}}/{{t.j}}/">
                   {{t.val}}
                 </a>
                 {% else %}
@@ -111,7 +111,7 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/ur/0/{{r}}/0/" style="color:white;" class="uuu">
+                <a href="/tasks_r/0/{{r}}/0/" style="color:white;" class="uuu">
                   Загрузки</a>
               </th>
 
