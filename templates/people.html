@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
+
 {% include 'menu2.html' %}
 <div class="bar">
   <h4>
     Все сотрудники</h4>
 </div>
-      <div class="table-container-4">
+
 <table border="1" cellspacing="0" cellpadding="5" 
   style="position:absolute;top:80px;
 left:20px;
@@ -63,5 +63,5 @@ left:20px;
     </tr>
     {% endfor %}</tbody>
 </table>
-      </div>
+
 {% endblock %}
