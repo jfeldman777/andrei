@@ -55,8 +55,8 @@ urlpatterns = [
  
     
     path("prjlist/", vvv.table_timeline, name="prjlist"),
-    path("table_j/", vvv.table_projects, name="atj"),
-    path("table_r/", vvv.table_resources, name="atr"),
+    path("tab_j/", vvv.table_projects, name="atj"),
+    path("tab_r/", vvv.table_resources, name="atr"),
     path("people/", vvv.people, name="people"),
     path("roles/", vvv.roles, name="roles"),
     
