@@ -30,8 +30,8 @@ def save_max(request):
         else:
             print(form.errors)
     if html == "":
-        return redirect(f"mr1/{p}/{r}/{j}/") #available_role(request, p, r, j)
-    return redirect("mrom")#"available_all(request)  # s
+        return redirect(f"/mr1/{p}/{r}/{j}/") #available_role(request, p, r, j)
+    return redirect("/mrom/")#"available_all(request)  # s
 
 
 
