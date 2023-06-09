@@ -80,10 +80,10 @@ def balance_map(request:object, n:int)->object:
 
     txy = [0] * len(roles)
     for j in range(len(roles)):
-        txy[j] = {"val": roles[j].title, "link": f"/dr/0/{roles[j].id}/0/"}
+        txy[j] = {"val": roles[j].title, "link": f"/delta_r/0/{roles[j].id}/0/"}
 
     for i in range(len(projects)):
-        xy[i][0] = {"val": projects[i], "link": f"/dj/0/0/{projects[i].id}/"}
+        xy[i][0] = {"val": projects[i], "link": f"/delta_j/0/0/{projects[i].id}/"}
         for j in range(len(roles)):
             project = projects[i]
             role = roles[j]
