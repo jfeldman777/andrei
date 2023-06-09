@@ -18,8 +18,8 @@ urlpatterns = [
     path("grade_form/<int:pid>/<int:rid>/", view_forms.grade_form, name="grade_form"),
     
 
-    path("save_max/", save_forms.save_max, name="sm"),
-    path("save_needs/", save_forms.save_needs, name="s2"),
+    path("save_max/", save_forms.save_max, name="save_max"),
+    path("save_needs/", save_forms.save_needs, name="save_needs"),
     path("save_task/", save_forms.save_task, name="save_task"),
     
 
