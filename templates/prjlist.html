@@ -6,9 +6,13 @@
 <div class="bar">
   <h4>Дорожная карта</h4>
 </div>
-<table border=1 style="position:absolute;top:80px;
-left:20px;
-text-align:center;" class="dif">
+<table border=1 style=" height: 100vh; position:absolute;top:78px;left:20px;" id=t00>
+  <tr style="text-align:center;">
+    <td style="vertical-align:top;">
+      <div class="table-container-4">
+        <table border=1 style="position:relative;top:0;" class="balance" width=100%>
+
+  <thead style="position:sticky;  text-align: center; background-color:#FFF;">
   <thead>
 
     <tr width=100% style="text-align: center;  padding: 5px;">
@@ -23,8 +27,6 @@ text-align:center;" class="dif">
     <th style="text-align: center;  padding: 5px;">Длит<br>(мес)</th>
 
     {% include 'moon.html' %}
-
-
     {% for row in matrix %}
     <tr style="text-align: center;  padding: 5px;">
       {% for cell in row %}
