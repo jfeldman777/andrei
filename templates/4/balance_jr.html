@@ -6,10 +6,9 @@
 <div class="bar">
   <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
 </div>
-
-<table border=1 width=100% aid=t00 class="table-container-4 ">
-  <tr style="text-align:center;">
-    <td width=50% style="vertical-align:top;">
+<table width=100% style=" height: 92vh; position:absolute;top:78px;" id=t00>
+                <tr style=" height: 42vh; ">
+    <td width=50% >
       <div class="table-container-2">
         <table border=1 style="position:relative;top:0;" class="balance" width=100%>
           <thead>
@@ -17,21 +16,29 @@
               <th colspan=13>Балансы</th>
             </tr>
             <tr>
-              {% include 'moon.html' %}
-              {% for tt in w1 %}
+              <th>---
+                {% include 'moon.html' %}
+                {% for tt in w1 %}
             <tr>
               {% for t in tt %}
               <td>
+                {% if t|isstr:'Дельта' %}
+                <a href="/delta_jr/0/{{r}}/{{j}}/" class="aad">{{t}}</a>
+                {% else %}
                 {{t}}
+                {% endif %}
               </td>
               {% endfor %}
+
             </tr>
-            {% endfor %}<tr>
-              <td colspan=13>
-                <a href="/balance_r/0/{{r}}/{{j}}" class="dda">подробнее</a>
-              </td>
-            <tr>
-              </tbody>
+
+            {% endfor %}
+
+
+
+
+
+            </tbody>
         </table>
       </div>
     </td>
@@ -52,46 +59,38 @@
 
                 {{t.val}}
               </td>
-
               {% endfor %}
+
             </tr>
+
             </tbody>
         </table>
       </div>
-
       <form id="f20" method="POST">
         {% csrf_token %}
-
-        <input type=hidden name="html" value='delta_jr'>
+        <input type=hidden name="html" value='balance_jr'>
         <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
       </form>
-
-
-
     </td>
   </tr>
-  <tr style="text-align:center; vertical-align:top;">
-
-    <td width=50% style="vertical-align:top;">
-      <div class="table-container-3">
+  <tr style="text-align:center;">
+    <td width=50%>
+      <div class="table-container-2">
         <table border=1 width=100% style="position:relative;top:0;">
           <thead>
             <tr>
               <th colspan=13>
-
                 <a href="/tasks_jr/0/{{r}}/{{j}}" style="color:white;" class="uuu">
                   Загрузки</a>
-
               </th>
             </tr>
             <tr>
               <th>
                 <form id="f10" method="POST">
-                  {% csrf_token %} <input type=hidden name="html" value='delta_jr'>
+                  {% csrf_token %}
+                  <input type=hidden name="html" value='balance_jr'>
                   <button type="submit" class="button3" disabled="true">Сохранить</button>
                 </form>
-
-
 
                 {% include 'moon.html' %}
 
@@ -99,29 +98,23 @@
             <tr>
               {% for t in tt %}
 
-
-              <td class="good" action="/save_task/" s fname="f10" key="{{t.link}}" title="{{t.up}}"
+              <td class="good" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
                 style="background-color:{{t.color}};">
-
-
                 {{t.val}}
               </td>{% endfor %}
             </tr>
             {% endfor %}
+
             </tbody>
         </table>
-
       </div>
-
-
-
-
+    </td>
     <td width=50% style="vertical-align:top;">
-      <div class="table-container-3">
-        <table border=1 style="position:relative;top:0;" width=100% class="dif">
+      <div class="table-container-2">
+        <table border=1 style="position:relative;top:0;vertical-align:top;" width=100% class="dif">
           <thead>
             <tr>
-              <th colspan=13> Остаточная доступность ресурсов</th>
+                  <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
               <th>Сотрудник
@@ -133,11 +126,9 @@
             </tr>
 
             {% endfor %}
-        </table></div>
+        </table>
+      </div>
     </td>
-
   </tr>
 </table>
-
-
-{% endblock %}
+{% endblock %}`
