@@ -1,4 +1,47 @@
 
+
+ .button3 {
+
+      background-color: #D5D8DC;
+      color: #000000;
+
+      border: none;
+      padding: 6px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px 0 rgba(90, 90, 90, 1);
+    }
+
+
+
+    .button3:hover {
+       background-color: #ABB2B9;
+      color: #000000;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1);
+    }
+
+
+
+    .button3:active {
+      background-color: #1A5276;
+      color: #FFFFFF;
+      box-shadow: none;
+      /* Remove box shadow when pressed */
+    }
+
+    button {
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      padding: 10px 20px;
+      cursor: pointer;
+      box-shadow: 2px 2px 4px #E0E0E0;
+
+      display: block;
+      margin-top: auto;
+      /* add a margin to the top of the button */
+    }
+
   .fixed-button1 {
       position: fixed;
       top: 500px;
@@ -19,24 +62,6 @@
       /* задает порядок отображения элемента, чтобы он был выше остальных элементов */
     }
 
-
-
-    /* Button styles */
-    button {
-      border: none;
-      border-radius: 4px;
-      font-weight: bold;
-      padding: 10px 20px;
-      cursor: pointer;
-      box-shadow: 2px 2px 4px #E0E0E0;
-
-      display: block;
-      margin-top: auto;
-      /* add a margin to the top of the button */
-    }
-
-
-
     .pressed-button3 {
       background-color: #1A5276;
       color: #FFFFFF;
@@ -44,15 +69,6 @@
 
 
 
-
-
-    td.true {
-      background-color: skyblue;
-    }
-
-    td.false {
-      background-color: white;
-    }
 
 
 td.active{
@@ -80,13 +96,13 @@ table, td {
       z-index:60
     }
 
-
     .table-container {
 
       position: absolute;
       top: 120px;
       left: 0
     }
+
 
     thead th {
       position: sticky;
@@ -101,34 +117,10 @@ table, td {
 
     }
 
-    .button3 {
-
-      background-color: #D5D8DC;
-      color: #000000;
-
-      border: none;
-      padding: 6px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px 0 rgba(90, 90, 90, 1);
-    }
-
-    .button3:hover {
-       background-color: #ABB2B9;
-      color: #000000;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1);
-    }
-
-    .button3:active {
-      background-color: #1A5276;
-      color: #FFFFFF;
-      box-shadow: none;
-      /* Remove box shadow when pressed */
-    }
-
 
     body {
       background-color: #FFFFFF;
     }
+
 
 

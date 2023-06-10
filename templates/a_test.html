@@ -1,145 +1,61 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% block content %}
+{% include 'scroll.html' %}
 {% load static %}
-
-<style>
-    .bar {
-        position: fixed;
-        /* This will make the navbar stick to the top */
-        top: 40px;
-        /* This positions the navbar at the very top of the page */
-        left: 0;
-        /* This positions the navbar at the very top of the page */
-
-        width: 100%;
-        /* This will stretch the navbar across the entire width of the screen */
-        overflow: hidden;
-        background-color: rgba(0, 255, 255, 1);
-        z-index: 1;
-    }
-
-
-    .navbar {
-        position: fixed;
-        /* This will make the navbar stick to the top */
-        top: 0;
-        /* This positions the navbar at the very top of the page */
-        left: 0;
-        /* This positions the navbar at the very top of the page */
-
-        width: 100%;
-        /* This will stretch the navbar across the entire width of the screen */
-        overflow: hidden;
-        background-color: rgba(0, 0, 255, 1);
-        z-index: 2;
-    }
-
-    .navbar a {
-        float: left;
-        display: block;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 0px 0px;
-        text-decoration: none;
-    }
-
-    .dropdown {
-        float: left;
-        overflow: hidden;
-    }
-
-    .dropdown .dropbtn {
-        font-size: 16px;
-        border: none;
-        outline: none;
-        color: white;
-        padding: 0px 0px;
-        background-color: inherit;
-        font-family: inherit;
-        margin: 0;
-    }
-
-    .navbar a:hover,
-    .dropdown:hover .dropbtn {
-        background-color: cornflowerblue;
-        shape-outside: content-box;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: fixed;
-        /* This will position the dropdown content relative to the viewport */
-        top: 30px;
-        /* This positions the dropdown content just below the navbar and the dropdown button */
-        right: inherit;
-        background-color: #f9f9f9;
-        min-width: 200px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-
-
-
-    .dropdown-content a {
-        float: none;
-        color: black;
-        padding: 0px 0px;
-        text-decoration: none;
-        display: block;
-        text-align: left;
-    }
-
-
-
-    .dropdown-content a:hover {
-        background-color: #ddd;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-</style>
-<div class="navbar">
-    <div style="color:white">Инструмент ресурсного планирования</div>
-
-    <div class="dropdown">
-        <button class="dropbtn">Проекты
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-        </div>
-
-    </div>
-    <div class="dropdown">
-        <button class="dropbtn">Ресурсы
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-        </div>
-
-    </div>
-    <div class="dropdown">
-        <button class="dropbtn">Балансы
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-        </div>
-
-    </div>
-    <a href="#about">Домой</a>
-</div>
 <div class="bar">
-    <h4>Проект: Телескоп - Ресурс: Аналитик</h4>
-</div>
+    <h4>Относительная нехватка ресурсов</h4></div>
+<table border=1 width=100% style=" height: 100vh; position:absolute;top:78px" id=t00>
+  <tr style="text-align:center;">
+    <td width=50% style="vertical-align:top;">
+      <div class="table-container-4">
+        <table border=1 style="position:relative;top:0;" class="balance" width=100%>
+          <thead>
+            <tr>
+              <th colspan=13>Балансы</th>
+            </tr></thead>
+
+
+
+            <tbody>
+            <tr>    <td>                 1111111111111111111            </td>          </tr>
+            <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>            <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+                        <tr>    <td>                 1111111111111111111            </td>          </tr>
+
+
+
+
+            </tbody></table></div>
+
 
 {% endblock %}

@@ -17,7 +17,7 @@ from django.urls import resolve
 '''
 def atest(request:object)->object:
 
-    return render(request, "a00.html")
+    return render(request, "a_test.html")
 
 def a00(request:object)->object:
     return render(request, "a00.html")
