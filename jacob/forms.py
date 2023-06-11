@@ -116,19 +116,29 @@ class UserAndProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
             super(UserAndProfileForm, self).__init__(*args, **kwargs)
             self.fields['password'].initial = User.objects.make_random_password()
+
+class GeneralModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.userprofile.fio
+
 class RoleForm(forms.ModelForm):
 
     title = forms.CharField(
         label="Название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
     )
 
-    general = forms.ModelChoiceField(
+    # general = forms.ModelChoiceField(
+    #     queryset=User.objects.filter(userprofile__virtual=False),
+    #     label= "Руководитель ресурсного пула",
+    #     empty_label=None,
+    #     required=False
+    # )
+    general = GeneralModelChoiceField(
         queryset=User.objects.filter(userprofile__virtual=False),
-        label= "Руководитель ресурсного пула",
+        label="Руководитель ресурсного пула",
         empty_label=None,
         required=False
     )
-
 
     class Meta:
         model = Role
