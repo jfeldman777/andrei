@@ -3,9 +3,12 @@
 {% block content %}
 {% include 'scroll.html' %}
 {% load static %}
+{% include 'page.html' %}
+
 <div class="bar">
   <h4>Все проекты - Ресурс: {{role}}</h4>
 </div>
+<div class="page">
 <table border=1 style="position:absolute;top:80px;text-align:center;" >
   <thead>
     <tr>
@@ -55,5 +58,5 @@
     {% endfor %}
   </tbody>
 </table>
-
+</div>
 {% endblock %}
