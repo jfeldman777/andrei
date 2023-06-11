@@ -65,7 +65,10 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["templates","templates/4"],
+        "DIRS": ["templates",
+                 "templates/4",
+                "templates/1"
+                 ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

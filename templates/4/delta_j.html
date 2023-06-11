@@ -3,13 +3,7 @@
 {% block content %}
 {% include 'scroll.html' %}
 {% load static %}
-<style>
-table, td {
-  padding: 0;
- line-height: normal;
-  margin: 0;
-}
-</style>
+{% include 'nopadding.html' %}
 <div class="bar">
   <h4>Проект: {{project}} - Все ресурсы</h4>
 </div>

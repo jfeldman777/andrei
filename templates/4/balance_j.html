@@ -2,14 +2,8 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
+{% include 'nopadding.html' %}
 {% load static %}
-<style>
-table, td {
-  padding: 0;
- line-height: normal;
-  margin: 0;
-}
-</style>
 <div class="bar">
   <h4>Проект: {{project}} - Все ресурсы</h4>
 </div>
