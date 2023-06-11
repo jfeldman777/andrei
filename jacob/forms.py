@@ -134,11 +134,7 @@ class RoleForm(forms.ModelForm):
     #     required=False
     # )
     general = GeneralModelChoiceField(
-        queryset=User.objects.filter(userprofile__virtual=False),
-        label="Руководитель ресурсного пула",
-        empty_label=None,
-        required=False
-    )
+        queryset=User.objects.filter(userprofile__virtual=False).order_by('userprofile__fio'))
 
     class Meta:
         model = Role
