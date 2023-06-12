@@ -1,17 +1,26 @@
 from typing import List
 
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .db import delta_role_project_12, needs_role_project_12, person_more_100_12, task_role_project_12
 from .db import get_prj_triplet, rest_of_time_pr_12, time_available_person_role_12
 from .db import task_person_role_project_12, real_and_virtual_people, real_people
-from .utils import *
+from .utils import get_grade,date0,n2txt,inc,mon_outside_prj,up,inc_n,mon_bool,dif
 from datetime import date
-from .models import UserProfile, Grade
-
+from .models import UserProfile, Grade,Project,Role
 from django.urls import resolve
 
+def atest1(request:object)->object:
+    gg = Grade.objects.all().order_by('id')
+    person = None
+    for g in gg:
+        print (g.id,g.person.id,g.role.id,g.mygrade)
+        person = g.person
 
+    person = UserProfile.objects.get(id=8)
+    role = Role.objects.get(id=1)
+    up =get_grade(person,role)
+    return render(request, "a001.html",{"g":up})
 '''
 отсюда можно запускать тесты
 '''
@@ -218,13 +227,7 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 "fire": df < 0,
             }
             d = inc(d)
-        up1 = ''
-        if not person.virtual:
-            try:
-                grade = Grade.objects.get(person=person, role=role).mygrade
-            except:
-                grade = '0'
-            up1=f" ({grade})"
+        up1 = get_grade(person,role)
         c_w3 = [{"val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
@@ -370,7 +373,7 @@ def delta_role_project(request, p, r, j,n=12):
     people_rr = real_people(role)
 
     for person in people_rr:  # 7777777777777777777777777777777777777777
-        w4.append([person.fio] + rest_of_time_pr_12(person, role))
+        w4.append([person.fio+get_grade(person,role)] + rest_of_time_pr_12(person, role))
 
     a_w2 = [0] * n
     dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
@@ -424,14 +427,8 @@ def delta_role_project(request, p, r, j,n=12):
             }
             d = inc(d)
 
-        up1 = ''
-        if not person.virtual:
-            try:
-                grade = Grade.objects.get(person=person, role=role).mygrade
-            except:
-                grade = '0'
-            up1=f" ({grade})"
-        c_w3 = [{"val": person.fio + up1}] + b_w3
+
+        c_w3 = [{"val": person.fio + get_grade(person,role)}] + b_w3
         p100 = -1
         w3.append(c_w3)
 
@@ -467,7 +464,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     people_rv = real_and_virtual_people(role)
 
     for person in people_rr:  # 7777777777777777777777777777777777777777
-        w4.append([person.fio] + rest_of_time_pr_12(person, role,n))
+        w4.append([person.fio+get_grade(person,role)] + rest_of_time_pr_12(person, role,n))
 
     a_w2 = [0] * n
     dem_rj = ["Потребность"] + needs_role_project_12(person,role, project,n)  # ----------------
@@ -517,14 +514,8 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             }
 
             d = inc(d)
-        up1 = ''
-        if not person.virtual:
-            try:
-                grade = Grade.objects.get(person=person, role=role).mygrade
-            except:
-                grade = '0'
-            up1=f" ({grade})"
-        c_w3 = [{"val": person.fio + up1}] + b_w3
+
+        c_w3 = [{"val": (person.fio + get_grade(person,role))}] + b_w3
         p100 = -1
         w3.append(c_w3)
 
@@ -567,7 +558,7 @@ def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     for person in people_rr:
         diff = rest_of_time_pr_12(person, role,n)
         x = diff
-        w4.append([person.fio] + x)
+        w4.append([person.fio+get_grade(person,role)] + x)
     for project in projects:
         zo = ["АУТСОРС"] + outsrc(role, project)
         zv = ["ВАКАНСИЯ"] + vacancia(role, project)
@@ -622,14 +613,8 @@ def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                 }
                 ##########################################################################3333333
                 d = inc(d)
-            up1=''
-            if not person.virtual:
-                try:
-                    grade = Grade.objects.get(person=person, role=role).mygrade
-                except:
-                    grade = '0'
-                up1 = f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+
+            c_w3 = [p100,{"val": (person.fio +get_grade(person,role))}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
@@ -671,7 +656,7 @@ def delta_role(request, p, r, j,n=12):
     for person in people_rr:
         diff = rest_of_time_pr_12(person, role,n)
         x = diff
-        w4.append([person.fio] + x)
+        w4.append([person.fio+get_grade(person,role)] + x)
 
     projects = Project.objects.all()
 
@@ -733,14 +718,8 @@ def delta_role(request, p, r, j,n=12):
                 }
                 ##########################################################################3333333
                 d = inc(d)
-            up1=''
-            if not person.virtual:
-                try:
-                    grade = Grade.objects.get(person=person, role=role).mygrade
-                except:
-                    grade = '0'
-                up1 = f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+
+            c_w3 = [p100,{"val": person.fio + get_grade(person,role)}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
@@ -779,7 +758,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         p6 = role.title
         for person in people_rr:  # 7777777777777777777777777777777777777777
             diff = rest_of_time_pr_12(person, role)
-            w4.append([p6, person.fio] + diff)
+            w4.append([p6, person.fio+get_grade(person,role)] + diff)
             p6 = -1
 
         delta = delta_role_project_12(role, project)
@@ -839,14 +818,8 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 }
                 d = inc(d)
 
-            up1=''
-            if not person.virtual:
-                try:
-                    grade = Grade.objects.get(person=person, role=role).mygrade
-                except:
-                    grade = '0'
-                up1 = f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+
+            c_w3 = [p100,{"val": person.fio + get_grade(person,role)}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
@@ -910,9 +883,10 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         p200 = role.title
         people_rr = real_people(role)
         people_rv = real_and_virtual_people(role)
+
         for person in people_rr:  #
             diff = rest_of_time_pr_12(person, role)
-            w4.append([p200, person.fio] + diff)
+            w4.append([p200, person.fio+get_grade(person,role)] + diff)
             p200 = -1
         for person in people_rv:  #
             diff = rest_of_time_pr_12(person, role,n)
@@ -939,14 +913,7 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 }
                 d = inc(d)
 
-            up1=''
-            if not person.virtual:
-                try:
-                    grade = Grade.objects.get(person=person, role=role).mygrade
-                except:
-                    grade = '0'
-                up1=f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+            c_w3 = [p100,{"val": person.fio + get_grade(person,role)}] + b_w3
             p100 = -1
             w3.append(c_w3)
 

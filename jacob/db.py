@@ -191,6 +191,7 @@ def delta_role_project_12(r:object, j:object,n:int=12)->List[int]:
     c = [b[i]-a[i] for i in range(n)]
     return c
 
+
 '''
 Загрузка одно человека по разным ролям суммарно превысила 100% (булев вектор)
 '''

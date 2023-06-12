@@ -36,21 +36,7 @@ from django.urls import reverse
 def date0()->date:
     d = date.today().replace(day=15)
     return d
-#
-# '''
-# дата через год 15го числа
-# '''
-# def date12()->date:
-#     d = date.today().replace(day=15)
-#     d = inc_n(d, 12)
-#     return d
 
-# '''
-# Имя и 12 нулей
-# '''
-# def zero(name: str) -> List[Union[int, str]]:
-#     sum = [name] + [0] * 12
-#     return sum
 
 from datetime import date, timedelta
 from typing import List, Dict
@@ -134,3 +120,15 @@ def mon_outside_prj(m:int, j:object)->bool:
     d2 = j.end_date
     return not (d1 <= m and m <= d2)
 
+def get_grade(person:object,role:object)->str:
+    up1 = ''
+    print(468)
+    if not person.virtual:
+        try:
+            print(777,person,role)
+            grade = Grade.objects.filter(person=person, role=role)
+            print(grade)
+        except:
+            grade = '9'
+        up1 = f" ({grade})"
+    return up1

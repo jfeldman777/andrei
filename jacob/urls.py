@@ -54,7 +54,8 @@ urlpatterns = [
     path("tab_r/", vvv.table_resources, name="atr"),
     path("people/", vvv.people, name="people"),
     path("roles/", vvv.roles, name="roles"),
-    
+
+    path("test1/", vvv.atest1, name="test1"),
     path("test/", vvv.atest, name="test"),
     path("", vvv.home, name="home"),
 ]
