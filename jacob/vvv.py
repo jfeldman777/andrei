@@ -157,7 +157,7 @@ def people(request):
         for i in range(nx-len(pL)):
             profile_data["res"].append({"role": '', "grade": '',
                                         "id":0})
-        NX=[i for i in range(4)]
+        NX=[i for i in range(nx)]
         data2.append(profile_data)
     context["data2"] = data2
     context["nx"] = NX
