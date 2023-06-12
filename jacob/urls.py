@@ -4,6 +4,8 @@ from . import save_forms
 from . import  view_forms
 
 urlpatterns = [
+    path("wish/<int:pid>/<int:rid>/<int:jid>/", view_forms.wish_form, name="wish"),
+
     path("project_form/<int:id>/", view_forms.project_form, name="project_form_with_id"),
     path("project_form/", view_forms.project_form, name="project_form"),
     
@@ -13,21 +15,14 @@ urlpatterns = [
     path("person_form/<int:id>/", view_forms.person_form, name="person_form_with_id"),
     path("person_form/", view_forms.create_user_and_profile, name="person_form"),
 
-    #path("keys_form/", view_forms.keys_form, name="keys_form"),
-
     path("grade_form/<int:pid>/<int:rid>/", view_forms.grade_form, name="grade_form"),
     
 
     path("save_max/", save_forms.save_max, name="save_max"),
     path("save_needs/", save_forms.save_needs, name="save_needs"),
     path("save_task/", save_forms.save_task, name="save_task"),
-    
 
-    #path("eva2/<str:fun>/", vvv.eva2, name="eva2"),
-    
-    
     path("b/<int:n>/", vvv.balance_map, name="balance_map"),
-    
     
     path("tasks_r/<int:p>/<int:r>/<int:j>/", vvv.assign_role, name="ur"),
     path("tasks_j/<int:p>/<int:r>/<int:j>/", vvv.assign_project, name="uj"),

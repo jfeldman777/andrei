@@ -126,13 +126,6 @@ class RoleForm(forms.ModelForm):
     title = forms.CharField(
         label="Название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
     )
-
-    # general = forms.ModelChoiceField(
-    #     queryset=User.objects.filter(userprofile__virtual=False),
-    #     label= "Руководитель ресурсного пула",
-    #     empty_label=None,
-    #     required=False
-    # )
     general = GeneralModelChoiceField(
         queryset=User.objects.filter(userprofile__virtual=False).order_by('userprofile__fio'))
 
@@ -194,4 +187,19 @@ class GradeForm(forms.ModelForm):
             "mygrade": "Грейд",
             "role":"Роль",
             "person":"Cотрудник"
+        }
+class WishForm(forms.ModelForm):
+
+    project = ImmutableModelChoiceField(queryset=Project.objects.all(),required=False,
+                                       label='Проект')
+    role = ImmutableModelChoiceField(queryset=Role.objects.all(),required=False,
+                                     label='Роль')
+
+    class Meta:
+        model = Wish
+        fields = ['project', 'role', 'mywish']
+        labels = {
+            "mywish": "Пожелания",
+            "role":"Роль",
+            "project":"Проект"
         }

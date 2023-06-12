@@ -1,9 +1,39 @@
 from django.shortcuts import redirect, get_object_or_404, render
 
 
-from .forms import UserAndProfileForm, RoleForm, User2Form, KeysForm, ProjectForm, GradeForm
-from .models import UserProfile, Role, Project, Grade
+from .forms import UserAndProfileForm, RoleForm, User2Form, WishForm, ProjectForm, GradeForm
+from .models import UserProfile, Role, Project, Grade,Wish
 
+'''
+форма для 
+'''
+
+def wish_form(request, pid, rid, jid):
+    wish=''
+    project = Project.objects.get(id=jid)
+    role = Role.objects.get(id=rid)
+    try:
+        wish = Wish.objects.get(project=project,role=role).mywish
+    except:
+        wish = ''
+    if request.method == "POST":
+        form = WishForm(request.POST)
+        if form.is_valid():
+            wish = form.cleaned_data['mywish']
+            Wish.objects.update_or_create(
+                project=project,
+                role=role,
+                defaults={'mywish': wish},
+            )
+            if pid==0:
+                return redirect(f"/delta_j/0/{rid}/{jid}/")
+            else:
+                return redirect(f"/balance_j/0/{rid}/{jid}/")
+    else:
+        initial_data = {'project': project, 'role': role,'mywish':wish}
+        form = WishForm(initial=initial_data)
+
+    return render(request, "form.html", {"form": form, "title":"Пожелания", "button":"Сохранить"})
 
 def create_user_and_profile(request):
     button = "Создать"
@@ -77,28 +107,28 @@ def role_form(request, id=None):
     else:
         form = RoleForm(instance=instance)
     return render(request, "form.html", {"form": form,"title":"Роль","button":button})
-
-def keys_form(request, id=None):
-    button = "Создать"
-    instance = None
-    if id:
-        button = "Сохранить"
-    if request.method == "POST":
-        form = KeysForm(request.POST, instance=instance)
-        if form.is_valid():
-            user_profile = form.save(commit=False)
-            selected_roles = form.cleaned_data.get('res', None)
-
-            if selected_roles is not None:
-                if not isinstance(selected_roles, list):
-                    selected_roles = [selected_roles]
-
-                user_profile.res.set(selected_roles)
-
-            return redirect("people")
-    else:
-        form = KeysForm()
-    return render(request, "form.html",  {"form": form, "title": "Сотрудник","button":button})
+#
+# def keys_form(request, id=None):
+#     button = "Создать"
+#     instance = None
+#     if id:
+#         button = "Сохранить"
+#     if request.method == "POST":
+#         form = KeysForm(request.POST, instance=instance)
+#         if form.is_valid():
+#             user_profile = form.save(commit=False)
+#             selected_roles = form.cleaned_data.get('res', None)
+#
+#             if selected_roles is not None:
+#                 if not isinstance(selected_roles, list):
+#                     selected_roles = [selected_roles]
+#
+#                 user_profile.res.set(selected_roles)
+#
+#             return redirect("people")
+#     else:
+#         form = KeysForm()
+#     return render(request, "form.html",  {"form": form, "title": "Сотрудник","button":button})
 
 '''
 форма для изменение или создания проекта (если номер не указан)

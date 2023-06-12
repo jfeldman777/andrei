@@ -73,9 +73,23 @@
               {% for dem in w2 %}
             <tr>
               {% for t in dem %}
-              <td class="good " action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
+
+              {% if forloop.first %}
+              <td>
+                <a href="/wish/1/{{t.r}}/{{j}}/">
+                {{t.val}}
+                </a>
+              </td>
+ {% else %}
+
+              <td class="good" fname="f20" action="/save_needs/"
+                  key="{{t.link}}" style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
+{% endif %}
+
+
+
               {% endfor %}
             </tr> {% endfor %}
             </tbody>

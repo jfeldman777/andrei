@@ -904,7 +904,7 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 "color": color,
             }  #
             d = inc(d)
-        w2.append([{"val": role.title}] + a_w2)
+        w2.append([{"val": role.title,'r':role.id}] + a_w2)
 
         p100 = role.title
         p200 = role.title
