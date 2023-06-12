@@ -19,8 +19,8 @@ def atest(request:object)->object:
 
     return render(request, "a00.html")
 
-def a00(request:object)->object:
-    return render(request, "a00.html")
+def atest1(request:object)->object:
+    return render(request, "a001.html")
 
 
 '''

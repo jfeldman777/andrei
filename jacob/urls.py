@@ -13,7 +13,7 @@ urlpatterns = [
     path("person_form/<int:id>/", view_forms.person_form, name="person_form_with_id"),
     path("person_form/", view_forms.create_user_and_profile, name="person_form"),
 
-    #path("keys_form/", view_forms.keys_form, name="keys_form"),
+
 
     path("grade_form/<int:pid>/<int:rid>/", view_forms.grade_form, name="grade_form"),
     
@@ -23,8 +23,7 @@ urlpatterns = [
     path("save_task/", save_forms.save_task, name="save_task"),
     
 
-    #path("eva2/<str:fun>/", vvv.eva2, name="eva2"),
-    
+
     
     path("b/<int:n>/", vvv.balance_map, name="balance_map"),
     
@@ -59,7 +58,8 @@ urlpatterns = [
     path("tab_r/", vvv.table_resources, name="atr"),
     path("people/", vvv.people, name="people"),
     path("roles/", vvv.roles, name="roles"),
-    
+
+    path("test1/", vvv.atest1, name="test1"),
     path("test/", vvv.atest, name="test"),
     path("", vvv.home, name="home"),
 ]

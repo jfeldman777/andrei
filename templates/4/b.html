@@ -4,19 +4,26 @@
 {% include 'scroll.html' %}
 {% load static %}
 <div class="bar">
+
+  <style>
+    td {
+    width:20%;
+    }
+  </style>
+
   <h4>Относительная нехватка ресурсов {{hh}} вперед</h4>
 </div>
 <div style=" position:absolute;top:80px; text-align:center;
 left:20px;
- width:60%">
-  <table border=1 >
+">
+  <table border=1 style="width=100%" >
     <thead>
-      <tr>
-        <th>
+      <>
+        <th width="150px">
           Проект\Ресурсный пул</th>
         {% for t in txy %}
-        <th style="padding: 5px;"><a href="{{t.link}}" style="color:white;" class="br">
-            {{t.val}}
+        <th style="padding: 5px; width:100px;"><a href="{{t.link}}" style="color:white; " class="br">
+          {{t.val}}</a>
         </th>
         {% endfor %}
       </tr>
@@ -27,15 +34,15 @@ left:20px;
         {% for x in xy %}
 
         {% if forloop.first %}
-        <td style="background-color:{{x.color}};"><a href="{{x.link}}" class="bj">
+        <td style="background-color:{{x.color}}; width:150px;"><a href="{{x.link}}" class="bj">
+           {{x.val}}
             {% else %}
 
-        <td style="background-color:{{x.color}};"><a href="{{x.link}}" class="brj">
-            {% endif %}
+        <td style="background-color:{{x.color}}; width:100px;">
+        <a href="{{x.link}}" class="brj">
             {{x.val}}
-
           </a>
-
+            {% endif %}
         </td>
         {% endfor %}
       </tr>
