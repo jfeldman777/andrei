@@ -134,7 +134,9 @@ def table_resources(request:object)->object:
 def people(request):
     context = {}
     profiles = UserProfile.objects.filter(virtual=False).order_by("fio")
+    nx = len(Role.objects.all())
     data2 = []
+    npLmax = 2
     for profile in profiles:
         try:
             grade1 = Grade.objects.filter(person=profile,role=profile.role).first().mygrade
@@ -143,12 +145,24 @@ def people(request):
         profile_data = {"fio": profile.fio, "role": profile.role,
                         "grade":grade1,
                         "res": [], "id": profile.id}
-        for role in profile.res.all():
-            grade = Grade.objects.filter(person=profile,role=role).first()
-            grade_value = grade.mygrade if grade else '0'
-            profile_data["res"].append({"role": str(role), "grade": grade_value, "id":role.id})
+        pL = profile.res.all()
+        for role in pL:
+            if role != profile.role:
+                grade = Grade.objects.filter(person=profile,role=role).first()
+                grade_value = grade.mygrade if grade else '0'
+
+                profile_data["res"].append({"role": str(role), "grade": grade_value,
+                                            "id":role.id})
+
+        for i in range(nx-len(pL)):
+            profile_data["res"].append({"role": '', "grade": '',
+                                        "id":0})
+        NX=[i for i in range(4)]
         data2.append(profile_data)
     context["data2"] = data2
+    context["nx"] = NX
+
+
     return render(request, "people.html", context)
 def roles(request:object)->object:
     context = {}
@@ -156,6 +170,7 @@ def roles(request:object)->object:
     data2 = [{"title": p.title, "id": p.id, "general": p.general.userprofile.fio}
                         for p in roles]
     context["data2"] = data2
+
     return render(request, "roles.html", context)
 '''
 Заголовок - 12 месяцев

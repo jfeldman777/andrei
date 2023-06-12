@@ -4,6 +4,11 @@ from ..models import Role
 
 register = template.Library()
 
+@register.filter
+def range(value):
+    return range(value)
+
+
 
 @register.filter
 def isnumeric(value):

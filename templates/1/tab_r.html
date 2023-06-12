@@ -1,10 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
 {% load static %}
-{% include 'page.html' %}
-
 
 
 <div class="bar">
@@ -12,20 +9,12 @@
     Все ресурсные пулы</h4>
 </div>
 
+<table id="example" class="display" style="width:100%">
 
-<div class="table-container-4 page">
-    <table border=1 style="position:relative;top:0;"  width=100%>
-
-  <thead style="position:sticky;  text-align: center; background-color:#FFF;">
-
-  <thead>
+   <thead>
     <tr>
       <th>Руководитель</th>
-      <th>
-
-          Ресурсный пул
-
-        </th>
+      <th>Ресурсный пул</th>
       <th>Максимальная доступность</th>
       <th>Остаточная доступность</th>
       <th>Балансы </th>
@@ -40,7 +29,7 @@
         {{ cell.name }}
 
       </td>
-      <td style="text-align: center; ">
+      <td >
 <a href="/role_form/{{cell.r}}/">
         {{ cell.title }}
       </a>
@@ -51,18 +40,18 @@
         </a>
       </td>
 
-      <td style="text-align: center; ">
+      <td >
         <a href="/rest_r/0/{{cell.r}}/0/">
           Смотреть
         </a>
       </td>
-      <td style="text-align: center; ">
+      <td >
         <a href="/balance_r/0/{{cell.r}}/0/">
           Изменить
         </a>
       </td>
 
-      <td style="text-align: center; ">
+      <td>
         <a href="/tasks_r/0/{{cell.r}}/0/">
           Изменить
         </a>
@@ -72,7 +61,16 @@
     </tr>
     {% endfor %}</tbody>
 </table>
-</div>
 
+<script>
+
+$(document).ready(function () {
+    $('#example').DataTable({
+        scrollY: '75vh',
+        scrollCollapse: true,
+        paging: false,
+    });
+});
+</script>
 
 {% endblock %}
