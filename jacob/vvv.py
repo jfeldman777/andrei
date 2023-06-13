@@ -241,7 +241,7 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 grade = '0'
             up1=f" ({grade})"
         c_w3 = [{"val": person.fio + up1}] + b_w3
-        p100 = -1
+
         w3.append(c_w3)
 
     moon12["w3"] = w3
@@ -300,7 +300,7 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                     grade = '0'
                 up1=f" ({grade})"
             c_w3 = [p100,{"val": person.fio + up1}] + b_w3
-            p100 = -1
+   
             w3.append(c_w3)
 
     moon12["w3"] = w3
@@ -357,7 +357,6 @@ def assign_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                     grade = '0'
                 up1=f" ({grade})"
             c_w3 = [p100,{"val": person.fio + up1}] + b_w3
-            p100 = -1
             w3.append(c_w3)
 
     moon12["w3"] = w3
