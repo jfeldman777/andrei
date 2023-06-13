@@ -1,33 +1,29 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
 {% load static %}
-
-{% include 'page.html' %}
 
 
 <div class="bar">
   <h4>
-   Все роли</h4>
+ Все роли</h4>
 </div>
-<div class="table-container-4 page">
-        <table border=1 style="position:relative;top:0;"  width=100%>
 
-  <thead>
-    <tr>
-<th>
-          <a href="/role_form/" style="color:white;">
+<table id="example" class="display" style="width:100%;"><thead>
+  <tr style="text-align:center;">
+    <th style="text-align:center;">
+
        Роль
-        </a>
-        </th>
-      <th>Руководитель ресурсного пула</th>
 
 
+     </th>
+     <th style="text-align:center;">
+
+      Руководитель ресурсного пула</th>
     </tr>
     </thead><tbody>
-    <tr>
-      {% for cell in data2 %}
+
+      {% for cell in data2 %}    <tr>
       <td style="text-align: center; ">
 <a href="/role_form/{{cell.id}}">
         {{ cell.title }}
@@ -42,6 +38,18 @@
 
     </tr>
     {% endfor %}</tbody>
-        </table></div>
+        </table>
 
+        <script>
+
+          $(document).ready(function () {
+              $('#example').DataTable({
+                  scrollY: '75vh',
+                  scrollCollapse: true,
+                  paging: false,
+              });
+          });
+          </script>
+          
+          
 {% endblock %}

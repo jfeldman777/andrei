@@ -286,7 +286,7 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i], 0), diff[i]),
-                    "val": a_w3[i],
+                    "val": a_w3[i], #if a_w3[i]!=0 else '*',
                     "color": color,
                     "fire": diff[i] < 0,
                 }
