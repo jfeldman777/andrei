@@ -1,17 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
 {% load static %}
-{% include 'page.html' %}
 
 <div class="bar">
   <h4>Все проекты - Ресурс: {{role}}</h4>
 </div>
-<div class="page">
-<table border=1 style="position:absolute;top:80px;left:20px;text-align:center;" >
+
+
+<table id="example" class="display" style="width:100%">
   <thead>
-    <tr>
+    <tr  style="text-align:center;">
       <th colspan=13>
         <a href="/delta_r/0/{{r}}/0/" style="color:white">
           Загрузки
@@ -20,11 +19,7 @@
     </tr>
     <tr>
       <th>
-        <form id="f10" method="POST">
-          {% csrf_token %}
-          <input type=hidden name="html" value='tasks_r'>
-          <button type="submit" class="button3" disabled="true"> Сохранить</button>
-        </form>
+        Сотрудник
 
         {% include 'moon.html' %}
   </thead>
@@ -58,5 +53,22 @@
     {% endfor %}
   </tbody>
 </table>
-</div>
+
+
+<script>
+
+  $(document).ready(function () {
+      $('#example').DataTable({
+          scrollY: '70vh',
+          scrollCollapse: true,
+          paging: false,
+      });
+  });
+  
+  </script>
+  <form id="f10" method="POST" action="/save_task/">
+            {% csrf_token %}          <input type=hidden name="html" value='balance_jr'>
+          </form>
+  
+
 {% endblock %}

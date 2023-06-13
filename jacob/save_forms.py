@@ -36,21 +36,26 @@ def save_max(request):
 
 
 def save_task(request):
+    print(787)
     p = 0
     r = 0
     j = 0
     html = ""
     if request.method == "POST":
         form = Form(request.POST)
+        print(788)
         if form.is_valid():
             for k, v in request.POST.items():
                 html = request.POST.get("html")
                 if "." in k:
                     p, r, j, d = k.split(".")
+                    print(k)
                     try:
                         project = Project.objects.get(id=j)
                         role = Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
+
+                        print(123)
                         create_or_update_task(
                             person, role, project, d, v
                         )  ##################################
@@ -58,7 +63,7 @@ def save_task(request):
                         pass
         else:
             print(form.errors)
-
+    print(676)
     return redirect(f"/{html}/{p}/{r}/{j}")
 
 

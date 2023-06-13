@@ -3,12 +3,24 @@
   const s1 = '/s1/'
   var element;
   var a = "/s1/";
+var form =  document.getElementById(f1);
+ 
+
+ var  link = document.getElementById('save');
+      link.addEventListener('click',function(){
+
+        form.submit();
+      })
+
 
   $('td.good').click(function () {
 
     var p = $(this).attr("key");
-    a = $(this).attr("action");
+    a = $(this).attr("action");   
     f1 = $(this).attr("fname");
+
+
+
 
     var originalValue = $(this).text();
 if (isNaN(parseInt(originalValue))) return;
@@ -43,12 +55,11 @@ if (isNaN(parseInt(originalValue))) return;
 
       $(this).parent().text(newValue + '@');
 
-      var form = document.getElementById(f1);
+  
       form.action = a
 
 
-      button = form.querySelector(".button3");
-      button.disabled = false;
+  
 
       // Create a new hidden input element
       var input = document.createElement('input');
@@ -68,6 +79,4 @@ if (isNaN(parseInt(originalValue))) return;
 
     });
   });
-
-
 </script>
