@@ -1,35 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
 {% load static %}
-{% include 'page.html' %}
 <div class="bar">
   <h4>Проект: {{project}} - Ресурсный пул: {{role}} - Потребность</h4>
 </div>
-<div class="page">
-<table border=1 style="position:absolute;top:80px;left:20px;text-align:center;" >
 
+<table id="example" class="display" style="width:100%;">
   <thead>
-    <tr>
-      <th colspan=13>
-        <a href="/delta_jr/0/{{r}}/{{j}}/" style="color:white">
-          Потребность</a>
-      </th>
-    </tr>
-    <th rowspan=2>
-      <form id="f20" method="POST" style="text-align:center;">
-        {% csrf_token %}
-        <input type=hidden name="html" value='needs_jr'>
-        <div style="text-align:center;">
-          <button type="submit" class="button3 " disabled="true">Сохранить</button>
-        </div>
-      </form>
-
+    <tr style="text-align:center;">
 
       {% include 'moon.html' %}
       {% for dem in w2 %}
-      <tr>
+      <tr style="text-align:center;">
         {% for t in dem %}
 
         <td class="good" action="/save_needs/" fname=f20 key="{{t.link}}" title="{{t.up}}"
@@ -41,7 +24,22 @@
       </tbody>
 
 </table>
-</div>
+
+<script>
+
+  $(document).ready(function () {
+      $('#example').DataTable({
+          scrollY: '70vh',
+          scrollCollapse: true,
+          paging: false,
+      });
+  });
+  
+  </script>
+  <form id="f10" method="POST" action="/save_task/">
+            {% csrf_token %}          <input type=hidden name="html" value='needs_jr'>
+          </form>
+ 
 
 
 

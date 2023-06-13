@@ -1013,7 +1013,7 @@ def needs_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             "color": color,
         }
         d = inc(d)
-    w2.append([{"val": role.title}] + a_w2)
+    w2.append(a_w2)
 
     moon12["w2"] = w2
 
