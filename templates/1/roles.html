@@ -40,16 +40,7 @@
     {% endfor %}</tbody>
         </table>
 
-        <script>
+      {% include 'datatable.html' %}
 
-          $(document).ready(function () {
-              $('#example').DataTable({
-                  scrollY: '75vh',
-                  scrollCollapse: true,
-                  paging: false,
-              });
-          });
-          </script>
-          
           
 {% endblock %}

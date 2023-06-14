@@ -13,11 +13,8 @@
          Сотрудник
         </th>
       <th>Ресурсный пул</th>
-{% for i in nx %}
 
-    <th>.</th>
-{% endfor %}
-    </tr>
+
     </thead>
     <tbody>
 
@@ -25,9 +22,8 @@
       <td style="text-align: center; ">
 <a href="/person_form/{{cell.id}}/">
         {{ cell.fio }}
-          </a>
-      </td>
-      <td style="text-align: center; ">
+          </a></td><td>
+
 {% if cell.role %}
              <a href="/grade_form/{{cell.id}}/{{cell.role.id}}/">
         {{ cell.role }}
@@ -37,35 +33,25 @@
           </a>
           {% else %}
           ?
-          {% endif %}   </td>
+          {% endif %}
    {% for choice in cell.res %}
 
-      <td style="text-align: center; ">
-          <a href="/grade_form/{{cell.id}}/{{choice.id}}/">
+
+       |   <a href="/grade_form/{{cell.id}}/{{choice.id}}/">
       {{ choice.role }}
        {% if choice.role %}
               ({{choice.grade}}){% else %}
               .
     {% endif %}
-                        </a> </td>
+                        </a>
    {% endfor %}
 
 
-
+</td>
     </tr>
     {% endfor %}</tbody>
 </table>
-<script>
-
-$(document).ready(function () {
-    $('#example').DataTable({
-        scrollY: '75vh',
-        scrollCollapse: true,
-        paging: false,
-    });
-});
-</script>
-
+{% include 'datatable.html' %}
 
 
 {% endblock %}

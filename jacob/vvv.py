@@ -154,13 +154,10 @@ def people(request):
                 profile_data["res"].append({"role": str(role), "grade": grade_value,
                                             "id":role.id})
 
-        for i in range(nx-len(pL)):
-            profile_data["res"].append({"role": '', "grade": '',
-                                        "id":0})
-        NX=[i for i in range(nx)]
+
         data2.append(profile_data)
     context["data2"] = data2
-    context["nx"] = NX
+
 
 
     return render(request, "people.html", context)
@@ -181,12 +178,10 @@ def moon(n:int=12)->List[object]:
     ym = []
     d = date0()
     for i in range(n):
-        y_data.append(d.year)
-        m_data.append(d.month)
-        ym.append({"y": str(d.year)[2:],
-                   "m": d.month})
-        d = inc(d)
-    return {"yy": y_data, "mm": m_data, "ym": ym}
+         ym.append({"y": str(d.year)[2:],"m": d.month})
+         d = inc(d)
+    return  { "ym": ym}
+
     ##################################################################
 
 '''

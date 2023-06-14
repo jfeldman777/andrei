@@ -1,0 +1,39 @@
+
+<script>
+
+  $(document).ready(function () {
+      $('#example').DataTable({
+          scrollY: '70vh',
+          scrollCollapse: true,
+          paging: false,
+          language: {
+    search: 'Поиск: ',
+    url: "/dataTables/i18n/ru_ru.lang",
+
+
+    "decimal":        ",",
+    "emptyTable":     "нет данных",
+    "info":           "Показать с _START_ до _END_ - _TOTAL_ записей",
+    "infoEmpty":      "Показать от 0 до 0 из 0 записей",
+    "infoFiltered":   "(выбрано из _MAX_ всех записей)",
+    "infoPostFix":    "",
+    "thousands":      "тысяч",
+    "lengthMenu":     "показать _MENU_ пунктов",
+    "loadingRecords": "Загружаем...",
+    "processing":     "",
+
+    "zeroRecords":    "Ничего не найдено",
+    "paginate": {
+        "first":      "первый",
+        "last":       "следующий",
+        "next":       "последний",
+        "previous":   "предыдущий"
+    },
+    "aria": {
+        "sortAscending":  ": сортируем-вщзрастает",
+        "sortDescending": ": сортируем-убьывает"
+    }
+  }      });
+  });
+
+</script>

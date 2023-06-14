@@ -38,18 +38,8 @@
     </tbody>
 </table>
 
+{% include 'datatable.html' %}
 
-<script>
-
-  $(document).ready(function () {
-      $('#example').DataTable({
-          scrollY: '70vh',
-          scrollCollapse: true,
-          paging: false,
-      });
-  });
-  
-  </script>
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='tasks_jr'>
           </form>

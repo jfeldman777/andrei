@@ -24,18 +24,7 @@
       </tbody>
 
 </table>
-
-<script>
-
-  $(document).ready(function () {
-      $('#example').DataTable({
-          scrollY: '70vh',
-          scrollCollapse: true,
-          paging: false,
-      });
-  });
-  
-  </script>
+{% include 'datatable.html' %}
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='needs_jr'>
           </form>

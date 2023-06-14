@@ -12,10 +12,6 @@
   <thead>
     <tr  style="text-align:center;">
       <th>
-        <!-- <a href="/delta_r/0/{{r}}/0/" style="color:white">
-          Загрузки
-        </a> -->
-        Проект
       </th>
 
       <th>
@@ -26,7 +22,7 @@
     {% for tt in w3 %}
     <tr   style="text-align:center;">     {% for t in tt %}
 
-        
+
 
       <td class="good" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
         style="background-color:{{t.color}};text-align:center;"
@@ -40,18 +36,9 @@
   </tbody>
 </table>
 
+{% include 'datatable.html' %}
 
-<script>
 
-  $(document).ready(function () {
-      $('#example').DataTable({
-          scrollY: '70vh',
-          scrollCollapse: true,
-          paging: false,
-      });
-  });
-  
-  </script>
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='tasks_r'>
           </form>
