@@ -173,14 +173,20 @@ def roles(request:object)->object:
 Заголовок - 12 месяцев
 '''
 def moon(n:int=12)->List[object]:
-    y_data = []
-    m_data = []
     ym = []
     d = date0()
     for i in range(n):
          ym.append({"y": str(d.year)[2:],"m": d.month})
          d = inc(d)
     return  { "ym": ym}
+
+def moon4(n: int = 12) -> List[object]:
+        ym = []
+        d = date0()
+        for i in range(n):
+            ym.append({"y": d.year, "m": d.month})
+            d = inc(d)
+        return {"ym": ym}
 
     ##################################################################
 

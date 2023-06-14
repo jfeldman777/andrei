@@ -147,7 +147,7 @@ def person_form(request, id):
             return redirect("people")
     else:
         form = User2Form(instance=instance)
-    return render(request, "form.html",  {"form": form,"title":"Редактировать карточку сотрудника","button":button})
+    return render(request, "form.html",  {"form": form,"title":"Изменить","button":button})
 
 
 #########################

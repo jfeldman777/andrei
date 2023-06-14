@@ -141,8 +141,12 @@ class RoleForm(forms.ModelForm):
 
 
 class ProjectForm(forms.ModelForm):
-    start_date = forms.DateField(label="Начало", widget=forms.SelectDateWidget)
-    end_date = forms.DateField(label="Окончание", widget=forms.SelectDateWidget)
+    start_date = forms.DateField(label="Начало",
+                                 widget=forms.DateInput(attrs={'type': 'date'})
+                                 )
+    end_date = forms.DateField(label="Окончание",
+                               widget=forms.DateInput(attrs={'type': 'date'}))
+
     title = forms.CharField(
         label="Название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
     )

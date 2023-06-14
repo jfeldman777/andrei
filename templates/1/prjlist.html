@@ -1,24 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
 {% load static %}
-{% include 'page.html' %}
 <div class="bar">
   <h4>Дорожная карта</h4>
 </div>
-<div class="table-container-4 page">
-        <table border=1 style="position:relative;top:0;"  width=100%>
-
-  <thead style="position:sticky;  text-align: center; background-color:#FFF;">
+<table id="example" class="display" style="width:100%;">
   <thead>
 
-    <tr width=100% style="text-align: center;  padding: 5px;">
-      <th colspan="17">Проекты</th>
-    </tr>
-    <th style="text-align: center; ">Руководитель</th>
-    <th style="text-align: center;  padding: 5px;"> <a href="/project_form/" style="color:white;">
-        Проект</a>
+    <tr>
+    <th>Руководитель</th>
+    <th>
+        Проект
     </th>
     <th style="text-align: center;  padding: 5px;">Начало</th>
     <th style="text-align: center;  padding: 5px;">Окончание</th>
@@ -46,11 +39,10 @@
       </td>
       {% endif %}
       {% endfor %}
-    </tr>
-    {% endfor %}
+
+    {% endfor %}</tr>
 </table>
 
-</div>
-
+{% include 'data.html' %}
 
 {% endblock %}
