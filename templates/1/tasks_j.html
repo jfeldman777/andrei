@@ -39,7 +39,7 @@
     {% endfor %}
     </tbody>
 </table>
-{% include 'datatable.html' %}
+{% include 'data.html' %}
 
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='tasks_j'>
