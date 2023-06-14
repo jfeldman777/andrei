@@ -1,7 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
 {% load static %}
 <div class="bar">
 
@@ -13,16 +12,16 @@
 
   <h4>Относительная нехватка ресурсов {{hh}} вперед</h4>
 </div>
-<div style=" position:absolute;top:80px; text-align:center;
-left:20px;
-">
-  <table border=1 style="width=100%" >
-    <thead>
-      <>
-        <th width="150px">
+
+
+<table id="example" class="display compact" style="width:100%">
+  <thead>
+
+      <tr>
+        <th>
           Проект\Ресурсный пул</th>
         {% for t in txy %}
-        <th style="padding: 5px; width:100px;"><a href="{{t.link}}" style="color:white; " class="br">
+        <th ><a href="{{t.link}}" class="br">
           {{t.val}}</a>
         </th>
         {% endfor %}
@@ -50,6 +49,6 @@ left:20px;
     </tbody>
   </table>
 
-</div>
+{% include 'data.html' %}
 
 {% endblock %}
