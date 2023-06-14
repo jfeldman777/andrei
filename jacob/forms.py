@@ -96,11 +96,11 @@ class UserAndProfileForm(forms.ModelForm):
     labels = {
         "username": "Логин",
     }
-
+    fio = forms.CharField(label="Сотрудник (ФИО)")
     role = forms.ModelChoiceField(queryset=Role.objects.all(),blank=True,required=False,
                                   label="Ресурсный пул"
     )  # Assuming Role model is defined
-    fio = forms.CharField(label="Сотрудник")
+
     res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
                                          required=False,
                                          label="Дополнительный ресурсный пул")
