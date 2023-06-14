@@ -1,55 +1,38 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
 {% load static %}
-{% include 'page.html' %}
 <div class="bar">
   <h4>Максимальная доступность ресурсов</h4>
 </div>
-<div class="table-container-4 page">
-        <table border=1 style="position:relative;top:0;" class="dif" width=100%>
-
-  <thead style="position:sticky;  text-align: center; background-color:#FFF;">
+<table id="example" class="display compact dif" style="width:100%;">
   <thead>
 
     <tr>
-      <th>
-        <form id="f10" method="POST">
-          {% csrf_token %}
-          <input type=hidden name="html" value='max'>
-          <button type="submit" class="button3" disabled="true">Сохранить</button>
-        </form>
+        <th> Ресурс </th><th>Сотрудник</th>
 
         {% include 'moon.html' %}
         {% for tt in dif14 %}
 
     <tr>
       {% for t in tt %}
-      {% if forloop.first %}
 
-
-      {% if t|negative %}{% else %}
-      <td colspan=13><a href="/max_r/0/{{t.r}}/0/" class="mrom">
-          {{t.val}}</a>
-      </td>
-    </tr>
-    <tr>
-      {% endif %}
-
-
-      {% else %}
-      <td style="background-color:{{t.color}};" class="good" action="/save_max/" fname="f10" key="{{t.link}}">
-
-        {{t.val}}{% if t.fire %}
+      <td style="background-color:{{t.color}};"
+          class="good" action="/save_max/" fname="f10" key="{{t.link}}" title="осталось {{fire}}%">
+          {{t.val}}
+        {% if t.fire %}
         <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
-
         {% endif%}
       </td>
-      {% endif %}
+
       {% endfor %}
     </tr>
     {% endfor %}
 </table>
-</div>
+
+            <form id="f10" method="POST">
+          {% csrf_token %}
+          <input type=hidden name="html" value='max'>
+        </form>
+        {% include 'data.html' %}
 {% endblock %}
