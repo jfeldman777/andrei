@@ -183,7 +183,8 @@ def moon(n:int=12)->List[object]:
     for i in range(n):
         y_data.append(d.year)
         m_data.append(d.month)
-        ym.append({"y": d.year, "m": d.month})
+        ym.append({"y": str(d.year)[2:],
+                   "m": d.month})
         d = inc(d)
     return {"yy": y_data, "mm": m_data, "ym": ym}
     ##################################################################
