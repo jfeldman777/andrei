@@ -61,7 +61,7 @@ def grade_form(request, pid, rid):
 
     return render(request, "form.html", {"form": form, "title":"Грейд", "button":"Сохранить"})
 
-def role_form(request, id=None):
+def role_form(request, id=None, file_name="form.html"):
     button = "Создать"
     instance = None
     if id:
@@ -76,7 +76,7 @@ def role_form(request, id=None):
 
     else:
         form = RoleForm(instance=instance)
-    return render(request, "form.html", {"form": form,"title":"Роль","button":button})
+    return render(request, file_name, {"form": form,"title":"Роль","button":button})
 
 def keys_form(request, id=None):
     button = "Создать"
@@ -148,3 +148,10 @@ def person_form(request, id):
     else:
         form = User2Form(instance=instance)
     return render(request, "form.html",  {"form": form,"title":"Редактировать карточку сотрудника","button":button})
+
+
+#########################
+def atest2(request):
+    button="Create"
+    form = RoleForm()
+    return render(request, "a002.html", {"form": form,"title":"Роль","button":button})

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "bootstrap4",
     "jacob.templatetags",
     "crispy_forms",
+    "crispy_bootstrap4",
 ]
 from .middleware import AllowFrameMiddleware
 
@@ -60,8 +61,14 @@ MIDDLEWARE = [
     "andrei2.middleware.AllowFrameMiddleware",
     # ...
 ]
-ROOT_URLCONF = "andrei2.urls"
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+#
+# CRISPY_TEMPLATE_PACK = 'uni_form'
+ROOT_URLCONF = "andrei2.urls"
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",

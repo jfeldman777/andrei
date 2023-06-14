@@ -8,7 +8,7 @@ from .db import task_person_role_project_12, real_and_virtual_people, real_peopl
 from .utils import *
 from datetime import date
 from .models import UserProfile, Grade
-
+from .view_forms import role_form
 from django.urls import resolve
 
 
@@ -16,12 +16,29 @@ from django.urls import resolve
 отсюда можно запускать тесты
 '''
 def atest(request:object)->object:
-
     return render(request, "a00.html")
 
 def atest1(request:object)->object:
     return render(request, "a001.html")
+# def atest2(request:object)->object:
+#     return role_form(request,id=None, file_name="a002.html")
 
+def role_form(request, id=None, file_name="form.html"):
+    button = "Создать"
+    instance = None
+    if id:
+        button = "Сохранить"
+        instance = get_object_or_404(Role, id=id)
+
+    if request.method == "POST":
+        form = RoleForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect("roles")
+
+    else:
+        form = RoleForm(instance=instance)
+    return render(request, file_name, {"form": form,"title":"Роль","button":button})
 
 '''
 домашняя страница

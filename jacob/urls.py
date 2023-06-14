@@ -6,7 +6,12 @@ from . import  view_forms
 urlpatterns = [
     path("project_form/<int:id>/", view_forms.project_form, name="project_form_with_id"),
     path("project_form/", view_forms.project_form, name="project_form"),
+
+
+
     
+
+
     path("role_form/<int:id>/", view_forms.role_form, name="role_form_with_id"),
     path("role_form/", view_forms.role_form, name="role_form"),
     
@@ -59,6 +64,7 @@ urlpatterns = [
     path("people/", vvv.people, name="people"),
     path("roles/", vvv.roles, name="roles"),
 
+    path("test2/", view_forms.atest2, name="test2"),
     path("test1/", vvv.atest1, name="test1"),
     path("test/", vvv.atest, name="test"),
     path("", vvv.home, name="home"),
