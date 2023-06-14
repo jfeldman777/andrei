@@ -23,23 +23,6 @@ def atest1(request:object)->object:
 # def atest2(request:object)->object:
 #     return role_form(request,id=None, file_name="a002.html")
 
-def role_form(request, id=None, file_name="form.html"):
-    button = "Создать"
-    instance = None
-    if id:
-        button = "Сохранить"
-        instance = get_object_or_404(Role, id=id)
-
-    if request.method == "POST":
-        form = RoleForm(request.POST, instance=instance)
-        if form.is_valid():
-            form.save()
-            return redirect("roles")
-
-    else:
-        form = RoleForm(instance=instance)
-    return render(request, file_name, {"form": form,"title":"Роль","button":button})
-
 '''
 домашняя страница
 '''
