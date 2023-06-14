@@ -1,20 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
 {% load static %}
-{% include 'page.html' %}
 <div class="bar">
   <h4>Остаточная доступность ресурсов</h4>
 </div>
-<div class="table-container-4 page">
-        <table border=1 style="position:relative;top:0;" class="dif"  width=100%>
+<table id="example" class="display compact dif" style="width:100%;">
+  <thead ><tr>
 
-  <thead style="position:sticky;  text-align: center; background-color:#FFF;">
-
-  <thead>
-
-    <tr>
+  <th>Ресурс</th>
       <th>Сотрудник
 
         {% include 'moon.html' %}
@@ -22,21 +16,13 @@
 
     <tr>
       {% for t in tt %}
-      {% if forloop.first %}
-      {% if t|negative %}{% else %}
-      <td colspan=13>{{t}}</td>
-    </tr>
-    <tr>
-      {% endif %}
-      {% else %}
-      <td>
+        <td style="text-align:center">
         {{t}}
       </td>
-      {% endif %}
       {% endfor %}
     </tr>
     {% endfor %}
 
-        </table></div>
-
+        </table>
+{% include 'data.html' %}
 {% endblock %}

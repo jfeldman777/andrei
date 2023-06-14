@@ -1269,7 +1269,7 @@ def rest_all(request:object,n:int=12)->object:  # Остаточная дост�
         for person in people_rr:
             dif = [person.fio] + rest_of_time_pr_12(person, role)
             dif14.append([px] + dif)
-            px = -1
+
 
     moon12["dif14"] = dif14
 
