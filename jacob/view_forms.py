@@ -31,7 +31,7 @@ def create_user_and_profile(request):
     else:
         form = UserAndProfileForm()
 
-    return render(request, 'form.html', {'form': form,"button":button,"title":"Добавить"})
+    return render(request, 'form.html', {'form': form,"button":button,"title":"Сотрудник"})
 
 
 '''
