@@ -47,8 +47,12 @@ INSTALLED_APPS = [
     "jacob.templatetags",
     "crispy_forms",
     "crispy_bootstrap4",
+    'import_export',
 ]
 from .middleware import AllowFrameMiddleware
+
+IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'delete'
+IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'delete'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
