@@ -3,13 +3,18 @@
 {% block content %}
 {% load static %}
 <div class="bar">
-  <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
+    Проект:<b> {{project}}</b> - Ресурс:<b> {{role}} </b> (2023-2024)
 </div>
 
 <table border="1" width=100% style="  position:absolute;top:78px;left:0;" id=t00><tbody>
-      <tr style="text-align:center;"><td>Баланс (<a href="/delta_jr/0/{{r}}/{{j}}" class="dda">Дельта</a>)
+      <tr style="text-align:center;">
+         <td style="background-color:grey;color:white;">
+              <h4>  Баланс (<a href="/delta_jr/0/{{r}}/{{j}}"
+                               style="background-color:grey;color:white;">-</a>)</h4>
       </td>>
-      <td>  <a href="/needs_jr/{{p}}/{{r}}/{{j}}" class="mmm">Потребность</a></td>
+      <td style="background-color:grey;color:white;"><h4>
+          <a href="/needs_jr/{{p}}/{{r}}/{{j}}" style="background-color:grey;color:white;">Потребность</a></h4>
+      </td>
 
       </tr>
                 <tr>
@@ -50,9 +55,15 @@
         </table>
     </td>
   </tr>
-      <tr style="text-align:center;"><td><a href="/tasks_jr/0/{{r}}/{{j}}"  class="uuu">
-                  Загрузки</a>
-      </td><td>Остаточная доступность ресурсов</td></tr>
+      <tr style="text-align:center;">
+          <td style="background-color:grey;color:white;">
+              <h4>
+
+          <a href="/tasks_jr/0/{{r}}/{{j}}" style="background-color:grey;color:white;">
+                  Загрузки</a></h4>
+      </td><td style="background-color:grey;color:white;">
+        <h4>  Остаточная доступность ресурсов</h4>
+      </td></tr>
   <tr style="text-align:center; vertical-align:top;">
     <td width=50% style="vertical-align:top;">
         <table width=100% class="display compact" id="example3">
