@@ -1,28 +1,19 @@
-
 <script>
 
   $(document).ready(function () {
-
       $('.display').DataTable({
-        "lengthChange": false,
+       "lengthChange": false,
       "searching": false,
-      // "ordering":false,
-          // scrollY: '70vh',
+      "ordering":false,
+          scrollY: '70vh',
           scrollCollapse: true,
           paging: false,
-info:false,
-
-
-      //  "lengthChange": false,
-      //     scrollY: '70vh',
-      //     scrollCollapse: true,
-      //     paging: false,
-
-
-
-
+          info:false,
           language: {
     search: 'Поиск: ',
+
+
+
     "decimal":        ",",
     "emptyTable":     "нет данных",
     "info":           "Показать с _START_ до _END_ - _TOTAL_ записей",
@@ -45,7 +36,7 @@ info:false,
         "sortAscending":  ": сортируем-возрастает",
         "sortDescending": ": сортируем-убывает"
     }
-      }
-  });});
+  }      });
+  });
 
 </script>
