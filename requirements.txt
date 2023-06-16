@@ -34,11 +34,9 @@ mypy==1.3.0
 mypy-extensions==1.0.0
 numpy==1.24.3
 odfpy==1.4.1
-<<<<<<< HEAD
-openpyxl==3.1.1
-=======
 
->>>>>>> f1fc182 (not in pack)
+openpyxl==3.1.1
+
 outcome==1.2.0
 packaging==23.1
 pandas==2.0.1
