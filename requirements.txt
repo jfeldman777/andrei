@@ -11,6 +11,8 @@ click==8.1.3
 colorama==0.4.6
 comtypes==1.1.14
 crispy-bootstrap4==2022.1
+defusedxml==0.7.1
+diff-match-patch==20230430
 dj-database-url==2.0.0
 Django==4.2
 django-bootstrap4==23.1
@@ -25,11 +27,13 @@ gunicorn==20.1.0
 h11==0.14.0
 idna==3.4
 iniconfig==2.0.0
+MarkupPy==1.14
 mixer==7.2.2
 mypy==1.3.0
 mypy-extensions==1.0.0
 numpy==1.24.3
-openpyxl==3.1.2
+odfpy==1.4.1
+openpyxl==3.1.1
 outcome==1.2.0
 packaging==23.1
 pandas==2.0.1
@@ -49,6 +53,7 @@ python-dateutil==2.8.2
 python-dotenv==1.0.0
 pyttsx3==2.90
 pytz==2023.3
+PyYAML==6.0
 requests==2.26.0
 selenium==4.9.1
 simplejson==3.17.2
@@ -57,6 +62,7 @@ sniffio==1.3.0
 sortedcontainers==2.4.0
 soupsieve==2.4.1
 sqlparse==0.4.4
+tablib==3.5.0
 tomli==2.0.1
 tqdm==4.65.0
 trio==0.22.0
@@ -67,3 +73,5 @@ urllib3==1.26.16
 webdriver-manager==3.8.6
 whitenoise==6.4.0
 wsproto==1.2.0
+xlrd==2.0.1
+xlwt==1.3.0
