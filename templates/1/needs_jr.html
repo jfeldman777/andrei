@@ -2,11 +2,11 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-<div class="bar">
-  <h4>Проект: {{project}} - Ресурсный пул: {{role}} - Потребность</h4>
-</div>
 
-<table id="example" class="display compact" style="width:100%;">
+  <h5>Проект: {{project}} - Ресурсный пул: {{role}} - Потребность</h5>
+
+
+<table class="display compact" style="width:100%;">
   <thead>
     <tr style="text-align:center;">
 
@@ -24,7 +24,7 @@
       </tbody>
 
 </table>
-{% include 'data.html' %}
+{% include 'data4.html' %}
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='needs_jr'>
           </form>

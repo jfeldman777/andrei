@@ -2,14 +2,14 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-<div class="bar">
-  <h4>Остаточная доступность ресурсов</h4>
-</div>
-<table id="example" class="display compact dif" style="width:100%;">
+
+  <h5>Остаточная доступность ресурсов</h5>
+
+<table  class="display compact dif" style="width:100%;">
   <thead ><tr>
 
-  <th>Ресурс</th>
-      <th>Сотрудник</th>
+    <th style="text-align:center;">Ресурс</th>
+      <th style="text-align:center;">Сотрудник</th>
 
         {% include 'moon.html' %}
         {% for tt in dif14 %}

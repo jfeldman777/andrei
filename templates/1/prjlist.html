@@ -1,32 +1,38 @@
 {% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% load static %}
-<div class="bar">
-  <h4>Дорожная карта</h4>
-</div>
-<table id="example" class="display compact" style="width:100%;">
+{% load static %}<h5>
+Дорожная карта</h5>
+<table class="display compact">
   <thead>
-
     <tr>
-    <th>Руководитель</th>
-    <th>
+    <th style="text-align: center;">
+      Руководитель</th>
+
+      <th style="text-align: center;">
+
         Проект
     </th>
-    <th style="text-align: center;  padding: 5px;">Начало</th>
-    <th style="text-align: center;  padding: 5px;">Окончание</th>
-    <th style="text-align: center;  padding: 5px;">Длит<br>(мес)</th>
+
+    <th style="text-align: center;">
+
+      Начало</th>
+
+      <th style="text-align: center;">
+
+      Окончание</th>
+    <th>Длит<br>(мес)</thstyle=>
 
     {% include 'moon.html' %}
     {% for row in matrix %}
-    <tr style="text-align: center;  padding: 5px;">
+    <tr>
       {% for cell in row %}
       {% if cell|isBool %}
       <td class="{% if cell %}true{% else %}false{% endif %}">
         {% if cell %}*{% else %}-{% endif %}
       </td>
       {% else %}
-      <td style="text-align: center; ">
+      <td>
         {% if cell|isObject %}
         <a href="/project_form/{{cell.id}}/">
 
@@ -39,10 +45,7 @@
       </td>
       {% endif %}
       {% endfor %}
-
     {% endfor %}</tr>
 </table>
-
-{% include 'data.html' %}
-
+{% include 'data4.html' %}
 {% endblock %}
