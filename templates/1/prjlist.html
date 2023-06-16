@@ -13,9 +13,9 @@
     <th>
         Проект
     </th>
-    <th style="text-align: center;  padding: 5px;">Начало</th>
-    <th style="text-align: center;  padding: 5px;">Окончание</th>
-    <th style="text-align: center;  padding: 5px;">Длит<br>(мес)</th>
+    <th style="text-align: left;  padding: 5px;">Начало</th>
+    <th style="text-align: left;  padding: 5px;">Окончание</th>
+    <th style="text-align: left;  padding: 5px;">Длит<br>(мес)</th>
 
     {% include 'moon.html' %}
     {% for row in matrix %}
@@ -26,7 +26,7 @@
         {% if cell %}*{% else %}-{% endif %}
       </td>
       {% else %}
-      <td style="text-align: center; ">
+      <td style="text-align: left; ">
         {% if cell|isObject %}
         <a href="/project_form/{{cell.id}}/">
 
