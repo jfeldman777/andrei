@@ -173,10 +173,11 @@ def roles(request:object)->object:
 Заголовок - 12 месяцев
 '''
 def moon(n:int=12)->List[object]:
+    L = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек',]
     ym = []
     d = date0()
     for i in range(n):
-         ym.append({"y": str(d.year)[2:],"m": d.month})
+         ym.append({"y": str(d.year)[2:],"m": L[d.month-1]})
          d = inc(d)
     return  { "ym": ym}
 
