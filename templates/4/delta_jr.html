@@ -1,106 +1,75 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% include 'scroll.html' %}
 {% load static %}
-{% include 'nopadding.html' %}
 <div class="bar">
-  <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
+    Проект: <b>{{project}}</b> - Ресурс:<b> {{role}}</b>(2023-2024)
 </div>
 
-<table width=100% style=" height: 92vh; position:absolute;top:78px;" id=t00>
-                <tr style=" height: 42vh; ">
+<table border="1" width=100% style=" border-color:black ;position:absolute;top:78px;left:0;" id=t00><tbody>
+      <tr style="text-align:center;"><td style="background-color:grey;color:white;"><h4>
+          Баланс (<a href="/balance_jr/0/{{r}}/{{j}}" class="dda" style="color:white;">+</a>)</h4>
+      </td>
+    <td style="background-color:grey;color:white;"> <h4>
+          <a href="/needs_jr/{{p}}/{{r}}/{{j}}" class="mmm" style="color:white;">Потребность</a></h4>
+      </td>
+
+      </tr>
+                <tr>
     <td width=50% style="vertical-align:top;">
-      <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;" class="balance" width=100%>
-          <thead>
-            <tr>
-              <th colspan=13>Балансы</th>
-            </tr>
-            <tr>
-              {% include 'moon.html' %}
+        <table class="display compact balance" width=100% id="example1">
+            <thead>
+
+                      {% include 'moon.html' %}
               {% for tt in w1 %}
-            <tr>
+            <tr style="text-align:center;">
               {% for t in tt %}
               <td>
                 {{t}}
               </td>
               {% endfor %}
             </tr>
-            {% endfor %}<tr>
-              <td colspan=13>
-                <a href="/balance_r/0/{{r}}/{{j}}" class="dda">подробнее</a>
-              </td>
-            <tr>
+            {% endfor %}
               </tbody>
         </table>
-      </div>
+
+
     </td>
     <td width=50% style="vertical-align:top;">
-      <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;">
+              <table width=100% class="display compact" id="example2">
           <thead>
-            <tr>
-              <th colspan=13>
-                <a href="/needs_jr/{{p}}/{{r}}/{{j}}" style="color:white;" class="mmm">Потребность</a>
-              </th>
-            </tr>
-            <tr>
+            <tr style="text-align:center;">
               {% include 'moon.html' %}
-            <tr>
+         <tr style="text-align:center;">
               {% for t in w2 %}
               <td class="good" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
-
                 {{t.val}}
               </td>
-
               {% endfor %}
             </tr>
             </tbody>
         </table>
-      </div>
-
-      <form id="f20" method="POST">
-        {% csrf_token %}
-
-        <input type=hidden name="html" value='delta_jr'>
-        <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
-      </form>
     </td>
   </tr>
+      <tr style="text-align:center;"><td style="background-color:grey;color:white;"><h4>
+          <a href="/tasks_jr/0/{{r}}/{{j}}"  class="uuu" style="color:white;">
+                  Загрузки
+      </a></h4>
+      </td><td style="background-color:grey;color:white;"><h4>
+          Остаточная доступность ресурсов</h4>
+      </td></tr>
   <tr style="text-align:center; vertical-align:top;">
     <td width=50% style="vertical-align:top;">
-      <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;">
+        <table width=100% class="display compact" id="example3">
           <thead>
-            <tr>
-              <th colspan=13>
-
-                <a href="/tasks_jr/0/{{r}}/{{j}}" style="color:white;" class="uuu">
-                  Загрузки</a>
-
-              </th>
-            </tr>
-            <tr>
-              <th>
-                <form id="f10" method="POST">
-                  {% csrf_token %} <input type=hidden name="html" value='delta_jr'>
-                  <button type="submit" class="button3" disabled="true">Сохранить</button>
-                </form>
-
-
-
+            <tr style="text-align:center;">
+      <th style="text-align:center;">Сотрудник</th>
                 {% include 'moon.html' %}
-
                 {% for tt in w3 %}
-            <tr>
+                <tr style="text-align:center;">
               {% for t in tt %}
-
-
-              <td class="good" action="/save_task/" s fname="f10" key="{{t.link}}" title="{{t.up}}"
+              <td class="good" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
                 style="background-color:{{t.color}};">
-
-
                 {{t.val}}
               </td>{% endfor %}
             </tr>
@@ -108,26 +77,39 @@
             </tbody>
         </table>
 
-      </div>
-  <td width=50% style="vertical-align:top;">
-      <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;" width=100% class="dif">
+
+  <td width=50%>
+
+                <table  width=100% id="example4" class="display compact dif">
           <thead>
-            <tr>
-              <th colspan=13> Остаточная доступность ресурсов</th>
-            </tr>
-            <tr>
-              <th>Сотрудник
-                {% include 'moon.html' %}
+           <tr style="text-align:center;">
+              <th style="text-align:center;">Сотрудник</th>
+                        {% include 'moon.html' %}
                 {% for dem in w4 %}
-            <tr>
+              <tr style="text-align:center;">
               {% for t in dem %}
               <td>{{t}}</td>{% endfor %}
             </tr>
 
             {% endfor %}
-        </table></div>
+        </table>
     </td>
   </tr>
+  </tbody>
 </table>
+      <form id="f20" method="POST">
+        {% csrf_token %}
+        <input type=hidden name="html" value='delta_jr'>
+      </form>
+             <form id="f10" method="POST">
+                  {% csrf_token %} <input type=hidden name="html" value='delta_jr'>
+
+                </form>
+
+
+{% include 'data4.html' %}
+
+
+
+
 {% endblock %}

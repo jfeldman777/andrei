@@ -5,7 +5,7 @@ from .forms import UserAndProfileForm, RoleForm, User2Form, KeysForm, ProjectFor
 from .models import UserProfile, Role, Project, Grade
 
 
-def create_user_and_profile(request):
+def create_user_and_profile(request:object)->any:
     button = "Создать"
     instance = None
     if request.method == "POST":
@@ -128,7 +128,7 @@ def project_form(request, id=None):
 '''
 форма для изменения человека 
 '''
-def person_form(request, id):
+def person_form(request:object, id:int)->any:
     button = "Создать"
     instance = None
     if id:

@@ -1,9 +1,21 @@
-from django.contrib import admin
 
-# Register your models here.
-from django.contrib import admin
-from .models import Role, Project, Load, Task, Less, Grade
+from .models import Role, Project, Load, Task, Less, Grade,UserProfile
 
+# admin.py
+
+from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
+
+from .resources import PersonResource
+
+#
+# class PersonAdmin(ImportExportModelAdmin):
+#     resource_class = PersonResource
+# @admin.register(UserProfile)
+class UserProfileAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display = ("user", "fio", "role")
+    ordering=['fio']
+    resource_class = PersonResource
 
 
 admin.site.register(Role)
@@ -12,14 +24,11 @@ admin.site.register(Load)
 admin.site.register(Task)
 admin.site.register(Less)
 
-from .models import UserProfile
 
 class GradeAdmin(admin.ModelAdmin):
     list_display = ("person", "role", "mygrade")
     ordering=['person']
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "fio", "role")
-    ordering=['fio']
+
 
 
 admin.site.register(UserProfile, UserProfileAdmin)

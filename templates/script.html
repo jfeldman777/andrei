@@ -11,12 +11,12 @@
     f1 = $(this).attr("fname");
 
     var originalValue = $(this).text();
-if (isNaN(parseInt(originalValue))) return;
+//if (isNaN(parseInt(originalValue))) return;
     var x = $.trim(originalValue);
     if (x == '0') x = '';
 
     var ID = new Date().getTime();
-    $(this).html('<input type="text" id=' + ID + ' size="1" maxlength="4" value="' + x + '">');
+    $(this).html('<input type="text" id=' + ID + ' size="1" maxlength="7" value="' + x + '">');
 
     element = document.getElementById(ID);
     element.focus();

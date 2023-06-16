@@ -485,17 +485,18 @@
   </tfoot>
 </table>
 
-<script>
+<!--<script>-->
 
-$(document).ready(function () {
-    $('#example').DataTable({
-        scrollY: '70vh',
-        scrollCollapse: true,
-        paging: false,
-    });
-});
+<!--$(document).ready(function () {-->
+<!--    $('.display').DataTable({-->
+<!--        scrollY: '70vh',-->
+<!--        scrollCollapse: true,-->
+<!--        paging: false,-->
+<!--    });-->
+<!--});-->
 
-</script>
+<!--</script>-->
+{% include 'data.html' %}
 <form id="f10" method="POST" action="/save_task/">
           {% csrf_token %}          <input type=hidden name="html" value='balance_jr'>
         </form>
