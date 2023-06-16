@@ -1,0 +1,25 @@
+<script>
+
+  window.onload = function () {
+    var tables = document.getElementsByTagName("table");
+    for (var i = 0; i < tables.length; i++) {
+
+      var rows = tables[i].getElementsByTagName("tr");
+      for (var j = 0; j < rows.length; j++) {
+        var cells = rows[j].getElementsByTagName("td");
+        for (var k = 0; k < cells.length; k++) {
+
+
+          if (tables[i].classList.contains("tasks")) {
+          cells[k].style.backgroundColor =
+          'rgb(240,240,240)';
+           cells[k].style.borderColor='rgb(255,255,255)';
+
+            }
+
+        }
+      }
+    }
+  };
+
+</script>

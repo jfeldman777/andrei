@@ -416,9 +416,9 @@ def delta_role_project(request, p, r, j,n=12):
         diff = rest_of_time_pr_12(person, role,n)
         d = date0()
         for i in range(n):
-            color = "white"
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(100,100,100)"
                 if delta[i] < 0:
                     color = "#B266FF"
             elif delta[i] < 0:
