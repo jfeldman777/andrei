@@ -9,7 +9,7 @@
   <thead>
 
     <tr>
-      <th style="text-align:center;">Ресурс </th> <th style="text-align:center;">Сотрудник</th>
+      <th style="text-align:center;">Ресурс </th>   <th style="text-align:center;">Сотрудник</th>
 
         {% include 'moon.html' %}
         {% for tt in dif14 %}
@@ -17,7 +17,7 @@
     <tr>
       {% for t in tt %}
 
-      <td style="background-color:{{t.color}};"
+      <td style="background-color:{{t.color}};text-align:center;"
           class="good" action="/save_max/" fname="f10" key="{{t.link}}" title="осталось {{fire}}%">
           {{t.val}}
         {% if t.fire %}
