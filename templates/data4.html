@@ -1,12 +1,14 @@
-
 <script>
 
   $(document).ready(function () {
       $('.display').DataTable({
-       "lengthChange": false
+       "lengthChange": false,
+      "searching": false,
+      "ordering":false,
           scrollY: '70vh',
           scrollCollapse: true,
           paging: false,
+          info:false,
           language: {
     search: 'Поиск: ',
 
