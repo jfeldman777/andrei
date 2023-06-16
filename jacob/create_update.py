@@ -16,22 +16,40 @@ def create_or_update_res_max(person:object, role:object, m:date, l:int)->None:  
         instance = Less.objects.create(person=person, role=role, start_date=m, load=l)
 
 
-def create_or_update_task(p:object, r:object, j:object, d:date, l:int)->None:  # Загрузка tjTask
-    try:
-        instance = Task.objects.get(person=p, project=j, role=r, month=d)
-    except:
-        instance = None
-    if instance:
-        instance.load = l
-        instance.save()
+def create_or_update_task(p:object, r:object, j:object, dm:date, svn:int)->None:  # Загрузка tjTask
+    print(1818)
+    if '-' in svn:
+        sv,sn = svn.split('-')
+        v = int(sv)
+        n = int(sn)
     else:
-        instance = Task.objects.create(person=p, role=r, project=j, month=d, load=l)
+        v = int(svn)
+        n = 1
+    d = datetime.strptime(dm, "%Y-%m-%d").date()
+    for i in range(n):
+        print(2020)
+        try:
+            instance = Task.objects.get(person=p, project=j, role=r, month=d)
+        except:
+            instance = None
+        if instance:
+            try:
+                instance.load = v
+                instance.save()
+                print(2021)
+            except:
+                print("bad1")
+        else:
+            try:
+                instance = Task.objects.create(person=p, role=r, project=j, month=d, load=v)
+                print(2022)
+            except:
+                print("bad")
+        d = inc(d)
 
 
 from datetime import datetime
 def create_or_update_needs(person:object, role:object, project:object, dm:str, svn:str)->None:  # Потребность tjLoad
-    print(999,svn,dm)
-
     if '-' in svn:
         sv,sn = svn.split('-')
         v = int(sv)

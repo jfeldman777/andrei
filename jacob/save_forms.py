@@ -55,7 +55,7 @@ def save_task(request):
                         role = Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
 
-                        print(123)
+                        print(v)
                         create_or_update_task(
                             person, role, project, d, v
                         )  ##################################
@@ -68,6 +68,7 @@ def save_task(request):
 
 
 def save_needs(request):
+    print(989)
     p = 0
     j = 0
     r = 0
@@ -78,7 +79,7 @@ def save_needs(request):
                 html = request.POST.get("html")
                 if "." in k:
                     p, r, j, d = k.split(".")
-
+                    print(987,p,r,j,d)
                     try:
                         person = None
                         role = Role.objects.get(id=r)
