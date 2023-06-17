@@ -393,16 +393,21 @@ def delta_role_project(request, p, r, j,n=12):
     dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
 
     d = date0()
+    tcolor=""
     for i in range(n):
+        tcolor=""
         color = "white"
         if mon_outside_prj(d, project):
-            color = "lightgrey"
+            color = " rgb(150,150,150) "
         elif dem_rj[i] > 0:
             color = "lightblue"
+        else:
+            tcolor="color2"
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
             "color": color,
+            "class":tcolor + "  good"
         }  #
 
         d = inc(d)
@@ -416,15 +421,18 @@ def delta_role_project(request, p, r, j,n=12):
         diff = rest_of_time_pr_12(person, role,n)
         d = date0()
         for i in range(n):
+            tcolor=""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(100,100,100)"
+                color = "rgb(150,150,150)"
                 if delta[i] < 0:
                     color = "#B266FF"
             elif delta[i] < 0:
                 color = "pink"
             elif a_w3[i] > 0:
                 color = "lightblue"
+            else:
+                tcolor="color"
 
             try:
                 p = person.id
@@ -438,6 +446,7 @@ def delta_role_project(request, p, r, j,n=12):
                 "up": up(max(-delta[i], 0), df),
                 "val": a_w3[i],
                 "color": color,
+                "class":tcolor+" good ",
             }
             d = inc(d)
 
@@ -448,7 +457,7 @@ def delta_role_project(request, p, r, j,n=12):
             except:
                 grade = '0'
             up1=f" ({grade})"
-        c_w3 = [{"val": person.fio + up1}] + b_w3
+        c_w3 = [{"class":"color *","val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
 
