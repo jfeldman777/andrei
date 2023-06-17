@@ -8,17 +8,17 @@
 <div class="bar">
   <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
 </div>
-<table width=100% style=" height: 92vh; position:absolute;top:78px;" id=t00>
+<table width=100% style=" height: 92vh; position:absolute;top:78px;border:1;border-color:white;" id=t00>
                 <tr style=" height: 42vh; ">
     <td width=50% >
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;" class="balance" width=100%>
+        <table border=1 style="position:relative;top:0;border-color:white;" class="balance" width=100%>
           <thead>
             <tr>
               <th colspan=13>Балансы</th>
             </tr>
             <tr>
-              <th>---
+              <th style="background-color:white;border:1;border-color:grey;">---
                 {% include 'moon.html' %}
                 {% for tt in w1 %}
             <tr>
@@ -41,7 +41,7 @@
     </td>
     <td width=50% style="vertical-align:top;">
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;">
+        <table border=1 width=100% style="position:relative;top:0;border-color:white;">
           <thead>
             <tr>
               <th colspan=13>
@@ -73,7 +73,7 @@
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;">
+        <table border=1 width=100% style="position:relative;top:0;border-color:white;">
           <thead>
             <tr>
               <th colspan=13>
@@ -82,7 +82,7 @@
               </th>
             </tr>
             <tr>
-              <th>
+              <th style="border-color:grey;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_jr'>
@@ -108,13 +108,14 @@
     </td>
     <td width=50% style="vertical-align:top;">
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;vertical-align:top;" width=100% class="dif">
+        <table border=1 style="position:relative;top:0;vertical-align:top;border-color:white;"
+               width=100% class="dif">
           <thead>
             <tr>
                   <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th>Сотрудник
+              <th style="background-color:white;color:black;border-color:grey;">Сотрудник
                 {% include 'moon.html' %}
                 {% for dem in w4 %}
             <tr>
