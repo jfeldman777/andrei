@@ -12,7 +12,7 @@
                 <tr style=" height: 42vh; ">
     <td width=50% >
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;" class="balance" width=100%>
+        <table border=1 style="position:relative;top:0;border-color:white;" class="balance" width=100%>
           <thead>
             <tr>
               <th colspan=13>Балансы</th>
@@ -32,7 +32,7 @@
               {% else %}
               <td>
                 {% if t|isstr:'Дельта' %}
-                <a href="/delta_j/0/0/{{j}}" class="aad">{{t}}</a>
+                <a href="/delta_j/0/0/{{j}}" >{{t}}</a>
                 {% else %}
                 {{t}}
                 {% endif %}
@@ -48,7 +48,7 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;">
+        <table border=1 width=100% style="position:relative;top:0;border-color:white;">
           <thead>
             <tr>
               <th colspan=13>
@@ -73,7 +73,7 @@
               {% for dem in w2 %}
             <tr>
               {% for t in dem %}
-              <td class="good " action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
+              <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
               {% endfor %}
@@ -86,7 +86,7 @@
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;">
+        <table border=1 width=100% style="position:relative;top:0;border-color:white;">
           <thead>
             <tr>
               <th colspan=13>
@@ -117,7 +117,7 @@
               {% else %}
 
 
-              <td class="good" action="{% url 'save_task' %}"
+              <td class="{{t.class}}" action="{% url 'save_task' %}"
                        fname="f10" key="{{t.link}}" title="{{t.up}}"
                 style="background-color:{{t.color}};">
                 {{t.val}}
@@ -131,7 +131,7 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;" width=100% class="dif">
+        <table border=1 style="position:relative;top:0;border-color:white;" width=100% class="dif">
           <thead>
             <tr>
               <th colspan=13> Остаточная доступность ресурсов</th>
