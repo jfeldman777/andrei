@@ -823,16 +823,19 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
         d = date0()
         for i in range(n):
+            tclass=""
             color = "white"
             if mon_outside_prj(d, project):
                 color = "lightgrey"
             elif dem_rj[i] > 0:
                 color = "lightblue"
-
+            else:
+                tclass='color'
             a_w2[i] = {
                 "val": dem_rj[i],
                 "color": color,
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
+                "class":tclass+ "  good"
             }
 
             d = inc(d)
@@ -843,6 +846,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                     "j": project.id,
                     "val": role.title,
                     "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
+                    "class":"color"
                 }
             ]
             + a_w2
@@ -855,21 +859,25 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             diff = rest_of_time_pr_12(person, role,n)
             d = date0()
             for i in range(n):
-                color = "white"
+                tclass=""
+                color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "lightgrey"
+                    color = "rgb(150,150,150)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
                     color = "pink"
                 elif a_w3[i] > 0:
                     color = "lightblue"
+                else:
+                    tclass="color"
 
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i], 0), diff[i]),
                     "val": a_w3[i],
                     "color": color,
+                    "class":tclass+ "  good"
                 }
                 d = inc(d)
 
@@ -880,7 +888,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 except:
                     grade = '0'
                 up1 = f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+            c_w3 = [p100,{"class":"color","val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
