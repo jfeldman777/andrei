@@ -10,44 +10,42 @@
 
         delta = -delta;
         x = colr + delta;
-        sx = 'rgb('+x+','+x+','+x+')'
+        sx = 'rgb(' + x + ',' + x + ',' + x + ')'
 
         var cells = rows[j].getElementsByTagName("td");
         for (var k = 0; k < cells.length; k++) {
- if (cells[k].classList.contains("color2")) cells[k].style.backgroundColor = sx;
-        if (cells[k].classList.contains("color")) cells[k].style.backgroundColor = sx;
-            cells[k].style.borderColor = 'rgb(255,255,255)';
+          if (cells[k].classList.contains("color2")) cells[k].style.backgroundColor = sx;
+          if (cells[k].classList.contains("color")) cells[k].style.backgroundColor = sx;
+          cells[k].style.borderColor = 'rgb(255,255,255)';
+
+          if (tables[i].classList.contains("dif")) {
+            cells[k].style.backgroundColor = sx;
+
+            if (cells[k].innerHTML < 0) {
+              cells[k].style.backgroundColor = "pink";
+            }
+            if (cells[k].innerHTML == 0) {
+              cells[k].style.backgroundColor = "yellow";
+            }
+          };
 
 
+          if (tables[i].classList.contains("balance")) {
 
-                            if (tables[i].classList.contains("dif")) {
-                                        cells[k].style.backgroundColor = sx;
+            if (cells[k].innerHTML < 0) {
+              cells[k].style.backgroundColor = "pink";
+            } else
+              if (cells[k].innerHTML > 0) {
+                cells[k].style.backgroundColor = "lightblue";
+              }
+              else {
+                cells[k].style.backgroundColor = sx;
+              }
+          }
 
-                                      if (cells[k].innerHTML < 0) {
-                                        cells[k].style.backgroundColor = "pink";
-                                      }
-                                      if (cells[k].innerHTML == 0) {
-                                        cells[k].style.backgroundColor = "yellow";
-                                      }
-                                    };
-
-
-                            if (tables[i].classList.contains("balance")) {
-
-                              if (cells[k].innerHTML < 0) {
-                                cells[k].style.backgroundColor = "pink";
-                              } else
-                                if (cells[k].innerHTML > 0) {
-                                  cells[k].style.backgroundColor = "lightblue";
-                                }
-                                else {
-                                 cells[k].style.backgroundColor = sx;
-                                }
-                            }
-
-                            if (cells[k].classList.contains("true")) {
-                              cells[k].style.backgroundColor = "lightblue";
-                            }
+          if (cells[k].classList.contains("true")) {
+            cells[k].style.backgroundColor = "lightblue";
+          }
 
 
 

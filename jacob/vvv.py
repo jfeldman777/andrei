@@ -500,15 +500,19 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     d = date0()
     for i in range(n):
+        tclass= ""
         color = "white"
         if mon_outside_prj(d, project):
             color = "lightgrey"
         elif dem_rj[i + 1] > 0:
             color = "lightblue"
+        else:
+            tclass=" good color "
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i + 1],
             "color": color,
+            "class":tclass
         }  #
 
         d = inc(d)
@@ -525,6 +529,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         diff = rest_of_time_pr_12(person, role)
         d = date0()
         for i in range(n):
+            tclass=""
             color = "white"
             if mon_outside_prj(d, project):
                 color = "lightgrey"
@@ -534,12 +539,15 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 color = "pink"
             elif a_w3[i] > 0:
                 color = "lightblue"
+            else:
+                tclass=" color"
 
             b_w3[i] = {
                 "link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
                 "up": up(max(-delta[i + 1], 0), diff[i]),
                 "val": a_w3[i],
                 "color": color,
+                "class":tclass + "  good "
             }
 
             d = inc(d)
@@ -550,7 +558,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             except:
                 grade = '0'
             up1=f" ({grade})"
-        c_w3 = [{"val": person.fio + up1}] + b_w3
+        c_w3 = [{"class":"color","val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
 
