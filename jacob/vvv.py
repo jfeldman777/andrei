@@ -725,6 +725,7 @@ def delta_role(request, p, r, j,n=12):
                 "val": project.title,
                 "j": project.id,
                 "r": role.id,
+                "class": "color"
             }
         ] + [0] * n
 
@@ -732,17 +733,21 @@ def delta_role(request, p, r, j,n=12):
 
         d = date0()
         for i in range(n):
-            color = "white"
+            tclass=""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(150,150,150)"
             elif dem_rj[i + 2] > 0:
                 color = "lightblue"
+            else:
+                tclass='color'
             a_w2[i + 1] = {
                 "val": dem_rj[i + 2],
                 "j": project.id,
                 "r": role.id,
                 "color": color,
                 "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
+                "class": tclass + "  good"
             }
             d = inc(d)
         w2.append(a_w2)  # --------
@@ -757,21 +762,25 @@ def delta_role(request, p, r, j,n=12):
             d = date0()
 
             for i in range(n):
-                color = "white"
+                tclass=""
+                color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "lightgrey"
+                    color =  "rgb(150,150,150)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
                     color = "pink"
                 elif a_w3[i] > 0:
                     color = "lightblue"
+                else:
+                    tclass="color"
 
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i], 0), diff[i]),
                     "val": a_w3[i],
                     "color": color,
+                    "class": tclass + "  good"
                 }
                 ##########################################################################3333333
                 d = inc(d)
@@ -782,7 +791,7 @@ def delta_role(request, p, r, j,n=12):
                 except:
                     grade = '0'
                 up1 = f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+            c_w3 = [p100,{"class":"color","val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
 

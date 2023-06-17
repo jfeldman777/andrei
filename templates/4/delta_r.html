@@ -56,7 +56,7 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/needs_r/0/{{r}}/{{j}}/" style="color: white" class="mmm">
+                <a href="/needs_r/0/{{r}}/{{j}}/" style="color: white" >
                   Потребность
                 </a>
               </th>
@@ -73,7 +73,7 @@
               <tr>
                 {% for t in dem %}
 
-                {% if forloop.first %} <td>
+                {% if forloop.first %} <td class="{{t.class}}">
 
                     {{t.val}}
 
