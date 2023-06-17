@@ -824,9 +824,9 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         d = date0()
         for i in range(n):
             tclass=""
-            color = "white"
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(150,150,150)"
             elif dem_rj[i] > 0:
                 color = "lightblue"
             else:
