@@ -402,7 +402,7 @@ def delta_role_project(request, p, r, j,n=12):
         elif dem_rj[i] > 0:
             color = "lightblue"
         else:
-            tcolor="color2"
+            tcolor="color"
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
@@ -457,7 +457,7 @@ def delta_role_project(request, p, r, j,n=12):
             except:
                 grade = '0'
             up1=f" ({grade})"
-        c_w3 = [{"class":"color *","val": person.fio + up1}] + b_w3
+        c_w3 = [{"class":"color","val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
 
