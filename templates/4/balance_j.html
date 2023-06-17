@@ -18,7 +18,8 @@
               <th colspan=13>Балансы</th>
             </tr>
             <tr>
-              <th>{{project}}
+               <th style="background:white;border:1;border-color:grey;color:black;">
+                {{project}}
                 {% include 'moon.html' %}
                 {% for dem in w1 %}
             <tr>
@@ -56,7 +57,7 @@
               <th>
             </tr>
             <tr>
-              <th>
+          <th style="background:white;border:1;border-color:grey;color:black;">
 
                 <form id="f20" method="POST">
                   {% csrf_token %}
@@ -95,7 +96,7 @@
               </th>
             </tr>
             <tr>
-              <th>
+             <th style="background:white;border:1;border-color:grey;color:black;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_j'>
@@ -137,7 +138,8 @@
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th>Сотрудник
+         <th style="background:white;border:1;border-color:grey;color:black;">
+                Сотрудник
                 {% include 'moon.html' %}
           </thead>
           <tbody>

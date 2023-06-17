@@ -22,7 +22,7 @@ position:absolute;top:78px;" id=t00>
               <th>
             </tr>
             <tr>
-              <th rowspan=2>{{project}}
+              <th style="background:white;border:1;border-color:grey;color:black;">{{project}}
                 {% include 'moon.html' %}
                 {% for dem in w1 %}
             <tr>
@@ -35,7 +35,7 @@ position:absolute;top:78px;" id=t00>
 
             {% endfor %}<tr>
               <td colspan=13>
-                <a href="/balance_j/0/0/{{j}}/" class="dda">подробнее</a>
+                <a href="/balance_j/0/0/{{j}}/" >подробнее</a>
               </td>
             <tr>
               </tbody>
@@ -52,7 +52,7 @@ position:absolute;top:78px;" id=t00>
               <th>
             </tr>
             <tr>
-              <th rowspan=2>
+             <th style="background:white;border:1;border-color:grey;color:black;">
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='delta_j'>
@@ -95,8 +95,8 @@ position:absolute;top:78px;" id=t00>
 
               <th>
             </tr>
-            <tr>
-              <th rowspan=2>
+            <tr style="background-color:white;border:1;border-color:grey;">
+         <th style="background-color:white;border:1;border-color:grey;color:black;">
 
                 <form id="f10" method="POST">
                   {% csrf_token %}
@@ -112,7 +112,7 @@ position:absolute;top:78px;" id=t00>
               {% if t|negative %}{% else %}
 
 
-              <td colspan=13>{{t}}</td>
+              <td colspan=13 style="background-color:white;border:1;border-color:grey;">{{t}}</td>
             </tr>
             <tr>
               {% endif %}
@@ -144,7 +144,7 @@ position:absolute;top:78px;" id=t00>
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th>Сотрудник
+              <th style="background:white;border:1;border-color:grey;color:black;">Сотрудник
                 {% include 'moon.html' %}
                 {% for tt in w4 %}
             <tr>

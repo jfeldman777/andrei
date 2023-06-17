@@ -82,7 +82,7 @@
               </th>
             </tr>
             <tr>
-              <th style="border-color:grey;">
+              <th style="background-color:white; border:1;border-color:grey;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_jr'>
@@ -90,7 +90,6 @@
                 </form>
 
                 {% include 'moon.html' %}
-
                 {% for tt in w3 %}
             <tr>
               {% for t in tt %}

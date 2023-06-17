@@ -21,7 +21,8 @@
               </th>
             </tr>
             <tr>
-              <th>Проект</th>
+           <th style="background:white;border:1;border-color:grey;color:black;">
+                Проект</th>
               {% include 'moon.html' %}
               {% for dem in w1 %}
             <tr>
@@ -60,8 +61,8 @@
                   Потребность
                 </a>
               </th>
-            </tr>
-            <th>
+            </tr><tr>
+      <th style="background:white;border:1;border-color:grey;color:black;">
               <form id="f20" method="POST">
                 {% csrf_token %}
                 <input type=hidden name="html" value='delta_r'>
@@ -104,14 +105,13 @@
             <tr>
               <th colspan=13>
 
-                <a href="/tasks_r/0/{{r}}/0/" style="color:white;" class="uuu">
+                <a href="/tasks_r/0/{{r}}/0/" style="color:white;">
                   Загрузки</a>
 
               </th>
             </tr>
             <tr>
-              <th>
-                <form id="f10" method="POST">
+              <th style="background:white;border:1;border-color:grey;color:black;">    <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='delta_r'>
                   <button type="submit" class="button3" disabled="true"> Сохранить</button>
@@ -151,7 +151,8 @@
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th>Сотрудник
+       <th style="background:white;border:1;border-color:grey;color:black;">
+                Сотрудник
                 {% include 'moon.html' %}
                 {% for tt in w4 %}
             <tr>

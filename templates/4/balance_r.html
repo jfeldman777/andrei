@@ -23,7 +23,8 @@
               <th>
             </tr>
             <tr>
-              <th>{{role}}
+        <th style="background:white;border:1;border-color:grey;color:black;">
+                      {{role}}
                 {% include 'moon.html' %}
                 {% for dem in w1 %}
             <tr>
@@ -65,7 +66,7 @@
               </th>
             </tr>
             <tr>
-              <th>
+        <th style="background:white;border:1;border-color:grey;color:black;">
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_r'>
@@ -118,7 +119,7 @@
             </tr>
 
             <tr>
-              <th>
+        <th style="background:white;border:1;border-color:grey;color:black;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_r'>
@@ -170,7 +171,8 @@
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th>Сотрудник
+              <th style="background:white;border:1;border-color:grey;color:black;">
+                Сотрудник
                 {% include 'moon.html' %}
                 {% for tt in w4 %}
             <tr>
