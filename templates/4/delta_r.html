@@ -8,11 +8,12 @@
 <div class="bar">
   <h4>Все проекты - Ресурс: {{role}}</h4>
 </div>
-<table width=100% style=" height: 92vh; position:absolute;top:78px;" id=t00>
+<table width=100% style=" height: 92vh; position:absolute;top:78px;border:1;border-color:white;" id=t00>
                 <tr style=" height: 42vh; ">
     <td width=50% >
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;" class="balance" width=100%>
+        <table border=1 style="border:1;border-color:white;
+        position:relative;top:0;" class="balance" width=100%>
           <thead>
             <tr>
               <th colspan=13>
@@ -27,9 +28,9 @@
               {% for t in dem %}
               <td>
                 {% if forloop.first %}
-                <a href="/delta_j/0/0/{{t.j}}">
+
                   {{t.val}}
-                </a>
+
                 {% else %}
                 {{t.val}}
                 {% endif %}
@@ -41,7 +42,7 @@
             {% endfor %}
             <tr>
               <td colspan=13>
-                <a href="/balance_r/0/{{r}}/0/" class="dda">подробнее</a>
+                <a href="/balance_r/0/{{r}}/0/" >подробнее</a>
               </td>
             <tr>
           <tbody>
@@ -50,7 +51,8 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;background-color:white;" class=in>
+        <table border=1 width=100% style="border:1;border-color:white;
+        position:relative;top:0;background-color:white;" class=in>
           <thead>
             <tr>
               <th colspan=13>
@@ -72,12 +74,12 @@
                 {% for t in dem %}
 
                 {% if forloop.first %} <td>
-                  <a href="/delta_jr/0/{{t.r}}/{{t.j}}">
+
                     {{t.val}}
-                  </a>
+
                   {% else %}
 
-                <td class="good" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
+                <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
                   {{t.val}}
                   {% endif %}
                 </td>
@@ -96,7 +98,8 @@
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;background-color:white;" >
+        <table border=1 width=100% style="border:1;border-color:white;
+        position:relative;top:0;background-color:white;" >
           <thead>
             <tr>
               <th colspan=13>
@@ -127,7 +130,7 @@
             <tr>
               {% endif %}
               {% else %}
-              <td class="good" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
+              <td class="{{t.class}}" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
                 style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
@@ -141,7 +144,8 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;background-color:white;" width=100% class="dif in">
+        <table border=1 style="border:1;border-color:white;
+        position:relative;top:0;background-color:white;" width=100% class="dif in">
           <thead>
             <tr>
               <th colspan=13> Остаточная доступность ресурсов</th>
