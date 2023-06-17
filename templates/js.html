@@ -14,11 +14,12 @@
 
         var cells = rows[j].getElementsByTagName("td");
         for (var k = 0; k < cells.length; k++) {
-          if (cells[k].classList.contains("color2")) cells[k].style.backgroundColor = sx;
+
           if (cells[k].classList.contains("color")) cells[k].style.backgroundColor = sx;
           cells[k].style.borderColor = 'rgb(255,255,255)';
 
           if (tables[i].classList.contains("dif")) {
+          if(!cells[k].classList.contains("long"))
             cells[k].style.backgroundColor = sx;
 
             if (cells[k].innerHTML < 0) {
