@@ -27,7 +27,7 @@ def create_or_update_task(p:object, r:object, j:object, dm:date, svn:str)->None:
         try:
             n = int(sn)
         except:
-            n = dif(d,d2)
+            n = dif(d,d2)-1
 
     else:
         v = int(svn)
@@ -64,7 +64,7 @@ def create_or_update_needs(person:object, role:object, project:object, dm:str, s
         try:
             n = int(sn)
         except:
-            n = dif(d, d2)
+            n = dif(d, d2)-1
     else:
         v = int(svn)
         n = 1
