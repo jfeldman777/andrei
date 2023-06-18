@@ -49,13 +49,13 @@ def save_task(request):
                 html = request.POST.get("html")
                 if "." in k:
                     p, r, j, d = k.split(".")
-                    print(k)
+                    print(k,111,v)
                     try:
                         project = Project.objects.get(id=j)
                         role = Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
 
-                        print(v)
+                        print(898,v)
                         create_or_update_task(
                             person, role, project, d, v
                         )  ##################################
