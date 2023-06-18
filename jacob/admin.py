@@ -1,5 +1,5 @@
 
-from .models import Role, Project, Load, Task, Less, Grade,UserProfile
+from .models import Role, Project, Load, Task, Less, Grade,UserProfile,Wish
 
 # admin.py
 
@@ -28,6 +28,7 @@ admin.site.register(Project,ProjectAdmin)
 admin.site.register(Load)
 admin.site.register(Task)
 admin.site.register(Less)
+admin.site.register(Wish)
 
 
 class GradeAdmin(admin.ModelAdmin):

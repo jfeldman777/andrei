@@ -194,7 +194,7 @@ def moon4(n: int = 12) -> List[object]:
 '''
 назначения - один ресурс - один проект
 '''
-def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
+def task_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     w3 = []
 
@@ -258,7 +258,7 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 '''
 назначения - один проект
 '''
-def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
+def task_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w3 = []
 
@@ -319,7 +319,7 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 '''
 назначения - один ресурс
 '''
-def assign_role(request:object, p:int, r:int, j:int,n:int=12)->object:
+def task_role(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
     w3 = []
     moon12 = moon()
@@ -480,7 +480,7 @@ def delta_role_project(request, p, r, j,n=12):
 '''
 балансы - один ресурс - один проект
 '''
-def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
+def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, j)
 
     w4 = []
@@ -587,7 +587,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 '''
 балансы - один ресурс
 '''
-def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
+def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
 
     people_rr = real_people(role)
@@ -935,7 +935,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 '''
 балансы - один проект
 '''
-def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
+def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []

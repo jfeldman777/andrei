@@ -33,9 +33,9 @@ urlpatterns = [
     path("b/<int:n>/", vvv.balance_map, name="balance_map"),
     
     
-    path("tasks_r/<int:p>/<int:r>/<int:j>/", vvv.assign_role, name="ur"),
-    path("tasks_j/<int:p>/<int:r>/<int:j>/", vvv.assign_project, name="uj"),
-    path("tasks_jr/<int:p>/<int:r>/<int:j>/", vvv.assign_role_project, name="ujr"),
+    path("tasks_r/<int:p>/<int:r>/<int:j>/", vvv.task_role, name="ur"),
+    path("tasks_j/<int:p>/<int:r>/<int:j>/", vvv.task_project, name="uj"),
+    path("tasks_jr/<int:p>/<int:r>/<int:j>/", vvv.task_role_project, name="ujr"),
 
     
     path("needs_j/<int:p>/<int:r>/<int:j>/", vvv.needs_project, name="mmj"),
@@ -47,9 +47,9 @@ urlpatterns = [
     path("delta_jr/<int:p>/<int:r>/<int:j>/", vvv.delta_role_project, name="djr"),
     
     
-    path("balance_r/<int:p>/<int:r>/<int:j>/", vvv.all_role, name="ar"),
-    path("balance_j/<int:p>/<int:r>/<int:j>/", vvv.all_project, name="aj"),
-    path("balance_jr/<int:p>/<int:r>/<int:j>/", vvv.all_role_project, name="ajr"),
+    path("balance_r/<int:p>/<int:r>/<int:j>/", vvv.balance_role, name="ar"),
+    path("balance_j/<int:p>/<int:r>/<int:j>/", vvv.balance_project, name="aj"),
+    path("balance_jr/<int:p>/<int:r>/<int:j>/", vvv.balance_role_project, name="ajr"),
     
     
     path("max/", vvv.available_all, name="mrom"),
