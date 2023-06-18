@@ -84,7 +84,7 @@
               </th>
             </tr>
             <tr>
-              <th  style="border:1;border-color:grey;background-color:white">
+              <th  style="border:none;border-color:grey;background-color:white">
                 <form id="f10" method="POST">
                   {% csrf_token %} <input type=hidden name="html" value='delta_jr'>
                   <button type="submit" class="button3" disabled="true">Сохранить</button>
@@ -99,7 +99,7 @@
 
 
               <td class=" {{t.class}}" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
-                style="background-color:{{t.color}};border:1;border-color:white;">
+                style="background-color:{{t.color}};border:none;border-color:white;">
 
 
                 {{t.val}}
@@ -121,7 +121,7 @@
             </tr>
               <th
 
-               style="text-align:center;border:1;border-color:grey;background-color:white;color:black"
+               style="text-align:center;border:none;background-color:white;color:black"
 
               >Сотрудник
                 {% include 'moon.html' %}

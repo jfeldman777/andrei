@@ -13,7 +13,7 @@ position:absolute;top:78px;" id=t00>
                 <tr style=" height: 42vh; ">
     <td width=50% >
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;border:1;
+        <table border=none style="position:relative;top:0;border:none;
         border-color:white;" class="balance" width=100%>
           <thead>
             <tr>
@@ -22,7 +22,7 @@ position:absolute;top:78px;" id=t00>
               <th>
             </tr>
             <tr>
-              <th style="background:white;border:1;border-color:grey;color:black;">{{project}}
+              <th style="background:white;border:none;border-color:grey;color:black;">{{project}}
                 {% include 'moon.html' %}
                 {% for dem in w1 %}
             <tr>
@@ -43,7 +43,7 @@ position:absolute;top:78px;" id=t00>
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border:1;border-color:white;">
+        <table border=1 width=100% style="position:relative;top:0;border:none;border-color:white;">
           <thead>
             <tr>
               <th colspan=13>
@@ -51,7 +51,7 @@ position:absolute;top:78px;" id=t00>
               <th>
             </tr>
             <tr>
-             <th style="background:white;border:1;border-color:grey;color:black;">
+             <th style="background:white;border:none;border-color:grey;color:black;">
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='delta_j'>
@@ -83,7 +83,7 @@ position:absolute;top:78px;" id=t00>
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border:1;border-color:white;">
+        <table border=1 width=100% style="position:relative;top:0;border:none;border-color:white;">
           <thead>
             <tr>
               <th colspan=13>
@@ -94,8 +94,8 @@ position:absolute;top:78px;" id=t00>
 
               <th>
             </tr>
-            <tr style="background-color:white;border:1;border-color:grey;">
-         <th style="background-color:white;border:1;border-color:grey;color:black;">
+            <tr style="background-color:white;border:none;border-color:grey;">
+         <th style="background-color:white;border:none;color:black;">
 
                 <form id="f10" method="POST">
                   {% csrf_token %}
@@ -143,7 +143,7 @@ position:absolute;top:78px;" id=t00>
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th style="background:white;border:1;border-color:grey;color:black;">Сотрудник
+              <th style="background:white;border:none;color:black;">Сотрудник
                 {% include 'moon.html' %}
                 {% for tt in w4 %}
             <tr>

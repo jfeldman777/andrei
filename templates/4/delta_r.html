@@ -15,11 +15,11 @@
 <div class="bar">
   <h4>Все проекты - Ресурс: {{role}}</h4>
 </div>
-<table width=100% style=" height: 92vh; position:absolute;top:78px;border:1;border-color:white;" id=t00>
+<table width=100% style=" height: 92vh; position:absolute;top:78px;border:none;border-color:white;" id=t00>
                 <tr style=" height: 42vh; ">
     <td width=50% >
       <div class="table-container-2">
-        <table border=1 style="border:1;border-color:white;
+        <table border=none style="border:none;border-color:white;
         position:relative;top:0;" class="balance" width=100%>
           <thead>
             <tr>
@@ -28,7 +28,7 @@
               </th>
             </tr>
             <tr>
-           <th style="background:white;border:1;border-color:grey;color:black;">
+           <th style="background:white;border:none;border-color:white;color:black;">
                 Проект</th>
               {% include 'moon.html' %}
               {% for dem in w1 %}
@@ -57,7 +57,7 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="border:1;border-color:white;
+        <table width=100% style="border:none;border-color:white;
         position:relative;top:0;background-color:white;" class=in>
           <thead>
             <tr>
@@ -67,7 +67,7 @@
                 </a>
               </th>
             </tr><tr>
-      <th style="background:white;border:1;border-color:grey;color:black;">
+      <th style="background:white;border:none;border-color:grey;color:black;">
               <form id="f20" method="POST">
                 {% csrf_token %}
                 <input type=hidden name="html" value='delta_r'>
@@ -104,7 +104,7 @@
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="border:1;border-color:white;
+        <table  width=100% style="border:none;border-color:white;
         position:relative;top:0;background-color:white;" >
           <thead>
             <tr>
@@ -116,7 +116,7 @@
               </th>
             </tr>
             <tr>
-              <th style="background:white;border:1;border-color:grey;color:black;">    <form id="f10" method="POST">
+              <th style="background:white;border:none;color:black;">    <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='delta_r'>
                   <button type="submit" class="button3" disabled="true"> Сохранить</button>
@@ -149,14 +149,14 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 style="
+        <table border=none style="
         position:relative;top:0;background-color:white;" width=100% class="dif in">
           <thead>
             <tr>
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-       <th style="background:white;border:1;border-color:grey;color:black;">
+       <th style="background:white;border:none;border-color:grey;color:black;">
                 Сотрудник
                 {% include 'moon.html' %}
                 {% for tt in w4 %}

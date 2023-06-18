@@ -12,14 +12,14 @@
                 <tr style=" height: 42vh; ">
     <td width=50% >
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;border-color:white;" class="balance" width=100%>
+        <table border=none style="position:relative;top:0;border-color:white;" class="balance" width=100%>
           <thead>
             <tr>
               <th colspan=13>Балансы (<a href="/delta_j/0/0/{{j}}" style="color:white;">дельта</a>)
               </th>
-            </tr>=
+            </tr>
             <tr>
-               <th style="background:white;border:1;border-color:grey;color:black;">
+               <th style="background:white;border:none;border-color:grey;color:black;">
                 {{project}}
                 {% include 'moon.html' %}
                 {% for dem in w1 %}
@@ -50,7 +50,7 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border-color:white;">
+        <table border=none width=100% style="position:relative;top:0;border-color:white;">
           <thead>
             <tr>
               <th colspan=13>
@@ -58,7 +58,7 @@
               <th>
             </tr>
             <tr>
-          <th style="background:white;border:1;border-color:grey;color:black;">
+          <th style="background:white;border:none;border-color:grey;color:black;">
 
                 <form id="f20" method="POST">
                   {% csrf_token %}
@@ -88,7 +88,7 @@
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border-color:white;">
+        <table border=none width=100% style="position:relative;top:0;border-color:white;">
           <thead>
             <tr>
               <th colspan=13>
@@ -97,7 +97,7 @@
               </th>
             </tr>
             <tr>
-             <th style="background:white;border:1;border-color:grey;color:black;">
+             <th style="background:white;border:none;border-color:grey;color:black;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_j'>
@@ -139,7 +139,7 @@
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-         <th style="background:white;border:1;border-color:grey;color:black;">
+         <th style="background:white;border:none;border-color:grey;color:black;">
                 Сотрудник
                 {% include 'moon.html' %}
           </thead>

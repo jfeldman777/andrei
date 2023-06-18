@@ -9,13 +9,13 @@
   <h4>Все проекты - Ресурс: {{role}}</h4>
 </div>
 
-<table width=100% style=" height: 92vh;border:1;border-color:white;
+<table width=100% style=" height: 92vh;border:none;border-color:white;
  position:absolute;top:78px;"
        id=t00>
                 <tr style=" height: 42vh; ">
     <td width=50% >
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;border:1;border-color:white;"
+        <table border=none style="position:relative;top:0;border:none;border-color:white;"
                class="balance" width=100%>
           <thead>
             <tr>
@@ -23,7 +23,7 @@
               <th>
             </tr>
             <tr>
-        <th style="background:white;border:1;border-color:grey;color:black;">
+        <th style="background:white;border:none;border-color:grey;color:black;">
                       {{role}}
                 {% include 'moon.html' %}
                 {% for dem in w1 %}
@@ -53,8 +53,8 @@
     </td>
     <td width=50% id=td2>
       <div class="table-container-2">
-        <table border=1 width=100%
-               style="position:relative;top:0;background-color:white;border:1;border-color:white;s" id=t12>
+        <table border=none width=100%
+               style="position:relative;top:0;background-color:white;border:none;border-color:white;s" id=t12>
           <thead>
             <tr>
               <th colspan=13>
@@ -64,7 +64,7 @@
               </th>
             </tr>
             <tr>
-        <th style="background:white;border:1;border-color:grey;color:black;">
+        <th style="background:white;border:none;border-color:grey;color:black;">
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_r'>
@@ -105,7 +105,7 @@
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border:1;border-color:white;
+        <table border=none width=100% style="position:relative;top:0;border:none;border-color:white;
         background-color:white;">
           <thead>
             <tr>
@@ -117,7 +117,7 @@
             </tr>
 
             <tr>
-        <th style="background:white;border:1;border-color:grey;color:black;">
+        <th style="background:white;border:none;border-color:grey;color:black;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_r'>
@@ -162,14 +162,14 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 style="border:1;border-color:white;
+        <table border=none style="border:none;border-color:white;
         position:relative;top:0;background-color:white;" width=100% class="dif">
           <thead>
             <tr>
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th style="background:white;border:1;border-color:grey;color:black;">
+              <th style="background:white;border:none;border-color:grey;color:black;">
                 Сотрудник
                 {% include 'moon.html' %}
                 {% for tt in w4 %}
