@@ -72,6 +72,12 @@ def needs_on_span(r:object, j:object, n:int)->int:
 '''
 
 def balance_map(request:object, n:int)->object:
+
+    delt = -4;
+
+    colr = 251;
+
+
     projects = Project.objects.all()
     roles = Role.objects.all()
     xy = [0] * len(projects)
@@ -83,8 +89,13 @@ def balance_map(request:object, n:int)->object:
         txy[j] = {"val": roles[j].title, "link": f"/delta_r/0/{roles[j].id}/0/"}
 
     for i in range(len(projects)):
-        xy[i][0] = {"val": projects[i], "link": f"/delta_j/0/0/{projects[i].id}/"}
+        col = colr + delt
+        delt = 0 - delt
+        xy[i][0] = {"color": f"rgb({col},{col},{col})",
+            "val": projects[i], "link": f"/delta_j/0/0/{projects[i].id}/"}
+
         for j in range(len(roles)):
+
             project = projects[i]
             role = roles[j]
             x = round(100 * delta_on_span(role, project, n) / needs_on_span(role, project, n))
@@ -94,7 +105,7 @@ def balance_map(request:object, n:int)->object:
             elif x >= 20:
                 color = "pink"
             else:
-                color = "white"
+                color = f"rgb({col},{col},{col})"
 
             xy[i][j + 1] = {
                 "val": f"{x}%",
