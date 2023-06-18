@@ -128,8 +128,10 @@ table, td {
 
 
 .hborder {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
     border-left: none;
     border-right: none;
+        color:black;
+    background-color:white;
 }
