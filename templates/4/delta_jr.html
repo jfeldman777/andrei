@@ -15,7 +15,8 @@
         <table border=1 style="position:relative;top:0;border-color:white;" class="balance" width=100%>
           <thead>
             <tr>
-              <th colspan=13  style="border:1;border-color:white;">Балансы</th>
+              <th colspan=13  style="border:1;border-color:white;">
+                Балансы (<a href="/balance_jr/0/{{r}}/{{j}}" style="color:white;" >подробнее</a>)</th>
             </tr>
             <tr  style="border:1;border-color:white;">
               {% include 'moon.html' %}
@@ -27,11 +28,9 @@
               </td>
               {% endfor %}
             </tr>
-            {% endfor %}<tr>
-              <td colspan=13  style="border:1;border-color:white;">
-                <a href="/balance_jr/0/{{r}}/{{j}}" >подробнее</a>
-              </td>
-            <tr>
+            {% endfor %}
+
+
               </tbody>
         </table>
       </div>

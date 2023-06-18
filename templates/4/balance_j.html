@@ -15,8 +15,9 @@
         <table border=1 style="position:relative;top:0;border-color:white;" class="balance" width=100%>
           <thead>
             <tr>
-              <th colspan=13>Балансы</th>
-            </tr>
+              <th colspan=13>Балансы (<a href="/delta_j/0/0/{{j}}" style="color:white;">дельта</a>)
+              </th>
+            </tr>=
             <tr>
                <th style="background:white;border:1;border-color:grey;color:black;">
                 {{project}}
@@ -32,11 +33,11 @@
               {% endif %}
               {% else %}
               <td>
-                {% if t|isstr:'Дельта' %}
-                <a href="/delta_j/0/0/{{j}}" >{{t}}</a>
-                {% else %}
+
+
+
                 {{t}}
-                {% endif %}
+
               </td>
               {% endif %}
               {% endfor %}

@@ -5,7 +5,7 @@
 
   <h5>Дорожная карта</h5>
 
-<table id="example" class="display compact" style="width:100%;">
+<table  class="display" style="width:100%;">
   <thead>
 
     <tr>
@@ -13,9 +13,9 @@
     <th>
         Проект
     </th>
-    <th style="text-align: left;  padding: 5px;">Начало</th>
-    <th style="text-align: left;  padding: 5px;">Окончание</th>
-    <th style="text-align: left;  padding: 5px;">Длит<br>(мес)</th>
+    <th style="text-align: left; ">Начaло</th>
+    <th style="text-align: left;  ">Оконч.</th>
+    <th style="text-align: left; ">Длит.<br>(мес)</th>
 
     {% include 'moon.html' %}
     {% for row in matrix %}
@@ -41,8 +41,8 @@
       {% endfor %}
 
     {% endfor %}</tr>
-</table>
+  </thead></table>
 
-{% include 'data.html' %}
+{% include 'data2.html' %}
 
 {% endblock %}

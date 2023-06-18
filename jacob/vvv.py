@@ -218,7 +218,7 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             tclass = ""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(150,150,150)"
+                color = "rgb(211,211,211)"
                 if delta[i] < 0:
                     color = "#B266FF"
             elif delta[i] < 0:
@@ -281,7 +281,7 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 tclass=""
                 color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "rgb(150,150,150)"
+                    color = "rgb(211,211,211)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
@@ -338,7 +338,7 @@ def assign_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                 tclass=""
                 color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "rgb(150,150,150)"
+                    color = "rgb(211,211,211)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
@@ -401,7 +401,7 @@ def delta_role_project(request, p, r, j,n=12):
         tcolor = ""
         color = "rgb(240,240,240)"
         if mon_outside_prj(d, project):
-            color = " rgb(150,150,150) "
+            color = " rgb(211,211,211) "
         elif dem_rj[i] > 0:
             color = "lightblue"
         else:
@@ -427,7 +427,7 @@ def delta_role_project(request, p, r, j,n=12):
             tcolor=""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(150,150,150)"
+                color = "rgb(211,211,211)"
                 if delta[i] < 0:
                     color = "#B266FF"
             elif delta[i] < 0:
@@ -506,7 +506,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         tclass= ""
         color = "rgb(240,240,240)"
         if mon_outside_prj(d, project):
-            color = "rgb(150,150,150)"
+            color = "rgb(211,211,211)"
         elif dem_rj[i + 1] > 0:
             color = "lightblue"
         else:
@@ -535,7 +535,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             tclass=""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(150,150,150)"
+                color = "rgb(211,211,211)"
                 if delta[i + 1] < 0:
                     color = "#B266FF"
             elif delta[i + 1] < 0:
@@ -619,7 +619,7 @@ def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
             tclass = ""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(150,150,150)"
+                color = "rgb(211,211,211)"
             elif dem_rj[i + 2] > 0:
                 color = "lightblue"
             else:
@@ -649,7 +649,7 @@ def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                 tclass = ""
                 color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "rgb(150,150,150)"
+                    color = "rgb(211,211,211)"
                     if delta[i + 1] < 0:
                         color = "#B266FF"
                 elif delta[i + 1] < 0:
@@ -739,7 +739,7 @@ def delta_role(request, p, r, j,n=12):
             tclass=""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(150,150,150)"
+                color = "rgb(211,211,211)"
             elif dem_rj[i + 2] > 0:
                 color = "lightblue"
             else:
@@ -768,7 +768,7 @@ def delta_role(request, p, r, j,n=12):
                 tclass=""
                 color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color =  "rgb(150,150,150)"
+                    color =  "rgb(211,211,211)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
@@ -846,7 +846,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             tclass=""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(150,150,150)"
+                color = "rgb(211,211,211)"
             elif dem_rj[i] > 0:
                 color = "lightblue"
             else:
@@ -882,7 +882,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 tclass=""
                 color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "rgb(150,150,150)"
+                    color = "rgb(211,211,211)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
@@ -957,7 +957,7 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             tclass=""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(150,150,150)"
+                color = "rgb(211,211,211)"
             elif dem_rj[i] > 0:
                 color = "lightblue"
             else:
@@ -989,7 +989,7 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 tclass=""
                 color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color =  "rgb(150,150,150)"
+                    color =  "rgb(211,211,211)"
                     if delta[i + 1] < 0:
                         color = "#B266FF"
                 elif delta[i + 1] < 0:
@@ -1059,7 +1059,7 @@ def needs_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         tclass = ""
         color = "rgb(240,240,240)"
         if mon_outside_prj(d, project):
-            color = "rgb(150,150,150)"
+            color = "rgb(211,211,211)"
         elif dem_rj[i] > 0:
             color = "lightblue"
         else:
@@ -1104,13 +1104,16 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             tclass = ""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(150,150,150)"
+                color = "rgb(211,211,211)"
             elif dem_rj[i] > 0:
                 color = "lightblue"
+            else :
+                tclass="color"
             a_w2[i] = {
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
                 "color": color,
+                "class":tclass+ "  good"
             }
             d = inc(d)
         w2.append([{"class":"color","val": role.title}] + a_w2)
@@ -1146,16 +1149,19 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
             tclass = ""
             color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "rgb(150,150,150)"
+                color = "rgb(211,211,211)"
             elif dem_rj[i] > 0:
                 color = "lightblue"
+            else:
+                tclass="color"
             a_w2[i] = {
                 "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
                 "color": color,
+                "class": tclass+" good"
             }
             d = inc(d)
-        w2.append([{"val": project.title}] + a_w2)
+        w2.append([{"class":"color","val": project.title}] + a_w2)
 
     moon12["w2"] = w2
 

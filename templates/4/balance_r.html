@@ -19,7 +19,7 @@
                class="balance" width=100%>
           <thead>
             <tr>
-              <th colspan=13>Балансы
+              <th colspan=13>Балансы (<a href="/delta_r/0/{{r}}/0/"  style="color:white;">дельта</a>)
               <th>
             </tr>
             <tr>
@@ -37,11 +37,9 @@
               {% endif %}
               {% else %}
               <td>
-                {% if t|isstr:'Дельта' %}
-                <a href="/delta_r/0/{{r}}/0/" class="aad">{{t}}</a>
-                {% else %}
+
                 {{t}}
-                {% endif %}
+
               </td>
               {% endif %}
               {% endfor %}

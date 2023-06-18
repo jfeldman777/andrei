@@ -7,8 +7,7 @@
   <h5>Относительная нехватка ресурсов {{hh}} вперед</h5>
 
 
-
-<table id="example" class="display compact" style="width:100%">
+<table class="display compact" style="width:100%">
   <thead>
 
       <tr>
@@ -27,16 +26,16 @@
         {% for x in xy %}
 
         {% if forloop.first %}
-        <td style="background-color:{{x.color}}; width:150px;"><a href="{{x.link}}" class="bj">
-           {{x.val}}
+        <td style="background-color:{{x.color}}; width:150px;" class="hborder"><a href="{{x.link}}" >
+          {{x.val}}</a></td>
             {% else %}
 
-        <td style="background-color:{{x.color}}; width:100px;">
-        <a href="{{x.link}}" class="brj">
+        <td style="background-color:{{x.color}}; width:100px;" class="hborder">
+        <a href="{{x.link}}" >
             {{x.val}}
           </a>
-            {% endif %}
-        </td>
+
+        </td>{% endif %}
         {% endfor %}
       </tr>
       {% endfor %}

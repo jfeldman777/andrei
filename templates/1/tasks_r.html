@@ -4,16 +4,21 @@
 {% load static %}
 
 
-  <h5>Все проекты - Ресурс: {{role}}</h5>
+  <h5>Все проекты - Ресурс: {{role}} -
+
+<a href="/delta_jr/0/{{r}}/{{j}}" style="color:black;">
+          Загрузки</a></h5>
 
 
 <table id="example" class="display compact" style="width:100%">
   <thead>
     <tr  style="text-align:center;">
-      <th>
+      <th class="hborder" style="text-align:center;">
+        Проект
+
       </th>
 
-      <th>
+     <th class="hborder" style="text-align:center;">
         Сотрудник
 
         {% include 'moon.html' %}
@@ -35,7 +40,7 @@
   </tbody>
 </table>
 
-{% include 'data.html' %}
+{% include 'data2.html' %}
 
 
   <form id="f10" method="POST" action="/save_task/">
