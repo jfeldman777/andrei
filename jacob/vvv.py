@@ -7,7 +7,7 @@ from .db import get_prj_triplet, rest_of_time_pr_12, time_available_person_role_
 from .db import task_person_role_project_12, real_and_virtual_people, real_people
 from .utils import *
 from datetime import date
-from .models import UserProfile, Grade
+from .models import UserProfile, Grade, Wish
 from .view_forms import role_form
 from django.urls import resolve
 
@@ -236,6 +236,10 @@ def task_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
                 color = "pink"
             elif a_w3[i] > 0:
                 color = "lightblue"
+            else:
+                tclass="color"
+
+
             try:
                 df = diff[i]
             except:
@@ -246,6 +250,7 @@ def task_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
                 "val": a_w3[i],
                 "color": color,
                 "fire": df < 0,
+                "class":tclass
             }
             d = inc(d)
         up1 = ''
@@ -277,6 +282,7 @@ def task_project(request:object, p:int, r:int, j:int, n:int=12)->object:
 
     roles = Role.objects.all()
     for role in roles:
+        wish = Wish.objects.get(role=role,project=project,)
         delta = delta_role_project_12(role, project,n)
         people = real_and_virtual_people(role)
         dem_rj = needs_role_project_12(person,role, project,n)  # ----------------
@@ -299,12 +305,15 @@ def task_project(request:object, p:int, r:int, j:int, n:int=12)->object:
                     color = "pink"
                 elif a_w3[i] > 0:
                     color = "lightblue"
+                else:
+                    tclass = "color"
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
-                    "up": up(max(-delta[i], 0), diff[i]),
-                    "val": a_w3[i], #if a_w3[i]!=0 else '*',
+                    "up": up(max(-delta[i], 0), diff[i],wish),
+                    "val": a_w3[i],
                     "color": color,
                     "fire": diff[i] < 0,
+                    'class':tclass
                 }
                 d = inc(d)
 
@@ -332,6 +341,7 @@ def task_project(request:object, p:int, r:int, j:int, n:int=12)->object:
 '''
 def task_role(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
+    wish = Wish.objects.get(role=role, project=project, )
     w3 = []
     moon12 = moon()
     people = real_and_virtual_people(role)

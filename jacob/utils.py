@@ -14,12 +14,15 @@ from datetime import date, timedelta
 '''
 Всплывающая подсказка
 '''
-def up(a: int, b: int) -> str:
+def up(a: int, b: int,c:str='') -> str:
+    cs = ''
+    if c!='':
+        cs = f"пожелание:{c}"
     if not isinstance(a, int):
-        return ""
+        return cs
     if b < 0 or b > 88888:
-        return f"надо:{a}"
-    return f"надо:{a}/есть:{b}"
+        return f"{cs}|надо:{a}"
+    return f"{cs}|надо:{a}|есть:{b}"
 
 '''
 Используется при тестировании для стандартизации вызова

@@ -51,7 +51,7 @@ position:absolute;top:78px;" id=t00>
               <th>
             </tr>
             <tr>
-             <th style="background:white;border:none;border-color:grey;color:black;">
+             <th style="background:white;border:none;border-color:white;color:black;">
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='delta_j'>
@@ -88,13 +88,13 @@ position:absolute;top:78px;" id=t00>
             <tr>
               <th colspan=13>
 
-                <a href="/tasks_j/0/0/{{j}}" style="color:white;" class="uuu">
+                <a href="/tasks_j/0/0/{{j}}" style="color:white;" >
                   Загрузки</a>
 
 
-              <th>
+              </th>
             </tr>
-            <tr style="background-color:white;border:none;border-color:grey;">
+            <tr style="background-color:white;border:none;border-color:white;">
          <th style="background-color:white;border:none;color:black;">
 
                 <form id="f10" method="POST">
@@ -111,7 +111,7 @@ position:absolute;top:78px;" id=t00>
               {% if t|negative %}{% else %}
 
 
-              <td colspan=13 style="background-color:white;border:1;border-color:grey;">{{t}}</td>
+              <td colspan=13 style="background-color:white;border:none;border-color:grey;">{{t}}</td>
             </tr>
             <tr>
               {% endif %}
