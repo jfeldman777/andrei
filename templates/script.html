@@ -58,11 +58,12 @@
       input.value = newValue;
 
 
-      //var container = $(this)
-      //input.style.width = cellWidth + "px";
-      //input.style.height = cellHeight + "px";
+      var container = $(this)
+      input.style.width = cellWidth + "px";
+      input.style.height = cellHeight + "px";
       //Add the new input element to the form
       form.appendChild(input);
+      alert(form);
     });
   });
 

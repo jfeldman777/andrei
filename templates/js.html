@@ -24,15 +24,15 @@
           //[k].style.borderColor = 'rgb(255,255,255)';
 
 
-
+            if (k==0) cells[k].style.backgroundColor = sy;
+            //else cells[k].style.backgroundColor = sx;
     cells[k].style.borderTop = '1px solid darkgray';  // задаем верхнюю границу
     cells[k].style.borderBottom = '1px solid darkgray';  // задаем нижнюю границу
     cells[k].style.borderLeft = 'none';  // убираем левую границу
     cells[k].style.borderRight = 'none';  // убираем правую границу
 
 
-            if (k==0) cells[k].style.backgroundColor = sy;
-            else cells[k].style.backgroundColor = sx;
+
 
           if (tables[i].classList.contains("dif")) {
             if (cells[k].innerHTML < 0) {
