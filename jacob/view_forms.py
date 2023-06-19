@@ -117,10 +117,15 @@ def project_form(request, id=None):
             form.save()
             return redirect("prjlist")
     else:
-        initial_data = {}
         if instance is not None:
-            initial_data = {'general': instance.general.fio}
-        form = ProjectForm(instance=instance, initial=initial_data)
+            print(instance.start_date, instance.end_date)
+
+            from django.utils.dateformat import format
+
+            instance.start_date = format(instance.start_date, 'Y-m-d')
+            instance.end_date = format(instance.end_date, 'Y-m-d')
+
+        form = ProjectForm(instance=instance)
 
     return render(request, "form.html", {"form": form,"title":"Проект","button":button})
 

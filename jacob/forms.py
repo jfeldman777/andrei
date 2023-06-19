@@ -145,7 +145,9 @@ class ProjectForm(forms.ModelForm):
                                  widget=forms.DateInput(attrs={'type': 'date'})
                                  )
     end_date = forms.DateField(label="Окончание",
-                               widget=forms.DateInput(attrs={'type': 'date'}))
+                               widget=forms.DateInput(attrs={'type': 'date'}, format='%d.%m.%Y'))
+
+
 
     title = forms.CharField(
         label="Название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
