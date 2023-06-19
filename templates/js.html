@@ -1,4 +1,4 @@
-<script>var delta = 4;
+<script>var delta = -4;
   var colr = 251;
   var x;
 
@@ -15,9 +15,18 @@
         var cells = rows[j].getElementsByTagName("td");
         for (var k = 0; k < cells.length; k++) {
 
+
           if (cells[k].classList.contains("color")) cells[k].style.backgroundColor = sx;
-          cells[k].style.borderColor = 'rgb(255,255,255)';
-//if (tables[i].classList.contains("duo"))cells[k].style.backgroundColor = sx;
+          //[k].style.borderColor = 'rgb(255,255,255)';
+
+
+
+    cells[k].style.borderTop = '1px solid darkgray';  // задаем верхнюю границу
+    cells[k].style.borderBottom = '1px solid darkgray';  // задаем нижнюю границу
+    cells[k].style.borderLeft = 'none';  // убираем левую границу
+    cells[k].style.borderRight = 'none';  // убираем правую границу
+
+
 
 
           if (tables[i].classList.contains("dif")) {
