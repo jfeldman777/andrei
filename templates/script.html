@@ -16,7 +16,7 @@
     if (x == '0') x = '';
 
     var ID = new Date().getTime();
-    $(this).html('<input type="text" id=' + ID + ' size="1" maxlength="7" value="' + x + '">');
+    $(this).html('<input type="text" id=' + ID + ' size="4" maxlength="7" value="' + x + '">');
 
     element = document.getElementById(ID);
     element.focus();
@@ -56,16 +56,13 @@
       input.type = 'hidden';
       input.name = p;
       input.value = newValue;
-      var cellWidth = $(this).clientWidth - 4;
-      var cellHeight = $(this).clientHeight - 2;
 
-      var container = $(this)
-      input.style.width = cellWidth + "px";
-      input.style.height = cellHeight + "px";
+
+      //var container = $(this)
+      //input.style.width = cellWidth + "px";
+      //input.style.height = cellHeight + "px";
       //Add the new input element to the form
       form.appendChild(input);
-
-
     });
   });
 

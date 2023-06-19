@@ -3,10 +3,11 @@
 {% block content %}
 {% load static %}
 
-  <h5>Проект: {{project}} - Ресурсный пул: {{role}} - Потребность</h5>
+  <h5>Проект: {{project}} - Ресурсный пул: {{role}} -
+<a href="/delta_jr/0/{{r}}/{{j}}" style="color:black;">Потребность
+          </a></h5>
 
-
-<table class="display compact" style="width:100%;">
+<table class="display compact duo" style="width:100%;">
   <thead>
     <tr style="text-align:center;">
 
@@ -24,7 +25,7 @@
       </tbody>
 
 </table>
-{% include 'data4.html' %}
+{% include 'data2.html' %}
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='needs_jr'>
           </form>

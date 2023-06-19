@@ -3,13 +3,15 @@
 {% block content %}
 {% load static %}
 
+
   <h5>
     Все ресурсные пулы</h5>
 
-<table id="example" class="display compact" style="width:100%">
+
+<table class="display compact dif" style="width:100%">
 
    <thead>
-    <tr>
+    <tr style="text-align: left; ">
       <th>Руководитель</th>
       <th>Ресурсный пул</th>
       <th>Максимальная доступность</th>
@@ -21,7 +23,7 @@
     </thead><tbody>
     <tr>
       {% for cell in data2 %}
-      <td style="text-align: center; ">
+      <td style="text-align:left;">
 
         {{ cell.name }}
 
@@ -31,7 +33,7 @@
         {{ cell.title }}
       </a>
       </td>
-      <td style="text-align: left; ">
+      <td>
         <a href="/max_r/0/{{cell.r}}/0/">
           Изменить
         </a>
@@ -59,6 +61,6 @@
     {% endfor %}</tbody>
 </table>
 
-{% include 'data.html' %}
+{% include 'data2.html' %}
 
 {% endblock %}

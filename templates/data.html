@@ -2,13 +2,18 @@
 <script>
 
   $(document).ready(function () {
-      $('#example').DataTable({
-          scrollY: '70vh',
-          scrollCollapse: true,
+      $('.display').DataTable({
+
+        "stripeClasses": [ 'odd-row', 'even-row' ],
+
+       "lengthChange": false,
+
           paging: false,
+          info:false,
+          ordering:false,
           language: {
     search: 'Поиск: ',
-    url: "/dataTables/i18n/ru_ru.lang",
+
 
 
     "decimal":        ",",
@@ -30,8 +35,8 @@
         "previous":   "предыдущий"
     },
     "aria": {
-        "sortAscending":  ": сортируем-вщзрастает",
-        "sortDescending": ": сортируем-убьывает"
+        "sortAscending":  ": сортируем-возрастает",
+        "sortDescending": ": сортируем-убывает"
     }
   }      });
   });

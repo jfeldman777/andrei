@@ -65,12 +65,14 @@ class Task(models.Model):
     role = models.ForeignKey(to=Role, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return f"{self.project}:{self.month}({self.person})={self.load} "
+        return f"{self.project}:{self.month}:{self.person})={self.load} "
 
 class Wish(models.Model):
     mywish = models.CharField(max_length=80, default="?")
     project = models.ForeignKey(to=Project, on_delete=models.CASCADE)
     role = models.ForeignKey(to=Role, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.project}:{self.role}=>{self.mywish}"
 
 class Grade(models.Model):
     GRADE_CHOICES = [

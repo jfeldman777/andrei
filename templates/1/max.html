@@ -5,11 +5,12 @@
 
   <h5>Максимальная доступность ресурсов</h5>
 
-<table id="example" class="display compact dif">
+<table  class="display compact dif">
   <thead>
 
     <tr>
-      <th style="text-align:center;">Ресурс </th> <th style="text-align:center;">Сотрудник</th>
+      <th style="text-align:center;   border-top: 1px solid grey;">Ресурс </th>
+        <th style="text-align:center;   border-top: 1px solid grey;">Сотрудник</th>
 
         {% include 'moon.html' %}
         {% for tt in dif14 %}
@@ -17,8 +18,8 @@
     <tr>
       {% for t in tt %}
 
-      <td style="background-color:{{t.color}};"
-          class="good" action="/save_max/" fname="f10" key="{{t.link}}" title="осталось {{fire}}%">
+      <td style="background-color:{{t.color}};text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="{{t.link}}">
           {{t.val}}
         {% if t.fire %}
         <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
@@ -34,5 +35,5 @@
           {% csrf_token %}
           <input type=hidden name="html" value='max'>
         </form>
-        {% include 'data.html' %}
+        {% include 'data2.html' %}
 {% endblock %}

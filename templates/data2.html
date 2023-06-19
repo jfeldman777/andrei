@@ -1,26 +1,22 @@
-<style>
-.odd-row {
-    background-color: #f2f2f2; /* Светлый цвет для нечетных рядов */
-}
 
-.even-row {
-    background-color: #dcdcdc; /* Темный цвет для четных рядов */
-}
-
-</style><script>
+<script>
 
   $(document).ready(function () {
       $('.display').DataTable({
-
-        "stripeClasses": [ 'odd-row', 'even-row' ],
-
+           "stripeClasses": [ 'odd-row', 'even-row' ],
        "lengthChange": false,
-      "searching": false,
-      "ordering":false,
-          scrollY: '70vh',
-          scrollCollapse: true,
+         // scrollY: '70vh',
+        //  scrollCollapse: true,
           paging: false,
           info:false,
+
+
+
+      "searching": true,
+      "ordering":true,
+
+
+
           language: {
     search: 'Поиск: ',
 
@@ -52,4 +48,3 @@
   });
 
 </script>
-

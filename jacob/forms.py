@@ -108,10 +108,10 @@ class UserAndProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'password', 'email']
+        fields = ['username', 'password']##, 'email']
         labels = {
             "username": "Логин",
-            'email':"Электронная почта"
+            #'email':"Электронная почта"
         }
     def __init__(self, *args, **kwargs):
             super(UserAndProfileForm, self).__init__(*args, **kwargs)

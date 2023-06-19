@@ -7,7 +7,7 @@ from .db import get_prj_triplet, rest_of_time_pr_12, time_available_person_role_
 from .db import task_person_role_project_12, real_and_virtual_people, real_people
 from .utils import *
 from datetime import date
-from .models import UserProfile, Grade
+from .models import UserProfile, Grade, Wish
 from .view_forms import role_form
 from django.urls import resolve
 
@@ -72,6 +72,12 @@ def needs_on_span(r:object, j:object, n:int)->int:
 '''
 
 def balance_map(request:object, n:int)->object:
+
+    delt = -4;
+
+    colr = 251;
+
+
     projects = Project.objects.all()
     roles = Role.objects.all()
     xy = [0] * len(projects)
@@ -83,8 +89,13 @@ def balance_map(request:object, n:int)->object:
         txy[j] = {"val": roles[j].title, "link": f"/delta_r/0/{roles[j].id}/0/"}
 
     for i in range(len(projects)):
-        xy[i][0] = {"val": projects[i], "link": f"/delta_j/0/0/{projects[i].id}/"}
+        col = colr + delt
+        delt = 0 - delt
+        xy[i][0] = {"color": f"rgb({col},{col},{col})",
+            "val": projects[i], "link": f"/delta_j/0/0/{projects[i].id}/"}
+
         for j in range(len(roles)):
+
             project = projects[i]
             role = roles[j]
             x = round(100 * delta_on_span(role, project, n) / needs_on_span(role, project, n))
@@ -94,7 +105,7 @@ def balance_map(request:object, n:int)->object:
             elif x >= 20:
                 color = "pink"
             else:
-                color = "white"
+                color = f"rgb({col},{col},{col})"
 
             xy[i][j + 1] = {
                 "val": f"{x}%",
@@ -173,7 +184,7 @@ def roles(request:object)->object:
 Заголовок - 12 месяцев
 '''
 def moon(n:int=12)->List[object]:
-    L=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек']
+    L = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек',]
     ym = []
     d = date0()
     for i in range(n):
@@ -194,7 +205,7 @@ def moon4(n: int = 12) -> List[object]:
 '''
 назначения - один ресурс - один проект
 '''
-def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
+def task_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, j)
     w3 = []
 
@@ -215,15 +226,20 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         except:
             p = 0
         for i in range(n):
-            color = "white"
+            tclass = ""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(211,211,211)"
                 if delta[i] < 0:
                     color = "#B266FF"
             elif delta[i] < 0:
                 color = "pink"
             elif a_w3[i] > 0:
                 color = "lightblue"
+            else:
+                tclass="color"
+
+
             try:
                 df = diff[i]
             except:
@@ -234,6 +250,7 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 "val": a_w3[i],
                 "color": color,
                 "fire": df < 0,
+                "class":tclass
             }
             d = inc(d)
         up1 = ''
@@ -257,7 +274,7 @@ def assign_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 '''
 назначения - один проект
 '''
-def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
+def task_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w3 = []
 
@@ -265,6 +282,11 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     roles = Role.objects.all()
     for role in roles:
+        try:
+            wish = Wish.objects.get(role=role,project=project,)
+            print(989)
+        except:
+            wish=''
         delta = delta_role_project_12(role, project,n)
         people = real_and_virtual_people(role)
         dem_rj = needs_role_project_12(person,role, project,n)  # ----------------
@@ -277,21 +299,25 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
             d = date0()
             for i in range(n):
-                color = "white"
+                tclass=""
+                color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "lightgrey"
+                    color = "rgb(211,211,211)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
                     color = "pink"
                 elif a_w3[i] > 0:
                     color = "lightblue"
+                else:
+                    tclass = "color"
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
-                    "up": up(max(-delta[i], 0), diff[i]),
-                    "val": a_w3[i], #if a_w3[i]!=0 else '*',
+                    "up": up(max(-delta[i], 0), diff[i],wish),
+                    "val": a_w3[i],
                     "color": color,
                     "fire": diff[i] < 0,
+                    'class':tclass
                 }
                 d = inc(d)
 
@@ -317,8 +343,9 @@ def assign_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 '''
 назначения - один ресурс
 '''
-def assign_role(request:object, p:int, r:int, j:int,n:int=12)->object:
+def task_role(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
+
     w3 = []
     moon12 = moon()
     people = real_and_virtual_people(role)
@@ -333,9 +360,10 @@ def assign_role(request:object, p:int, r:int, j:int,n:int=12)->object:
             diff = rest_of_time_pr_12(person, role,n)
             d = date0()
             for i in range(n):
-                color = "white"
+                tclass=""
+                color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "lightgrey"
+                    color = "rgb(211,211,211)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
@@ -393,16 +421,21 @@ def delta_role_project(request, p, r, j,n=12):
     dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
 
     d = date0()
+    tcolor=""
     for i in range(n):
-        color = "white"
+        tcolor = ""
+        color = "rgb(240,240,240)"
         if mon_outside_prj(d, project):
-            color = "lightgrey"
+            color = " rgb(211,211,211) "
         elif dem_rj[i] > 0:
             color = "lightblue"
+        else:
+            tcolor="color"
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
             "color": color,
+            "class":tcolor + "  good"
         }  #
 
         d = inc(d)
@@ -416,15 +449,18 @@ def delta_role_project(request, p, r, j,n=12):
         diff = rest_of_time_pr_12(person, role,n)
         d = date0()
         for i in range(n):
-            color = "white"
+            tcolor=""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(211,211,211)"
                 if delta[i] < 0:
                     color = "#B266FF"
             elif delta[i] < 0:
                 color = "pink"
             elif a_w3[i] > 0:
                 color = "lightblue"
+            else:
+                tcolor="color"
 
             try:
                 p = person.id
@@ -438,6 +474,7 @@ def delta_role_project(request, p, r, j,n=12):
                 "up": up(max(-delta[i], 0), df),
                 "val": a_w3[i],
                 "color": color,
+                "class":tcolor+" good ",
             }
             d = inc(d)
 
@@ -448,7 +485,7 @@ def delta_role_project(request, p, r, j,n=12):
             except:
                 grade = '0'
             up1=f" ({grade})"
-        c_w3 = [{"val": person.fio + up1}] + b_w3
+        c_w3 = [{"class":"color","val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
 
@@ -468,7 +505,7 @@ def delta_role_project(request, p, r, j,n=12):
 '''
 балансы - один ресурс - один проект
 '''
-def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
+def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, j)
 
     w4 = []
@@ -491,15 +528,19 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     d = date0()
     for i in range(n):
-        color = "white"
+        tclass= ""
+        color = "rgb(240,240,240)"
         if mon_outside_prj(d, project):
-            color = "lightgrey"
+            color = "rgb(211,211,211)"
         elif dem_rj[i + 1] > 0:
             color = "lightblue"
+        else:
+            tclass=" good color "
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i + 1],
             "color": color,
+            "class":tclass
         }  #
 
         d = inc(d)
@@ -516,21 +557,25 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         diff = rest_of_time_pr_12(person, role)
         d = date0()
         for i in range(n):
-            color = "white"
+            tclass=""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(211,211,211)"
                 if delta[i + 1] < 0:
                     color = "#B266FF"
             elif delta[i + 1] < 0:
                 color = "pink"
             elif a_w3[i] > 0:
                 color = "lightblue"
+            else:
+                tclass=" color"
 
             b_w3[i] = {
                 "link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
                 "up": up(max(-delta[i + 1], 0), diff[i]),
                 "val": a_w3[i],
                 "color": color,
+                "class":tclass + "  good "
             }
 
             d = inc(d)
@@ -541,7 +586,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             except:
                 grade = '0'
             up1=f" ({grade})"
-        c_w3 = [{"val": person.fio + up1}] + b_w3
+        c_w3 = [{"class":"color","val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
 
@@ -567,7 +612,7 @@ def all_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 '''
 балансы - один ресурс
 '''
-def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
+def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
 
     people_rr = real_people(role)
@@ -590,22 +635,27 @@ def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
         zv = ["ВАКАНСИЯ"] + vacancia(role, project)
 
         p200 = project.title
-        a_w2 = [{"val": project.title, "j": project.id, "r": r}] + [0] * n
+        a_w2 = [{"class":"color",
+            "val": project.title, "j": project.id, "r": r}] + [0] * n
         dem_rj = [project.title] + ["Потребность"] + needs_role_project_12(person, role, project,n)  #
 
         d = date0()
         for i in range(n):
-            color = "white"
+            tclass = ""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(211,211,211)"
             elif dem_rj[i + 2] > 0:
                 color = "lightblue"
+            else:
+                tclass="color"
             a_w2[i + 1] = {
                 "val": dem_rj[i + 2],
                 "j": project.id,
                 "r": role.id,
                 "color": color,
                 "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
+                "class": tclass + "  good"
             }
             d = inc(d)
         w2.append(a_w2)  # --------
@@ -621,21 +671,24 @@ def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
             d = date0()
 
             for i in range(n):
-                color = "white"
+                tclass = ""
+                color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "lightgrey"
+                    color = "rgb(211,211,211)"
                     if delta[i + 1] < 0:
                         color = "#B266FF"
                 elif delta[i + 1] < 0:
                     color = "pink"
                 elif a_w3[i] > 0:
                     color = "lightblue"
-
+                else:
+                    tclass = 'color'
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i + 1], 0), diff[i]),
                     "val": a_w3[i],
                     "color": color,
+                    "class":tclass+ "  good"
                 }
                 ##########################################################################3333333
                 d = inc(d)
@@ -646,7 +699,7 @@ def all_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                 except:
                     grade = '0'
                 up1 = f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+            c_w3 = [p100,{"class":"color","val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
@@ -700,6 +753,7 @@ def delta_role(request, p, r, j,n=12):
                 "val": project.title,
                 "j": project.id,
                 "r": role.id,
+                "class": "color"
             }
         ] + [0] * n
 
@@ -707,17 +761,21 @@ def delta_role(request, p, r, j,n=12):
 
         d = date0()
         for i in range(n):
-            color = "white"
+            tclass=""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(211,211,211)"
             elif dem_rj[i + 2] > 0:
                 color = "lightblue"
+            else:
+                tclass='color'
             a_w2[i + 1] = {
                 "val": dem_rj[i + 2],
                 "j": project.id,
                 "r": role.id,
                 "color": color,
                 "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
+                "class": tclass + "  good"
             }
             d = inc(d)
         w2.append(a_w2)  # --------
@@ -732,21 +790,25 @@ def delta_role(request, p, r, j,n=12):
             d = date0()
 
             for i in range(n):
-                color = "white"
+                tclass=""
+                color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "lightgrey"
+                    color =  "rgb(211,211,211)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
                     color = "pink"
                 elif a_w3[i] > 0:
                     color = "lightblue"
+                else:
+                    tclass="color"
 
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i], 0), diff[i]),
                     "val": a_w3[i],
                     "color": color,
+                    "class": tclass + "  good"
                 }
                 ##########################################################################3333333
                 d = inc(d)
@@ -757,7 +819,7 @@ def delta_role(request, p, r, j,n=12):
                 except:
                     grade = '0'
                 up1 = f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+            c_w3 = [p100,{"class":"color","val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
@@ -806,16 +868,19 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
         d = date0()
         for i in range(n):
-            color = "white"
+            tclass=""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(211,211,211)"
             elif dem_rj[i] > 0:
                 color = "lightblue"
-
+            else:
+                tclass='color'
             a_w2[i] = {
                 "val": dem_rj[i],
                 "color": color,
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
+                "class":tclass+ "  good"
             }
 
             d = inc(d)
@@ -826,6 +891,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                     "j": project.id,
                     "val": role.title,
                     "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
+                    "class":"color"
                 }
             ]
             + a_w2
@@ -838,21 +904,25 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             diff = rest_of_time_pr_12(person, role,n)
             d = date0()
             for i in range(n):
-                color = "white"
+                tclass=""
+                color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "lightgrey"
+                    color = "rgb(211,211,211)"
                     if delta[i] < 0:
                         color = "#B266FF"
                 elif delta[i] < 0:
                     color = "pink"
                 elif a_w3[i] > 0:
                     color = "lightblue"
+                else:
+                    tclass="color"
 
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i], 0), diff[i]),
                     "val": a_w3[i],
                     "color": color,
+                    "class":tclass+ "  good"
                 }
                 d = inc(d)
 
@@ -863,7 +933,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 except:
                     grade = '0'
                 up1 = f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+            c_w3 = [p100,{"class":"color","val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
@@ -890,7 +960,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 '''
 балансы - один проект
 '''
-def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
+def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, -1, j)
     w4 = []
     w3 = []
@@ -909,19 +979,22 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
         d = date0()
         for i in range(n):
-            color = "white"
+            tclass=""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(211,211,211)"
             elif dem_rj[i] > 0:
                 color = "lightblue"
-
+            else:
+                tclass='color'
             a_w2[i] = {
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
                 "color": color,
+                "class": tclass + "  good"
             }  #
             d = inc(d)
-        w2.append([{"val": role.title}] + a_w2)
+        w2.append([{"class":"color","val": role.title}] + a_w2)
 
         p100 = role.title
         p200 = role.title
@@ -938,21 +1011,24 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
             d = date0()
             for i in range(n):
-                color = "white"
+                tclass=""
+                color = "rgb(240,240,240)"
                 if mon_outside_prj(d, project):
-                    color = "lightgrey"
+                    color =  "rgb(211,211,211)"
                     if delta[i + 1] < 0:
                         color = "#B266FF"
                 elif delta[i + 1] < 0:
                     color = "pink"
                 elif a_w3[i] > 0:
                     color = "lightblue"
-
+                else:
+                    tclass="color"
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{j}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i + 1], 0), diff[i]),
                     "val": a_w3[i],
                     "color": color,
+                    "class": tclass + "  good"
                 }
                 d = inc(d)
 
@@ -963,7 +1039,7 @@ def all_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 except:
                     grade = '0'
                 up1=f" ({grade})"
-            c_w3 = [p100,{"val": person.fio + up1}] + b_w3
+            c_w3 = [p100,{"class":"color","val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
@@ -1005,15 +1081,19 @@ def needs_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     d = date0()
     for i in range(n):
-        color = "white"
+        tclass = ""
+        color = "rgb(240,240,240)"
         if mon_outside_prj(d, project):
-            color = "lightgrey"
+            color = "rgb(211,211,211)"
         elif dem_rj[i] > 0:
             color = "lightblue"
+        else:
+            tclass = "color"
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
             "color": color,
+            "class": tclass + "  good"
         }
         d = inc(d)
     w2.append(a_w2)
@@ -1046,18 +1126,22 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
         d = date.today().replace(day=15)
         for i in range(n):
-            color = "white"
+            tclass = ""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(211,211,211)"
             elif dem_rj[i] > 0:
                 color = "lightblue"
+            else :
+                tclass="color"
             a_w2[i] = {
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
                 "color": color,
+                "class":tclass+ "  good"
             }
             d = inc(d)
-        w2.append([{"val": role.title}] + a_w2)
+        w2.append([{"class":"color","val": role.title}] + a_w2)
 
     moon12["w2"] = w2
 
@@ -1087,18 +1171,22 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
 
         d = date0()
         for i in range(n):
-            color = "white"
+            tclass = ""
+            color = "rgb(240,240,240)"
             if mon_outside_prj(d, project):
-                color = "lightgrey"
+                color = "rgb(211,211,211)"
             elif dem_rj[i] > 0:
                 color = "lightblue"
+            else:
+                tclass="color"
             a_w2[i] = {
                 "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
                 "color": color,
+                "class": tclass+" good"
             }
             d = inc(d)
-        w2.append([{"val": project.title}] + a_w2)
+        w2.append([{"class":"color","val": project.title}] + a_w2)
 
     moon12["w2"] = w2
 

@@ -14,12 +14,16 @@ from datetime import date, timedelta
 '''
 Всплывающая подсказка
 '''
-def up(a: int, b: int) -> str:
+def up(a: int, b: int,c:str='') -> str:
+    print(777,c)
+    cs = ''
+    if c!='':
+        cs = f"пожелание:{c}"
     if not isinstance(a, int):
-        return ""
+        return cs
     if b < 0 or b > 88888:
-        return f"надо:{a}"
-    return f"надо:{a}/есть:{b}"
+        return f"{cs}|надо:{a}"
+    return f"{cs}|надо:{a}|есть:{b}"
 
 '''
 Используется при тестировании для стандартизации вызова
@@ -36,21 +40,7 @@ from django.urls import reverse
 def date0()->date:
     d = date.today().replace(day=15)
     return d
-#
-# '''
-# дата через год 15го числа
-# '''
-# def date12()->date:
-#     d = date.today().replace(day=15)
-#     d = inc_n(d, 12)
-#     return d
 
-# '''
-# Имя и 12 нулей
-# '''
-# def zero(name: str) -> List[Union[int, str]]:
-#     sum = [name] + [0] * 12
-#     return sum
 
 from datetime import date, timedelta
 from typing import List, Dict

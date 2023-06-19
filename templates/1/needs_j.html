@@ -3,13 +3,15 @@
 {% block content %}
 {% load static %}
 
-  <h5>Проект: {{project}} - Потребность</h5>
+  <h5>Проект: {{project}} -
+      <a href="/delta_j/0/{{r}}/{{j}}" style="color:black;">Потребность
+          </a></h5>
 
 
-<table class="display compact" style="width:100%;">
+<table class="display compact needs" style="width:100%;">
   <thead>
     <tr>
-      <th style="text-align:center;">
+      <th style="text-align:center;" class="hborder">
 Ресурс
 
         {% include 'moon.html' %}
@@ -17,7 +19,7 @@
       <tr style="text-align:center;">
         {% for t in dem %}
 
-        <td class="good" action="/save_needs/" fname="f20" key="{{t.link}}" title="{{t.up}}"
+        <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}" title="{{t.up}}"
           style="background-color: {{t.color}}">
           {{t.val}}
         </td>
@@ -25,7 +27,7 @@
       </tr> {% endfor %}
       </tbody>
 </table>
-{% include 'data4.html' %}
+{% include 'data2.html' %}
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='needs_j'>
           </form>

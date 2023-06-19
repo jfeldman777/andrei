@@ -4,20 +4,23 @@
 {% load static %}
 
   <h5>
-  Ресурсный пул: {{role}} - Потребность</h5>
+  Ресурсный пул: {{role}} -
+      <a href="/delta_r/0/{{r}}/{{j}}" style="color:black;">Потребность
+          </a></h5>
 
 <table id="example" class="display compact" style="width:100%;">
   <thead>
     <tr style="text-align:center;">
 
-      <th>
+      <th class="hborder" style="text-align:center;">
 Проект
         {% include 'moon.html' %}
         {% for dem in w2 %}
         <tr style="text-align:center;">
       {% for t in dem %}
 
-      <td class="good" action="/save_needs/" fname=f10 key="{{t.link}}" title="{{t.up}}" style="background-color:{{t.color}}">
+      <td class="{{t.class}}" action="/save_needs/" fname=f10 key="{{t.link}}" title="{{t.up}}"
+          style="background-color:{{t.color}}">
         {{t.val}}
       </td>
       {% endfor %}
@@ -25,7 +28,7 @@
     </tbody>
 </table>
 
-{% include 'data4.html' %}
+{% include 'data2.html' %}
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='needs_r'>
           </form>

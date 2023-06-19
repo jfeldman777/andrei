@@ -9,18 +9,22 @@
   <h4>Все проекты - Ресурс: {{role}}</h4>
 </div>
 
-<table width=100% style=" height: 92vh; position:absolute;top:78px;" id=t00>
+<table width=100% style=" height: 92vh;border:none;border-color:white;
+ position:absolute;top:78px;"
+       id=t00>
                 <tr style=" height: 42vh; ">
     <td width=50% >
       <div class="table-container-2">
-        <table border=0 style="position:relative;top:0;" class="balance" width=100%>
+        <table border=none style="position:relative;top:0;border:none;border-color:white;"
+               class="balance" width=100%>
           <thead>
             <tr>
-              <th colspan=13>Балансы
+              <th colspan=13>Балансы (<a href="/delta_r/0/{{r}}/0/"  style="color:white;">дельта</a>)
               <th>
             </tr>
             <tr>
-              <th>{{role}}
+        <th style="background:white;border:none;border-color:grey;color:black;">
+                      {{role}}
                 {% include 'moon.html' %}
                 {% for dem in w1 %}
             <tr>
@@ -33,11 +37,9 @@
               {% endif %}
               {% else %}
               <td>
-                {% if t|isstr:'Дельта' %}
-                <a href="/delta_r/0/{{r}}/0/" class="aad">{{t}}</a>
-                {% else %}
+
                 {{t}}
-                {% endif %}
+
               </td>
               {% endif %}
               {% endfor %}
@@ -51,7 +53,8 @@
     </td>
     <td width=50% id=td2>
       <div class="table-container-2">
-        <table border=0 width=100% style="position:relative;top:0;background-color:white;" id=t12>
+        <table border=none width=100%
+               style="position:relative;top:0;background-color:white;border:none;border-color:white;s" id=t12>
           <thead>
             <tr>
               <th colspan=13>
@@ -61,7 +64,7 @@
               </th>
             </tr>
             <tr>
-              <th>
+        <th style="background:white;border:none;border-color:grey;color:black;">
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_r'>
@@ -76,14 +79,14 @@
             <tr>
               {% for t in dem %}
               {% if forloop.first %}
-              <td>
-                <a href="/needs_jr/0/{{t.r}}/{{t.j}}/">
+              <td class="{{t.class}}">
+
                   {{t.val}}
-                </a>
+
                 {% else %}
 
 
-              <td class="good" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
+              <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
                 {{t.val}}
                 {% endif %}
               </td>
@@ -102,7 +105,8 @@
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=0 width=100% style="position:relative;top:0;background-color:white;">
+        <table border=none width=100% style="position:relative;top:0;border:none;border-color:white;
+        background-color:white;">
           <thead>
             <tr>
               <th colspan=13>
@@ -113,7 +117,7 @@
             </tr>
 
             <tr>
-              <th>
+        <th style="background:white;border:none;border-color:grey;color:black;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_r'>
@@ -137,7 +141,7 @@
               {% endif %}
               {% else %}
 
-              <td class="good" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
+              <td class="{{t.class}}" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
                 style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
@@ -158,13 +162,15 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=0 style="position:relative;top:0;background-color:white;" width=100% class="dif">
+        <table border=none style="border:none;border-color:white;
+        position:relative;top:0;background-color:white;" width=100% class="dif">
           <thead>
             <tr>
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th>Сотрудник
+              <th style="background:white;border:none;border-color:grey;color:black;">
+                Сотрудник
                 {% include 'moon.html' %}
                 {% for tt in w4 %}
             <tr>

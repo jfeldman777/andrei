@@ -7,42 +7,42 @@
 
   <h5>Все проекты</h5>
 
-<table class="display compact" style="width:100%">
+<table class="display compact dif" style="width:100%">
    <thead>
     <tr>
-      <th style="text-align:center;">Руководитель</th>
-      <th style="text-align:center;">Проект</th>
-      <th style="text-align:center;">Потребность</th>
-      <th style="text-align:center;">Балансы </th>
+      <th>Руководитель</th>
+      <th>Проект</th>
+      <th>Потребность</th>
+      <th>Балансы </th>
 
-      <th style="text-align:center;">Назначения</th>
+      <th>Назначения</th>
     </tr>
    </thead><tbody>
-    <tr>
+    <tr style="text-align:left;">
       {% for cell in data %}
-      <td>
+      <td style="text-align:left;">
 
         {{ cell.name }}
 
       </td>
-      <td>
+      <td style="text-align:left;">
 
         {{ cell.project }}
       </td>
-      <td >
+      <td style="text-align:left;">
         <a href="/needs_j/0/0/{{cell.j}}">
           Изменить
         </a>
       </td>
 
-      <td >
+      <td style="text-align:left;">
         <a href="/balance_j/0/0/{{cell.j}}">
           Смотреть
         </a>
       </td>
 
 
-      <td >
+      <td style="text-align:left;">
         <a href="/tasks_j/0/0/{{cell.j}}">
           Смотреть
         </a>
@@ -51,7 +51,7 @@
     {% endfor %}
 </tbody>
 </table>
-{% include 'data.html' %}
+{% include 'data2.html' %}
 
 
 {% endblock %}

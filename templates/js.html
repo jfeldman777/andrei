@@ -1,35 +1,60 @@
-<script>
+<script>var delta = 4;
+  var colr = 251;
+  var x;
 
   window.onload = function () {
     var tables = document.getElementsByTagName("table");
     for (var i = 0; i < tables.length; i++) {
-
       var rows = tables[i].getElementsByTagName("tr");
       for (var j = 0; j < rows.length; j++) {
+
+        delta = -delta;
+        x = colr + delta;
+        sx = 'rgb(' + x + ',' + x + ',' + x + ')'
+
         var cells = rows[j].getElementsByTagName("td");
         for (var k = 0; k < cells.length; k++) {
 
+          if (cells[k].classList.contains("color")) cells[k].style.backgroundColor = sx;
+          cells[k].style.borderColor = 'rgb(255,255,255)';
+//if (tables[i].classList.contains("duo"))cells[k].style.backgroundColor = sx;
+
 
           if (tables[i].classList.contains("dif")) {
+          if(!cells[k].classList.contains("long"))
+            cells[k].style.backgroundColor = sx;
+
             if (cells[k].innerHTML < 0) {
               cells[k].style.backgroundColor = "pink";
-            } else if (cells[k].innerHTML == 0) {
+            }
+            if (cells[k].innerHTML == 0) {
               cells[k].style.backgroundColor = "yellow";
-            } else
-              cells[k].style.backgroundColor = "white";
-          }
+            }
+          };
 
 
           if (tables[i].classList.contains("balance")) {
+
             if (cells[k].innerHTML < 0) {
               cells[k].style.backgroundColor = "pink";
             } else
               if (cells[k].innerHTML > 0) {
                 cells[k].style.backgroundColor = "lightblue";
               }
+              else {
+                cells[k].style.backgroundColor = sx;
+              }
           }
-if (cells[k].classList.contains("true")) {
-              cells[k].style.backgroundColor = "lightblue";}
+
+          if (cells[k].classList.contains("true")) {
+            cells[k].style.backgroundColor = "lightblue";
+          }
+
+
+
+
+
+
 
         }
       }

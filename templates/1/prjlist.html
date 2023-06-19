@@ -1,29 +1,31 @@
 {% extends 'base1.html' %}
 {% load custom_filters %}
 {% block content %}
-{% load static %}<h5>
-Дорожная карта</h5>
-<table class="display compact">
+{% load static %}
+
+  <h5>Дорожная карта</h5>
+
+<table  class="display compact" style="width:100%;position:absolute;left:0;">
   <thead>
+
     <tr>
-    <th>Руководитель</th>
-    <th>
-        Проект
-    </th>
-    <th style="text-align: center;  padding: 5px;">Начало</th>
-    <th style="text-align: center;  padding: 5px;">Окончание</th>
-    <th style="text-align: center;  padding: 5px;">Длит<br>(мес)</th>
+    <th style="   border-top: 1px solid grey;">Руководитель</th>
+    <th style="   border-top: 1px solid grey;">
+      Проект&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+    <th style="text-align: left; border-top: 1px solid grey;">Начaло</th>
+    <th style="text-align: left; border-top: 1px solid grey; ">Оконч.</th>
+    <th style="text-align: left;border-top: 1px solid grey; ">Длит.<br>(мес)</th>
 
     {% include 'moon.html' %}
     {% for row in matrix %}
-    <tr>
+    <tr style="text-align: center;  padding: 5px;">
       {% for cell in row %}
       {% if cell|isBool %}
       <td class="{% if cell %}true{% else %}false{% endif %}">
         {% if cell %}*{% else %}-{% endif %}
       </td>
       {% else %}
-      <td>
+      <td style="text-align: left; ">
         {% if cell|isObject %}
         <a href="/project_form/{{cell.id}}/">
 
@@ -38,6 +40,8 @@
       {% endfor %}
 
     {% endfor %}</tr>
-</table>
-{% include 'data4.html' %}
+  </thead></table>
+
+{% include 'data2.html' %}
+
 {% endblock %}

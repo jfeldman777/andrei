@@ -4,32 +4,41 @@
 {% include 'scroll.html' %}
 {% load static %}
 {% include 'nopadding.html' %}
-
+<style>
+.hborder {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: none;
+    border-right: none;
+}
+</style>
 <div class="bar">
   <h4>Все проекты - Ресурс: {{role}}</h4>
 </div>
-<table width=100% style=" height: 92vh; position:absolute;top:78px;" id=t00>
+<table width=100% style=" height: 92vh; position:absolute;top:78px;border:none;border-color:white;" id=t00>
                 <tr style=" height: 42vh; ">
     <td width=50% >
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;" class="balance" width=100%>
+        <table border=none style="border:none;border-color:white;
+        position:relative;top:0;" class="balance" width=100%>
           <thead>
             <tr>
               <th colspan=13>
-                Балансы
+                Балансы (<a href="/balance_r/0/{{r}}/0/" style="color:white;" >подробнее</a>)
               </th>
             </tr>
             <tr>
-              <th>Проект</th>
+           <th style="background:white;border:none;border-color:white;color:black;">
+                Проект</th>
               {% include 'moon.html' %}
               {% for dem in w1 %}
-            <tr>
+            <tr class="hborder">
               {% for t in dem %}
-              <td>
+              <td class="hborder">
                 {% if forloop.first %}
-                <a href="/delta_j/0/0/{{t.j}}">
+
                   {{t.val}}
-                </a>
+
                 {% else %}
                 {{t.val}}
                 {% endif %}
@@ -39,27 +48,26 @@
             </tr>
 
             {% endfor %}
-            <tr>
-              <td colspan=13>
-                <a href="/balance_r/0/{{r}}/0/" class="dda">подробнее</a>
-              </td>
-            <tr>
+
+
+
           <tbody>
         </table>
       </div>
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;background-color:white;" class=in>
+        <table width=100% style="border:none;border-color:white;
+        position:relative;top:0;background-color:white;" class=in>
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/needs_r/0/{{r}}/{{j}}/" style="color: white" class="mmm">
+                <a href="/needs_r/0/{{r}}/{{j}}/" style="color: white" >
                   Потребность
                 </a>
               </th>
-            </tr>
-            <th>
+            </tr><tr>
+      <th style="background:white;border:none;border-color:grey;color:black;">
               <form id="f20" method="POST">
                 {% csrf_token %}
                 <input type=hidden name="html" value='delta_r'>
@@ -71,13 +79,13 @@
               <tr>
                 {% for t in dem %}
 
-                {% if forloop.first %} <td>
-                  <a href="/delta_jr/0/{{t.r}}/{{t.j}}">
+                {% if forloop.first %} <td class="{{t.class}}">
+
                     {{t.val}}
-                  </a>
+
                   {% else %}
 
-                <td class="good" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
+                <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
                   {{t.val}}
                   {% endif %}
                 </td>
@@ -96,19 +104,19 @@
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;background-color:white;" >
+        <table  width=100% style="border:none;border-color:white;
+        position:relative;top:0;background-color:white;" >
           <thead>
             <tr>
               <th colspan=13>
 
-                <a href="/tasks_r/0/{{r}}/0/" style="color:white;" class="uuu">
+                <a href="/tasks_r/0/{{r}}/0/" style="color:white;">
                   Загрузки</a>
 
               </th>
             </tr>
             <tr>
-              <th>
-                <form id="f10" method="POST">
+              <th style="background:white;border:none;color:black;">    <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='delta_r'>
                   <button type="submit" class="button3" disabled="true"> Сохранить</button>
@@ -127,7 +135,7 @@
             <tr>
               {% endif %}
               {% else %}
-              <td class="good" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
+              <td class="{{t.class}}" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
                 style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
@@ -141,18 +149,20 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;background-color:white;" width=100% class="dif in">
+        <table border=none style="
+        position:relative;top:0;background-color:white;border:none" width=100% class="dif in">
           <thead>
             <tr>
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th>Сотрудник
+       <th style="background:white;border:none;border-color:white;color:black;">
+                Сотрудник
                 {% include 'moon.html' %}
                 {% for tt in w4 %}
             <tr>
               {% for t in tt %}
-              <td>
+              <td class="hborder">
                 {{t}}
               </td>
               {% endfor %}
