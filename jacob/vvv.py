@@ -7,7 +7,7 @@ from .db import get_prj_triplet, rest_of_time_pr_12, time_available_person_role_
 from .db import task_person_role_project_12, real_and_virtual_people, real_people
 from .utils import *
 from datetime import date
-from .models import UserProfile, Grade, Wish
+from .models import UserProfile, Grade, Wish,Project
 from .view_forms import role_form
 from django.urls import resolve
 
@@ -207,6 +207,10 @@ def moon4(n: int = 12) -> List[object]:
 '''
 def task_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, j)
+    try:
+        wish = Wish.objects.get(role=role, project=project, ).mywish
+    except:
+        wish = ''
     w3 = []
 
     moon12 = moon()
@@ -246,7 +250,7 @@ def task_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
                 df = 0
             b_w3[i] = {
                 "link": f"{p}.{r}.{j}.{d.year}-{d.month}-15",
-                "up": up(max(-delta[i], 0), df),
+                "up": up(max(-delta[i], 0), df,wish),
                 "val": a_w3[i],
                 "color": color,
                 "fire": df < 0,
@@ -283,8 +287,7 @@ def task_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     roles = Role.objects.all()
     for role in roles:
         try:
-            wish = Wish.objects.get(role=role,project=project,)
-            print(989)
+            wish = Wish.objects.get(role=role,project=project,).mywish
         except:
             wish=''
         delta = delta_role_project_12(role, project,n)
@@ -352,6 +355,10 @@ def task_role(request:object, p:int, r:int, j:int, n:int=12)->object:
     projects = Project.objects.all()
 
     for project in projects:
+        try:
+            wish = Wish.objects.get(role=role,project=project,).mywish
+        except:
+            wish=''
         delta = delta_role_project_12(role, project,n)
         p100 = {"val": project.title}
         for person in people:
@@ -373,7 +380,7 @@ def task_role(request:object, p:int, r:int, j:int, n:int=12)->object:
 
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
-                    "up": up(max(-delta[i], 0), diff[i]),
+                    "up": up(max(-delta[i], 0), diff[i],wish),
                     "val": a_w3[i],
                     "color": color,
                     "fire": diff[i] < 0,
@@ -1069,6 +1076,10 @@ def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
 '''
 def needs_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, j)
+    try:
+        wish = Wish.objects.get(role=role, project=project, ).mywish
+    except:
+        wish = ''
     if role == None:
         return home(request)
     w2 = []
@@ -1093,7 +1104,8 @@ def needs_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
             "color": color,
-            "class": tclass + "  good"
+            "class": tclass + "  good",
+            'up':up(c=wish)
         }
         d = inc(d)
     w2.append(a_w2)
@@ -1119,6 +1131,10 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     roles = Role.objects.all()
     for role in roles:
+        try:
+            wish = Wish.objects.get(role=role,project=project,).mywish
+        except:
+            wish=''
         delta = delta_role_project_12(role, project)
 
         a_w2 = [0] * n
@@ -1138,10 +1154,11 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
                 "color": color,
-                "class":tclass+ "  good"
+                "class":tclass+ "  good",
+                'up':up(c=wish)
             }
             d = inc(d)
-        w2.append([{"class":"color","val": role.title}] + a_w2)
+        w2.append([{"class":"color",'up':up(c=wish),"val": role.title}] + a_w2)
 
     moon12["w2"] = w2
 
@@ -1164,6 +1181,11 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     projects = Project.objects.all()
     for project in projects:
+        try:
+            wish = Wish.objects.get(project=project,role=role)
+        except:
+            wish = None
+
         delta = delta_role_project_12(role, project,n)
 
         a_w2 = [0] * n
@@ -1183,10 +1205,11 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                 "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
                 "color": color,
-                "class": tclass+" good"
+                "class": tclass+" good",
+                'up':up(c=wish)
             }
             d = inc(d)
-        w2.append([{"class":"color","val": project.title}] + a_w2)
+        w2.append([{"class":"color",'up':up(c=wish),"val": project.title}] + a_w2)
 
     moon12["w2"] = w2
 

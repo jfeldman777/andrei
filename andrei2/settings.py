@@ -13,8 +13,10 @@ IS_HEROKU = False
 IS_HEROKU = os.getenv("IS_HEROKU")
 
 if IS_HEROKU:
-    import django_heroku
-
+    try:
+        import django_heroku
+    except:
+        pass
 
 
 
