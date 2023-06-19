@@ -93,7 +93,8 @@ position:absolute;top:78px; " id=t00>
               {% for dem in w2 %}
             <tr>
               {% for t in dem %}
-              <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
+              <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}"
+                  style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
               {% endfor %}
