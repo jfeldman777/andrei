@@ -1371,6 +1371,7 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
                     "color": color,
                     "val": dif[i + 1],
                     "fire": is100[i],
+                    "class":"good"
                 }
                 d = inc(d)
 

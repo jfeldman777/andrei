@@ -16,9 +16,11 @@
 <table width=100% style=" height: 92vh; position:absolute;top:78px; " id=t00>
                 <tr style=" height: 42vh; ">
     <td width=50% >
-      <div class="table-container-2">
-        <table border=none style="position:relative;top:0;border-color:white;" class="balance" width=100%>
+
+    <div class="table-container-2">
+        <table border=none style="position:relative;border-color:white;" class="balance" width=100%>
           <thead>
+
             <tr>
               <th colspan=13>Балансы (<a href="/delta_j/0/0/{{j}}" style="color:white;">дельта</a>)
               </th>
@@ -29,6 +31,9 @@
                color:black;">
                 {{project}}
                 {% include 'moon.html' %}
+
+                </tr></thead>
+            <tbody>
                 {% for dem in w1 %}
             <tr>
               {% for t in dem %}
@@ -80,7 +85,7 @@
 
 
 
-              {% include 'moon.html' %}
+              {% include 'moon.html' %}</tr></thead><tbody>
               {% for dem in w2 %}
             <tr>
               {% for t in dem %}
@@ -114,7 +119,7 @@
                   <input type=hidden name="html" value='balance_j'>
                   <button type="submit" class="button3" disabled="true">Сохранить</button>
                 </form>
-                {% include 'moon.html' %}
+                {% include 'moon.html' %}</tr></thead><tbody>
                 {% for tt in w3 %}
             <tr>
               {% for t in tt %}
@@ -155,9 +160,8 @@
 border-bottom: 1px solid grey;
 ">
                 Сотрудник
-                {% include 'moon.html' %}
-          </thead>
-          <tbody>
+                {% include 'moon.html' %}</tr></thead><tbody>
+
             {% for tt in w4 %}
             <tr>
               {% for t in tt %}

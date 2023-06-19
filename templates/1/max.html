@@ -12,14 +12,14 @@
       <th style="text-align:center;">Ресурс </th>
         <th style="text-align:center;  ">Сотрудник</th>
 
-        {% include 'moon.html' %}
+        {% include 'moon.html' %}</tr></thead><tbody>
         {% for tt in dif14 %}
 
     <tr>
       {% for t in tt %}
 
       <td style="background-color:{{t.color}};text-align:center;"
-          class="good" action="/save_max/" fname="f10" key="{{t.link}}">
+          class="{{t.class}}" action="/save_max/" fname="f10" key="{{t.link}}">
           {{t.val}}
         {% if t.fire %}
         <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
