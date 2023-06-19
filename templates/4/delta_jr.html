@@ -4,6 +4,11 @@
 {% include 'scroll.html' %}
 {% load static %}
 {% include 'nopadding.html' %}
+<style>
+    body {
+        overflow-y: hidden;
+    }
+</style>
 <div class="bar">
   <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
 </div>
@@ -18,7 +23,7 @@
               <th colspan=13  style="border:1;border-color:white;">
                 Балансы (<a href="/balance_jr/0/{{r}}/{{j}}" style="color:white;" >подробнее</a>)</th>
             </tr>
-            <tr  style="border:1;border-color:white;">
+            <tr >
               {% include 'moon.html' %}
               {% for tt in w1 %}
             <tr   style="border:1;border-color:white;">
@@ -84,7 +89,9 @@
               </th>
             </tr>
             <tr>
-              <th  style="border:none;border-color:grey;background-color:white">
+              <th  style="border:none;
+        border-bottom: 1px solid grey;
+              background-color:white">
                 <form id="f10" method="POST">
                   {% csrf_token %} <input type=hidden name="html" value='delta_jr'>
                   <button type="submit" class="button3" disabled="true">Сохранить</button>
@@ -121,7 +128,10 @@
             </tr>
               <th
 
-               style="text-align:center;border:none;background-color:white;color:black"
+               style="text-align:center;border:none;background-color:white;color:black;
+
+border-bottom: 1px solid grey;
+"
 
               >Сотрудник
                 {% include 'moon.html' %}

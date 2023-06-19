@@ -4,6 +4,11 @@
 {% include 'scroll.html' %}
 {% load static %}
 {% include 'nopadding.html' %}
+<style>
+    body {
+        overflow-y: hidden;
+    }
+</style>
 <div class="bar">
   <h4>Проект: {{project}} - Все ресурсы</h4>
 </div>
@@ -22,7 +27,9 @@ position:absolute;top:78px;" id=t00>
               <th>
             </tr>
             <tr>
-              <th style="background:white;border:none;border-color:grey;color:black;">{{project}}
+              <th style="background:white;
+border-bottom: 1px solid grey;
+              color:black;">{{project}}
                 {% include 'moon.html' %}
                 {% for dem in w1 %}
             <tr>
@@ -51,7 +58,9 @@ position:absolute;top:78px;" id=t00>
               <th>
             </tr>
             <tr>
-             <th style="background:white;border:none;border-color:white;color:black;">
+             <th style="background:white;
+          border-bottom: 1px solid grey;
+             color:black;">
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='delta_j'>
@@ -95,7 +104,9 @@ position:absolute;top:78px;" id=t00>
               </th>
             </tr>
             <tr style="background-color:white;border:none;border-color:white;">
-         <th style="background-color:white;border:none;color:black;">
+         <th style="background-color:white;
+border-bottom: 1px solid grey;
+         color:black;">
 
                 <form id="f10" method="POST">
                   {% csrf_token %}
@@ -143,7 +154,10 @@ position:absolute;top:78px;" id=t00>
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th style="background:white;border:none;color:black;">Сотрудник
+              <th style="background:white;
+
+border-bottom: 1px solid grey;
+              color:black;">Сотрудник
                 {% include 'moon.html' %}
                 {% for tt in w4 %}
             <tr>

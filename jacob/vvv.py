@@ -408,7 +408,10 @@ def task_role(request:object, p:int, r:int, j:int, n:int=12)->object:
 '''
 def delta_role_project(request, p, r, j,n=12):
     person, role, project = get_prj_triplet(-1, r, j)
-
+    try:
+        wish = Wish.objects.get(role=role, project=project, ).mywish
+    except:
+        wish = ''
     w4 = []
     w3 = []
     w2 = []
@@ -514,7 +517,10 @@ def delta_role_project(request, p, r, j,n=12):
 '''
 def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, j)
-
+    try:
+        wish = Wish.objects.get(role=role, project=project, ).mywish
+    except:
+        wish = ''
     w4 = []
     w3 = []
     w2 = []
@@ -638,6 +644,10 @@ def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
         x = diff
         w4.append([person.fio] + x)
     for project in projects:
+        try:
+            wish = Wish.objects.get(role=role, project=project, ).mywish
+        except:
+            wish = ''
         zo = ["АУТСОРС"] + outsrc(role, project)
         zv = ["ВАКАНСИЯ"] + vacancia(role, project)
 
@@ -754,6 +764,10 @@ def delta_role(request, p, r, j,n=12):
 
     # W222222222222222222222222222222
     for project in projects:
+        try:
+            wish = Wish.objects.get(role=role, project=project, ).mywish
+        except:
+            wish = ''
         p100 = project.title
         a_w2 = [
             {
@@ -860,6 +874,10 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     roles = Role.objects.all()
     for role in roles:
+        try:
+            wish = Wish.objects.get(role=role, project=project, ).mywish
+        except:
+            wish = ''
         people_rr = real_people(role)
         people_rv = real_and_virtual_people(role)
         p6 = role.title
