@@ -5,6 +5,8 @@
 
   <h5>Максимальная доступность ресурсов</h5>
 
+
+
 <table  class="display compact dif">
   <thead>
 
@@ -34,6 +36,9 @@
             <form id="f10" method="POST">
           {% csrf_token %}
           <input type=hidden name="html" value='max'>
+                <div style="position:absolute;top:60px;right:600px;">
+<button   type="submit"  class="btn btn-primary"> Сохранить изменения </button>
+</div>
         </form>
         {% include 'data2.html' %}
 {% endblock %}

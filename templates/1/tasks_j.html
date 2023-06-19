@@ -42,7 +42,11 @@
 {% include 'data2.html' %}
 
   <form id="f10" method="POST" action="/save_task/">
-            {% csrf_token %}          <input type=hidden name="html" value='tasks_j'>
+            {% csrf_token %}
+      <div style="position:absolute;top:60px;right:600px;">
+<button   type="submit"  class="btn btn-primary"> Сохранить изменения </button>
+</div>
+      <input type=hidden name="html" value='tasks_j'>
           </form>
  
 

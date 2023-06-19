@@ -254,7 +254,7 @@ def task_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
                 "val": a_w3[i],
                 "color": color,
                 "fire": df < 0,
-                "class":tclass
+                "class":tclass + "  good"
             }
             d = inc(d)
         up1 = ''
@@ -320,7 +320,7 @@ def task_project(request:object, p:int, r:int, j:int, n:int=12)->object:
                     "val": a_w3[i],
                     "color": color,
                     "fire": diff[i] < 0,
-                    'class':tclass
+                    'class':tclass + "  good"
                 }
                 d = inc(d)
 
@@ -377,13 +377,15 @@ def task_role(request:object, p:int, r:int, j:int, n:int=12)->object:
                     color = "pink"
                 elif a_w3[i] > 0:
                     color = "lightblue"
-
+                else:
+                    tclass = "color"
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i], 0), diff[i],wish),
                     "val": a_w3[i],
                     "color": color,
                     "fire": diff[i] < 0,
+                    "class":tclass
                 }
                 d = inc(d)
 

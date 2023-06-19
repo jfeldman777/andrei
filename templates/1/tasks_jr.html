@@ -11,8 +11,9 @@
    <thead>
 
     <tr  style="text-align:center;" class="hborder">
-      <th  style="text-align:center;" class="hborder">Сотрудник
-         {% include 'moon.html' %}</tr></thead><tbody>
+      <th  style="text-align:center;" >Сотрудник
+         {% include 'moon.html' %}</tr></thead>
+      <tbody>
 
         {% for tt in w3 %}
     <tr  style="text-align:center;">
@@ -33,11 +34,14 @@
     </tbody>
 </table>
 
-{% include 'data2.html' %}
+
 
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='tasks_jr'>
+      <div style="position:absolute;top:60px;right:500px;">
+<button   type="submit"  class="btn btn-primary"> Сохранить изменения </button>
+</div>
           </form>
   
-
+{% include 'data2.html' %}
 {% endblock %}
