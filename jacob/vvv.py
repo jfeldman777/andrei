@@ -282,7 +282,11 @@ def task_project(request:object, p:int, r:int, j:int, n:int=12)->object:
 
     roles = Role.objects.all()
     for role in roles:
-        wish = Wish.objects.get(role=role,project=project,)
+        try:
+            wish = Wish.objects.get(role=role,project=project,)
+            print(989)
+        except:
+            wish=''
         delta = delta_role_project_12(role, project,n)
         people = real_and_virtual_people(role)
         dem_rj = needs_role_project_12(person,role, project,n)  # ----------------
@@ -341,7 +345,7 @@ def task_project(request:object, p:int, r:int, j:int, n:int=12)->object:
 '''
 def task_role(request:object, p:int, r:int, j:int, n:int=12)->object:
     person, role, project = get_prj_triplet(-1, r, -1)
-    wish = Wish.objects.get(role=role, project=project, )
+
     w3 = []
     moon12 = moon()
     people = real_and_virtual_people(role)

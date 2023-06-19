@@ -15,6 +15,7 @@ from datetime import date, timedelta
 Всплывающая подсказка
 '''
 def up(a: int, b: int,c:str='') -> str:
+    print(777,c)
     cs = ''
     if c!='':
         cs = f"пожелание:{c}"
