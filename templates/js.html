@@ -10,7 +10,11 @@
 
         delta = -delta;
         x = colr + delta;
-        sx = 'rgb(' + x + ',' + x + ',' + x + ')'
+        sx = 'rgb(' + x + ',' + x + ',' + x + ')';
+        var y = x - 10;
+
+        var sy = 'rgb(' + y + ',' + y + ',' + y + ')';
+
 
         var cells = rows[j].getElementsByTagName("td");
         for (var k = 0; k < cells.length; k++) {
@@ -27,12 +31,10 @@
     cells[k].style.borderRight = 'none';  // убираем правую границу
 
 
-
+            if (k==0) cells[k].style.backgroundColor = sy;
+            else cells[k].style.backgroundColor = sx;
 
           if (tables[i].classList.contains("dif")) {
-          if(!cells[k].classList.contains("long"))
-            cells[k].style.backgroundColor = sx;
-
             if (cells[k].innerHTML < 0) {
               cells[k].style.backgroundColor = "pink";
             }
@@ -40,7 +42,6 @@
               cells[k].style.backgroundColor = "yellow";
             }
           };
-
 
           if (tables[i].classList.contains("balance")) {
 
@@ -50,9 +51,7 @@
               if (cells[k].innerHTML > 0) {
                 cells[k].style.backgroundColor = "lightblue";
               }
-              else {
-                cells[k].style.backgroundColor = sx;
-              }
+
           }
 
           if (cells[k].classList.contains("true")) {
