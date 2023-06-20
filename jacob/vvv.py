@@ -1430,10 +1430,12 @@ def rest_all(request:object,n:int=12)->object:  # Остаточная дост�
 
 def table_timeline(request:object,n:int=12)->object:  # все проекты (портфель)
     moon12 = moon()
+    paint = Paint()
     projects = Project.objects.all().order_by("general", "start_date")
     data = []
     for p in projects:
-        data.append(project_timeline_line(p))
+        paint.next_row(None)
+        data.append(project_timeline_line(p,paint))
     moon12["matrix"] = data
     return render(request, "prjlist.html", moon12)
 
@@ -1444,23 +1446,23 @@ from datetime import date
 одна строка в портфель проектов
 '''
 import babel
-def project_timeline_line(p,n=12):
+def project_timeline_line(p,paint,n=12):
 
     dmin = date.today()
     dmin = dmin.replace(day=15)
     dmax = inc_n(dmin, n-1)
     L = []
-    L.append(p.general.fio)
-    L.append({"title": p.title, "id": p.id})  # 989898
+    L.append({"val":p.general.fio,"color":paint.rgb_back_left()})
+    L.append({"val": p.title, "id": p.id,"color":paint.rgb_back_right()})  # 989898
 
     formatted_date = babel.dates.format_date(p.start_date, "d MMM YY", locale='ru')
-    L.append( formatted_date)
+    L.append({"val": formatted_date,"color":paint.rgb_back_right()})
 
     formatted_date = babel.dates.format_date(p.end_date, "d MMM YY", locale='ru')
-    L.append( formatted_date)
+    L.append({"val": formatted_date, "color": paint.rgb_back_right()})
 
 
-    L+=[dif(p.start_date, p.end_date)] + mon_bool(dmin, dmax, p.start_date, p.end_date)
-
+    L+= [{"val":timespan_len(p.start_date, p.end_date),"color": paint.rgb_back_right()}]
+    L+= mon_bool_color(dmin, dmax, p.start_date, p.end_date,Paint.MY_BLUE,paint.rgb_back_right())
     return L
 

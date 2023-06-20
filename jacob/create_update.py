@@ -1,7 +1,7 @@
 from datetime import date
 
 from .models import Load, Task, Less
-from .utils import inc,dif
+from .utils import inc,timespan_len
 
 
 def create_or_update_res_max(person:object, role:object, m:date, l:int)->None:  # Доступность
@@ -27,7 +27,7 @@ def create_or_update_task(p:object, r:object, j:object, dm:date, svn:str)->None:
         try:
             n = int(sn)
         except:
-            n = dif(d,d2)-1
+            n = timespan_len(d, d2) - 1
 
     else:
         v = int(svn)
@@ -64,7 +64,7 @@ def create_or_update_needs(person:object, role:object, project:object, dm:str, s
         try:
             n = int(sn)
         except:
-            n = dif(d, d2)-1
+            n = timespan_len(d, d2) - 1
     else:
         v = int(svn)
         n = 1

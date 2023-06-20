@@ -83,7 +83,7 @@ def inc_n(d:date, n:int)->date:
 дата любого месяца переносится на 15е число и добавляется 1 месяц.
 Проект начатый в январе и законченный в январе длится один месяц.
 '''
-def dif(d1:date, d2:date)->int:
+def timespan_len(d1:date, d2:date)->int:
     return (d2.year - d1.year) * 12 + d2.month - d1.month + 1
 
 
@@ -102,7 +102,22 @@ def mon_bool(dmin:date, dmax:date, dstart:date, dend:date)->List[bool]:
         L.append(b)
         d = inc(d)
     return L    
+def mon_bool_color(dmin:date, dmax:date, dstart:date, dend:date,color1,color2)->List[bool]:
+    L = []
+    d = dmin.replace(day=15)
+    d2 = dmax.replace(day=15)
+    d3 = dstart.replace(day=15)
+    d4 = dend.replace(day=15)
+    while d <= d2:
+        b = d3 <= d <= d4
 
+        if b:
+            x = {"val":"*","color":color1}
+        else:
+            x = {"val": "-", "color": color2}
+        L.append(x)
+        d = inc(d)
+    return L
 '''
 за сколько месяцев
 '''
