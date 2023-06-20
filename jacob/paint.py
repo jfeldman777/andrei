@@ -5,7 +5,7 @@ class Paint:
     MY_YELLOW = "yellow"
     MY_PINK = "pink"
     MY_GREY = "rgb(211,211,211)"
-    MY_BLUE = "blue"
+    MY_BLUE = "lightblue"
     MY_PURPLE =  "#B266FF"
     ENTRY_MAP_CUT = 20
 
