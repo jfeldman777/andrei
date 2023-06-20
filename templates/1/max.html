@@ -7,7 +7,7 @@
 
 
 
-<table  class="display compact dif">
+<table  class="display compact">
   <thead>
 
     <tr>
@@ -33,11 +33,11 @@
     {% endfor %}
 </table>
 
-            <form id="f10" method="POST">
+            <form id="f10" method="POST" action="/save_max/">
           {% csrf_token %}
           <input type=hidden name="html" value='max'>
                 <div style="position:absolute;top:60px;right:600px;">
-<button   type="submit"  class="btn btn-primary"> Сохранить изменения </button>
+<button   type="submit"  class="button3 btn btn-primary"> Сохранить </button>
 </div>
         </form>
         {% include 'data2.html' %}

@@ -18,31 +18,31 @@
       <th>Назначения</th>
     </tr>
    </thead><tbody>
-    <tr style="text-align:left;">
+    <tr style="text-align:left; ">
       {% for cell in data %}
-      <td style="text-align:left;">
+      <td style="text-align:left;background-color:{{cell.color1}};">
 
         {{ cell.name }}
 
       </td>
-      <td style="text-align:left;">
+      <td style="text-align:left; background-color:{{cell.color2}};">
 
         {{ cell.project }}
       </td>
-      <td style="text-align:left;">
+      <td style="text-align:left; background-color:{{cell.color2}};">
         <a href="/needs_j/0/0/{{cell.j}}">
           Изменить
         </a>
       </td>
 
-      <td style="text-align:left;">
+      <td style="text-align:left; background-color:{{cell.color2}};">
         <a href="/balance_j/0/0/{{cell.j}}">
           Смотреть
         </a>
       </td>
 
 
-      <td style="text-align:left;">
+      <td style="text-align:left; background-color:{{cell.color2}};">
         <a href="/tasks_j/0/0/{{cell.j}}">
           Смотреть
         </a>

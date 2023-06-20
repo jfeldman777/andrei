@@ -57,7 +57,8 @@
               {% include 'moon.html' %}</tr></thead><tbody>
             <tr>
               {% for t in w2 %}
-              <td class="{{t.class}}}" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
+              <td class="{{t.class}}}" action="/save_needs/" fname="f20" key="{{t.link}}"
+                  style="background-color:{{t.color}};">
 
                 {{t.val}}
               </td>
@@ -71,14 +72,14 @@
       <form id="f20" method="POST">
         {% csrf_token %}
         <input type=hidden name="html" value='balance_jr'>
-        <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить изменения</button>
+        <button type="submit" class="button3 fixed-button2" disabled="true">Сохранить </button>
       </form>
     </td>
   </tr>
   <tr style="text-align:center;">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border-color:white;">
+        <table width=100% style="position:relative;top:0;border-color:white;">
           <thead>
             <tr>
               <th colspan=13>

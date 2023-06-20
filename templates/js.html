@@ -1,67 +1,17 @@
-<script>var delta = -4;
-  var colr = 251;
-  var x;
-
+<script>
   window.onload = function () {
     var tables = document.getElementsByTagName("table");
     for (var i = 0; i < tables.length; i++) {
       var rows = tables[i].getElementsByTagName("tr");
       for (var j = 0; j < rows.length; j++) {
 
-        delta = -delta;
-        x = colr + delta;
-        sx = 'rgb(' + x + ',' + x + ',' + x + ')';
-        var y = x - 10;
-
-        var sy = 'rgb(' + y + ',' + y + ',' + y + ')';
-
-
         var cells = rows[j].getElementsByTagName("td");
         for (var k = 0; k < cells.length; k++) {
 
-
-          if (cells[k].classList.contains("color")) cells[k].style.backgroundColor = sx;
-          //[k].style.borderColor = 'rgb(255,255,255)';
-
-
-            if (k==0) cells[k].style.backgroundColor = sy;
-            //else cells[k].style.backgroundColor = sx;
-    cells[k].style.borderTop = '1px solid darkgray';  // задаем верхнюю границу
+    cells[k].style.borderTop =  'none';  // '1px solid darkgray';  // задаем верхнюю границу
     cells[k].style.borderBottom = '1px solid darkgray';  // задаем нижнюю границу
     cells[k].style.borderLeft = 'none';  // убираем левую границу
     cells[k].style.borderRight = 'none';  // убираем правую границу
-
-
-
-
-          if (tables[i].classList.contains("dif")) {
-            if (cells[k].innerHTML < 0) {
-              cells[k].style.backgroundColor = "pink";
-            }
-            if (cells[k].innerHTML == 0) {
-              cells[k].style.backgroundColor = "yellow";
-            }
-          };
-
-          if (tables[i].classList.contains("balance")) {
-
-            if (cells[k].innerHTML < 0) {
-              cells[k].style.backgroundColor = "pink";
-            } else
-              if (cells[k].innerHTML > 0) {
-                cells[k].style.backgroundColor = "lightblue";
-              }
-
-          }
-
-          if (cells[k].classList.contains("true")) {
-            cells[k].style.backgroundColor = "lightblue";
-          }
-
-
-
-
-
 
 
         }

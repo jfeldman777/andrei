@@ -10,7 +10,7 @@ from datetime import date
 from .models import UserProfile, Grade, Wish,Project
 from .view_forms import role_form
 from django.urls import resolve
-
+from .paint import Paint
 
 '''
 отсюда можно запускать тесты
@@ -72,12 +72,6 @@ def needs_on_span(r:object, j:object, n:int)->int:
 '''
 
 def balance_map(request:object, n:int)->object:
-
-    delt = -4;
-
-    colr = 251;
-
-
     projects = Project.objects.all()
     roles = Role.objects.all()
     xy = [0] * len(projects)
@@ -88,29 +82,25 @@ def balance_map(request:object, n:int)->object:
     for j in range(len(roles)):
         txy[j] = {"val": roles[j].title, "link": f"/delta_r/0/{roles[j].id}/0/"}
 
+    paint = Paint()
     for i in range(len(projects)):
-        col = colr + delt
-        delt = 0 - delt
-        xy[i][0] = {"color": f"rgb({col},{col},{col})",
+        paint.next_row(projects[i])
+        xy[i][0] = {"color": paint.rgb_back(),
             "val": projects[i], "link": f"/delta_j/0/0/{projects[i].id}/"}
 
         for j in range(len(roles)):
 
+
             project = projects[i]
             role = roles[j]
             x = round(100 * delta_on_span(role, project, n) / needs_on_span(role, project, n))
+            paint.next_cell(x)
 
-            if 20 > x > 0:
-                color = "yellow"
-            elif x >= 20:
-                color = "pink"
-            else:
-                color = f"rgb({col},{col},{col})"
 
             xy[i][j + 1] = {
                 "val": f"{x}%",
                 "link": f"/delta_jr/0/{roles[j].id}/{projects[i].id}/",
-                "color": color,
+                "color": paint.color_entry_map(),
                 "i": project.id,
                 "j": role.id,
             }
@@ -124,9 +114,18 @@ def balance_map(request:object, n:int)->object:
 '''
 
 def table_projects(request:object)->object:
+    paint = Paint()
     projects = Project.objects.all().order_by("general")
-    data = [{"j": p.id, "project": p.title, "name": p.general.fio}
-        for p in projects]
+    data = []
+    for i in range(len(projects)):
+        paint.next_row(None)
+        p = projects[i]
+        data.append({"j": p.id, "project": p.title, "name": p.general.fio,
+             "color2":paint.rgb_back_right(),
+             "color1":paint.rgb_back_left()
+             })
+
+
     context = {"data": data}
     return render(request, "tab_j.html", context)
 
@@ -1335,6 +1334,7 @@ def available_role(request:object, p:int, r:int, j:int,n:int=12)->object:
 показать максимальную доступность по всем персонам и ролям
 '''
 def available_all(request:object,n:int=12)->object:  # Максимальная доступнасть по всем ресурсам
+
     moon12 = moon()
     dif14 = []
 
@@ -1356,21 +1356,20 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
         people_rr = real_people(role)
 
         px = {"val": role.title, "r": role.id}  #######################
+
+        paint = Paint()
         for person in people_rr:
+            paint.next_row(person.fio)
             is100 = person_more_100_12(person,n)
 
-            dif2 = [{"val": person.fio}] + [0] * n
+            dif2 = [{"color":paint.rgb_back(),"val": person.fio}] + [0] * n
             dif = [person.fio] + time_available_person_role_12(person, role)
             d = date0()
             for i in range(n):
-                if arr[person.id][role.id][i] > 100:
-                    color = "pink"
-                else:
-                    color = "white"
-
+                paint.next_cell(dif[i + 1])
                 dif2[i + 1] = {
                     "link": f"{person.id}.{role.id}.0.{d.year}-{d.month}-15",
-                    "color": color,
+                    "color": paint.color_rest(arr[person.id][role.id][i]),
                     "val": dif[i + 1],
                     "fire": is100[i],
                     "class":"good"

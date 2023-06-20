@@ -23,13 +23,13 @@
     </tr>
     </thead><tbody>
 
-      {% for cell in data2 %}    <tr style="text-align: left; ">
+      {% for cell in data2 %}    <tr style="text-align: left; backround-color={{cell.color}};">
       <td style="text-align: left; ">
 <a href="/role_form/{{cell.id}}">
         {{ cell.title }}
           </a>
       </td>
-      <td style="text-align: left; ">
+      <td style="text-align: left; backround-color={{cell.color}};">
 
         {{ cell.general }}
 
