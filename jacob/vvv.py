@@ -916,9 +916,12 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         people_rr = real_people(role)
         people_rv = real_and_virtual_people(role)
         p6 = role.title
-        for person in people_rr:  # 7777777777777777777777777777777777777777
-            diff = rest_of_time_pr_12(person, role)
-            w4.append([p6, person.fio] + diff)
+        paint4 = Paint()
+        for person in people_rr:
+            paint4.next_row(None)
+            dif = [{"color": paint4.rgb_back_left(),
+                    "val": person.fio}] + rest_and_color_12(person, role, paint4.color_rest, 12)
+            w4.append([p6] + dif)
             p6 = -1
 
         delta = delta_role_project_12(role, project)
@@ -1057,13 +1060,19 @@ def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
         w2.append([{"class":"color","val": role.title}] + a_w2)
 
         p100 = role.title
-        p200 = role.title
         people_rr = real_people(role)
         people_rv = real_and_virtual_people(role)
-        for person in people_rr:  #
-            diff = rest_of_time_pr_12(person, role)
-            w4.append([p200, person.fio] + diff)
-            p200 = -1
+
+        p6 = role.title
+        paint4 = Paint()
+        for person in people_rr:
+            paint4.next_row(None)
+            dif = [{"color": paint4.rgb_back_left(),
+                    "val": person.fio}] + rest_and_color_12(person, role, paint4.color_rest, 12)
+            w4.append([p6] + dif)
+            p6 = -1
+
+
         for person in people_rv:  #
             diff = rest_of_time_pr_12(person, role,n)
             b_w3 = [0] * n

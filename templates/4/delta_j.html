@@ -163,18 +163,17 @@ border-bottom: 1px solid grey;
                 {% for tt in w4 %}
             <tr>
               {% for t in tt %}
-
-                  {% if forloop.first %}
+              {% if forloop.first %}
                   {% if t|negative %}
 
                   {% else %}
-                  <td colspan=13 class="long">{{t}}</td>
+                  <td colspan=13 style="background-color:white;">{{t}}</td>
                 </tr>
                 <tr>
                   {% endif %}
               {% else %}
-              <td>
-                {{t}}
+              <td style="background-color:{{t.color}};">
+                {{t.val}}
               </td>
               {% endif %}
               {% endfor %}

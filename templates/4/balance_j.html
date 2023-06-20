@@ -182,8 +182,8 @@ border-bottom: 1px solid grey;
             <tr>
               {% endif %}
               {% else %}
-              <td>
-                {{t}}
+              <td style="background-color:{{t.color}};">
+                {{t.val}}
               </td>
               {% endif %}
               {% endfor %}
