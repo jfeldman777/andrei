@@ -130,7 +130,7 @@ border-bottom: 1px solid grey;
                 {% for dem in w4 %}
             <tr>
               {% for t in dem %}
-              <td>{{t}}</td>{% endfor %}
+              <td style="background-color:{{t.color}}">{{t.val}}</td>{% endfor %}
             </tr>
 
             {% endfor %}

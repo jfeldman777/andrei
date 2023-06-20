@@ -125,20 +125,14 @@
               <th colspan=13  style="border:1;border-color:white;">
 
                 Остаточная доступность ресурсов</th>
-            </tr>
-              <th
-
-               style="text-align:center;border:none;background-color:white;color:black;
-
-border-bottom: 1px solid grey;
-"
-
-              >Сотрудник
+            </tr><tr>
+              <th style="text-align:center;border:none;background-color:white;color:black;
+border-bottom: 1px solid grey;">Сотрудник
                 {% include 'moon.html' %}</tr></thead><tbody>
                 {% for dem in w4 %}
-            <tr style="border:1;border-color:white;">
+            <tr>
               {% for t in dem %}
-              <td >{{t}}</td>{% endfor %}
+              <td  style="background-color:{{t.color}}" >{{t.val}}</td>{% endfor %}
             </tr>
 
             {% endfor %}

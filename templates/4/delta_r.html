@@ -175,8 +175,8 @@ border-bottom: 1px solid grey;
                 {% for tt in w4 %}
             <tr>
               {% for t in tt %}
-              <td class="hborder">
-                {{t}}
+              <td style="background-color:{{t.color}}">
+                {{t.val}}
               </td>
               {% endfor %}
 

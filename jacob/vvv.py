@@ -425,7 +425,7 @@ def delta_role_project(request, p, r, j,n=12):
         wish = Wish.objects.get(role=role, project=project, ).mywish
     except:
         wish = ''
-    w4 = []
+
     w3 = []
     w2 = []
     w1 = []
@@ -436,9 +436,17 @@ def delta_role_project(request, p, r, j,n=12):
 
     people_rv = real_and_virtual_people(role)
     people_rr = real_people(role)
+    paint4 = Paint()
+    for person in people_rr:
+        paint4.next_row(None)
+        dif = [{"color":paint4.rgb_back_left(),
+                "val":person.fio}] + rest_and_color_12(person, role,paint4.color_rest,12)
+        w4.append(dif)
 
-    for person in people_rr:  # 7777777777777777777777777777777777777777
-        w4.append([person.fio] + rest_of_time_pr_12(person, role))
+
+
+
+
 
     a_w2 = [0] * n
     dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
@@ -545,9 +553,13 @@ def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
 
     people_rr = real_people(role)
     people_rv = real_and_virtual_people(role)
+    paint4 = Paint()
+    for person in people_rr:
+        paint4.next_row(None)
+        dif = [{"color":paint4.rgb_back_left(),
+                "val":person.fio}] + rest_and_color_12(person, role,paint4.color_rest,12)
+        w4.append(dif)
 
-    for person in people_rr:  # 7777777777777777777777777777777777777777
-        w4.append([person.fio] + rest_of_time_pr_12(person, role,n))
 
     a_w2 = [0] * n
     dem_rj = ["Потребность"] + needs_role_project_12(person,role, project,n)  # ----------------
@@ -652,10 +664,17 @@ def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
 
     x = [0] * n
 
+    paint4 = Paint()
     for person in people_rr:
-        diff = rest_of_time_pr_12(person, role,n)
-        x = diff
-        w4.append([person.fio] + x)
+        paint4.next_row(None)
+        dif = [{"color": paint4.rgb_back_left(),
+                "val": person.fio}] + rest_and_color_12(person, role, paint4.color_rest, 12)
+        w4.append(dif)
+
+
+
+
+
     for project in projects:
         try:
             wish = Wish.objects.get(role=role, project=project, ).mywish
@@ -768,10 +787,13 @@ def delta_role(request, p, r, j,n=12):
 
     x = [0] * n
 
+    paint4 = Paint()
     for person in people_rr:
-        diff = rest_of_time_pr_12(person, role,n)
-        x = diff
-        w4.append([person.fio] + x)
+        paint4.next_row(None)
+        dif = [{"color":paint4.rgb_back_left(),
+                "val":person.fio}] + rest_and_color_12(person, role,paint4.color_rest,12)
+        w4.append(dif)
+
 
     projects = Project.objects.all()
 

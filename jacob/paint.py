@@ -98,6 +98,10 @@ class Paint:
         return self.rgb_back()
 
 
-
+    def color_timeline(self,d,m1,m2):
+        if m1 <=d<=m2:
+            return self.MY_BLUE
+        return self.rgb_back_right()
+    
 
 
