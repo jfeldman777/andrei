@@ -19,10 +19,11 @@
     <tbody>
 
       {% for cell in data2 %} <tr>
-      <td style="text-align: center; ">
+      <td style="text-align: center; background-color:{{cell.color}};">
 <a href="/person_form/{{cell.id}}/">
         {{ cell.fio }}
-          </a></td><td>
+          </a></td>
+      <td style="text-align: center; background-color:{{cell.color}};">
 
 {% if cell.role %}
              <a href="/grade_form/{{cell.id}}/{{cell.role.id}}/">

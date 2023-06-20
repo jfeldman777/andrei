@@ -133,27 +133,38 @@ def table_projects(request:object)->object:
 Все ресурсы в одной таблице
 '''
 def table_resources(request:object)->object:
+    paint = Paint()
     context = {}
+    data = []
     roles = Role.objects.all().order_by("general")
-    data2 = [{"title": p.title, "r": p.id, "name":UserProfile.objects.get(user=p.general).fio}
-                    for p in roles]
-    context["data2"] = data2
+    for i in range(len(roles)):
+        paint.next_row(None)
+        p = roles[i]
+        data.append({"title": p.title, "r": p.id,
+                      "color2": paint.rgb_back_right(),
+                      "color1": paint.rgb_back_left(),
+                      "name":UserProfile.objects.get(user=p.general).fio})
+
+    context["data2"] = data
     return render(request, "tab_r.html", context)
 
 
 def people(request):
+    paint = Paint()
     context = {}
     profiles = UserProfile.objects.filter(virtual=False).order_by("fio")
     nx = len(Role.objects.all())
     data2 = []
     npLmax = 2
     for profile in profiles:
+        paint.next_row(None)
         try:
             grade1 = Grade.objects.filter(person=profile,role=profile.role).first().mygrade
         except:
             grade1 = '0'
         profile_data = {"fio": profile.fio, "role": profile.role,
                         "grade":grade1,
+                        "color":paint.rgb_back_left(),
                         "res": [], "id": profile.id}
         pL = profile.res.all()
         for role in pL:
@@ -162,6 +173,7 @@ def people(request):
                 grade_value = grade.mygrade if grade else '0'
 
                 profile_data["res"].append({"role": str(role), "grade": grade_value,
+                                            "color": paint.rgb_back_right(),
                                             "id":role.id})
 
 

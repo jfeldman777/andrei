@@ -23,23 +23,23 @@
     </thead><tbody>
     <tr>
       {% for cell in data2 %}
-      <td style="text-align:left;">
+      <td style="text-align:left;background-color:{{cell.color1}};">
 
         {{ cell.name }}
 
       </td>
-      <td >
+      <td style="text-align:left;background-color:{{cell.color2}};">
 <a href="/role_form/{{cell.r}}/">
         {{ cell.title }}
       </a>
       </td>
-      <td>
+     <td style="text-align:left;background-color:{{cell.color2}};">
         <a href="/max_r/0/{{cell.r}}/0/">
           Изменить
         </a>
       </td>
 
-      <td >
+    <td style="text-align:left;background-color:{{cell.color2}};">
         <a href="/rest_r/0/{{cell.r}}/0/">
           Смотреть
         </a>
@@ -50,7 +50,7 @@
         </a>
       </td>
 
-      <td>
+    <td style="text-align:left;background-color:{{cell.color2}};">
         <a href="/tasks_r/0/{{cell.r}}/0/">
           Изменить
         </a>
