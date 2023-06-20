@@ -60,7 +60,7 @@ class Paint:
             return self.MY_PINK
         if self.cell == 0:
             return self.MY_YELLOW
-        return self.rgb_back()
+        return self.rgb_back_right()
 
     def color_tasks(self,isOut,isPink):
         if isinstance(self.cell,int):

@@ -1366,15 +1366,16 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
     for role in roles:
         p9 = role.title
         people_rr = real_people(role)
-
-        px = {"val": role.title, "r": role.id}  #######################
-
         paint = Paint()
+    #
+
+
         for person in people_rr:
             paint.next_row(person.fio)
+            px = {"val": role.title, "r": role.id, "color": paint.rgb_back_left()}  ######################
             is100 = person_more_100_12(person,n)
 
-            dif2 = [{"color":paint.rgb_back(),"val": person.fio}] + [0] * n
+            dif2 = [{"color":paint.rgb_back_right(),"val": person.fio}] + [0] * n
             dif = [person.fio] + time_available_person_role_12(person, role)
             d = date0()
             for i in range(n):
