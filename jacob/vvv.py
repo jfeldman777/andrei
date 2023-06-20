@@ -4,7 +4,7 @@ from django.shortcuts import redirect, get_object_or_404
 
 from .db import delta_role_project_12, needs_role_project_12, person_more_100_12, task_role_project_12
 from .db import get_prj_triplet, rest_of_time_pr_12, time_available_person_role_12
-from .db import task_person_role_project_12, real_and_virtual_people, real_people
+from .db import task_person_role_project_12, real_and_virtual_people, real_people, rest_and_color_12
 from .utils import *
 from datetime import date
 from .models import UserProfile, Grade, Wish,Project
@@ -1403,17 +1403,20 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
 def rest_all(request:object,n:int=12)->object:  # Остаточная доступость по всем ресурсам
     moon12 = moon()
     dif14 = []
-
+    paint = Paint()
     project = None #Project.objects.all()
     roles = Role.objects.all()
     for role in roles:
+
         p9 = role.title
         people_rr = real_people(role)
         people_rv = real_and_virtual_people(role)
         px = role.title
         for person in people_rr:
-            dif = [person.fio] + rest_of_time_pr_12(person, role)
-            dif14.append([px] + dif)
+            paint.next_row(None)
+            dif = [{"color":paint.rgb_back_right(),
+                    "val":person.fio}] + rest_and_color_12(person, role,paint.color_rest,12)
+            dif14.append([{"color":paint.rgb_back_left(),"val":px}] + dif)
 
 
     moon12["dif14"] = dif14

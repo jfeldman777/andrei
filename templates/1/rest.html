@@ -5,7 +5,7 @@
 
   <h5>Остаточная доступность ресурсов</h5>
 
-<table  class="display compact dif" style="width:100%;">
+<table  class="display compact" style="width:100%;">
   <thead ><tr>
 
     <th style="text-align:center;  ">Ресурс</th>
@@ -16,8 +16,8 @@
 
     <tr>
       {% for t in tt %}
-        <td style="text-align:center">
-        {{t}}
+        <td style="text-align:center;background-color:{{t.color}}">
+        {{t.val}}
       </td>
       {% endfor %}
     </tr>

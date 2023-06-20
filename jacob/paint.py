@@ -56,9 +56,11 @@ class Paint:
         return self.rgb_back()
 
     def color_rest(self,all_rest):
-        if all_rest > 100:
+
+        print(88,all_rest)
+        if all_rest < 0:
             return self.MY_PINK
-        if self.cell == 0:
+        if all_rest == 0:
             return self.MY_YELLOW
         return self.rgb_back_right()
 
