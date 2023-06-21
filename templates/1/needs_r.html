@@ -12,7 +12,7 @@
   <thead>
     <tr style="text-align:center;">
 
-      <th class="hborder" style="text-align:center;">
+      <th class="hborder" style="text-align:center;border-top:none;">
 Проект
         {% include 'moon.html' %}</tr></thead><tbody>
         {% for dem in w2 %}
@@ -20,7 +20,7 @@
       {% for t in dem %}
 
       <td class="{{t.class}}" action="/save_needs/" fname=f10 key="{{t.link}}" title="{{t.up}}"
-          style="background-color:{{t.color}}">
+          style="background-color:{{t.color}};">
         {{t.val}}
       </td>
       {% endfor %}

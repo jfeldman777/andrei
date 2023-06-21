@@ -448,13 +448,14 @@ def delta_role_project(request, p, r, j,n=12):
 
     paint2 = Paint()
     d = date0()
-
+    paint2.next_row(None)
     for i in range(n):
-        paint2.next_row(None)
+        paint2.next_cell(dem_rj[i])
+
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
-            "color": paint2.color_needs(project.start_date,project.end_date,d,dem_rj[i]),
+            "color": paint2.color_needs(project.start_date,project.end_date,d),
             "class":"good"
         }  #
 
@@ -555,12 +556,13 @@ def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
 
     paint2 = Paint()
     d = date0()
+    paint2.next_row(None)
     for i in range(n):
-        paint2.next_row(None)
+        paint2.next_cell(dem_rj[i + 1])
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i + 1],
-            "color": paint4.color_needs(project.start_date,project.end_date,d,dem_rj[i + 1]),
+            "color": paint4.color_needs(project.start_date,project.end_date,d),
         }  #
 
         d = inc(d)
@@ -1129,20 +1131,16 @@ def needs_role_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
 
     d = date0()
+    paint2 = Paint()
+    paint2.next_row(None)
     for i in range(n):
-        tclass = ""
-        color = "rgb(240,240,240)"
-        if mon_outside_prj(d, project):
-            color = "rgb(211,211,211)"
-        elif dem_rj[i] > 0:
-            color = "lightblue"
-        else:
-            tclass = "color"
+        paint2.next_cell(dem_rj[i])
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
-            "color": color,
-            "class": tclass + "  good",
+            "color":paint2.color_needs(project.start_date,project.end_date,d),
+
+            "class": "  good",
             'up':up(c=wish)
         }
         d = inc(d)
@@ -1167,8 +1165,11 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     w2 = []
     moon12 = moon()
 
-    roles = Role.objects.all()
+    roles = Role.objects.all().order_by('title')
+    paint2 = Paint()
+
     for role in roles:
+        paint2.next_row(None)
         try:
             wish = Wish.objects.get(role=role,project=project,).mywish
         except:
@@ -1179,24 +1180,18 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         dem_rj = needs_role_project_12(person,role, project,n)  # ----------------
 
         d = date.today().replace(day=15)
+
         for i in range(n):
-            tclass = ""
-            color = "rgb(240,240,240)"
-            if mon_outside_prj(d, project):
-                color = "rgb(211,211,211)"
-            elif dem_rj[i] > 0:
-                color = "lightblue"
-            else :
-                tclass="color"
+            paint2.next_cell(dem_rj[i])
             a_w2[i] = {
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
-                "color": color,
-                "class":tclass+ "  good",
+                "color": paint2.color_needs(project.start_date,project.end_date,d),
+                "class":"  good",
                 'up':up(c=wish)
             }
             d = inc(d)
-        w2.append([{"class":"color",'up':up(c=wish),"val": role.title}] + a_w2)
+        w2.append([{"color":paint2.rgb_back_left(),'up':up(c=wish),"val": role.title}] + a_w2)
 
     moon12["w2"] = w2
 
@@ -1216,9 +1211,11 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     w2 = []
     moon12 = moon()
+    paint2 = Paint()
+    projects = Project.objects.all().order_by('title')
 
-    projects = Project.objects.all()
     for project in projects:
+        paint2.next_row(None)
         try:
             wish = Wish.objects.get(project=project,role=role)
         except:
@@ -1231,23 +1228,16 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
 
         d = date0()
         for i in range(n):
-            tclass = ""
-            color = "rgb(240,240,240)"
-            if mon_outside_prj(d, project):
-                color = "rgb(211,211,211)"
-            elif dem_rj[i] > 0:
-                color = "lightblue"
-            else:
-                tclass="color"
+            paint2.next_cell(dem_rj[i])
             a_w2[i] = {
                 "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
-                "color": color,
-                "class": tclass+" good",
+                "color": paint2.color_needs(project.start_date,project.end_date,d),
+                "class": " good",
                 'up':up(c=wish)
             }
             d = inc(d)
-        w2.append([{"class":"color",'up':up(c=wish),"val": project.title}] + a_w2)
+        w2.append([{"color":paint2.rgb_back_left(),'up':up(c=wish),"val": project.title}] + a_w2)
 
     moon12["w2"] = w2
 
