@@ -154,15 +154,16 @@ def task_role(request: object, p: int, r: int, j: int, n: int = 12) -> object:
     moon12 = moon()
     people = real_and_virtual_people(role)
     projects = Project.objects.all()
-
+    paint3 = Paint()
     for project in projects:
+
         try:
             wish = Wish.objects.get(role=role, project=project, ).mywish
         except:
             wish = ''
         delta = delta_role_project_12(role, project, n)
 
-        paint3 = Paint()
+
         for person in people:
             paint3.next_row(None)
             p100 = {"val": project.title,'color':paint3.rgb_back_left()}
@@ -171,7 +172,7 @@ def task_role(request: object, p: int, r: int, j: int, n: int = 12) -> object:
             diff = rest_of_time_pr_12(person, role, n)
             d = date0()
             for i in range(n):
-
+                paint3.next_cell(a_w3[i])
                 isOut = d < project.start_date or d > project.end_date
                 isPurple = delta[i] < 0
                 b_w3[i] = {
