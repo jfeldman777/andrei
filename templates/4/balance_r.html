@@ -86,14 +86,14 @@ overflow-y: hidden;
             <tr>
               {% for t in dem %}
               {% if forloop.first %}
-              <td class="{{t.class}}">
+              <td style="background-color:{{t.color}};">
 
                   {{t.val}}
 
                 {% else %}
 
 
-              <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
+              <td  action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
                 {{t.val}}
                 {% endif %}
               </td>
