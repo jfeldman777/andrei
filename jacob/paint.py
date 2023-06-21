@@ -77,17 +77,19 @@ class Paint:
         return self.rgb_back_right()
 
     def color_tasks(self,isOut,isPink):
-        if isinstance(self.cell,int):
-            if isOut:
-                if isPink > 0:
-                    return self.MY_PURPLE
-                else:
-                    return self.MY_GREY
+        if isOut:
+            if isPink > 0:
+                return self.MY_PURPLE
             else:
-                if isPink:
-                    return self.MY_PINK
+                return self.MY_GREY
+        else:
+            if isPink:
+                return self.MY_PINK
+            try:
                 if self.cell > 0:
                     return self.MY_BLUE
+            except:
+                pass
 
         return self.rgb_back_right()
 

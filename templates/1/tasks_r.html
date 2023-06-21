@@ -13,12 +13,12 @@
 <table  class="display compact" style="width:100%">
   <thead>
     <tr  style="text-align:center;">
-      <th class="hborder" style="text-align:center;">
+      <th  style="text-align:center;">
         Проект
 
       </th>
 
-     <th class="hborder" style="text-align:center;">
+     <th  style="text-align:center;">
         Сотрудник
 
         {% include 'moon.html' %}</tr></thead><tbody>
@@ -45,7 +45,7 @@
 
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='tasks_r'>
-      <div style="z-index:100;position:absolute;top:660px;right:450px;">
+      <div style="z-index:100;position:absolute;top:80px;right:450px;">
 <button   type="submit"  class="btn btn-primary"> Сохранить </button>
 </div>
           </form>

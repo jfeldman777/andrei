@@ -132,7 +132,7 @@ def n2txt(n:int)->str:
 '''
 месяц вне проекта - да или нет
 '''
-def mon_outside_prj(m:int, j:object)->bool:
+def mon_outside_prj(m:date, j:Project)->bool:
     if j == None:
         return True
     d1 = j.start_date

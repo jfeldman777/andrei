@@ -1,7 +1,8 @@
 from django.urls import path
-from . import vvv
+from . import vvv, tasks
 from . import save_forms
 from . import  view_forms
+from .tasks import task_role,task_project,task_role_project
 
 urlpatterns = [
     path("project_form/<int:id>/", view_forms.project_form, name="project_form_with_id"),
@@ -33,9 +34,9 @@ urlpatterns = [
     path("b/<int:n>/", vvv.balance_map, name="balance_map"),
     
     
-    path("tasks_r/<int:p>/<int:r>/<int:j>/", vvv.task_role, name="ur"),
-    path("tasks_j/<int:p>/<int:r>/<int:j>/", vvv.task_project, name="uj"),
-    path("tasks_jr/<int:p>/<int:r>/<int:j>/", vvv.task_role_project, name="ujr"),
+    path("tasks_r/<int:p>/<int:r>/<int:j>/", tasks.task_role, name="ur"),
+    path("tasks_j/<int:p>/<int:r>/<int:j>/", tasks.task_project, name="uj"),
+    path("tasks_jr/<int:p>/<int:r>/<int:j>/", tasks.task_role_project, name="ujr"),
 
     
     path("needs_j/<int:p>/<int:r>/<int:j>/", vvv.needs_project, name="mmj"),
