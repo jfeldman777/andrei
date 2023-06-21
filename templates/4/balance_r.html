@@ -41,7 +41,7 @@ overflow-y: hidden;
             <tr>
               {% endif %}
               {% else %}
-              <td style="background:{{t.color}};">
+              <td style="background-color:{{t.color}};">
 
                 {{t.val}}
 
@@ -59,7 +59,7 @@ overflow-y: hidden;
     <td width=50% id=td2>
       <div class="table-container-2">
         <table border=none width=100%
-               style="position:relative;top:0;background-color:white;border:none;border-color:white;s" id=t12>
+               style="position:relative;top:0;background-color:white;border:none;border-color:white;s" >
           <thead>
             <tr>
               <th colspan=13>
@@ -93,7 +93,7 @@ overflow-y: hidden;
                 {% else %}
 
 
-              <td  action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
+              <td class="good" action="/save_needs/" fname="f20" key="{{t.link}}" style="background-color:{{t.color}};">
                 {{t.val}}
                 {% endif %}
               </td>

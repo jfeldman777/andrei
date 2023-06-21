@@ -461,8 +461,9 @@ def delta_role_project(request, p, r, j,n=12):
 
         d = inc(d)
     w2 = a_w2
-
+    paint3 = Paint()
     for person in people_rv:
+        paint3.next_row(None)
         if person == None:
             break
         b_w3 = [0] * n
@@ -470,19 +471,7 @@ def delta_role_project(request, p, r, j,n=12):
         diff = rest_of_time_pr_12(person, role,n)
         d = date0()
         for i in range(n):
-            tcolor=""
-            color = "rgb(240,240,240)"
-            if mon_outside_prj(d, project):
-                color = "rgb(211,211,211)"
-                if delta[i] < 0:
-                    color = "#B266FF"
-            elif delta[i] < 0:
-                color = "pink"
-            elif a_w3[i] > 0:
-                color = "lightblue"
-            else:
-                tcolor="color"
-
+            paint3.next_cell(a_w3[i])
             try:
                 p = person.id
                 df = diff[i]
@@ -494,8 +483,8 @@ def delta_role_project(request, p, r, j,n=12):
                 "link": f"{p}.{r}.{j}.{d.year}-{d.month}-15",
                 "up": up(max(-delta[i], 0), df),
                 "val": a_w3[i],
-                "color": color,
-                "class":tcolor+" good ",
+                "color": paint3.color_tasks(mon_outside_prj(d, project),(delta[i] < 0)),
+                "class":"good ",
             }
             d = inc(d)
 
@@ -506,7 +495,7 @@ def delta_role_project(request, p, r, j,n=12):
             except:
                 grade = '0'
             up1=f" ({grade})"
-        c_w3 = [{"class":"color","val": person.fio + up1}] + b_w3
+        c_w3 = [{"color":paint3.rgb_back_left(),"val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
     paint1 = Paint()
@@ -563,7 +552,7 @@ def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i + 1],
-            "color": paint4.color_needs(project.start_date,project.end_date,d),
+            "color": paint2.color_needs(project.start_date,project.end_date,d),
         }  #
 
         d = inc(d)
@@ -572,7 +561,9 @@ def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     supp = ["Поставка"] + task_role_project_12(role, project,n)
     delta = ["Дельта"] + delta_role_project_12(role, project,n)
 
+    paint3 = Paint()
     for person in people_rv:
+        paint3.next_row(None)
         if person == None:
             break
         b_w3 = [0] * n
@@ -580,25 +571,14 @@ def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
         diff = rest_of_time_pr_12(person, role)
         d = date0()
         for i in range(n):
-            tclass=""
-            color = "rgb(240,240,240)"
-            if mon_outside_prj(d, project):
-                color = "rgb(211,211,211)"
-                if delta[i + 1] < 0:
-                    color = "#B266FF"
-            elif delta[i + 1] < 0:
-                color = "pink"
-            elif a_w3[i] > 0:
-                color = "lightblue"
-            else:
-                tclass=" color"
+            paint3.next_cell(a_w3[i])
 
             b_w3[i] = {
                 "link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
                 "up": up(max(-delta[i + 1], 0), diff[i]),
                 "val": a_w3[i],
-                "color": color,
-                "class":tclass + "  good "
+                "color": paint3.color_tasks(mon_outside_prj(d, project),(int(delta[i+1])< 0)),
+                "class":"  good "
             }
 
             d = inc(d)
@@ -609,7 +589,7 @@ def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
             except:
                 grade = '0'
             up1=f" ({grade})"
-        c_w3 = [{"class":"color","val": person.fio + up1}] + b_w3
+        c_w3 = [{"color":paint3.rgb_back_left(),"val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
 
@@ -669,9 +649,11 @@ def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
 
     paint2 = Paint()
     paint1 = Paint()
+    paint3 = Paint()
     for project in projects:
         paint2.next_row(None)
         paint1.next_row(None)
+        paint3.next_row(None)
         try:
             wish = Wish.objects.get(role=role, project=project, ).mywish
         except:
@@ -704,30 +686,22 @@ def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
 
         p100 = project.title
         for person in people_rv:
+            paint3.next_row(None)
             diff = rest_of_time_pr_12(person, role,n)
             b_w3 = [0] * n
             a_w3 = task_person_role_project_12(person, role, project,n)
             d = date0()
 
             for i in range(n):
-                tclass = ""
-                color = "rgb(240,240,240)"
-                if mon_outside_prj(d, project):
-                    color = "rgb(211,211,211)"
-                    if delta[i + 1] < 0:
-                        color = "#B266FF"
-                elif delta[i + 1] < 0:
-                    color = "pink"
-                elif a_w3[i] > 0:
-                    color = "lightblue"
-                else:
-                    tclass = 'color'
+                paint3.next_cell(a_w3[i])
+
+
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i + 1], 0), diff[i]),
                     "val": a_w3[i],
-                    "color": color,
-                    "class":tclass+ "  good"
+                    "color": paint3.color_tasks(mon_outside_prj(d, project),(delta[i+1] < 0)),
+                    "class":"  good"
                 }
                 ##########################################################################3333333
                 d = inc(d)
@@ -738,7 +712,7 @@ def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
                 except:
                     grade = '0'
                 up1 = f" ({grade})"
-            c_w3 = [p100,{"class":"color","val": person.fio + up1}] + b_w3
+            c_w3 = [p100,{"color":paint3.rgb_back_left(),"val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
@@ -794,6 +768,7 @@ def delta_role(request, p, r, j,n=12):
     # W222222222222222222222222222222
     paint2 = Paint()
     paint1 = Paint()
+    paint3 = Paint()
     for project in projects:
         paint1.next_row(None)
         paint2.next_row(None)
@@ -830,6 +805,7 @@ def delta_role(request, p, r, j,n=12):
         delta = delta_role_project_12(role, project,n)
 
         for person in people_rv:
+            paint3.next_row(None)
             diff = rest_of_time_pr_12(person, role,n)
             b_w3 = [0] * n
             a_w3 = task_person_role_project_12(person, role, project,n)
@@ -837,25 +813,14 @@ def delta_role(request, p, r, j,n=12):
             d = date0()
 
             for i in range(n):
-                tclass=""
-                color = "rgb(240,240,240)"
-                if mon_outside_prj(d, project):
-                    color =  "rgb(211,211,211)"
-                    if delta[i] < 0:
-                        color = "#B266FF"
-                elif delta[i] < 0:
-                    color = "pink"
-                elif a_w3[i] > 0:
-                    color = "lightblue"
-                else:
-                    tclass="color"
+
 
                 b_w3[i] = {
                     "link": f"{person.id}.{r}.{project.id}.{d.year}-{d.month}-15",
                     "up": up(max(-delta[i], 0), diff[i]),
                     "val": a_w3[i],
-                    "color": color,
-                    "class": tclass + "  good"
+                    "color": paint3.color_tasks(mon_outside_prj(d, project),(delta[i] < 0)),
+                    "class": "  good"
                 }
                 ##########################################################################3333333
                 d = inc(d)
@@ -866,7 +831,7 @@ def delta_role(request, p, r, j,n=12):
                 except:
                     grade = '0'
                 up1 = f" ({grade})"
-            c_w3 = [p100,{"class":"color","val": person.fio + up1}] + b_w3
+            c_w3 = [p100,{"color":paint3.rgb_back_left(),"val": person.fio + up1}] + b_w3
             p100 = -1
             w3.append(c_w3)
 
