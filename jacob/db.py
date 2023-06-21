@@ -8,14 +8,14 @@ def real_and_virtual_people(role:object)->List[object]:
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
     pps = pp1.union(pp2)
-    ppl = sorted(list(pps), key=lambda x:x.fio)
     try:
         ov = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]
         ou = UserProfile.objects.filter(fio="АУТСОРС")[0]
     except:
         ou = None
         ov = None
-    return ppl + [ou, ov]
+    return sorted(list(pps) + [ou, ov], key=lambda x:x.fio)
+
 
 
 def real_people(role:object)->List[UserProfile]:

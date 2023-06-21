@@ -37,7 +37,7 @@ def task_role_project(request: object, p: int, r: int, j: int, n: int = 12) -> o
         except:
             p = 0
         for i in range(n):
-            paint3.next_row(None)
+            paint3.next_cell(a_w3[i])
 
             try:
                 df = diff[i]
@@ -96,9 +96,10 @@ def task_project(request: object, p: int, r: int, j: int, n: int = 12) -> object
         people = real_and_virtual_people(role)
         dem_rj = needs_role_project_12(person, role, project, n)  # ----------------
 
-        p100 = {"val": role.title}
+
         for person in people:
             paint3.next_row(None)
+            p100 = {"val": project.title, 'color': paint3.rgb_back_left()}
             diff = rest_of_time_pr_12(person, role, n)
             b_w3 = [0] * n
             a_w3 = task_person_role_project_12(person, role, project, n)
@@ -128,7 +129,7 @@ def task_project(request: object, p: int, r: int, j: int, n: int = 12) -> object
                 except:
                     grade = '0'
                 up1 = f" ({grade})"
-            c_w3 = [p100, {'color': paint3.rgb_back_left(), "val": person.fio + up1}] + b_w3
+            c_w3 = [p100, {'color': paint3.rgb_back_right(), "val": person.fio + up1}] + b_w3
 
             w3.append(c_w3)
 
