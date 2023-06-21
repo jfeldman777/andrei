@@ -443,30 +443,19 @@ def delta_role_project(request, p, r, j,n=12):
                 "val":person.fio}] + rest_and_color_12(person, role,paint4.color_rest,12)
         w4.append(dif)
 
-
-
-
-
-
     a_w2 = [0] * n
     dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
 
+    paint2 = Paint()
     d = date0()
-    tcolor=""
+
     for i in range(n):
-        tcolor = ""
-        color = "rgb(240,240,240)"
-        if mon_outside_prj(d, project):
-            color = " rgb(211,211,211) "
-        elif dem_rj[i] > 0:
-            color = "lightblue"
-        else:
-            tcolor="color"
+        paint2.next_row(None)
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
-            "color": color,
-            "class":tcolor + "  good"
+            "color": paint4.color_needs(project.start_date,project.end_date,d,dem_rj[i]),
+            "class":"good"
         }  #
 
         d = inc(d)
@@ -564,21 +553,14 @@ def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     a_w2 = [0] * n
     dem_rj = ["Потребность"] + needs_role_project_12(person,role, project,n)  # ----------------
 
+    paint2 = Paint()
     d = date0()
     for i in range(n):
-        tclass= ""
-        color = "rgb(240,240,240)"
-        if mon_outside_prj(d, project):
-            color = "rgb(211,211,211)"
-        elif dem_rj[i + 1] > 0:
-            color = "lightblue"
-        else:
-            tclass=" good color "
+        paint2.next_row(None)
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i + 1],
-            "color": color,
-            "class":tclass
+            "color": paint4.color_needs(project.start_date,project.end_date,d,dem_rj[i + 1]),
         }  #
 
         d = inc(d)

@@ -2,8 +2,8 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-{% include 'nopadding.html' %}
 {% load static %}
+{% include 'nopadding.html' %}
 <style>
     body {
         overflow-y: hidden;
@@ -12,7 +12,7 @@
 <div class="bar">
   <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
 </div>
-<table width=100% style=" height: 100vh;
+<table width=100% style="
  overflow-y: hidden;
  position:absolute;top:78px;border:1;border-color:white;" >
                 <tr style=" height: 42vh; ">
@@ -50,15 +50,16 @@
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/needs_jr/{{p}}/{{r}}/{{j}}" style="color:white;" class="mmm">Потребность</a>
+                <a href="/needs_jr/{{p}}/{{r}}/{{j}}" style="color:white;" >Потребность</a>
               </th>
             </tr>
             <tr>
               {% include 'moon.html' %}</tr></thead><tbody>
             <tr>
               {% for t in w2 %}
-              <td class="{{t.class}}}" action="/save_needs/" fname="f20" key="{{t.link}}"
-                  style="background-color:{{t.color}};">
+              <td class="good" action="/save_needs/" fname="f20" key="{{t.link}};"
+              style="background-color:{{t.color}};"
+              >
 
                 {{t.val}}
               </td>
@@ -76,7 +77,7 @@
       </form>
     </td>
   </tr>
-  <tr style="text-align:center;">
+  <tr style="text-align:center;height: 80vh; ">
     <td width=50%>
       <div class="table-container-2">
         <table width=100% style="position:relative;top:0;border-color:white;">

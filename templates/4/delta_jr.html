@@ -13,7 +13,7 @@
   <h4>Проект: {{project}} - Ресурс: {{role}}</h4>
 </div>
 
-<table width=100% style=" height:100vh; position:absolute;top:78px; overflow-y: hidden;" >
+<table width=100% style="position:absolute;top:78px; overflow-y: hidden;" >
                 <tr style=" height: 42vh; ">
     <td width=50% style="vertical-align:top;border:1;border-color:white;">
       <div class="table-container-2">
@@ -40,9 +40,9 @@
         </table>
       </div>
     </td>
-    <td width=50% style="vertical-align:top;boreder:1;border-color:white;">
+    <td width=50% style="vertical-align:top;border:1;border-color:white;">
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border-color:white;" class="needs">
+        <table border=1 width=100% style="position:relative;top:0;border-color:white;" >
           <thead>
             <tr  style="border:1;border-color:white;">
               <th colspan=13  style="border:1;border-color:white;">
@@ -54,8 +54,8 @@
               {% include 'moon.html' %}</tr></thead><tbody>
             <tr style="border:1;border-color:white;">
               {% for t in w2 %}
-              <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}"
-                  style="background-color:{{t.color}}"
+              <td  class="good" action="/save_needs/" fname="f20" key="{{t.link}}" 
+              style="background-color:{{t.color}};"
               >
 
                 {{t.val}}
@@ -75,10 +75,10 @@
       </form>
     </td>
   </tr>
-  <tr style="text-align:center; vertical-align:top;">
+  <tr style="text-align:center; vertical-align:top;height: 80vh; ">
     <td width=50% style="vertical-align:top;border:1;border-color:white;">
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border-color:white;" class="tasks">
+        <table border=1 width=100% style="position:relative;top:0;border-color:white;" >
           <thead>
             <tr>
               <th colspan=13  style="border:1;border-color:white;">

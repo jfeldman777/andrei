@@ -79,15 +79,15 @@ class Paint:
 
         return self.rgb_back()
 
-    def color_needs(self):
-        if isinstance(self.cell, int):
-            if self.isOut:
+    def color_needs(self,d1,d2,d,cell):
+        if isinstance(cell, int):
+            if d < d1 or d > d2:
                 return self.MY_GREY
             else:
-                if self.cell > 0:
+                if cell > 0:
                     return self.MY_BLUE
 
-        return self.rgb_back()
+        return self.rgb_back_right()
 
     def color_entry_map(self):
         if isinstance(self.cell,int):
