@@ -454,7 +454,7 @@ def delta_role_project(request, p, r, j,n=12):
         a_w2[i] = {
             "link": f"0.{r}.{j}.{d.year}-{d.month}-15",
             "val": dem_rj[i],
-            "color": paint4.color_needs(project.start_date,project.end_date,d,dem_rj[i]),
+            "color": paint2.color_needs(project.start_date,project.end_date,d,dem_rj[i]),
             "class":"good"
         }  #
 
@@ -890,7 +890,9 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
 
     roles = Role.objects.all()
+    paint2 = Paint()
     for role in roles:
+        paint2.next_row(None)
         try:
             wish = Wish.objects.get(role=role, project=project, ).mywish
         except:
@@ -911,21 +913,17 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
         a_w2 = [0] * n
         dem_rj = needs_role_project_12(person,role, project,n)  # ----------------
 
+
         d = date0()
         for i in range(n):
-            tclass=""
-            color = "rgb(240,240,240)"
-            if mon_outside_prj(d, project):
-                color = "rgb(211,211,211)"
-            elif dem_rj[i] > 0:
-                color = "lightblue"
-            else:
-                tclass='color'
+            paint2.next_cell(dem_rj[i])
+
             a_w2[i] = {
                 "val": dem_rj[i],
-                "color": color,
+
+                "color": paint2.color_needs(project.start_date, project.end_date, d),
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
-                "class":tclass+ "  good"
+                "class":"  good"
             }
 
             d = inc(d)
@@ -936,7 +934,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                     "j": project.id,
                     "val": role.title,
                     "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
-                    "class":"color"
+                    "color":paint2.rgb_back_left()
                 }
             ]
             + a_w2
@@ -1012,34 +1010,30 @@ def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     w2 = []
     w1 = []
     moon12 = moon()
-
+    paint2 = Paint()
     roles = Role.objects.all()
     a_w2 = [0] * n
     for role in roles:
+        paint2.next_row(None)
         zo = ["АУТСОРС"] + outsrc(role, project,n)
         zv = ["ВАКАНСИЯ"] + vacancia(role, project,n)
         supp = ["Поставка"] + task_role_project_12(role, project,n)
         delta = ["Дельта"] + delta_role_project_12(role, project,n)
         dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
 
+
         d = date0()
         for i in range(n):
-            tclass=""
-            color = "rgb(240,240,240)"
-            if mon_outside_prj(d, project):
-                color = "rgb(211,211,211)"
-            elif dem_rj[i] > 0:
-                color = "lightblue"
-            else:
-                tclass='color'
+            paint2.next_cell(dem_rj[i])
+
             a_w2[i] = {
                 "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                 "val": dem_rj[i],
-                "color": color,
-                "class": tclass + "  good"
+                "color": paint2.color_needs(project.start_date, project.end_date, d ),
+                "class": " good"
             }  #
             d = inc(d)
-        w2.append([{"class":"color","val": role.title}] + a_w2)
+        w2.append([{"color":paint2.rgb_back_left(),"val": role.title}] + a_w2)
 
         p100 = role.title
         people_rr = real_people(role)
