@@ -34,20 +34,17 @@
               </th>
             </tr>
             <tr>
-           <th style="background:white;border:none;border-color:white;color:black;">
+           <th style="background:white;color:black;border-bottom: 1px solid grey;">
                 Проект</th>
               {% include 'moon.html' %}</tr></thead><tbody>
               {% for dem in w1 %}
-            <tr class="hborder">
+            <tr >
               {% for t in dem %}
-              <td class="hborder">
-                {% if forloop.first %}
+              <td style="background-color:{{t.color}};">
 
-                  {{t.val}}
 
-                {% else %}
                 {{t.val}}
-                {% endif %}
+
               </td>
               {% endfor %}
 

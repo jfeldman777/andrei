@@ -668,8 +668,10 @@ def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
 
 
     paint2 = Paint()
+    paint1 = Paint()
     for project in projects:
         paint2.next_row(None)
+        paint1.next_row(None)
         try:
             wish = Wish.objects.get(role=role, project=project, ).mywish
         except:
@@ -680,14 +682,14 @@ def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
         p200 = project.title
         a_w2 = [{"color":paint2.rgb_back_left(),
             "val": project.title, "j": project.id, "r": r}] + [0] * n
-        dem_rj = [project.title] + ["Потребность"] + needs_role_project_12(person, role, project,n)  #
+        dem_rj = ["Потребность"] + needs_role_project_12(person, role, project,n)  #
 
         d = date0()
         for i in range(n):
-            paint2.next_cell(dem_rj[i + 2])
+            paint2.next_cell(dem_rj[i + 1])
 
             a_w2[i + 1] = {
-                "val": dem_rj[i + 2],
+                "val": dem_rj[i + 1],
                 "j": project.id,
                 "r": role.id,
                 "color": paint2.color_needs(project.start_date,project.end_date,d),
@@ -740,12 +742,16 @@ def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
             p100 = -1
             w3.append(c_w3)
 
-        w1.append(dem_rj)  ##########################################77777
-        w1.append([-1] + supp)  ###############--
-        w1.append([-1] + zo)  ################
-
-        w1.append([-1] + zv)  #####################
-        w1.append([-1] + delta)  ############################
+        w1.append([project.title] + paint1.plus_color_balance(  dem_rj) ) ##########################################77777
+        paint1.next_row(None)
+        w1.append([-1] + paint1.plus_color_balance(  supp) ) ###############--
+        paint1.next_row(None)
+        w1.append([-1] + paint1.plus_color_balance(  zo) ) ################
+        paint1.next_row(None)
+        w1.append([-1] + paint1.plus_color_balance(  zv))  #####################
+        paint1.next_row(None)
+        w1.append([-1] + paint1.plus_color_balance(  delta))  ############################
+        paint1.next_row(None)
 
     moon12["w4"] = w4  ########################################
     moon12["w2"] = w2  #####################
@@ -787,7 +793,9 @@ def delta_role(request, p, r, j,n=12):
 
     # W222222222222222222222222222222
     paint2 = Paint()
+    paint1 = Paint()
     for project in projects:
+        paint1.next_row(None)
         paint2.next_row(None)
         try:
             wish = Wish.objects.get(role=role, project=project, ).mywish
@@ -862,8 +870,8 @@ def delta_role(request, p, r, j,n=12):
             p100 = -1
             w3.append(c_w3)
 
-        delta2 = [{"val": x} for x in delta]        
-        w1.append([{"j": project.id, "val": project.title}] + delta2)  
+
+        w1.append(paint1.plus_color_balance([ project.title] + delta)  )
 
     moon12["w4"] = w4  ########################################
     moon12["w2"] = w2  #####################
@@ -892,6 +900,7 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
 
     roles = Role.objects.all()
     paint2 = Paint()
+    paint1 = Paint()
     for role in roles:
         paint2.next_row(None)
         try:
@@ -981,10 +990,9 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             p100 = -1
             w3.append(c_w3)
 
-        delta2 = [{"val": x} for x in delta]
-        w1.append(
-            [{"r": role.id, "val": role.title}] + delta2
-        )  ############################
+        paint1.next_row(None)
+        w1.append(paint1.plus_color_balance([role.title] + delta))
+        ############################
     moon12["w1"] = w1
     moon12["w2"] = w2
     moon12["w3"] = w3
@@ -1014,7 +1022,9 @@ def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
     paint2 = Paint()
     roles = Role.objects.all()
     a_w2 = [0] * n
+    paint1 = Paint()
     for role in roles:
+        paint1.next_row(None)
         paint2.next_row(None)
         zo = ["АУТСОРС"] + outsrc(role, project,n)
         zv = ["ВАКАНСИЯ"] + vacancia(role, project,n)
@@ -1089,13 +1099,16 @@ def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
             p100 = -1
             w3.append(c_w3)
 
-        w1.append(
-            [role.title, "Потребность"] + dem_rj
-        )  ##########################################77777
-        w1.append([-1] + supp)  ###############--
-        w1.append([-1] + zo)  ################
-        w1.append([-1] + zv)  #####################
-        w1.append([-1] + delta)  ############################
+        w1.append([role.title]+paint1.plus_color_balance(  ["Потребность"] + dem_rj) ) ##########################################77777
+        paint1.next_row(None)
+        w1.append([-1] + paint1.plus_color_balance(supp) ) ###############--
+        paint1.next_row(None)
+        w1.append([-1] + paint1.plus_color_balance(zo))  ################
+        paint1.next_row(None)
+        w1.append([-1] + paint1.plus_color_balance(zv) ) #####################
+        paint1.next_row(None)
+        w1.append([-1] + paint1.plus_color_balance(delta) ) ############################
+
     moon12["w1"] = w1
     moon12["w2"] = w2
     moon12["w3"] = w3

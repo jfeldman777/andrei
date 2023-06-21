@@ -28,7 +28,7 @@ overflow-y: hidden;
               <th>
             </tr>
             <tr>
-        <th style="background:white;border:none;border-color:grey;color:black;">
+        <th style="background:white;color:black;border-bottom: 1px solid grey;">
                       {{role}}
                 {% include 'moon.html' %}</tr></thead><tbody>
                 {% for dem in w1 %}
@@ -41,9 +41,9 @@ overflow-y: hidden;
             <tr>
               {% endif %}
               {% else %}
-              <td>
+              <td style="background:{{t.color}};">
 
-                {{t}}
+                {{t.val}}
 
               </td>
               {% endif %}
