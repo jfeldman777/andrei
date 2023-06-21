@@ -47,13 +47,25 @@ class Paint:
             return self.rgb_back_left()
         return self.rgb_back_right()
 
-    def color_balance(self):
+    def plus_color_balance(self,L):
+        res = []
+        for i in range(len(L)):
+            self.cell = L[i]
+            m = {'val':L[i],'color':self.color_balance(i)}
+            res.append(m)
+        return res
+
+
+
+    def color_balance(self,k=0):
         if  isinstance(self.cell, int):
             if self.cell < 0:
                 return self.MY_PINK
             if self.cell > 0:
                 return self.MY_BLUE
-        return self.rgb_back()
+        if k == 0:
+            return self.rgb_back_left()
+        return self.rgb_back_right()
 
     def color_rest(self,all_rest):
 

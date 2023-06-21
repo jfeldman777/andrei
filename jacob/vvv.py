@@ -509,8 +509,9 @@ def delta_role_project(request, p, r, j,n=12):
         c_w3 = [{"class":"color","val": person.fio + up1}] + b_w3
         p100 = -1
         w3.append(c_w3)
-
-    w1.append(delta)  ############################
+    paint1 = Paint()
+    paint1.next_row(None)
+    w1.append(paint1.plus_color_balance(delta))  ############################
     moon12["w1"] = w1
     moon12["w2"] = w2
     moon12["w3"] = w3
@@ -614,11 +615,16 @@ def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
 
 
     paint1 = Paint()
-    w1.append(dem_rj)  ##########################################77777
-    w1.append(supp)  ###############--
-    w1.append(zo)  ################
-    w1.append(zv)  #####################
-    w1.append(delta)  ############################
+    paint1.next_row(None)
+    w1.append(paint1.plus_color_balance(dem_rj))  ##########################################77777
+    paint1.next_row(None)
+    w1.append(paint1.plus_color_balance(supp) ) ###############--
+    paint1.next_row(None)
+    w1.append(paint1.plus_color_balance(zo))  ################
+    paint1.next_row(None)
+    w1.append(paint1.plus_color_balance(zv))  #####################
+    paint1.next_row(None)
+    w1.append(paint1.plus_color_balance(delta))  ############################
 
     moon12["w1"] = w1
     moon12["w2"] = w2
