@@ -44,7 +44,9 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                 'up':up(c=wish)
             }
             d = inc(d)
-        w2.append([{"color":paint2.rgb_back_left(),'up':up(c=wish),"val": project.title}] + a_w2)
+        w2.append([{"color":paint2.rgb_back_left(),'up':up(c=wish)+"?","class":"wish",
+                    "project":project.id,"role":role.id,
+                    "val": project.title}] + a_w2)
 
     moon12["w2"] = w2
 
@@ -93,7 +95,8 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 'up':up(c=wish)
             }
             d = inc(d)
-        w2.append([{"color":paint2.rgb_back_left(),'up':up(c=wish),"val": role.title}] + a_w2)
+        w2.append([{"color":paint2.rgb_back_left(),"class":"wish",
+                    'up':up(c=wish)+'?',"val": role.title}] + a_w2)
 
     moon12["w2"] = w2
 
@@ -104,6 +107,7 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
     moon12["r"] = 0
     moon12["id"] = j
     return render(request, "needs_j.html", moon12)
+
 
 '''
 потребность - один ресурс - один проект

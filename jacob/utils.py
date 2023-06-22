@@ -17,7 +17,7 @@ from datetime import date, timedelta
 def up(a: int=-1, b: int=-1,c:str='') -> str:
 
     cs = ''
-    if c!='':
+    if c!='' and c!= None:
         cs = f"особые требования->{c}"
     if not isinstance(a, int) or a < 0:
         return cs

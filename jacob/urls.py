@@ -27,7 +27,7 @@ urlpatterns = [
     path("save_max/", save_forms.save_max, name="save_max"),
     path("save_needs/", save_forms.save_needs, name="save_needs"),
     path("save_task/", save_forms.save_task, name="save_task"),
-    
+    path("save_wish/", save_forms.save_wish, name="save_wish"),
 
 
     

@@ -1,7 +1,19 @@
 from datetime import date
 
-from .models import Load, Task, Less
+from .models import Load, Task, Less, Wish, Role, Project
 from .utils import inc,timespan_len
+
+def create_or_update_wish(role:Role, project:Project, txt:str)->None:  # Доступность
+    try:
+        instance = Wish.objects.get(role=role, project=project)
+    except:
+        instance = None
+    if instance:
+        instance.mywish = txt
+        instance.save()
+    else:
+        instance = Wish.objects.create(project=project, role=role, mywish=txt)
+
 
 
 def create_or_update_res_max(person:object, role:object, m:date, l:int)->None:  # Доступность

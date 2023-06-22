@@ -20,7 +20,9 @@
       {% for t in dem %}
 
       <td class="{{t.class}}" action="/save_needs/" fname=f10 key="{{t.link}}" title="{{t.up}}"
-          style="background-color:{{t.color}};">
+          style="background-color:{{t.color}};"
+      role="{{t.role}}" project="{{t.project}}"
+      >
         {{t.val}}
       </td>
       {% endfor %}
@@ -36,5 +38,5 @@
 </div>
           </form>
  
-
+ {% include 'wish_js.html' %}
 {% endblock %}
