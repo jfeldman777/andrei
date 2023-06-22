@@ -1,7 +1,7 @@
 <script>
   var f1;
   var element;
-  var a ;
+  var a;
 
   $('td.good').click(function () {
     var p = $(this).attr("key");
@@ -21,6 +21,7 @@
     $(this).on('keypress', '#' + ID, function (event) {
       if (event.which === 13) { // 13 соответствует клавише Enter
         element.blur();
+        $('.btn.btn-primary').prop('disabled', false);
       }
     });
 
@@ -31,9 +32,6 @@
       var form = document.getElementById(f1);
       form.action = a;
 
-      var button = form.querySelector(".button3");
-      button.disabled = false;
-
       var input = document.createElement('input');
       input.type = 'hidden';
       input.name = p;
@@ -41,5 +39,11 @@
 
       form.appendChild(input);
     });
+  });
+
+  // Обработчик события click для кнопки вне обработчика события focusout
+  $('.btn.btn-primary').click(function() {
+    var form = document.getElementById(f1);
+    form.submit();
   });
 </script>

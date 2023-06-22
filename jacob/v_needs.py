@@ -45,7 +45,7 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
             }
             d = inc(d)
         w2.append([{"color":paint2.rgb_back_left(),'up':up(c=wish)+"?","class":"wish",
-                    "project":project.id,"role":role.id,
+                    "project":project.id,"role":r,
                     "val": project.title}] + a_w2)
 
     moon12["w2"] = w2

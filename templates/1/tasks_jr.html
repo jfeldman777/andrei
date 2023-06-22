@@ -38,7 +38,7 @@
 
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='tasks_jr'>
-      <div style="position:absolute;top:60px;right:400px;">
+      <div style="z-index:100;position:absolute;top:80px;right:385px;">
 <button   type="submit"  class="btn btn-primary"> Сохранить </button>
 </div>
           </form>

@@ -12,7 +12,7 @@
   <thead>
     <tr style="text-align:center;">
 
-      <th class="hborder" style="text-align:center;border-top:none;">
+      <th style="text-align:center;border-top:none;">
 Проект
         {% include 'moon.html' %}</tr></thead><tbody>
         {% for dem in w2 %}
@@ -31,10 +31,10 @@
 </table>
 
 {% include 'data2.html' %}
-  <form id="f10" method="POST" action="/save_task/">
+  <form  method="POST" id="f10">
             {% csrf_token %}          <input type=hidden name="html" value='needs_r'>
-      <div style="position:absolute;top:60px;right:600px;">
-<button   type="submit"  class="btn btn-primary"> Сохранить  </button>
+      <div style="z-index:100;position:absolute;top:80px;right:385px;">
+<button   type="submit" disabled="true"  class="btn btn-primary"> Сохранить  </button>
 </div>
           </form>
  

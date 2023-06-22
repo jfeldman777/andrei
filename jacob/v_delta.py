@@ -159,13 +159,12 @@ def delta_role(request, p, r, j,n=12):
         d = date0()
         for i in range(n):
             paint2.next_cell(dem_rj[i+2])
-            isOut = d < project.start_date or d > project.end_date
-            isPurple = delta[i] < 0
+
             a_w2[i + 1] = {
                 "val": dem_rj[i + 2],
                 "j": project.id,
                 "r": role.id,
-                "color": paint3.color_tasks(isOut,isPurple),
+                "color": paint2.color_needs(project.start_date,project.end_date,d),
                 "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
                 "class": "  good"
             }

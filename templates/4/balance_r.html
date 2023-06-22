@@ -75,7 +75,7 @@ overflow-y: hidden;
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_r'>
-                  <button type="submit" class="button3" disabled="true">Сохранить</button>
+         <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
 
 
@@ -131,7 +131,7 @@ border-bottom: 1px solid grey;
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_r'>
                   <input type=hidden name="r" value='{{r}}'>
-                  <button type="submit" class="button3 " disabled="true">Сохранить</button>
+          <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
 
                 {% include 'moon.html' %}</tr></thead><tbody>
