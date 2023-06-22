@@ -185,12 +185,19 @@ def people(request):
 
     return render(request, "people.html", context)
 def roles(request:object)->object:
+    paint = Paint()
     context = {}
-    roles = Role.objects.all().order_by("general")
-    data2 = [{"title": p.title, "id": p.id, "general": p.general.userprofile.fio}
-                        for p in roles]
-    context["data2"] = data2
+    data = []
+    roles = Role.objects.all().order_by("title")
 
+
+    for p in roles:
+        paint.next_row(None)
+        m = {"title": p.title, "id": p.id, "general": p.general.userprofile.fio,
+             'color1':paint.rgb_back_left(),'color2':paint.rgb_back_right()
+             }
+        data.append(m)
+    context["data2"] = data
     return render(request, "roles.html", context)
 '''
 Заголовок - 12 месяцев

@@ -9,13 +9,10 @@
  Все роли</h5>
 
 
-<table id="example" class="display compact" style="width:100%;"><thead>
+<table  class="display compact" style="width:100%;"><thead>
   <tr style="text-align:left;">
     <th style="text-align:left;">
-
        Роль
-
-
      </th>
      <th style="text-align:left;">
 
@@ -23,13 +20,13 @@
     </tr>
     </thead><tbody>
 
-      {% for cell in data2 %}    <tr style="text-align: left; backround-color={{cell.color}};">
-      <td style="text-align: left; ">
+      {% for cell in data2 %}    <tr style="text-align: left; ">
+      <td style="text-align: left; background-color:{{cell.color1}};">
 <a href="/role_form/{{cell.id}}">
         {{ cell.title }}
           </a>
       </td>
-      <td style="text-align: left; backround-color={{cell.color}};">
+      <td style="text-align: left; background-color:{{cell.color2}};">
 
         {{ cell.general }}
 
@@ -40,7 +37,7 @@
     {% endfor %}</tbody>
         </table>
 
-      {% include 'data.html' %}
+      {% include 'data2.html' %}
 
           
 {% endblock %}

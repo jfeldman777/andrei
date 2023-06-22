@@ -66,6 +66,10 @@
               {% endfor %}
 
             </tr>
+            <tr><td colspan="12">
+              <button   type="submit"  class="btn btn-primary"> Сохранить </button>
+
+            </td></tr>
 
             </tbody>
         </table>
@@ -73,7 +77,7 @@
       <form id="f20" method="POST">
         {% csrf_token %}
         <input type=hidden name="html" value='balance_jr'>
-    <button   type="submit"  class="btn btn-primary"> Сохранить </button>
+
       </form>
     </td>
   </tr>

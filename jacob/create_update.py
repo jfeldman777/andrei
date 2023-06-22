@@ -32,14 +32,14 @@ def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:
         n = 1
     for i in range(n):
         try:
-            instance = Less.objects.get(person=person, role=role, start_date=m)
+            instance = Less.objects.get(person=person, role=role, start_date=d)
         except:
             instance = None
         if instance:
             instance.load = v
             instance.save()
         else:
-            instance = Less.objects.create(person=person, role=role, start_date=m, load=v)
+            instance = Less.objects.create(person=person, role=role, start_date=d, load=v)
         d = inc(d)
 
 
