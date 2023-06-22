@@ -8,7 +8,7 @@ from .db import task_person_role_project_12, real_and_virtual_people, real_peopl
 from .utils import *
 from datetime import date
 from .models import UserProfile, Grade, Wish,Project
-from .utils import date0
+from .utils import date0, inc
 from .view_forms import role_form
 from django.urls import resolve
 from .paint import Paint

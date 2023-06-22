@@ -300,7 +300,7 @@ def balance_role_project(request:object, p:int, r:int, j:int, n:int=12)->object:
         for i in range(n):
             paint3.next_cell(a_w3[i])
             isOut = d < project.start_date or d > project.end_date
-            isPurple = delta[i] < 0
+            isPurple = delta[i+1] < 0
             b_w3[i] = {
                 "link": f"{person.id}.{r}.{j}.{d.year}-{d.month}-15",
                 "up": up(max(-delta[i + 1], 0), diff[i]),
