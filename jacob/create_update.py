@@ -27,7 +27,7 @@ def create_or_update_task(p:object, r:object, j:object, dm:date, svn:str)->None:
         try:
             n = int(sn)
         except:
-            n = timespan_len(d, d2) - 1
+            n = timespan_len(d, d2) 
 
     else:
         v = int(svn)
@@ -64,7 +64,7 @@ def create_or_update_needs(person:object, role:object, project:object, dm:str, s
         try:
             n = int(sn)
         except:
-            n = timespan_len(d, d2) - 1
+            n = timespan_len(d, d2)
     else:
         v = int(svn)
         n = 1
