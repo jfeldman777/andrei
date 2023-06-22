@@ -6,6 +6,7 @@
   <h5>Проект: {{project}} - Ресурсный пул: {{role}} -
 <a href="/delta_jr/0/{{r}}/{{j}}" style="color:black;">Потребность
           </a></h5>
+<button   type="submit"  class="btn btn-primary"> Сохранить  </button>
 
 <table class="display compact duo" style="width:100%;">
   <thead>
@@ -28,12 +29,23 @@
 {% include 'data2.html' %}
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}          <input type=hidden name="html" value='needs_jr'>
-      <div style="z-index:100;position:absolute;top:80px;right:385px;">
-<button   type="submit"  class="btn btn-primary"> Сохранить  </button>
-</div>
+
+
+
           </form>
  
 
 
+<style>
 
+    h5 {
+    display: block;
+}
+
+.btn.btn-primary {
+    display: block;
+    margin-top: 10px; /* Если вы хотите добавить некоторый отступ между текстом и кнопкой */
+}
+
+</style>
 {% endblock %}

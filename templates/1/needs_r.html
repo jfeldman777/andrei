@@ -7,7 +7,7 @@
   Ресурсный пул: {{role}} -
       <a href="/delta_r/0/{{r}}/{{j}}" style="color:black;">Потребность
           </a></h5>
-
+<button   type="submit" disabled="true"  class="btn btn-primary"> Сохранить  </button>
 <table id="example" class="display compact" style="width:100%;">
   <thead>
     <tr style="text-align:center;">
@@ -33,10 +33,22 @@
 {% include 'data2.html' %}
   <form  method="POST" id="f10">
             {% csrf_token %}          <input type=hidden name="html" value='needs_r'>
-      <div style="z-index:100;position:absolute;top:80px;right:385px;">
-<button   type="submit" disabled="true"  class="btn btn-primary"> Сохранить  </button>
-</div>
+
+
+
           </form>
+<style>
+
+    h5 {
+    display: block;
+}
+
+.btn.btn-primary {
+    display: block;
+    margin-top: 10px; /* Если вы хотите добавить некоторый отступ между текстом и кнопкой */
+}
+
+</style>
  
  {% include 'wish_js.html' %}
 {% endblock %}

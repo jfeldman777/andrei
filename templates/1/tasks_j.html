@@ -6,14 +6,14 @@
 
   <h5>Проект: {{project}} - Все ресурсы -<a href="/delta_j/0/{{r}}/{{j}}" style="color:black;">
           Загрузки</a></h5>
-
+<button   type="submit"  class="btn btn-primary"> Сохранить </button>
 <table  class="display compact" style="width:100%;">
   <thead>
     <tr style="text-align:center;">
-      <th class="hborder" style="text-align:center;">
+      <th style="text-align:center;">
 Ресурс
       </th>
-      <th class="hborder" style="text-align:center;">
+      <th style="text-align:center;">
 Сотрудник
 
         {% include 'moon.html' %}</tr></thead><tbody>
@@ -43,11 +43,22 @@
 
   <form id="f10" method="POST" action="/save_task/">
             {% csrf_token %}
-      <div style="z-index:100;position:absolute;top:80px;right:385px;">
-<button   type="submit"  class="btn btn-primary"> Сохранить </button>
-</div>
+
+
+
       <input type=hidden name="html" value='tasks_j'>
           </form>
- 
+ <style>
+
+    h5 {
+    display: block;
+}
+
+.btn.btn-primary {
+    display: block;
+    margin-top: 10px; /* Если вы хотите добавить некоторый отступ между текстом и кнопкой */
+}
+
+</style>
 
 {% endblock %}
