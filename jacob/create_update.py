@@ -16,17 +16,31 @@ def create_or_update_wish(role:Role, project:Project, txt:str)->None:  # Дос�
 
 
 
-def create_or_update_res_max(person:object, role:object, m:date, l:int)->None:  # Доступность
-    try:
-        instance = Less.objects.get(person=person, role=role, start_date=m)
-    except:
-        instance = None
-    if instance:
-        instance.load = l
-        instance.save()
-    else:
-        instance = Less.objects.create(person=person, role=role, start_date=m, load=l)
+def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:  # Доступность
 
+    d = datetime.strptime(m, "%Y-%m-%d").date()
+    if '-' in svn:
+        sv,sn = svn.split('-')
+        v = int(sv)
+        try:
+            n = int(sn)
+        except:
+            n = 12
+
+    else:
+        v = int(svn)
+        n = 1
+    for i in range(n):
+        try:
+            instance = Less.objects.get(person=person, role=role, start_date=m)
+        except:
+            instance = None
+        if instance:
+            instance.load = v
+            instance.save()
+        else:
+            instance = Less.objects.create(person=person, role=role, start_date=m, load=v)
+        d = inc(d)
 
 
 
