@@ -24,9 +24,9 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
     for project in projects:
         paint2.next_row(None)
         try:
-            wish = Wish.objects.get(project=project,role=role)
+            wish = Wish.objects.get(project=project,role=role).mywish
         except:
-            wish = None
+            wish = ''
 
         delta = delta_role_project_12(role, project,n)
 
@@ -44,9 +44,10 @@ def needs_role(request:object, p:int, r:int, j:int,n:int=12)->object:
                 'up':up(c=wish)
             }
             d = inc(d)
-        w2.append([{"color":paint2.rgb_back_left(),'up':up(c=wish)+"?","class":"wish",
+        wish_sign = '!' if wish!='' else ''
+        w2.append([{"color":paint2.rgb_back_left(),'up':wish,"class":"wish",
                     "project":project.id,"role":r,
-                    "val": project.title}] + a_w2)
+                    "val": project.title+wish_sign}] + a_w2)
 
     moon12["w2"] = w2
 
@@ -95,8 +96,10 @@ def needs_project(request:object, p:int, r:int, j:int,n:int=12)->object:
                 'up':up(c=wish)
             }
             d = inc(d)
+        wish_sign = '!' if wish else ''
         w2.append([{"color":paint2.rgb_back_left(),"class":"wish",
-                    'up':up(c=wish)+'?',"val": role.title}] + a_w2)
+                    "project": j, "role": role.id,
+                    'up':wish,"val": role.title+wish_sign}] + a_w2)
 
     moon12["w2"] = w2
 

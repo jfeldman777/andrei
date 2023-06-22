@@ -31,7 +31,10 @@ def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
         supp = ["Поставка"] + task_role_project_12(role, project,n)
         delta = ["Дельта"] + delta_role_project_12(role, project,n)
         dem_rj = needs_role_project_12(person,role, project,n)   # ----------------
-
+        try:
+            wish = Wish.objects.get(project=project, role=role).mywish
+        except:
+            wish = ''
 
         d = date0()
         for i in range(n):
@@ -44,7 +47,12 @@ def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
                 "class": " good"
             }  #
             d = inc(d)
-        w2.append([{"color":paint2.rgb_back_left(),"val": role.title}] + a_w2)
+        wish_sign = '!' if wish != '' else ''
+        w2.append([{"color":paint2.rgb_back_left(),"up":wish,
+                    "val": role.title+wish_sign,
+                    "project": j, "role": role.id,
+
+                    }] + a_w2)
 
         p100 = role.title
         people_rr = real_people(role)
@@ -160,8 +168,12 @@ def balance_role(request:object, p:int, r:int, j:int, n:int=12)->object:
         zv = ["ВАКАНСИЯ"] + vacancia(role, project)
 
         p200 = project.title
+        wish_sign = '!' if wish != '' else ''
         a_w2 = [{"color":paint2.rgb_back_left(),
-            "val": project.title, "j": project.id, "r": r}] + [0] * n
+                 'class':"wish",
+                "up":wish,
+            "val": project.title+wish_sign,
+                 "project": project.id, "role": r}] + [0] * n
         dem_rj = ["Потребность"] + needs_role_project_12(person, role, project,n)  #
 
         d = date0()

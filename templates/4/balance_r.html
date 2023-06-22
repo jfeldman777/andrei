@@ -86,7 +86,11 @@ overflow-y: hidden;
             <tr>
               {% for t in dem %}
               {% if forloop.first %}
-              <td style="background-color:{{t.color}};">
+              <td style="background-color:{{t.color}};" class="{{t.class}}"
+                        role="{{t.role}}" project="{{t.project}}"
+
+              title="{{t.up}}"
+              >
 
                   {{t.val}}
 
@@ -200,4 +204,5 @@ border-bottom: 1px solid grey;
     </td>
   </tr>
 </table>
+ {% include 'wish_js.html' %}
 {% endblock %}
