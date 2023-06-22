@@ -84,7 +84,13 @@
               <tr>
                 {% for t in dem %}
 
-                {% if forloop.first %} <td style="background-color:{{t.color}};">
+                {% if forloop.first %}
+                  <td style="background-color:{{t.color}};"
+                  class="{{t.class}}"
+                  project="{{t.project}}"
+                      role="{{t.role}}"
+                      title="{{t.up}}"
+                  >
 
                     {{t.val}}
 
@@ -186,5 +192,5 @@ border-bottom: 1px solid grey;
     </td>
   </tr>
 </table>
-
+ {% include 'wish_js.html' %}
 {% endblock %}

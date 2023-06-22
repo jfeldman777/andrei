@@ -55,7 +55,7 @@ border-bottom: 1px solid grey;
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/needs_j/{{p}}/{{r}}/{{j}}" style="color:white;" class="mmm">Потребность</a>
+                <a href="/needs_j/{{p}}/{{r}}/{{j}}" style="color:white;">Потребность</a>
               <th>
             </tr>
             <tr>
@@ -75,7 +75,10 @@ border-bottom: 1px solid grey;
               {% for t in dem %}
 
 
-              <td class="{{t.class}}" fname="f20" action="/save_needs/" key="{{t.link}}" 
+              <td class="{{t.class}}" fname="f20" action="/save_needs/" key="{{t.link}}"
+                  project="{{t.project}}"
+                  role="{{t.role}}"
+                  title="{{t.up}}"
               style="background-color:{{t.color}};">
                 {{t.val}}
 
@@ -188,5 +191,5 @@ border-bottom: 1px solid grey;
   </tr>
 </table>
 
-
+ {% include 'wish_js.html' %}
 {% endblock %}

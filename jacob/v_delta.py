@@ -145,11 +145,14 @@ def delta_role(request, p, r, j,n=12):
         except:
             wish = ''
         p100 = project.title
+        wish_sign = '!' if wish != '' else ''
         a_w2 = [
             {
-                "val": project.title,
-                "j": project.id,
-                "r": role.id,
+                "up":wish,
+                "class":"wish",
+                "val": project.title+wish_sign,
+                "project": project.id,
+                "role": role.id,
                 "color":paint2.rgb_back_left()
             }
         ] + [0] * n
@@ -162,8 +165,8 @@ def delta_role(request, p, r, j,n=12):
 
             a_w2[i + 1] = {
                 "val": dem_rj[i + 2],
-                "j": project.id,
-                "r": role.id,
+                "project": project.id,
+                "role": role.id,
                 "color": paint2.color_needs(project.start_date,project.end_date,d),
                 "link": f"0.{r}.{project.id}.{d.year}-{d.month}-15",
                 "class": "  good"
@@ -272,12 +275,15 @@ def delta_project(request:object, p:int, r:int, j:int,n:int=12)->object:
             }
 
             d = inc(d)
+        wish_sign = '!' if wish != '' else ''
         w2.append(
             [
                 {
-                    "r": role.id,
-                    "j": project.id,
-                    "val": role.title,
+                    "class":"wish",
+                    "up":wish,
+                    "role": role.id,
+                    "project": project.id,
+                    "val": role.title+wish_sign,
                     "link": f"0.{role.id}.{j}.{d.year}-{d.month}-15",
                     "color":paint2.rgb_back_left()
                 }

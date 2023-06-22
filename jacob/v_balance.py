@@ -48,10 +48,8 @@ def balance_project(request:object, p:int, r:int, j:int, n:int=12)->object:
             }  #
             d = inc(d)
         wish_sign = '!' if wish != '' else ''
-        w2.append([{"color":paint2.rgb_back_left(),"up":wish,
-                    "val": role.title+wish_sign,
-                    "project": j, "role": role.id,
-
+        w2.append([{"color":paint2.rgb_back_left(),"up":wish,"val": role.title+wish_sign,
+                    "project": j, "role": role.id, "class":"wish",
                     }] + a_w2)
 
         p100 = role.title
