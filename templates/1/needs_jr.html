@@ -17,7 +17,7 @@
       <tr style="text-align:center;">
         {% for t in dem %}
 
-        <td class="{{t.color}}" action="/save_needs/" fname=f10 key="{{t.link}}" title="{{t.up}}"
+        <td class="{{t.class}}" action="/save_needs/" fname=f10 key="{{t.link}}" title="{{t.up}}"
           style="background-color: {{t.color}};">
           {{t.val}}
         </td>
@@ -27,7 +27,7 @@
 
 </table>
 {% include 'data2.html' %}
-  <form id="f10" method="POST" action="/save_task/">
+  <form id="f10" method="POST" ">
             {% csrf_token %}          <input type=hidden name="html" value='needs_jr'>
 
 
