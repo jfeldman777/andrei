@@ -49,6 +49,10 @@
         var w = prompt('Напишите ваши пожелания!', currentTitle);
         $(this).attr('title', w);
 
+var cell = $(this).html();
+$(this).html(cell+'?');
+
+
         var project = $(this).attr('project');
         var role = $(this).attr('role');
 
