@@ -1,18 +1,25 @@
 
 <script>
 
+
   $(document).ready(function () {
       $('.display').DataTable({
-
-        "stripeClasses": [ 'odd-row', 'even-row' ],
-
+           "stripeClasses": [ 'odd-row', 'even-row' ],
        "lengthChange": false,
-
+         // scrollY: '70vh',
+        //  scrollCollapse: true,
           paging: false,
           info:false,
-          ordering:false,
+
+
+
+      "searching": true,
+      "ordering":true,
+
+
+
           language: {
-    search: 'Поиск: ',
+    search: '&nbsp;&nbsp;Поиск: ',
 
 
 
@@ -40,5 +47,4 @@
     }
   }      });
   });
-
 </script>

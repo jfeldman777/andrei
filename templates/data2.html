@@ -1,5 +1,8 @@
-
 <script>
+$(window).on('load', function() {
+    $('label').before('<button type="submit" disabled="true" class="btn btn-primary btn-sm"> Сохранить </button>')});
+
+
 
   $(document).ready(function () {
       $('.display').DataTable({
@@ -18,7 +21,7 @@
 
 
           language: {
-    search: 'Поиск: ',
+    search: '&nbsp;&nbsp;Поиск: ',
 
 
 
