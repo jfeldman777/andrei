@@ -1,92 +1,9 @@
 <script>
 
-  window.onload = function () {
-    var tables = document.getElementsByTagName("table");
-    for (var i = 0; i < tables.length; i++) {
 
-      var rows = tables[i].getElementsByTagName("tr");
-      for (var j = 0; j < rows.length; j++) {
-        var cells = rows[j].getElementsByTagName("td");
-        for (var k = 0; k < cells.length; k++) {
+$(window).on('load', function() {
+    $('.btn').after('input');
+});
 
-
-          if (tables[i].classList.contains("tasks")) {
-          cells[k].style.backgroundColor =
-          'rgb(240,240,240)';
-           cells[k].style.borderColor='rgb(255,255,255)';
-
-            }
-
-        }
-      }
-    }
-  };
-
-</script>
-<script>
-    <script>var delta = -4;
-  var colr = 251;
-  var x;
-
-  window.onload = function () {
-    var tables = document.getElementsByTagName("table");
-    for (var i = 0; i < tables.length; i++) {
-      var rows = tables[i].getElementsByTagName("tr");
-      for (var j = 0; j < rows.length; j++) {
-
-        delta = -delta;
-        x = colr + delta;
-        sx = 'rgb(' + x + ',' + x + ',' + x + ')';
-        var y = x - 10;
-
-        var sy = 'rgb(' + y + ',' + y + ',' + y + ')';
-
-        var cells = rows[j].getElementsByTagName("td");
-        for (var k = 0; k < cells.length; k++) {
-
-
-var t=0; var p=0; var colr="green";
-if(isNaN(cells[k].innerHTML) t=-2; else
-{p = parseInt(cells[k].innerHTML);
-if (p==0) t=0; else if(p>0) t = 1; else t=-1;
-}
-
-
-
-  if (tables[i].classList.contains("dif"))
- if (t==0) {
-  colr = "yellow";
-}
-else
-if (tables[i].classList.contains("balance")) {
-if(t==1) colr = "lightblue"; else
-if (t==-1)  colr = "pink";
-}
-else
- if (cells[k].classList.contains("true"))
-            colr= = "lightblue";
-
-else if (t==-2) || t == 1){
-  if (k == 0) {
-    colr = sy;
-  } else {
-    colr = sx;
-  }
-}
-
-
-    cells[k].style.borderTop = '1px solid darkgray';  // задаем верхнюю границу
-    cells[k].style.borderBottom = '1px solid darkgray';  // задаем нижнюю границу
-    cells[k].style.borderLeft = 'none';  // убираем левую границу
-    cells[k].style.borderRight = 'none';  // убираем правую границу
-
- cells[k].style.backgroundColor = colr;
-
-        }
-      }
-    }
-  };
-
-</script>
 
 </script>

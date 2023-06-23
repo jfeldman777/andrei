@@ -6,7 +6,7 @@
   <h5>Проект: {{project}} -
       <a href="/delta_j/0/{{r}}/{{j}}" style="color:black;">Потребность
           </a></h5>
-<button   type="submit" disabled="true"  class="btn btn-primary"> Сохранить </button>
+
 
 <table class="display compact needs" style="width:100%;">
   <thead>
@@ -36,18 +36,12 @@
 
 
           </form>
-<style>
 
-    h5 {
-    display: block;
-}
+<script>
+$(window).on('load', function() {
+    $('label').after('&nbsp;<button   type="submit" disabled="true" class="btn btn-primary btn-sm"> Сохранить </button>');
+});
 
-.btn.btn-primary {
-    display: block;
-    margin-top: 10px; /* Если вы хотите добавить некоторый отступ между текстом и кнопкой */
-}
-
-</style>
-
+</script>
  {% include 'wish_js.html' %}
 {% endblock %}
