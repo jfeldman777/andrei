@@ -29,7 +29,7 @@
     <div class="table-container-2">
         <table border=none style="position:relative;border-color:white;
 
-" class="balance" width=100%>
+" width=100%>
           <thead>
 
             <tr>
@@ -100,7 +100,7 @@
                 <form id="f20" method="POST">
                   {% csrf_token %}
 
-    <input type=hidden name="html" value='balance/{{id}}/{{coord}}/{{mod}}/'>
+    <input type=hidden name="html" value='/balance/{{id}}/{{coord}}/{{mod}}/'>
 <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
 
@@ -144,7 +144,7 @@
              color:black;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
-                  <input type=hidden name="html" value='balance/{{id}}/{{coord}}/{{mod}}/'>
+                  <input type=hidden name="html" value='/balance/{{id}}/{{coord}}/{{mod}}/'>
    <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
                 {% include 'moon.html' %}</tr></thead><tbody>
