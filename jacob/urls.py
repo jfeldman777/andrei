@@ -34,28 +34,28 @@ urlpatterns = [
     path("b/<int:n>/", vvv.balance_map, name="balance_map"),
     
     
-    path("tasks_r/<int:p>/<int:r>/<int:j>/", v_tasks.task_role, name="ur"),
-    path("tasks_j/<int:p>/<int:r>/<int:j>/", v_tasks.task_project, name="uj"),
-    path("tasks_jr/<int:p>/<int:r>/<int:j>/", v_tasks.task_role_project, name="ujr"),
+    # path("tasks_r/<int:p>/<int:r>/<int:j>/", v_tasks.task_role, name="ur"),
+    # path("tasks_j/<int:p>/<int:r>/<int:j>/", v_tasks.task_project, name="uj"),
+    # path("tasks_jr/<int:p>/<int:r>/<int:j>/", v_tasks.task_role_project, name="ujr"),
 
     
-    path("needs_j/<int:p>/<int:r>/<int:j>/", v_needs.needs_project, name="mmj"),
-    path("needs_r/<int:p>/<int:r>/<int:j>/", v_needs.needs_role, name="mmr"),
-    path("needs_jr/<int:p>/<int:r>/<int:j>/", v_needs.needs_role_project, name="mmjr"),
+    # path("needs_j/<int:p>/<int:r>/<int:j>/", v_needs.needs_project, name="mmj"),
+    # path("needs_r/<int:p>/<int:r>/<int:j>/", v_needs.needs_role, name="mmr"),
+    # path("needs_jr/<int:p>/<int:r>/<int:j>/", v_needs.needs_role_project, name="mmjr"),
     
-    path("delta_j/<int:p>/<int:r>/<int:j>/", v_delta.delta_project, name="dj"),
-    path("delta_r/<int:p>/<int:r>/<int:j>/", v_delta.delta_role, name="dr"),
-    path("delta_jr/<int:p>/<int:r>/<int:j>/", v_delta.delta_role_project, name="djr"),
+    # path("delta_j/<int:p>/<int:r>/<int:j>/", v_delta.delta_project, name="dj"),
+    # path("delta_r/<int:p>/<int:r>/<int:j>/", v_delta.delta_role, name="dr"),
+    # path("delta_jr/<int:p>/<int:r>/<int:j>/", v_delta.delta_role_project, name="djr"),
     
-    
-    path("balance_r/<int:p>/<int:r>/<int:j>/", v_balance.balance_role, name="ar"),
-    path("balance_j/<int:p>/<int:r>/<int:j>/", v_balance.balance_project, name="aj"),
-    path("balance_jr/<int:p>/<int:r>/<int:j>/", v_balance.balance_role_project, name="ajr"),
+    #
+    # path("balance_r/<int:p>/<int:r>/<int:j>/", v_balance.balance_role, name="ar"),
+    # path("balance_j/<int:p>/<int:r>/<int:j>/", v_balance.balance_project, name="aj"),
+    # path("balance_jr/<int:p>/<int:r>/<int:j>/", v_balance.balance_role_project, name="ajr"),
     
     
     path("max/", vvv.available_all, name="mrom"),
-    path("max_r/<int:p>/<int:r>/<int:j>/", vvv.available_role, name="mr1"),
-    path("rest_r/<int:p>/<int:r>/<int:j>/", vvv.rest_role, name="mr2"),
+    # path("max_r/<int:p>/<int:r>/<int:j>/", vvv.available_role, name="mr1"),
+    # path("rest_r/<int:p>/<int:r>/<int:j>/", vvv.rest_role, name="mr2"),
     path("rest/", vvv.rest_all, name="mro"),
  
     
