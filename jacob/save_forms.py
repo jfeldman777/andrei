@@ -65,7 +65,7 @@ def save_task(request):
         else:
             print(form.errors)
 
-    return redirect('/'+html)
+    return redirect(html)
 
 
 def save_needs(request):

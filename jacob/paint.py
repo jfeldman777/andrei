@@ -94,8 +94,16 @@ class Paint:
         return self.rgb_back_right()
 
     def color_needs(self,d1,d2,d):
+        d15 = d.replace(day=15)
+        d1_15 = d1.replace(day=15)
+        d2_15 = d2.replace(day=15)
+
+
+
         if isinstance(self.cell, int):
-            if d < d1 or d > d2:
+
+            if d15 < d1_15 or d15 > d2_15:
+
                 return self.MY_GREY
             else:
                 if self.cell > 0:
