@@ -1,14 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'base0.html' %}
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
 {% load static %}
-<div class="bar">
-    <h4>Главная страница</h4>
-</div>
-<div style="position:absolute; top:80px; left:0; width:90%; horizontal-align:center; 
-           border: none; 
-           ">
+{% include 'menu2.html' %}
+<br>
+    <h4 style="margin-left:20px;">Главная страница</h4>
+<br>
+
     <table style="border: none; border-collapse: collapse;" >       
  
         <tr  style="vertical-align:top; text-align:left;">
@@ -99,5 +98,5 @@
 
             </td></tr>
             </table>
-</div>
+
 {% endblock %}
