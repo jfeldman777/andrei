@@ -2,56 +2,89 @@
 {% load custom_filters %}
 {% block content %}
 {% include 'scroll.html' %}
-{% load static %}
 {% include 'nopadding.html' %}
+{% load static %}
 <style>
     body {
         overflow-y: hidden;
     }
+
 </style>
-<div class="bar">
-  <h4>Проект: {{project}} - Все ресурсы</h4>
-</div>
-<table width=100% style=" height: 100vh;
-overflow-y: hidden;
-border:1;border-color:white;
-position:absolute;top:78px;" id=t00>
-                <tr style=" height: 42vh; ">
+<table width=100%>
+      <tr>
+        <td colspan="2" style="z-index:100;">
+            {% include 'menu2.html' %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" >
+            <h5 style="margin-top:10px;">Проект: {{project}} - Все ресурсы</h5>
+        </td>
+    </tr>
+
+                <tr>
+
     <td width=50% >
-      <div class="table-container-2">
-        <table border=none style="position:relative;top:0;border:none;
-        border-color:white;" class="balance" width=100%>
+
+    <div class="table-container-2">
+        <table border=none style="position:relative;border-color:white;
+
+" class="balance" width=100%>
           <thead>
+
             <tr>
-              <th colspan=13>
-                Балансы (<a href="/balance_j/0/0/{{j}}/" style="color:white;">подробнее</a>)
-              <th>
+              <th colspan=13>Балансы (<a href="/delta_j/0/0/{{j}}" style="color:white;">дельта</a>)
+              </th>
             </tr>
             <tr>
-              <th style="background:white;
+               <th style="background:white;
+      border-bottom: 1px solid grey;
+               color:black;">
+                {{project}}
+               </th>
+              {% for x in ym %}
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
 border-bottom: 1px solid grey;
-              color:black;">{{project}}
-                {% include 'moon.html' %}</tr></thead><tbody>
+">{{x.y}}<br>{{x.m}}</th>
+{% endfor %}
+
+                </tr></thead>
+            <tbody>
                 {% for dem in w1 %}
             <tr>
               {% for t in dem %}
+              {% if forloop.first %}
+              {% if t|negative %}{% else %}
+              <td colspan=13>{{t}}</td>
+            </tr>
+            <tr>
+              {% endif %}
+              {% else %}
               <td style="background-color:{{t.color}};">
-                  {{t.val}}
+
+
+
+                {{t.val}}
+
               </td>
+              {% endif %}
               {% endfor %}
+
             </tr>
 
-            {% endfor %}
-
-
-
-              </tbody>
+            {% endfor %}</tbody>
         </table>
       </div>
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border:none;border-color:white;">
+        <table border=none width=100% style="
+
+        position:relative;top:0;border-color:white;  ">
           <thead>
             <tr>
               <th colspan=13>
@@ -59,66 +92,60 @@ border-bottom: 1px solid grey;
               <th>
             </tr>
             <tr>
-             <th style="background:white;
-          border-bottom: 1px solid grey;
-             color:black;">
+          <th style="background:white;
+        border-bottom: 1px solid grey;
+          color:black;">
+
                 <form id="f20" method="POST">
                   {% csrf_token %}
-                  <input type=hidden name="html" value='delta_j'>
-        <button   type="submit"  class="btn btn-primary"> Сохранить </button>
+                  <input type=hidden name="html" value='balance_j'>
+
+<button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
 
+              </th>
 
-                {% include 'moon.html' %}</tr></thead><tbody>
-                {% for dem in w2 %}
+
+
+
+              {% include 'moon.html' %}</tr></thead><tbody>
+              {% for dem in w2 %}
             <tr>
               {% for t in dem %}
-
-
-              <td class="{{t.class}}" fname="f20" action="/save_needs/" key="{{t.link}}"
+              <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}"
+                  role="{{t.role}}" title="{{t.up}}"
                   project="{{t.project}}"
-                  role="{{t.role}}"
-                  title="{{t.up}}"
-              style="background-color:{{t.color}};">
+                  style="background-color:{{t.color}};">
                 {{t.val}}
-
               </td>
-
-
               {% endfor %}
             </tr> {% endfor %}
-
-
             </tbody>
         </table>
       </div>
     </td>
   </tr>
-  <tr style="text-align:center;">
+  <tr style="text-align:center;height: 50vh; ">
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 width=100% style="position:relative;top:0;border:none;border-color:white;">
+        <table border=none width=100% style="position:relative;top:0;border-color:white;
+">
           <thead>
             <tr>
               <th colspan=13>
-
                 <a href="/tasks_j/0/0/{{j}}" style="color:white;" >
                   Загрузки</a>
-
-
               </th>
             </tr>
             <tr style="background-color:white;border:none;border-color:white;">
          <th style="background-color:white;
-border-bottom: 1px solid grey;
-         color:black;">
-
+             border-bottom: 1px solid grey;
+             color:black;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='delta_j'>
-    <button   type="submit"  class="btn btn-primary"> Сохранить </button>
+   <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
-
                 {% include 'moon.html' %}</tr></thead><tbody>
                 {% for tt in w3 %}
             <tr>
@@ -127,7 +154,8 @@ border-bottom: 1px solid grey;
               {% if t|negative %}{% else %}
 
 
-              <td colspan=13 style="background-color:white;border:none;border-color:grey;">{{t}}</td>
+              <td colspan=13 class="long">
+                {{t}}</td>
             </tr>
             <tr>
               {% endif %}
@@ -140,41 +168,40 @@ border-bottom: 1px solid grey;
                 style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
-
-
               {% endif %}
               {% endfor %}
             </tr>
-            {% endfor %}
-
-            </tbody>
+            {% endfor %}</tbody>
         </table>
       </div>
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=1 style="position:relative;top:0;border:1;border-color:white;" width=100%>
+        <table style="position:relative;top:0;border-color:white;
+
+" width=100% >
           <thead>
             <tr>
               <th colspan=13> Остаточная доступность ресурсов</th>
             </tr>
             <tr>
-              <th style="background:white;
-
+         <th style="background:white;color:black;
 border-bottom: 1px solid grey;
               color:black;">Сотрудник
                 {% include 'moon.html' %}</tr></thead><tbody>
-                {% for tt in w4 %}
+
+            {% for tt in w4 %}
             <tr>
               {% for t in tt %}
-              {% if forloop.first %}
-                  {% if t|negative %}
 
-                  {% else %}
+              {% if forloop.first %}
+              {% if t|negative %}
+
+              {% else %}
                   <td colspan=13 style="background-color:white;">{{t}}</td>
-                </tr>
-                <tr>
-                  {% endif %}
+            </tr>
+            <tr>
+              {% endif %}
               {% else %}
               <td style="background-color:{{t.color}};">
                 {{t.val}}
@@ -183,13 +210,17 @@ border-bottom: 1px solid grey;
               {% endfor %}
 
             </tr>
-            </tbody>
+
             {% endfor %}
+          </tbody>
         </table>
       </div>
     </td>
   </tr>
+  </tbody>
 </table>
+</div>
+
 
  {% include 'wish_js.html' %}
 {% endblock %}

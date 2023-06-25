@@ -16,23 +16,6 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>-->
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
-
-
-<style>
-.hborder {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    border-left: none;
-    border-right: none;
-    color:black;
-    background-color:white;
-}
-</style>
-
-
 
 <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
  <script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
@@ -43,14 +26,15 @@
 
 <body>
 
-  <main class="container mt-5">
-{% include 'menu2.html' %}
+<!--  <main class="container mt-5">-->
+
     {% block content %}
+
     {% endblock %}
-  </main>
+<!--  </main>-->
   {% bootstrap_javascript %}
 {% include 'borders_js.html' %}
 
 </body>
-{% include 'save_cell_js.html' %}
+{% include 'save_cell_js4.html' %}
 </html>

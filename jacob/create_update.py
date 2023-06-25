@@ -68,7 +68,6 @@ def create_or_update_task(p:object, r:object, j:object, dm:date, svn:str)->None:
             try:
                 instance.load = v
                 instance.save()
-                print(2021)
             except:
                 print("bad1")
         else:

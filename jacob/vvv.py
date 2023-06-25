@@ -81,13 +81,13 @@ def balance_map(request:object, n:int)->object:
 
     txy = [0] * len(roles)
     for j in range(len(roles)):
-        txy[j] = {"val": roles[j].title, "link": f"/delta_r/0/{roles[j].id}/0/"}
+        txy[j] = {"val": roles[j].title, "link": f"/balance/{roles[j].id}/1/1/"}
 
     paint = Paint()
     for i in range(len(projects)):
         paint.next_row(projects[i])
         xy[i][0] = {"color": paint.rgb_back(),
-            "val": projects[i], "link": f"/delta_j/0/0/{projects[i].id}/"}
+            "val": projects[i], "link": f"/balance/{projects[i].id}/0/1/"}
 
         for j in range(len(roles)):
 

@@ -2,13 +2,14 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
+{% include 'menu2.html' %}
+<br>
+  <h5 style="text-align:center;">Максимальная доступность ресурсов</h5>
 
-  <h5>Максимальная доступность ресурсов</h5>
-<button   type="submit" disabled="true"  class="btn btn-primary"> Сохранить </button>
 
 
 
-<table  class="display compact">
+<table  class="display compact" width="80%">
   <thead>
 
     <tr>
@@ -45,14 +46,7 @@
 
 
 
-    h5 {
-    display: block;
-}
 
-.btn.btn-primary {
-    display: block;
-    margin-top: 10px; /* Если вы хотите добавить некоторый отступ между текстом и кнопкой */
-}
 
 </style>
         {% include 'data2.html' %}

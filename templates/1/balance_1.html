@@ -1,0 +1,45 @@
+{% extends 'base1.html' %}
+{% load custom_filters %}
+{% block content %}
+{% load static %}
+
+{% include 'menu2.html' %}
+<div style="text-align:center;"><br>
+  <h5>Проект: {{project_name}} - Ресурс : {{role_name}} -
+      <a href="/balance/{{id}}/{{coord}}/1/" style="color:black;">Потребность
+          </a></h5>
+</div>
+<table class="display compact" style="width:80%;">
+      <thead>
+ <tr>
+      <th style="text-align:center;" >
+Ресурс
+
+        {% include 'moon.html' %}</tr></thead><tbody>
+      {% for dem in w2 %}
+      <tr style="text-align:center;">
+        {% for t in dem %}
+
+        <td class="{{t.class}}" action="/save_needs/" fname="f10" key="{{t.link}}" title="{{t.up}}"
+            project="{{t.project}}"
+            role="{{t.role}}"
+          style="background-color: {{t.color}};">
+          {{t.val}}
+        </td>
+        {% endfor %}
+      </tr> {% endfor %}
+      </tbody>
+</table>
+
+{% include 'data.html' %}
+  <form  method="POST" id="f10">
+            {% csrf_token %}
+
+      <input type=hidden name="html" value='/balance/{{id}}/{{coord}}/{{mod}}/'>
+
+
+          </form>
+
+
+ {% include 'wish_js.html' %}
+{% endblock %}

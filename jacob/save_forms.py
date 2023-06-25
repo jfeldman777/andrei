@@ -64,8 +64,8 @@ def save_task(request):
                         pass
         else:
             print(form.errors)
-    print(676)
-    return redirect(f"/{html}/{p}/{r}/{j}")
+
+    return redirect('/'+html)
 
 
 def save_needs(request):
@@ -90,7 +90,7 @@ def save_needs(request):
         else:
             print(form.errors)
 
-    return redirect(f"/{html}/{p}/{r}/{j}")
+    return redirect(html)
 
 
 

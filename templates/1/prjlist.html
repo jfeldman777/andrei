@@ -3,10 +3,12 @@
 {% block content %}
 {% load static %}
 
-  <h5>Дорожная карта</h5>
+{% include 'menu2.html' %}
+<br>
+  <h4 style="text-align:center;">Дорожная карта</h4>
 
 <table  class="display compact"
-        style="width:100%; padding-left: 0; margin-left: 0;">
+        style="width:80%;">
 
   <thead style="width:100%; padding-left: 0; margin-left: 0;">
 
@@ -39,6 +41,6 @@
     {% endfor %}</tr>
   </thead></table>
 
-{% include 'data2.html' %}
+{% include 'data0.html' %}
 
 {% endblock %}

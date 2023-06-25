@@ -42,9 +42,15 @@
   });
 
   // Обработчик события click для кнопки вне обработчика события focusout
-  $('.btn.btn-primary').click(function() {
-    var form = document.getElementById(f1);
+
+
+$(window).on('load', function() {
+    $('label').before('<button id=999  type="submit" disabled="true" class="btn btn-primary btn-sm"> Сохранить </button>&nbsp;&nbsp;');
+
+$('#999').click(function() {
+    var form = document.getElementById('f10');
     form.submit();
   });
+});
 
 </script>

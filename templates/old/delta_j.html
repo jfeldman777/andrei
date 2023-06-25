@@ -8,31 +8,47 @@
     body {
         overflow-y: hidden;
     }
+    h5{
+}
 </style>
-<div class="bar">
-  <h4>Проект: {{project}} - Все ресурсы</h4>
-</div>
+<table width=100%>
+      <tr>
+        <td colspan="2" style="z-index:100;">
+            {% include 'menu2.html' %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" >
+            <h5 style="margin-top:10px;">Проект: {{project}} - Все ресурсы</h5>
+        </td>
+    </tr>
 
-<table width=100% style=" height: 100vh;
-overflow-y: hidden;
-position:absolute;top:78px; " id=t00>
-                <tr style=" height: 42vh; ">
+                <tr>
+
     <td width=50% >
+      <div class="table-container-2">
+        <table border=none style="position:relative;border-color:white;
 
-    <div class="table-container-2">
-        <table border=none style="position:relative;border-color:white;" class="balance" width=100%>
+" class="balance" width=100%>
           <thead>
-
             <tr>
               <th colspan=13>Балансы (<a href="/delta_j/0/0/{{j}}" style="color:white;">дельта</a>)
               </th>
             </tr>
             <tr>
-               <th style="background:white;
-      border-bottom: 1px solid grey;
-               color:black;">
-                {{project}}
-                {% include 'moon.html' %}
+              <th style="background:white;
+border-bottom: 1px solid grey;
+              color:black;">{{project}}
+               </th>
+              {% for x in ym %}
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+border-bottom: 1px solid grey;
+">{{x.y}}<br>{{x.m}}</th>
+{% endfor %}
 
                 </tr></thead>
             <tbody>
@@ -47,18 +63,17 @@ position:absolute;top:78px; " id=t00>
               {% endif %}
               {% else %}
               <td style="background-color:{{t.color}};">
-
-
-
-                {{t.val}}
-
+                  {{t.val}}
               </td>
               {% endif %}
               {% endfor %}
-
             </tr>
 
-            {% endfor %}</tbody>
+            {% endfor %}
+
+
+
+              </tbody>
         </table>
       </div>
     </td>
@@ -66,23 +81,22 @@ position:absolute;top:78px; " id=t00>
       <div class="table-container-2">
         <table border=none width=100% style="
 
-        position:relative;top:0;border-color:white;">
+        position:relative;top:0;border-color:white;  ">
           <thead>
             <tr>
               <th colspan=13>
-                <a href="/needs_j/{{p}}/{{r}}/{{j}}" style="color:white;" class="mmm">Потребность</a>
+                <a href="/needs_j/{{p}}/{{r}}/{{j}}" style="color:white;">Потребность</a>
               <th>
             </tr>
             <tr>
-          <th style="background:white;
-        border-bottom: 1px solid grey;
-          color:black;">
-
+             <th style="background:white;
+          border-bottom: 1px solid grey;
+             color:black;">
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_j'>
 
-<button   type="submit"  class="btn btn-primary"> Сохранить </button>
+        <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
 
               </th>
@@ -90,49 +104,60 @@ position:absolute;top:78px; " id=t00>
 
 
 
-              {% include 'moon.html' %}</tr></thead><tbody>
-              {% for dem in w2 %}
+                {% include 'moon.html' %}</tr></thead><tbody>
+                {% for dem in w2 %}
             <tr>
               {% for t in dem %}
               <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}"
                   role="{{t.role}}" title="{{t.up}}"
                   project="{{t.project}}"
-                  style="background-color:{{t.color}};">
+              style="background-color:{{t.color}};">
                 {{t.val}}
+
               </td>
+
+
               {% endfor %}
             </tr> {% endfor %}
+
+
             </tbody>
         </table>
       </div>
     </td>
   </tr>
-  <tr style="text-align:center;">
+  <tr style="text-align:center;height: 50vh; ">
     <td width=50%>
       <div class="table-container-2">
-        <table border=none width=100% style="position:relative;top:0;border-color:white;">
+        <table border=none width=100% style="position:relative;top:0;border-color:white;
+">
           <thead>
             <tr>
               <th colspan=13>
+
                 <a href="/tasks_j/0/0/{{j}}" style="color:white;" >
                   Загрузки</a>
+
+
               </th>
             </tr>
-            <tr>
-             <th style="background:white;
-             border-bottom: 1px solid grey;
-             color:black;">
+            <tr style="background-color:white;border:none;border-color:white;">
+         <th style="background-color:white;
+border-bottom: 1px solid grey;
+         color:black;">
+
                 <form id="f10" method="POST">
                   {% csrf_token %}
-                  <input type=hidden name="html" value='balance_j'>
-   <button   type="submit"  class="btn btn-primary"> Сохранить </button>
+                  <input type=hidden name="html" value='delta_j'>
+    <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
+
                 {% include 'moon.html' %}</tr></thead><tbody>
                 {% for tt in w3 %}
             <tr>
               {% for t in tt %}
               {% if forloop.first %}
-              {% if t|negative %}
+              {% if t|negative %}{% else %}
 
               {% else %}
               <td colspan=13 class="long">
@@ -143,15 +168,20 @@ position:absolute;top:78px; " id=t00>
               {% else %}
 
 
-              <td class="{{t.class}}" action="{% url 'save_task' %}"
-                       fname="f10" key="{{t.link}}" title="{{t.up}}"
+
+
+              <td class="{{t.class}}" action="/save_task/" fname="f10" key="{{t.link}}" title="{{t.up}}"
                 style="background-color:{{t.color}};">
                 {{t.val}}
               </td>
+
+
               {% endif %}
               {% endfor %}
             </tr>
-            {% endfor %}</tbody>
+            {% endfor %}
+
+            </tbody>
         </table>
       </div>
     </td>
@@ -167,22 +197,19 @@ height: 55vh;
             <tr>
          <th style="background:white;color:black;
 border-bottom: 1px solid grey;
-">
-                Сотрудник
+              color:black;">Сотрудник
                 {% include 'moon.html' %}</tr></thead><tbody>
-
-            {% for tt in w4 %}
+                {% for tt in w4 %}
             <tr>
               {% for t in tt %}
-
               {% if forloop.first %}
-              {% if t|negative %}
+                  {% if t|negative %}
 
-              {% else %}
-              <td colspan=13 class="long">{{t}}</td>
-            </tr>
-            <tr>
-              {% endif %}
+                  {% else %}
+                  <td colspan=13 style="background-color:white;">{{t}}</td>
+                </tr>
+                <tr>
+                  {% endif %}
               {% else %}
               <td style="background-color:{{t.color}};">
                 {{t.val}}

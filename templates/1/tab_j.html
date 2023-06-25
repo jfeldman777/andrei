@@ -2,12 +2,11 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
+{% include 'menu2.html' %}
+<br>
+  <h4 style="text-align:center;">Все проекты</h4>
 
-
-
-  <h5>Все проекты</h5>
-
-<table class="display compact dif" style="width:100%">
+<table class="display compact dif" style="width:80%">
    <thead>
     <tr>
       <th>Руководитель</th>
@@ -51,7 +50,7 @@
     {% endfor %}
 </tbody>
 </table>
-{% include 'data2.html' %}
+{% include 'data0.html' %}
 
 
 {% endblock %}
