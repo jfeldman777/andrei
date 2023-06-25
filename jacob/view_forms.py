@@ -78,28 +78,6 @@ def role_form(request, id=None, file_name="form.html"):
         form = RoleForm(instance=instance)
     return render(request, file_name, {"form": form,"title":"Роль","button":button})
 
-def keys_form(request, id=None):
-    button = "Создать"
-    instance = None
-    if id:
-        button = "Сохранить"
-    if request.method == "POST":
-        form = KeysForm(request.POST, instance=instance)
-        if form.is_valid():
-            user_profile = form.save(commit=False)
-            selected_roles = form.cleaned_data.get('res', None)
-
-            if selected_roles is not None:
-                if not isinstance(selected_roles, list):
-                    selected_roles = [selected_roles]
-
-                user_profile.res.set(selected_roles)
-
-            return redirect("people")
-    else:
-        form = KeysForm()
-    return render(request, "form.html",  {"form": form, "title": "Сотрудник","button":button})
-
 '''
 форма для изменение или создания проекта (если номер не указан)
 '''
