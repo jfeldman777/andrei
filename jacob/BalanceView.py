@@ -124,7 +124,7 @@ class BalanceView(View):
         for person in people_rr:
             paint4.next_row(None)
             dif = [{"color": paint4.rgb_back_left(),
-                    "val": person.fio}] + rest_and_color_12(person, role, paint4.color_rest, 12)
+                    "val": add_grade(person,role)}] + rest_and_color_12(person, role, paint4.color_rest, 12)
             self.w4.append([p4] + dif)
             p4 = -1
 
@@ -150,14 +150,7 @@ class BalanceView(View):
                 }
                 d = inc(d)
 
-            up1=''
-            if not person.virtual:
-                try:
-                    grade = Grade.objects.get(person=person, role=role).mygrade
-                except:
-                    grade = '0'
-                up1=f" ({grade})"
-            c_w3 = [p3,{'color': paint3.rgb_back_left(),"val": person.fio + up1}] + b_w3
+            c_w3 = [p3,{'color': paint3.rgb_back_left(),"val": add_grade(person,role)}] + b_w3
             p3 = -1
             self.w3.append(c_w3)
 
@@ -174,3 +167,14 @@ class BalanceView(View):
         self.w1.append([-1] + self.paint1.plus_color_balance(delta) ) ############################
 
         return
+
+
+def add_grade(person,role):
+    up1 = ''
+    if not person.virtual:
+        try:
+            grade = Grade.objects.get(person=person, role=role).mygrade
+        except:
+            grade = '0'
+        up1 = f" ({grade})"
+    return person.fio + up1
