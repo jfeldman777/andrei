@@ -22,8 +22,8 @@ def up(a: int=-1, b: int=-1,c:str='') -> str:
     if not isinstance(a, int) or a < 0:
         return cs
     if b < 0 or b > 88888:
-        return f"{cs}|надо->{a}"
-    return f"|надо->{a}|есть->{b}|{cs}"
+        return f"{cs}|надо:{a}"
+    return f"|надо:{a}|есть:{b}|{cs}"
 
 '''
 Используется при тестировании для стандартизации вызова
