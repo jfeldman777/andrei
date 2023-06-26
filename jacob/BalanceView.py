@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.views import View
 
 from .db import get_prj_triplet, task_role_project_12, delta_role_project_12, needs_role_project_12, \
-    real_people, real_and_virtual_people, rest_of_time_pr_12, task_person_role_project_12, rest_and_color_12
+    real_people, real_and_virtual_people, rest_of_time_pr_12, task_person_role_project_12, rest_and_color_12, \
+    rest_role_12
 from .models import Role, Wish, Project, Grade
 from .paint import Paint
 from .utils import date0, inc, up
@@ -98,6 +99,7 @@ class BalanceView(View):
         if self.mod != 3:
                 d = date0()
                 a_w2 = [0] * self.n
+                rest = rest_role_12(role,self.n)
                 for i in range(self.n):
                     self.paint2.next_cell(dem_rj[i])
 
@@ -105,7 +107,8 @@ class BalanceView(View):
                         "link": f"0.{role.id}.{project.id}.{d.year}-{d.month}-15",
                         "val": dem_rj[i],
                         "color": self.paint2.color_needs(project.start_date, project.end_date, d ),
-                        "class": " good"
+                        "class": " good",
+                        "up":up(max(-delta[i], 0), rest[i],wish),
                     }  #
                     d = inc(d)
                 wish_sign = ' !' if wish != '' else ''
@@ -126,7 +129,7 @@ class BalanceView(View):
         paint3 = Paint()
         for person in people_rr:
             paint4.next_row(None)
-            dif = [{"color": paint4.rgb_back_left(),
+            dif = [{"color": paint4.rgb_back_left(),"align":"left",
                     "val": add_grade(person,role)}] + rest_and_color_12(person, role, paint4.color_rest, 12)
             self.w4.append([p4] + dif)
             p4 = -1
@@ -149,11 +152,13 @@ class BalanceView(View):
                         "up": up(max(-delta[i], 0), diff[i],wish),
                         "val": a_w3[i],
                         "color": paint3.color_tasks(isOut,isPurple),
-                        "class": "  good"
+                        "class": "  good",
+                        "align":"center"
                     }
                     d = inc(d)
 
-                    c_w3 = [{"val":p3},{'color': paint3.rgb_back_left(),"val": add_grade(person,role)}] + b_w3
+                    c_w3 = [{"val":p3},{'color': paint3.rgb_back_left(),"align":"left",
+                                        "val": add_grade(person,role)}] + b_w3
 
                 if self.mod < 2:
                     p3 = -1

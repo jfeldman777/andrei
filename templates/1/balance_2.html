@@ -13,19 +13,19 @@
 <table class="display compact" style="width:80%;">
       <thead>
  <tr>
-      <th style="text-align:center;" >
+      <th style="text-align:left;" >
           {{res_or_prj}}</th>
-           <th style="text-align:center;" >
+           <th style="text-align:left;" >
 Сотрудник </th>
         {% include 'moon.html' %}</tr></thead><tbody>
       {% for dem in w3 %}
-      <tr style="text-align:center;">
+      <tr >
         {% for t in dem %}
 
         <td class="{{t.class}}" action="/save_needs/" fname="f10" key="{{t.link}}" title="{{t.up}}"
             project="{{t.project}}"
             role="{{t.role}}"
-          style="background-color: {{t.color}};">
+          style="background-color: {{t.color}};text-align:{{t.align}};">
           {{t.val}}
         </td>
         {% endfor %}
