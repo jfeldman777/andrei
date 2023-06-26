@@ -34,14 +34,9 @@
     </tr>
     {% endfor %}
 </table>
-
             <form id="f10" method="POST" action="/save_max/">
           {% csrf_token %}
           <input type=hidden name="html" value='max'>
-
-
-
         </form>
-
         {% include 'data2.html' %}
 {% endblock %}

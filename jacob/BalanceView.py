@@ -154,8 +154,13 @@ class BalanceView(View):
             p3 = -1
             self.w3.append(c_w3)
 
+        if self.coord == 1 :
+            p1 = project.title
+        else:
+            p1 = role.title
+
         if self.mod == 0:
-            self.w1.append([role.title]+self.paint1.plus_color_balance(  ["Потребность"] + dem_rj) ) ##########################################77777
+            self.w1.append([p1]+self.paint1.plus_color_balance(  ["Потребность"] + dem_rj) ) ##########################################77777
             self.paint1.next_row(None)
             self.w1.append([-1] + self.paint1.plus_color_balance(supp) ) ###############--
             self.paint1.next_row(None)
