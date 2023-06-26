@@ -105,7 +105,7 @@ class BalanceView(View):
                 "class": " good"
             }  #
             d = inc(d)
-        wish_sign = '!' if wish != '' else ''
+        wish_sign = ' !' if wish != '' else ''
         self.w2.append([{"color":self.paint2.rgb_back_left(),
                          "up":wish,
 

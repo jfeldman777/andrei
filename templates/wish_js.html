@@ -43,7 +43,10 @@
         $(this).attr('title', w);
 
 var cell = $(this).html();
-$(this).html(cell+'!');
+if (cell.indexOf('!') < 0) {
+    $(this).html(cell+'!');
+}
+
 
 
         var project = $(this).attr('project');
