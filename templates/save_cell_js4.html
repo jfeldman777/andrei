@@ -13,7 +13,7 @@
     if (x == '0') x = '';
 
     var ID = new Date().getTime();
-    $(this).html('<input type="text" id=' + ID + ' size="4" maxlength="7" value="' + x + '">');
+    $(this).html('<input type="text" id=' + ID + ' size="1" maxlength="5" value="' + x + '">');
 
     element = document.getElementById(ID);
     element.focus();
@@ -45,21 +45,7 @@
 
 
 $(window).on('load', function() {
-
-$('label').css({
-        'position': 'relative',
-        'left': '-160px'
-    });
-
-    $('label').after('<button id=999  type="submit" disabled="true" class="btn btn-primary btn-sm"> Сохранить </button>&nbsp;&nbsp;');
-
-$('#999').css({
-        'position': 'relative',
-        'left': '-150px'
-    });
-
-
-
+    $('label').before('<button id=999  type="submit" disabled="true" class="btn btn-primary"> Сохранить </button>');
 $('#999').click(function() {
     var form = document.getElementById('f10');
     form.submit();

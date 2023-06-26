@@ -9,16 +9,18 @@
 
 <div style="text-align:center;"><br>
   <h5>Проект: {{project_name}} - Ресурс : {{role_name}} -
-      <a href="/balance/{{id}}/{{coord}}/1/" style="color:black;">Потребность
+      <a href="/balance/{{id}}/{{coord}}/1/" style="color:black;">Загрузки
           </a></h5>
 </div>
 <table class="display compact" style="width:80%;">
       <thead>
  <tr>
       <th style="text-align:center;" >
-Ресурс </th>
+          {{res_or_prj}}</th>
+           <th style="text-align:center;" >
+Сотрудник </th>
         {% include 'moon.html' %}</tr></thead><tbody>
-      {% for dem in w2 %}
+      {% for dem in w3 %}
       <tr style="text-align:center;">
         {% for t in dem %}
 

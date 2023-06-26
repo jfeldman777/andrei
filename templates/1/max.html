@@ -4,17 +4,19 @@
 {% load static %}
 {% include 'menu2.html' %}
 <br>
-  <h5 style="text-align:center;">Максимальная доступность ресурсов</h5>
+<div style="margin-left:50px">
+<table><tr><td>
+  <h5>Максимальная доступность ресурсов</h5>
 
 
 
 
-<table  class="display compact" width="80%">
+<table  class="display compact" width="100%">
   <thead>
 
     <tr>
-      <th style="text-align:center;">Ресурс </th>
-        <th style="text-align:center;  ">Сотрудник</th>
+      <th style="text-align:left;">Ресурс </th>
+        <th style="text-align:left;  ">Сотрудник</th>
 
         {% include 'moon.html' %}</tr></thead><tbody>
         {% for tt in dif14 %}
@@ -22,7 +24,7 @@
     <tr>
       {% for t in tt %}
 
-      <td style="background-color:{{t.color}};text-align:center;"
+      <td style="background-color:{{t.color}};text-align:{{t.align}};"
           class="{{t.class}}" action="/save_max/" fname="f10" key="{{t.link}}">
           {{t.val}}
         {% if t.fire %}
@@ -34,9 +36,13 @@
     </tr>
     {% endfor %}
 </table>
-            <form id="f10" method="POST" action="/save_max/">
+
+    </td></tr></table></div>
+        {% include 'data2.html' %}
+<form id="f10" method="POST" action="/save_max/">
           {% csrf_token %}
           <input type=hidden name="html" value='max'>
         </form>
-        {% include 'data2.html' %}
+
+
 {% endblock %}

@@ -1,23 +1,25 @@
-{% extends 'base1.html' %}
+{% extends 'base0.html' %}
 {% load custom_filters %}
 {% block content %}
 {% load static %}
 {% include 'menu2.html' %}
 <br>
-  <h5 style="text-align:center">Остаточная доступность ресурсов</h5>
+<div style="margin-left:50px">
+<table><tr><td>
+  <h5>Остаточная доступность ресурсов</h5>
 <br>
-<table  class="display compact" style="width:80%;">
+<table  class="display compact" style="width:100%;">
   <thead ><tr>
 
-    <th style="text-align:center;  ">Ресурс</th>
-      <th style="text-align:center; ">Сотрудник</th>
+    <th>Ресурс</th>
+      <th>Сотрудник</th>
 
         {% include 'moon.html' %}</tr></thead><tbody>
         {% for tt in dif14 %}
 
     <tr>
       {% for t in tt %}
-        <td style="text-align:center;background-color:{{t.color}}">
+        <td style="text-align:{{t.align}};background-color:{{t.color}}">
         {{t.val}}
       </td>
       {% endfor %}
@@ -25,5 +27,6 @@
     {% endfor %}
 
         </table>
+</td></tr></table></div>
 {% include 'data1.html' %}
 {% endblock %}

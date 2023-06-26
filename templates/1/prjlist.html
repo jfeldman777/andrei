@@ -5,10 +5,12 @@
 
 {% include 'menu2.html' %}
 <br>
-  <h4 style="text-align:center;">Дорожная карта</h4>
+<div style="margin-left:50px">
+<table><tr><td>
+  <h5>Дорожная карта</h5>
 
 <table  class="display compact"
-        style="width:80%;">
+        style="width:100%;">
 
   <thead style="width:100%; padding-left: 0; margin-left: 0;">
 
@@ -16,19 +18,16 @@
     <th>Руководитель</th>
     <th style="white-space: nowrap;">      Проект&nbsp;&nbsp;</th>
     <th style="text-align: left; ">Начaло</th>
-    <th style="text-align:  ">Оконч.</th>
-    <th style="text-align:  ">Длит.<br>(мес)</th>
+    <th style="text-align: left ">Оконч.</th>
+    <th style="text-align: left ">Длит.<br>(мес)</th>
 
     {% include 'moon.html' %}</tr></thead><tbody>
     {% for row in matrix %}
-    <tr style="text-align: center;  padding: 5px;  white-space: nowrap;
-}">
+    <tr style=" padding: 5px;  white-space: nowrap;}">
       {% for cell in row %}
-      <td style="text-align: left; background-color:{{cell.color}};">
+      <td style="text-align: {{cell.align}}; background-color:{{cell.color}};">
         {% if cell.id %}
         <a href="/project_form/{{cell.id}}/">
-
-
           {{cell.val}}
         </a>
         {% else %}
@@ -40,6 +39,7 @@
 
     {% endfor %}</tr>
   </thead></table>
+    </td></tr></table></div>
 
 {% include 'data0.html' %}
 

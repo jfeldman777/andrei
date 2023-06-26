@@ -30,7 +30,7 @@ class BalanceView(View):
             project = Project.objects.get(id=id)
             roles = Role.objects.all()
             for role in roles:
-                context = self.get_1(project,role)
+                self.get_1(project,role)
 
 
         else:
@@ -56,6 +56,7 @@ class BalanceView(View):
         moon12['mod'] = self.mod
         moon12['coord'] = self.coord
         moon12['pp'] = project.title if coord == 0 else role.title
+        moon12['res_or_prj'] = "Ресурс" if coord == 0 else "Проект"
 
         if coord == 0:
             moon12['project_name']=project.title
@@ -66,9 +67,10 @@ class BalanceView(View):
 
         if self.mod < 2:
             return render(request, "balance_4.html", moon12)
+        elif self.mod == 3:
+            return render(request, "balance_2.html", moon12)
         else:
             return render(request, "balance_1.html", moon12)
-
     def get_1(self,project,role):
         zo = None
         zv = None
@@ -93,26 +95,27 @@ class BalanceView(View):
 
         pp2 = project.title if self.coord == 1 else role.title
 
-        d = date0()
-        a_w2 = [0] * self.n
-        for i in range(self.n):
-            self.paint2.next_cell(dem_rj[i])
+        if self.mod != 3:
+                d = date0()
+                a_w2 = [0] * self.n
+                for i in range(self.n):
+                    self.paint2.next_cell(dem_rj[i])
 
-            a_w2[i] = {
-                "link": f"0.{role.id}.{project.id}.{d.year}-{d.month}-15",
-                "val": dem_rj[i],
-                "color": self.paint2.color_needs(project.start_date, project.end_date, d ),
-                "class": " good"
-            }  #
-            d = inc(d)
-        wish_sign = ' !' if wish != '' else ''
-        self.w2.append([{"color":self.paint2.rgb_back_left(),
-                         "up":wish,
+                    a_w2[i] = {
+                        "link": f"0.{role.id}.{project.id}.{d.year}-{d.month}-15",
+                        "val": dem_rj[i],
+                        "color": self.paint2.color_needs(project.start_date, project.end_date, d ),
+                        "class": " good"
+                    }  #
+                    d = inc(d)
+                wish_sign = ' !' if wish != '' else ''
+                self.w2.append([{"color":self.paint2.rgb_back_left(),
+                                 "up":wish,
 
-                         "val": pp2 + wish_sign,
+                                 "val": pp2 + wish_sign,
 
-                    "project": project.id, "role": role.id, "class":"wish",
-                    }] + a_w2)
+                            "project": project.id, "role": role.id, "class":"wish",
+                            }] + a_w2)
 
 
         people_rr = real_people(role)
@@ -128,31 +131,33 @@ class BalanceView(View):
             self.w4.append([p4] + dif)
             p4 = -1
 
+        if self.mod !=2:
+            for person in people_rv:  #
+                paint3.next_row(None)
 
-        for person in people_rv:  #
-            paint3.next_row(None)
+                diff = rest_of_time_pr_12(person, role,self.n)
+                b_w3 = [0] * self.n
+                a_w3 = task_person_role_project_12(person, role, project,self.n)
 
-            diff = rest_of_time_pr_12(person, role,self.n)
-            b_w3 = [0] * self.n
-            a_w3 = task_person_role_project_12(person, role, project,self.n)
+                d = date0()
+                for i in range(self.n):
+                    paint3.next_cell(a_w3[i])
+                    isOut = d < project.start_date.replace(day=15) or d > project.end_date.replace(day=15)
+                    isPurple = delta[i] < 0
+                    b_w3[i] = {
+                        "link": f"{person.id}.{role.id}.{project.id}.{d.year}-{d.month}-15",
+                        "up": up(max(-delta[i], 0), diff[i],wish),
+                        "val": a_w3[i],
+                        "color": paint3.color_tasks(isOut,isPurple),
+                        "class": "  good"
+                    }
+                    d = inc(d)
 
-            d = date0()
-            for i in range(self.n):
-                paint3.next_cell(a_w3[i])
-                isOut = d < project.start_date or d > project.end_date
-                isPurple = delta[i] < 0
-                b_w3[i] = {
-                    "link": f"{person.id}.{role.id}.{project.id}.{d.year}-{d.month}-15",
-                    "up": up(max(-delta[i], 0), diff[i],wish),
-                    "val": a_w3[i],
-                    "color": paint3.color_tasks(isOut,isPurple),
-                    "class": "  good"
-                }
-                d = inc(d)
+                    c_w3 = [{"val":p3},{'color': paint3.rgb_back_left(),"val": add_grade(person,role)}] + b_w3
 
-            c_w3 = [p3,{'color': paint3.rgb_back_left(),"val": add_grade(person,role)}] + b_w3
-            p3 = -1
-            self.w3.append(c_w3)
+                if self.mod < 2:
+                    p3 = -1
+                self.w3.append(c_w3)
 
         if self.coord == 1 :
             p1 = project.title

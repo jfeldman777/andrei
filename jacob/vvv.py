@@ -294,12 +294,12 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
             px = {"val": role.title, "r": role.id, "color": paint.rgb_back_left()}  ######################
             is100 = person_more_100_12(person,n)
 
-            dif2 = [{"color":paint.rgb_back_right(),"val": person.fio}] + [0] * n
+            dif2 = [{"color":paint.rgb_back_right(),"val": person.fio,"aligh":"left"}] + [0] * n
             dif = [person.fio] + time_available_person_role_12(person, role)
             d = date0()
             for i in range(n):
                 paint.next_cell(dif[i + 1])
-                dif2[i + 1] = {
+                dif2[i + 1] = {"align":"center",
                     "link": f"{person.id}.{role.id}.0.{d.year}-{d.month}-15",
                     "color": paint.color_rest(arr[person.id][role.id][i]),
                     "val": dif[i + 1],
@@ -333,9 +333,9 @@ def rest_all(request:object,n:int=12)->object:  # Остаточная дост�
         px = role.title
         for person in people_rr:
             paint.next_row(None)
-            dif = [{"color":paint.rgb_back_right(),
+            dif = [{"color":paint.rgb_back_right(),"align":"left",
                     "val":person.fio}] + rest_and_color_12(person, role,paint.color_rest,12)
-            dif14.append([{"color":paint.rgb_back_left(),"val":px}] + dif)
+            dif14.append([{"color":paint.rgb_back_left(),"val":px,"align":"left",}] + dif)
 
 
     moon12["dif14"] = dif14
@@ -419,17 +419,17 @@ def project_timeline_line(p,paint,n=12):
     dmin = dmin.replace(day=15)
     dmax = inc_n(dmin, n-1)
     L = []
-    L.append({"val":p.general.fio,"color":paint.rgb_back_left()})
-    L.append({"val": p.title, "id": p.id,"color":paint.rgb_back_right()})  # 989898
+    L.append({"val":p.general.fio,"color":paint.rgb_back_left(),"align":"left"})
+    L.append({"val": p.title, "id": p.id,"color":paint.rgb_back_right(),"align":"left"})  # 989898
 
     formatted_date = babel.dates.format_date(p.start_date, "d MMM YY", locale='ru')
-    L.append({"val": formatted_date,"color":paint.rgb_back_right()})
+    L.append({"val": formatted_date,"color":paint.rgb_back_right(),"align":"left"})
 
     formatted_date = babel.dates.format_date(p.end_date, "d MMM YY", locale='ru')
-    L.append({"val": formatted_date, "color": paint.rgb_back_right()})
+    L.append({"val": formatted_date, "color": paint.rgb_back_right(),"align":"left"})
 
 
-    L+= [{"val":timespan_len(p.start_date, p.end_date),"color": paint.rgb_back_right()}]
+    L+= [{"val":timespan_len(p.start_date, p.end_date),"color": paint.rgb_back_right(),"align":"center"}]
     L+= mon_bool_color(dmin, dmax, p.start_date, p.end_date,Paint.MY_BLUE,paint.rgb_back_right())
     return L
 
