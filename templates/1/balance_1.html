@@ -2,12 +2,10 @@
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-
 {% include 'menu2.html' %}
-
-
-
-<div style="text-align:center;"><br>
+<br>
+<div style="margin-left:50px">
+<table><tr><td>
   <h5>Проект: {{project_name}} - Ресурс : {{role_name}} -
       <a href="/balance/{{id}}/{{coord}}/1/" style="color:black;">Потребность
           </a></h5>
@@ -33,7 +31,8 @@
       </tbody>
 </table>
 
-{% include 'data2.html' %}
+    </td></tr></table></div>
+        {% include 'data2.html' %}
   <form  method="POST" id="f10">
             {% csrf_token %}
 

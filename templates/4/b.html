@@ -1,14 +1,15 @@
-{% extends 'base1.html' %}
+{{% extends 'base0.html' %}
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-
 {% include 'menu2.html' %}
 <br>
+<div style="margin-left:50px">
+<table><tr><td>
   <h5>Относительная нехватка ресурсов {{hh}} вперед</h5>
 <br>
 
-<table class="display compact hover nowrap" style="width:80%">
+<table class="display compact hover nowrap" style="width:100%">
   <thead>
 
       <tr>
@@ -43,6 +44,8 @@
     </tbody>
   </table>
 
-{% include 'data0.html' %}
+
+    </td></tr></table></div>
+        {% include 'data2.html' %}
 
 {% endblock %}

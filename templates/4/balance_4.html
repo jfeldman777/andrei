@@ -152,11 +152,11 @@
             <tr>
               {% for t in tt %}
               {% if forloop.first %}
-              {% if t|negative %}{% else %}
+              {% if t.val|negative %}{% else %}
 
 
               <td colspan=13 class="long">
-                {{t}}</td>
+                {{t.val}}</td>
             </tr>
             <tr>
               {% endif %}

@@ -1,14 +1,16 @@
-{% extends 'base1.html' %}
+{% extends 'base0.html' %}
 {% load custom_filters %}
 {% block content %}
 {% load static %}
 {% include 'menu2.html' %}
 <br>
+<div style="margin-left:50px">
+<table><tr><td>
   <h5>
  Все роли</h5>
 
 
-<table  class="display compact" style="width:80%;"><thead>
+<table  class="display compact" style="width:100%;"><thead>
   <tr style="text-align:left;">
     <th style="text-align:left;">
        Роль
@@ -35,8 +37,6 @@
     </tr>
     {% endfor %}</tbody>
         </table>
-
-      {% include 'data1.html' %}
-
-          
+</td></tr></table></div>
+{% include 'data1.html' %}
 {% endblock %}

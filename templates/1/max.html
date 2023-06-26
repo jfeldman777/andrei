@@ -7,23 +7,14 @@
 <div style="margin-left:50px">
 <table><tr><td>
   <h5>Максимальная доступность ресурсов</h5>
-
-
-
-
 <table  class="display compact" width="100%">
   <thead>
-
     <tr>
       <th style="text-align:left;">Ресурс </th>
         <th style="text-align:left;  ">Сотрудник</th>
-
         {% include 'moon.html' %}</tr></thead><tbody>
         {% for tt in dif14 %}
-
-    <tr>
-      {% for t in tt %}
-
+    <tr>{% for t in tt %}
       <td style="background-color:{{t.color}};text-align:{{t.align}};"
           class="{{t.class}}" action="/save_max/" fname="f10" key="{{t.link}}">
           {{t.val}}
@@ -31,7 +22,6 @@
         <img src="{% static 'fire2.png' %}" alt="Icon" width=16>
         {% endif%}
       </td>
-
       {% endfor %}
     </tr>
     {% endfor %}

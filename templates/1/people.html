@@ -1,4 +1,4 @@
-{% extends 'base1.html' %}
+{% extends 'base0.html' %}
 {% load custom_filters %}
 {% block content %}
 {% load static %}
@@ -8,25 +8,23 @@
 <table><tr><td>
   <h5>
     Все сотрудники</h5>
-
-
-<table  class="display compact " style="width:80%;"><thead>
+<table  class="display compact " style="width:100%;"><thead>
     <tr>
-      <th style="text-align:center;">
+      <th style="text-align:left;">
          Сотрудник
         </th>
-        <th style="text-align:center;">Ресурсный пул</th>
+        <th style="text-align:left;">Ресурсный пул</th>
 
 
     </thead>
     <tbody>
 
       {% for cell in data2 %} <tr>
-      <td style="text-align: center; background-color:{{cell.color}};">
+      <td style="text-align: left; background-color:{{cell.color}};">
 <a href="/person_form/{{cell.id}}/">
         {{ cell.fio }}
           </a></td>
-      <td style="text-align: center; background-color:{{cell.color}};">
+      <td style="text-align: left; background-color:{{cell.color}};">
 
 {% if cell.role %}
              <a href="/grade_form/{{cell.id}}/{{cell.role.id}}/">
@@ -55,7 +53,8 @@
     </tr>
     {% endfor %}</tbody>
 </table>
-{% include 'data1.html' %}
+    </td></tr></table></div>
+        {% include 'data2.html' %}
 
 
 {% endblock %}
