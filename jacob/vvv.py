@@ -220,81 +220,28 @@ def moon4(n: int = 12) -> List[object]:
         return {"ym": ym}
 
     ##################################################################
-
-'''
-доступность максимальная - персональная - один вид ресурса
-'''
-def available_role(request:object, p:int, r:int, j:int,n:int=12)->object:
-    moon12 = moon()
-    dif14 = []
-    dif15 = []
-
-    try:
-        role = Role.objects.filter(id=r)[0]
-    except:
-        role = None
-
-    people_rr = real_people(role)
-    people_rv = real_and_virtual_people(role)
-
-    for person in people_rr:
-        dif = time_available_person_role_12(person, role,n)
-        is100 = person_more_100_12(person)
-
-        dif100 = [0] * n
-        da = date0()
-        for i in range(n):
-            dif100[i] = {
-                "link": f"{person.id}.{r}.0.{da.year}-{da.month}-15",
-                "fire": is100[i],
-                "val": dif[i],
-            }  # 9898
-            da = inc(da)
-        dif14.append([person.fio] + dif100)  ######################
-
-    moon12["dif14"] = dif14
-
-    moon12["dif15"] = dif15
-    moon12["r"] = r
-    moon12["role"] = role
-
-    return render(request, "max_r.html", moon12)
-
-
-'''
-показать максимальную доступность по всем персонам и ролям
-'''
-def available_all(request:object,n:int=12)->object:  # Максимальная доступнасть по всем ресурсам
-
-    moon12 = moon()
-    dif14 = []
-
-    project = Project.objects.all()
-    roles = Role.objects.all()
-
+def available(roles,n=12):
     my = UserProfile.objects.all()
     arr = [0] * 100
     for p in my:
         arr[p.id] = [0] * 1000
         for r in roles:
-            t = time_available_person_role_12(p, r,n)
+            t = time_available_person_role_12(p, r, n)
             arr[p.id][r.id] = [0] * n
             for i in range(n):
                 arr[p.id][r.id][i] += t[i]
 
+    moon12 = moon()
+    dif14 = []
+    paint = Paint()
     for role in roles:
-        p9 = role.title
         people_rr = real_people(role)
-        paint = Paint()
-    #
-
-
         for person in people_rr:
             paint.next_row(person.fio)
-            px = {"val": role.title, "r": role.id, "color": paint.rgb_back_left()}  ######################
+            px = {"val": role.title, "r": role.id, "color": paint.rgb_back_left()}
             is100 = person_more_100_12(person,n)
 
-            dif2 = [{"color":paint.rgb_back_right(),"val": person.fio,"aligh":"left"}] + [0] * n
+            dif2 = [{"color":paint.rgb_back_right(),"val": person.fio,"align":"left"}] + [0] * n
             dif = [person.fio] + time_available_person_role_12(person, role)
             d = date0()
             for i in range(n):
@@ -308,10 +255,37 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
                 }
                 d = inc(d)
 
-            dif14.append([px] + dif2)  ######################
-           ##################################
+        dif14.append([px] + dif2)
 
     moon12["dif14"] = dif14  ########################################
+    return moon12
+
+'''
+доступность максимальная - персональная - один вид ресурса
+'''
+def available_role(request:object, r:int, n:int=12)->object:
+    try:
+        role = Role.objects.filter(id=r)[0]
+    except:
+        role = None
+
+    roles = [role]
+
+    moon12 = available(roles,  n)
+    return render(request, "max.html", moon12)
+
+
+'''
+показать максимальную доступность по всем персонам и ролям
+'''
+def available_all(request:object,n:int=12)->object:  # Максимальная доступнасть по всем ресурсам
+
+    moon12 = moon()
+    dif14 = []
+
+    project = Project.objects.all()
+    roles = Role.objects.all()
+    moon12 = available(roles, n=12)
 
     return render(request, "max.html", moon12)
 
@@ -346,51 +320,37 @@ def rest_all(request:object,n:int=12)->object:  # Остаточная дост�
 ''' 
 доступность остаточная - персональная - один вид ресурса
 '''
-def rest_role(request:object, p:int, r:int, j:int,n:int=12)->object:
-    moon12 = moon()
-    dif14 = []
-    dif15 = []
+
+
+
+def rest_role(request:object, r:int,n:int=12)->object:
     try:
         role = Role.objects.filter(id=r)[0]
     except:
         role = None
 
     people_rr = real_people(role)
+    moon12 = rest(role, people_rr, n)
+    return render(request, "rest.html", moon12)
+def rest(role, people_rr, n = 12):
+    moon12 = moon()
+    dif14 = []
 
+    paint = Paint()
     for person in people_rr:
-        dif = time_available_person_role_12(person, role,n)
-
-        dif100 = [0] * n
-        da = date0()
-        for i in range(n):
-            dif100[i] = {
-                "link": f"{person.id}.0.0.{da.year}-{da.month}-15",
-                "up": up(1, 2),
-                "title": dif[i],
-            }  # 9898
-            da = inc(da)
-        dif14.append([person.fio] + dif100)  ######################
-
-    for person in people_rr:
-        dif = rest_of_time_pr_12(person, role,n)
-
-        dif100 = [0] * n
-        da = date0()
-        for i in range(n):
-            dif100[i] = {
-                "link": f"{person.id}.0.0.{da.year}-{da.month}-15",
-                "title": dif[i],
-            }  # 9898
-            da = inc(da)
-        dif15.append([person.fio] + dif100)  ######################
+        paint.next_row(None)
+        dif = [{"color": paint.rgb_back_right(), "align": "left",
+                "val": person.fio}] + rest_and_color_12(person, role, paint.color_rest, 12)
+        dif14.append([{"color": paint.rgb_back_left(), "val": role.title,
+                       "align": "left", }] + dif)
 
     moon12["dif14"] = dif14
 
-    moon12["dif15"] = dif15
-    moon12["r"] = r
+    moon12["r"] = role.id
     moon12["role"] = role
+    return moon12
 
-    return render(request, "rest_r.html", moon12)
+
 '''
 портфель проектов
 '''

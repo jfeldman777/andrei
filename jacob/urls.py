@@ -36,8 +36,11 @@ urlpatterns = [
 
     
     
-    path("max/", vvv.available_all, name="mrom"),
-    path("rest/", vvv.rest_all, name="mro"),
+    path("max/", vvv.available_all),
+    path("max_r/<int:r>/", vvv.available_role),
+
+    path("rest/", vvv.rest_all),
+    path("rest_r/<int:r>/", vvv.rest_role),
  
     
     path("prjlist/", vvv.table_timeline, name="prjlist"),
