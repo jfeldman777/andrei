@@ -143,7 +143,7 @@ class BalanceView(View):
                 isPurple = delta[i] < 0
                 b_w3[i] = {
                     "link": f"{person.id}.{role.id}.{project.id}.{d.year}-{d.month}-15",
-                    "up": up(max(-delta[i], 0), diff[i]),
+                    "up": up(max(-delta[i], 0), diff[i],wish),
                     "val": a_w3[i],
                     "color": paint3.color_tasks(isOut,isPurple),
                     "class": "  good"

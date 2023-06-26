@@ -15,15 +15,11 @@ from datetime import date, timedelta
 Всплывающая подсказка
 '''
 def up(a: int=-1, b: int=-1,c:str='') -> str:
+    cs =  f"{c} | " if len(c.strip())>0 else ''
+    bs = f" | есть: {b}" if b < 88888 else ''
+    ass = f"надо: {a}"
 
-    cs = ''
-    if c!='' and c!= None:
-        cs = f"особые требования->{c}"
-    if not isinstance(a, int) or a < 0:
-        return cs
-    if b < 0 or b > 88888:
-        return f"{cs}|надо:{a}"
-    return f"|надо:{a}|есть:{b}|{cs}"
+    return cs + ass + bs
 
 '''
 Используется при тестировании для стандартизации вызова
