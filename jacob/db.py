@@ -1,4 +1,5 @@
 from .utils import *
+from .paint import Paint
 
 # from .vvv import assign_role,assign_project,assign_role_project,
 # from .vvv import needs_project,needs_role,needs_role_project
@@ -7,15 +8,15 @@ from .utils import *
 def real_and_virtual_people(role:object)->List[object]:
     pp1 = set(UserProfile.objects.filter(Q(role=role, virtual=False)))
     pp2 = set(UserProfile.objects.filter(Q(res=role, virtual=False)))
-    pps = sorted(list(pp1.union(pp2)), key=lambda x:x.fio)
+    pps = pp1.union(pp2)
+    ppl = sorted(list(pps), key=lambda x:x.fio)
     try:
         ov = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]
         ou = UserProfile.objects.filter(fio="АУТСОРС")[0]
     except:
         ou = None
         ov = None
-    return pps + [ou, ov]
-
+    return ppl + [ou, ov]
 
 
 def real_people(role:object)->List[UserProfile]:
@@ -56,16 +57,6 @@ def get_prj_triplet(p:int, r:int, j:int)->tuple[any,any,any]:
 
     return (person, role, project)
 
-def rest_role_12(r,n):
-    people = real_people(r)
-
-    res = [0]*n
-    for p in people:
-        res_p = rest_of_time_pr_12(p, r, n)
-        for i in range(n):
-            res[i]+=res_p[i]
-    return res
-
 
 
 def rest_of_time_pr_12(p, r,n=12):
@@ -79,8 +70,7 @@ def rest_and_color_12(p, r,color,n=12):
     a = task_person_role_12(p, r,n)
     b = time_available_person_role_12(p, r,n)
     c = [b[i]-a[i] for i in range(n)]
-    d = [{"val":c[i],"align":"center",
-          "color":color(c[i])} for i in range(n)]
+    d = [{"val":c[i],"color":color(c[i])} for i in range(n)]
     return d
 
 def task_person_role_12(person:object, role:object,n:int=12)->List[int]:
@@ -197,7 +187,15 @@ def needs_role_project_12(p:object,r:object, j:object,n:int=12)->List[int]:
         d = inc(d)
     return res
 
+def needs_rj_color_12(p:object,r:object, j:object,n:int=12,paint=None)->List[int]:
+    d = date0()
+    res1 = needs_role_project_12(p,r,j,n)
+    res = []
+    for i in range(n):
+        paint.next_cell(res1[i])
+        res.aappend({'val':res1[i],'color':paint.color_balance()})
 
+    return res
 
 '''
 нехватка ресурса - роль и проект - на 12 месяцев

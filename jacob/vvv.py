@@ -236,14 +236,16 @@ def available(roles,n=12):
     moon12 = moon()
     dif14 = []
     paint = Paint()
+    i=0
     for role in roles:
+        i=1-i
         people_rr = real_people(role)
         for person in people_rr:
             paint.next_row(person.fio)
-            px = {"val": role.title, "r": role.id, "color": paint.rgb_back_left()}
+            px = {"val": role.title, "r": role.id}
             is100 = person_more_100_12(person,n)
 
-            dif2 = [{"color":paint.rgb_back_right(),"val": person.fio,"align":"left"}] + [0] * n
+            dif2 = [{"val": person.fio,"align":"left"}] + [0] * n
             dif = [person.fio] + time_available_person_role_12(person, role)
             d = date0()
             for i in range(n):
@@ -257,7 +259,7 @@ def available(roles,n=12):
                 }
                 d = inc(d)
 
-        dif14.append([px] + dif2)
+            dif14.append([{"class":"odd" if i == 1 else "even"},px] + dif2)
 
     moon12["dif14"] = dif14  ########################################
     return moon12
@@ -362,9 +364,12 @@ def table_timeline(request:object,n:int=12)->object:  # все проекты (�
     paint = Paint()
     projects = Project.objects.all().order_by("general", "start_date")
     data = []
+    i = 1
     for p in projects:
+        i = 1-i
         paint.next_row(None)
-        data.append(project_timeline_line(p,paint))
+        data.append([{"class":"even" if i==0 else "odd"
+                      }]+project_timeline_line(p,paint))
     moon12["matrix"] = data
     return render(request, "prjlist.html", moon12)
 
@@ -381,17 +386,28 @@ def project_timeline_line(p,paint,n=12):
     dmin = dmin.replace(day=15)
     dmax = inc_n(dmin, n-1)
     L = []
-    L.append({"val":p.general.fio,"color":paint.rgb_back_left(),"align":"left"})
-    L.append({"val": p.title, "id": p.id,"color":paint.rgb_back_right(),"align":"left"})  # 989898
+    L.append({"val":p.general.fio,
+              # "color":paint.rgb_back_left(),
+              "align":"left"})
+    L.append({"val": p.title, "id": p.id,
+              # "color":paint.rgb_back_right(),
+              "align":"left"})  # 989898
 
     formatted_date = babel.dates.format_date(p.start_date, "d MMM YY", locale='ru')
-    L.append({"val": formatted_date,"color":paint.rgb_back_right(),"align":"left"})
+    L.append({"val": formatted_date,
+              # "color":paint.rgb_back_right(),
+              "align":"left"})
 
     formatted_date = babel.dates.format_date(p.end_date, "d MMM YY", locale='ru')
-    L.append({"val": formatted_date, "color": paint.rgb_back_right(),"align":"left"})
+    L.append({"val": formatted_date,
+              # "color": paint.rgb_back_right(),
+              "align":"left"})
 
 
-    L+= [{"val":timespan_len(p.start_date, p.end_date),"color": paint.rgb_back_right(),"align":"center"}]
+    L+= [{"val":timespan_len(p.start_date, p.end_date),
+          # "color": paint.rgb_back_right(),
+          "align":"center"}]
+
     L+= mon_bool_color(dmin, dmax, p.start_date, p.end_date,Paint.MY_BLUE,paint.rgb_back_right())
     return L
 

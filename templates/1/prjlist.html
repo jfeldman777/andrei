@@ -1,15 +1,14 @@
-{% extends 'base0.html' %}
+{% extends 'base3.html' %}
 {% load custom_filters %}
 {% block content %}
 {% load static %}
-
 {% include 'menu2.html' %}
 <br>
-<div style="margin-left:50px;">
+<div style="margin-left:50px; width:80%">
 <table><tr><td>
-  <h5>Дорожная карта</h5>
-
-<table  class="display compact"
+  <h5>   Дорожная карта</h5>
+</td></tr><tr><td>
+<table  class="display dataTable"
         style="width:100%;">
 
   <thead style="width:100%; padding-left: 0; margin-left: 0;">
@@ -23,9 +22,12 @@
 
     {% include 'moon.html' %}</tr></thead><tbody>
     {% for row in matrix %}
-    <tr style=" padding: 5px;  white-space: nowrap;}">
-      {% for cell in row %}
-      <td style="text-align: {{cell.align}}; background-color:{{cell.color}};">
+         {% for cell in row %}
+    {% if forloop.first %}
+        <tr style=" padding: 5px;  white-space: nowrap;" class="{{cell.class}}">
+    {% else %}
+
+      <td style="text-align: {{cell.align}}; background-color:{{cell.color}}">
         {% if cell.id %}
         <a href="/project_form/{{cell.id}}/">
           {{cell.val}}
@@ -33,14 +35,15 @@
         {% else %}
         {{cell.val}}
         {% endif %}
+        {% endif %}
       </td>
 
       {% endfor %}
-
-    {% endfor %}</tr>
-  </thead></table>
+</tr>
+    {% endfor %}
+</tbody></table>
     </td></tr></table></div>
 
-{% include 'data2.html' %}
+{% include 'dat.html' %}
 
 {% endblock %}

@@ -68,13 +68,11 @@ class Paint:
         return self.rgb_back_right()
 
     def color_rest(self,all_rest):
-
-        print(88,all_rest)
         if all_rest < 0:
             return self.MY_PINK
         if all_rest == 0:
             return self.MY_YELLOW
-        return self.rgb_back_right()
+        return '' #self.rgb_back_right()
 
     def color_tasks(self,isOut,isPink):
         if isOut:
