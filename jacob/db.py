@@ -74,11 +74,11 @@ def rest_of_time_pr_12(p, r,n=12):
 
     return c
 
-def rest_and_color_12(p, r,color,n=12):
+def rest_and_color_12(p, r,color,is_1,n=12):
     a = task_person_role_12(p, r,n)
     b = time_available_person_role_12(p, r,n)
     c = [b[i]-a[i] for i in range(n)]
-    d = [{"val":c[i],"color":color(c[i])} for i in range(n)]
+    d = [{"val":c[i],"color":color(c[i],is_1)} for i in range(n)]
     return d
 
 def task_person_role_12(person:object, role:object,n:int=12)->List[int]:

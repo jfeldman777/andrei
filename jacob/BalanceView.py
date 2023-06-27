@@ -120,7 +120,7 @@ class BalanceView(View):
                 wish_sign = ' !' if wish != '' else ''
                 self.w2.append([{"class":"even" if k==0 else "odd",
                                  "up":wish,
-
+                                 "color":self.paint2.rgb_back_left(),
                                  "val": pp2 + wish_sign,
 
                             "project": project.id, "role": role.id, "class":"wish",
@@ -141,7 +141,7 @@ class BalanceView(View):
             for person in people_rr:
                 paint4.next_row(None)
                 dif = [{"color": paint4.rgb_back_left(),"align":"left",
-                        "val": add_grade(person,role)}] + rest_and_color_12(person, role, paint4.color_rest, 12)
+                        "val": add_grade(person,role)}] + rest_and_color_12(person, role, paint4.color_rest,False ,12)
                 if self.coord==0:
                     self.w4.append([p4] + dif)
                 else:

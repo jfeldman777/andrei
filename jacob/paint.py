@@ -67,12 +67,12 @@ class Paint:
             return self.rgb_back_left()
         return self.rgb_back_right()
 
-    def color_rest(self,all_rest):
+    def color_rest(self,all_rest,is_1=True):
         if all_rest < 0:
             return self.MY_PINK
         if all_rest == 0:
             return self.MY_YELLOW
-        return '' #self.rgb_back_right()
+        return '' if is_1 else self.rgb_back_right()
 
     def color_tasks(self,isOut,isPink):
         if isOut:
@@ -95,18 +95,12 @@ class Paint:
         d15 = d.replace(day=15)
         d1_15 = d1.replace(day=15)
         d2_15 = d2.replace(day=15)
-
-
-
         if isinstance(self.cell, int):
-
             if d15 < d1_15 or d15 > d2_15:
-
                 return self.MY_GREY
             else:
                 if self.cell > 0:
                     return self.MY_BLUE
-
         return self.rgb_back_right()
 
     def color_entry_map(self):
