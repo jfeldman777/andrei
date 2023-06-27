@@ -89,7 +89,7 @@ class Paint:
             except:
                 pass
 
-        return self.rgb_back_right()
+        return ''
 
     def color_needs(self,d1,d2,d):
         d15 = d.replace(day=15)

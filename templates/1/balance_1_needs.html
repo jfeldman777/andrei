@@ -1,4 +1,4 @@
-{% extends 'base1.html' %}
+{% extends 'base3.html' %}
 {% load custom_filters %}
 {% block content %}
 {% load static %}
@@ -16,9 +16,10 @@
       <th style="text-align:center;" >
 Ресурс </th>
         {% include 'moon.html' %}</tr></thead><tbody>
-      {% for dem in w2 %}
-      <tr style="text-align:center;">
-        {% for t in dem %}
+      {% for dem in w2 %} {% for t in dem %}
+      {% if forloop.first %}
+      <tr style="text-align:center;" class="{{t.class}}">
+      {% endif %}
 
         <td class="{{t.class}}" action="/save_needs/" fname="f10" key="{{t.link}}" title="{{t.up}}"
             project="{{t.project}}"
@@ -32,7 +33,7 @@
 </table>
 
     </td></tr></table></div>
-        {% include 'data2.html' %}
+        {% include 'dat.html' %}
   <form  method="POST" id="f10">
             {% csrf_token %}
 
@@ -41,6 +42,7 @@
 
           </form>
 
+{% include 'save_cell_js4.html' %}
 
  {% include 'wish_js.html' %}
 {% endblock %}

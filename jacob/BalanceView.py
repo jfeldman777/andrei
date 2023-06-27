@@ -104,7 +104,9 @@ class BalanceView(View):
                 d = date0()
                 a_w2 = [0] * self.n
                 rest = rest_role_12(role,self.n)
+                k = 0
                 for i in range(self.n):
+                    k = 1 - k
                     self.paint2.next_cell(dem_rj[i])
 
                     a_w2[i] = {
@@ -116,7 +118,7 @@ class BalanceView(View):
                     }  #
                     d = inc(d)
                 wish_sign = ' !' if wish != '' else ''
-                self.w2.append([{"color":self.paint2.rgb_back_left(),
+                self.w2.append([{"class":"even" if k==0 else "odd",
                                  "up":wish,
 
                                  "val": pp2 + wish_sign,
@@ -148,7 +150,9 @@ class BalanceView(View):
                 p4 = -1
 
         if self.mod !=2:
+            k=0
             for person in people_rv:  #
+                k=1-k
                 paint3.next_row(None)
 
                 diff = rest_of_time_pr_12(person, role,self.n)
@@ -170,7 +174,7 @@ class BalanceView(View):
                     }
                     d = inc(d)
 
-                    c_w3 = [{"val":p3,'color': paint3.rgb_back_left()},{'color': paint3.rgb_back_right(),"align":"left",
+                    c_w3 = [{"val":p3,'class': "even" if k==0 else "odd"},{"align":"left",
                                         "val": add_grade(person,role)}] + b_w3
 
                 if self.mod < 2:
