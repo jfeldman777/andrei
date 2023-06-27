@@ -23,11 +23,12 @@
       </tr>
     </thead>
     <tbody>
-      {% for xy in tab %}
-      <tr>
-        {% for x in xy %}
+      {% for xy in tab %}     {% for x in xy %}
 
-        {% if forloop.first %}
+
+
+
+        {% if forloop.first %}    <tr class="{{x.class}}">
         <td style="background-color:{{x.color}}; width:150px;" ><a href="{{x.link}}" >
           {{x.val}}</a></td>
             {% else %}
@@ -46,6 +47,6 @@
 
 
     </td></tr></table></div>
-        {% include 'dat.html' %}
+        {% include 'dat_no_order.html' %}
 
 {% endblock %}

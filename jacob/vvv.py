@@ -86,7 +86,7 @@ def balance_map(request:object, n:int)->object:
     paint = Paint()
     for i in range(len(projects)):
         paint.next_row(projects[i])
-        xy[i][0] = {"color": paint.rgb_back(),
+        xy[i][0] = {"class":"even" if i%2==0 else "odd",
             "val": projects[i], "link": f"/balance/{projects[i].id}/0/1/"}
 
         for j in range(len(roles)):

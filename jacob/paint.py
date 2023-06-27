@@ -115,7 +115,7 @@ class Paint:
                 return self.MY_PINK
             elif self.cell > 0:
                 return self.MY_YELLOW
-        return self.rgb_back()
+        return ''
 
 
     def color_timeline(self,d,m1,m2):

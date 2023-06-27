@@ -1,0 +1,38 @@
+<script>
+$('.display').DataTable({
+                  paging: false,
+                  info:false,
+              "searching": true,
+              "ordering":false,
+                  scrollCollapse: true,
+                  language: {
+            search: '&nbsp;&nbsp;&nbsp;Поиск: ',
+
+
+
+                 "decimal":        ",",
+                "emptyTable":     "нет данных",
+                "info":           "Показать с _START_ до _END_ - _TOTAL_ записей",
+            "infoEmpty":      "Показать от 0 до 0 из 0 записей",
+            "infoFiltered":   "(выбрано из _MAX_ всех записей)",
+            "infoPostFix":    "",
+            "thousands":      "тысяч",
+            "lengthMenu":     "показать _MENU_ пунктов",
+            "loadingRecords": "Загружаем...",
+            "processing":     "",
+
+            "zeroRecords":    "Ничего не найдено",
+            "paginate": {
+                "first":      "первый",
+                "last":       "следующий",
+                "next":       "последний",
+                "previous":   "предыдущий"
+            },
+            "aria": {
+                "sortAscending":  ": сортируем-возрастает",
+                "sortDescending": ": сортируем-убывает"
+            }
+          }
+     });
+
+    </script>
