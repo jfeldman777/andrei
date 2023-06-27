@@ -189,16 +189,16 @@ def people(request):
 
     return render(request, "people.html", context)
 def roles(request:object)->object:
-    paint = Paint()
+
     context = {}
     data = []
     roles = Role.objects.all().order_by("title")
 
-
+    i=0
     for p in roles:
-        paint.next_row(None)
+
         m = {"title": p.title, "id": p.id, "general": p.general.userprofile.fio,
-             'color1':paint.rgb_back_left(),'color2':paint.rgb_back_right()
+            "class":"even" if i==0 else "odd"
              }
         data.append(m)
     context["data2"] = data

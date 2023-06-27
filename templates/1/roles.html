@@ -1,4 +1,4 @@
-{% extends 'base0.html' %}
+{% extends 'base3.html' %}
 {% load custom_filters %}
 {% block content %}
 {% load static %}
@@ -21,7 +21,7 @@
     </tr>
     </thead><tbody>
 
-      {% for cell in data2 %}    <tr style="text-align: left; ">
+      {% for cell in data2 %}    <tr style="text-align: left; " class="{{cell.class}}">
       <td style="text-align: left; background-color:{{cell.color1}};">
 <a href="/role_form/{{cell.id}}">
         {{ cell.title }}
@@ -38,5 +38,5 @@
     {% endfor %}</tbody>
         </table>
 </td></tr></table></div>
-{% include 'data1.html' %}
+{% include 'dat.html' %}
 {% endblock %}
