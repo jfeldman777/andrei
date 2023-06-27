@@ -1,4 +1,4 @@
-{% extends 'base0.html' %}
+{% extends 'base3.html' %}
 {% load custom_filters %}
 {% block content %}
 {% load static %}
@@ -9,22 +9,36 @@
   <h5>    Все ресурсные пулы</h5>
 
 
-<table class="display compact " style="width:100%">
+<table class="display dataTable" style="width:100%">
 
    <thead>
     <tr style="text-align: left; ">
-      <th>Руководитель</th>
-      <th>Ресурсный пул</th>
-      <th>Максимальная доступность</th>
-      <th>Остаточная доступность</th>
-      <th>Балансы </th>
-      <th>Назначения</th>
+      <th class="sorting sorting_asc" tabindex="0"
+                    aria-controls="example" rowspan="1" colspan="1"
+                    aria-sort="ascending" aria-label="Name: activate to sort column descending"
+      >Руководитель</th>
+      <th class="sorting sorting_asc" tabindex="0"
+                    aria-controls="example" rowspan="1" colspan="1"
+                    aria-sort="ascending" aria-label="Name: activate to sort column descending"
+      >Ресурсный пул</th>
+      <th class="sorting sorting_asc" tabindex="0"
+                    aria-controls="example" rowspan="1" colspan="1"
+                    aria-sort="ascending" aria-label="Name: activate to sort column descending">Максимальная доступность</th>
+      <th class="sorting sorting_asc" tabindex="0"
+                    aria-controls="example" rowspan="1" colspan="1"
+                    aria-sort="ascending" aria-label="Name: activate to sort column descending">Остаточная доступность</th>
+      <th class="sorting sorting_asc" tabindex="0"
+                    aria-controls="example" rowspan="1" colspan="1"
+                    aria-sort="ascending" aria-label="Name: activate to sort column descending">Балансы </th>
+      <th class="sorting sorting_asc" tabindex="0"
+                    aria-controls="example" rowspan="1" colspan="1"
+                    aria-sort="ascending" aria-label="Name: activate to sort column descending">Назначения</th>
 
     </tr>
     </thead><tbody>
-    <tr>
+
       {% for cell in data2 %}
-      <td style="text-align:left;background-color:{{cell.color1}};">
+       <tr class="{{cell.class}}"> <td  class="sorting_1" style="text-align:left;background-color:{{cell.color1}};">
 
         {{ cell.name }}
 
@@ -63,5 +77,5 @@
 
         </table>
 </td></tr></table></div>
-{% include 'data1.html' %}
+{% include 'dat.html' %}
 {% endblock %}

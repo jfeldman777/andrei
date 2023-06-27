@@ -1,22 +1,10 @@
-
 <script>
-
-  $(document).ready(function () {
-      $('.display').DataTable({
-               "stripeClasses": [ 'odd-row', 'even-row' ],
-           "lengthChange": false,
-             // scrollY: '70vh',
-            //  scrollCollapse: true,
+$('.display').DataTable({
                   paging: false,
                   info:false,
-
-
-
               "searching": true,
               "ordering":true,
-
-
-
+                  scrollCollapse: true,
                   language: {
             search: 'Поиск: ',
 
@@ -46,6 +34,5 @@
             }
           }
      });
-  });
 
-</script>
+    </script>

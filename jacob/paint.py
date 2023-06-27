@@ -47,11 +47,11 @@ class Paint:
             return self.rgb_back_left()
         return self.rgb_back_right()
 
-    def plus_color_balance(self,L):
+    def plus_color_balance(self,L,has_left=True):
         res = []
         for i in range(len(L)):
             self.cell = L[i]
-            m = {'val':L[i],'color':self.color_balance(i)}
+            m = {'val':L[i],'color':self.color_balance(i if has_left else 1)}
             res.append(m)
         return res
 

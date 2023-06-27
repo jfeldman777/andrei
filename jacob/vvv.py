@@ -115,16 +115,17 @@ def balance_map(request:object, n:int)->object:
 '''
 
 def table_projects(request:object)->object:
-    paint = Paint()
+    # paint = Paint()
     projects = Project.objects.all().order_by("general")
     data = []
     for i in range(len(projects)):
-        paint.next_row(None)
+        # paint.next_row(None)
         p = projects[i]
         data.append({"j": p.id, "project": p.title, "name": p.general.fio,
-             "color2":paint.rgb_back_right(),
-             "color1":paint.rgb_back_left()
-             })
+            "class":"odd" if (i % 2>0) else "even"})
+             # "color2":paint.rgb_back_right(),
+             # "color1":paint.rgb_back_left()
+             # })
 
 
     context = {"data": data}
@@ -134,16 +135,17 @@ def table_projects(request:object)->object:
 Все ресурсы в одной таблице
 '''
 def table_resources(request:object)->object:
-    paint = Paint()
+    # paint = Paint()
     context = {}
     data = []
     roles = Role.objects.all().order_by("general")
     for i in range(len(roles)):
-        paint.next_row(None)
+        # paint.next_row(None)
         p = roles[i]
         data.append({"title": p.title, "r": p.id,
-                      "color2": paint.rgb_back_right(),
-                      "color1": paint.rgb_back_left(),
+                      # "color2": paint.rgb_back_right(),
+                      # "color1": paint.rgb_back_left(),
+                     "class": "odd" if (i % 2>0) else "even",
                       "name":UserProfile.objects.get(user=p.general).fio})
 
     context["data2"] = data
@@ -279,11 +281,11 @@ def available_role(request:object, r:int, n:int=12)->object:
 показать максимальную доступность по всем персонам и ролям
 '''
 def available_all(request:object,n:int=12)->object:  # Максимальная доступнасть по всем ресурсам
-
-    moon12 = moon()
-    dif14 = []
-
-    project = Project.objects.all()
+    #
+    # moon12 = moon()
+    # dif14 = []
+    #
+    # project = Project.objects.all()
     roles = Role.objects.all()
     moon12 = available(roles, n=12)
 

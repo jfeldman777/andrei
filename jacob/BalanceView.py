@@ -30,13 +30,13 @@ class BalanceView(View):
 
         if coord == 0:
             project = Project.objects.get(id=id)
-            roles = Role.objects.all()
+            roles = Role.objects.all().order_by('title')
             for role in roles:
                 self.get_1(project,role)
 
 
         else:
-            projects = Project.objects.all()
+            projects = Project.objects.all().order_by('title')
             role = Role.objects.get(id=id)
             for project in projects:
                 self.get_1(project,role)
@@ -169,7 +169,7 @@ class BalanceView(View):
                     }
                     d = inc(d)
 
-                    c_w3 = [{"val":p3},{'color': paint3.rgb_back_left(),"align":"left",
+                    c_w3 = [{"val":p3,'color': paint3.rgb_back_left()},{'color': paint3.rgb_back_right(),"align":"left",
                                         "val": add_grade(person,role)}] + b_w3
 
                 if self.mod < 2:
@@ -192,8 +192,7 @@ class BalanceView(View):
             delta = ["Дельта"] + delta
 
         self.paint1.next_row(None)
-        print(888)
-        self.w1.append([-1] + self.paint1.plus_color_balance(delta) ) ############################
+        self.w1.append([-1] + self.paint1.plus_color_balance(delta,self.mod == 0) ) ############################
 
         return
 
