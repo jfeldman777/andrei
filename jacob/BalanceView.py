@@ -60,6 +60,7 @@ class BalanceView(View):
         moon12['pp'] = project.title if coord == 0 else role.title
         moon12['res_or_prj'] = "Ресурс" if coord == 0 else "Проект"
         moon12['prj_bool'] = self.coord == 0
+        print(67676,self.coord == 0)
 
         if coord == 0:
             moon12['project_name']=project.title
@@ -125,7 +126,7 @@ class BalanceView(View):
 
         people_rr = real_people(role)
         people_rv = real_and_virtual_people(role)
-        if self.coord == 1:
+        if self.coord == 0:
             p4 = pp2
         else:
             p4=-1
