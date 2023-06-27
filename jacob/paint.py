@@ -15,6 +15,12 @@ class Paint:
         self.ROW = 0
         return
 
+    def reset(self):
+        self.COL = 0
+        self.ROW = 0
+        self.DELTA_GREY = 5
+        return
+
     def next_row(self,cell):
         self.DELTA_GREY = 0-self.DELTA_GREY
         print(999,self.DELTA_GREY)
@@ -74,7 +80,7 @@ class Paint:
             return self.MY_YELLOW
         return '' if is_1 else self.rgb_back_right()
 
-    def color_tasks(self,isOut,isPink):
+    def color_tasks(self,isOut,isPink,is_1=True):
         if isOut:
             if isPink > 0:
                 return self.MY_PURPLE
@@ -89,7 +95,7 @@ class Paint:
             except:
                 pass
 
-        return ''
+        return '' if is_1 else self.rgb_back()
 
     def color_needs(self,d1,d2,d):
         d15 = d.replace(day=15)

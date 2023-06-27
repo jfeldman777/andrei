@@ -168,13 +168,16 @@ class BalanceView(View):
                         "link": f"{person.id}.{role.id}.{project.id}.{d.year}-{d.month}-15",
                         "up": up(max(-delta[i], 0), diff[i],wish),
                         "val": a_w3[i],
-                        "color": paint3.color_tasks(isOut,isPurple),
+                        "color": paint3.color_tasks(isOut,isPurple,False),
                         "class": "  good",
                         "align":"center"
                     }
                     d = inc(d)
 
-                    c_w3 = [{"val":p3,'class': "even" if k==0 else "odd"},{"align":"left",
+                    c_w3 = [{"val":p3,'class': "even" if k==0 else "odd",
+
+
+                             },{"align":"left", "color":"" if self.mod == 3 else paint3.rgb_back_left(),
                                         "val": add_grade(person,role)}] + b_w3
 
                 if self.mod < 2:
@@ -187,6 +190,8 @@ class BalanceView(View):
             p1 = role.title
 
         if self.mod == 0:
+            self.paint1.reset()
+            self.paint1.next_row(None)
             self.w1.append([p1]+self.paint1.plus_color_balance(  ["Потребность"] + dem_rj) ) ##########################################77777
             self.paint1.next_row(None)
             self.w1.append([-1] + self.paint1.plus_color_balance(supp) ) ###############--
