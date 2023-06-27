@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from django.views import View
 
 from .db import get_prj_triplet, task_role_project_12, delta_role_project_12, needs_role_project_12, \
-    real_people, real_and_virtual_people, rest_of_time_pr_12, task_person_role_project_12, rest_and_color_12
+    real_people, real_and_virtual_people, rest_of_time_pr_12, task_person_role_project_12, rest_and_color_12, \
+    rest_role_12
+from .models import Project,Role,Wish,Grade
 
 from .paint import Paint
 from .utils import date0, inc, up

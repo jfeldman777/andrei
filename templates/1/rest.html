@@ -16,17 +16,23 @@
 
         {% include 'moon.html' %}</tr></thead><tbody>
         {% for tt in dif14 %}
-
-    <tr>
       {% for t in tt %}
-        <td style="text-align:{{t.align}};background-color:{{t.color}}">
+        {% if forloop.first %}
+        <tr class="{{t.class}}">
+
+        <td>
         {{t.val}}
       </td>
+          {% else %}
+        <td style="text-align:{{t.align}};background-color:{{t.color}}" class="{{t.class}}">
+        {{t.val}}
+      </td>
+          {% endif %}
       {% endfor %}
     </tr>
     {% endfor %}
 
         </table>
 </td></tr></table></div>
-{% include 'data1.html' %}
+{% include 'dat.html' %}
 {% endblock %}

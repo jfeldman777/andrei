@@ -57,7 +57,15 @@ def get_prj_triplet(p:int, r:int, j:int)->tuple[any,any,any]:
 
     return (person, role, project)
 
+def rest_role_12(r,n):
+    people = real_people(r)
 
+    res = [0]*n
+    for p in people:
+        res_p = rest_of_time_pr_12(p, r, n)
+        for i in range(n):
+            res[i]+=res_p[i]
+    return res
 
 def rest_of_time_pr_12(p, r,n=12):
     a = task_person_role_12(p, r,n)

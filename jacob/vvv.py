@@ -285,11 +285,6 @@ def available_role(request:object, r:int, n:int=12)->object:
 показать максимальную доступность по всем персонам и ролям
 '''
 def available_all(request:object,n:int=12)->object:  # Максимальная доступнасть по всем ресурсам
-    #
-    # moon12 = moon()
-    # dif14 = []
-    #
-    # project = Project.objects.all()
     roles = Role.objects.all()
     moon12 = available(roles, n=12)
 
@@ -302,21 +297,11 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
 def rest_all(request:object,n:int=12)->object:  # Остаточная доступость по всем ресурсам
     moon12 = moon()
     dif14 = []
-    paint = Paint()
-    project = None #Project.objects.all()
-    roles = Role.objects.all()
+    roles = Role.objects.all().order_by('title')
     for role in roles:
-
-        p9 = role.title
         people_rr = real_people(role)
-        people_rv = real_and_virtual_people(role)
-        px = role.title
-        for person in people_rr:
-            paint.next_row(None)
-            dif = [{"color":paint.rgb_back_right(),"align":"left",
-                    "val":person.fio}] + rest_and_color_12(person, role,paint.color_rest,12)
-            dif14.append([{"color":paint.rgb_back_left(),"val":px,"align":"left",}] + dif)
-
+        dif = rest(role,people_rr)
+        dif14+=dif
 
     moon12["dif14"] = dif14
 
@@ -330,31 +315,35 @@ def rest_all(request:object,n:int=12)->object:  # Остаточная дост�
 
 
 def rest_role(request:object, r:int,n:int=12)->object:
+    moon12 = moon()
     try:
         role = Role.objects.filter(id=r)[0]
     except:
         role = None
 
     people_rr = real_people(role)
-    moon12 = rest(role, people_rr, n)
+    moon12["dif14"] = rest(role, people_rr, n)
+
     return render(request, "rest.html", moon12)
-def rest(role, people_rr, n = 12):
-    moon12 = moon()
-    dif14 = []
+
+
+
+def rest(role,people_rr, n = 12):
+
+    dif10 = []
 
     paint = Paint()
+    i=0
     for person in people_rr:
+        i=1-i
         paint.next_row(None)
-        dif = [{"color": paint.rgb_back_right(), "align": "left",
+        dif = [{"align": "left","class": "even" if i==0 else "odd",
                 "val": person.fio}] + rest_and_color_12(person, role, paint.color_rest, 12)
-        dif14.append([{"color": paint.rgb_back_left(), "val": role.title,
+        dif10.append([{"class": "even" if i==0 else "odd", "val": role.title,
                        "align": "left", }] + dif)
 
-    moon12["dif14"] = dif14
 
-    moon12["r"] = role.id
-    moon12["role"] = role
-    return moon12
+    return dif10
 
 
 '''
