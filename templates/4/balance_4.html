@@ -196,13 +196,18 @@ border-bottom: 1px solid grey;
             <tr>
               {% for t in tt %}
 
+            {% if prj_bool %}
+
               {% if forloop.first %}
               {% if t|negative %}
 
               {% else %}
                   <td colspan=13 style="background-color:white;">{{t}}</td>
-            </tr>
-            <tr>
+ </tr><tr>
+            {% endif %}
+
+
+
               {% endif %}
               {% else %}
               <td style="background-color:{{t.color}};">

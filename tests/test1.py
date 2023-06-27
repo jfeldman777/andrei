@@ -41,14 +41,14 @@ driver = webdriver.Chrome()
 url='http://127.0.0.1:8001'
 
 driver.get(url)
+for i in range(1,23):
+    s = f"mm{i}"
+    go(s)
 
 for i in range(1,17):
     s = f"hh{i}"
     go(s)
 
-for i in range(1,23):
-    s = f"mm{i}"
-    go(s)
 
 driver.quit()
 '''

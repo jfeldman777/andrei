@@ -17,6 +17,7 @@ class BalanceView(View):
         self.w4 = []
         self.paint1 = Paint()
         self.paint2 = Paint()
+        self.flag = True
         return
 
     def get(self, request,id,coord=0, mod=0,n=12):
@@ -58,6 +59,7 @@ class BalanceView(View):
         moon12['coord'] = self.coord
         moon12['pp'] = project.title if coord == 0 else role.title
         moon12['res_or_prj'] = "Ресурс" if coord == 0 else "Проект"
+        moon12['prj_bool'] = self.coord == 0
 
         if coord == 0:
             moon12['project_name']=project.title
@@ -69,9 +71,9 @@ class BalanceView(View):
         if self.mod < 2:
             return render(request, "balance_4.html", moon12)
         elif self.mod == 3:
-            return render(request, "balance_2.html", moon12)
+            return render(request, "balance_2_workload.html", moon12)
         else:
-            return render(request, "balance_1.html", moon12)
+            return render(request, "balance_1_needs.html", moon12)
     def get_1(self,project,role):
         zo = None
         zv = None
@@ -123,16 +125,25 @@ class BalanceView(View):
 
         people_rr = real_people(role)
         people_rv = real_and_virtual_people(role)
+        if self.coord == 1:
+            p4 = pp2
+        else:
+            p4=-1
         p3 = pp2
-        p4 = pp2
         paint4 = Paint()
         paint3 = Paint()
-        for person in people_rr:
-            paint4.next_row(None)
-            dif = [{"color": paint4.rgb_back_left(),"align":"left",
-                    "val": add_grade(person,role)}] + rest_and_color_12(person, role, paint4.color_rest, 12)
-            self.w4.append([p4] + dif)
-            p4 = -1
+
+        if self.flag:
+            for person in people_rr:
+                paint4.next_row(None)
+                dif = [{"color": paint4.rgb_back_left(),"align":"left",
+                        "val": add_grade(person,role)}] + rest_and_color_12(person, role, paint4.color_rest, 12)
+                if self.coord==0:
+                    self.w4.append([p4] + dif)
+                else:
+                    self.w4.append(dif)
+                    self.flag = False
+                p4 = -1
 
         if self.mod !=2:
             for person in people_rv:  #
