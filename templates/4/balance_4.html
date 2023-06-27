@@ -8,9 +8,16 @@
     body {
         overflow-y: hidden;
     }
+table.in td:nth-child(n+2):nth-child(-n+13),
+table.in th:nth-child(n+2):nth-child(-n+13) {
+    width: 6%; /* Примерное значение, подгоните под свои потребности */
+    overflow: hidden; /* Обрежет содержимое, если оно не помещается в ячейку */
+}
+
+}
 
 </style>
-<table width=100%>
+<table class="out" width=100%>
       <tr>
         <td colspan="2" style="z-index:100;">
             {% include 'menu2.html' %}
@@ -27,7 +34,8 @@
     <td width=50% >
 
     <div class="table-container-2">
-        <table border=none style="position:relative;border-color:white;
+        <table class="innn"
+                border=none style="position:relative;border-color:white;
 
 " width=100%>
           <thead>
@@ -83,9 +91,9 @@
     </td>
     <td width=50%>
       <div class="table-container-2">
-        <table border=none width=100% style="
-
-        position:relative;top:0;border-color:white;  ">
+        <table border=none width=100%
+               class="innn"
+               style=" position:relative;top:0;border-color:white;  ">
           <thead>
             <tr>
               <th colspan=13>
@@ -129,7 +137,9 @@
   <tr style="text-align:center;height: 50vh; ">
     <td width=50%>
       <div class="table-container-2">
-        <table border=none width=100% style="position:relative;top:0;border-color:white;
+        <table border=none width=100%
+               class="in"
+               style="position:relative;top:0;border-color:white;
 ">
           <thead>
             <tr>
@@ -181,7 +191,7 @@
       <div class="table-container-2">
         <table style="position:relative;top:0;border-color:white;
 
-" width=100% class="dif">
+" width=100% class="in">
           <thead>
             <tr>
               <th colspan=13> Остаточная доступность ресурсов</th>
