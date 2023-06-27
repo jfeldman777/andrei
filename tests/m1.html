@@ -1,0 +1,1173 @@
+
+
+<!DOCTYPE html>
+
+
+
+<html>
+<head>
+  <title>Инструмент ресурсного планирования</title>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" rel="stylesheet">
+  <link rel="icon" href="/static/favicon.png" type="image/png">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="/static/style.css"> -->
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
+ <script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"></script>
+<style>
+    .bar {
+
+        width:80%;
+        overflow: hidden;
+        background-color:  white;
+        z-index: 12;
+        padding: 4px;
+    }
+
+    .navbar {
+        position:sticky;
+        top:0;
+        left:0;
+        width: 100%;
+        overflow: hidden;
+        background-color: rgba(0, 0, 255, 1);
+        z-index: 10;
+        display: flex;
+        justify-content: flex-end; 
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        
+    }
+
+    .navbar .site-name{
+        color:white;
+        font-weight: bold;
+        position:absolute;
+        top:8px;
+        left:12px; 
+     display: flex;
+     justify-content: normal;
+     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    }
+
+    .navbar a {
+
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 0px 40px;
+        text-decoration: none;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: 100;
+    }
+
+    .dropdown {
+        float: left;
+        padding: 0 40px;
+        overflow: hidden;
+
+
+    }
+
+    .dropdown    .dropbtn {
+        font-weight: 100;
+        overflow: hidden;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 0px 0px;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+        margin: 0;
+        background-color:  rgba(0, 0, 255, 1);
+        box-shadow: none;
+       
+    }
+
+    .navbar a:hover,
+    .dropdown:hover  {
+        background-color:  rgba(0, 0, 255, 1);
+        shape-outside: content-box;
+      
+    }
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        top: 30px;
+        right: inherit;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 1);
+        z-index: 15;
+        
+    }
+
+
+
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 0px 0px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    td tr th {
+        text-align:left;
+
+    }
+</style>
+
+</head>
+
+<body>
+
+<!--  <main class="container mt-5">-->
+
+    
+
+
+
+
+
+<div class="navbar">
+        <div class="site-name">
+    Инструмент ресурсного планирования</div>
+<!--<a href=# id="save">Сохранить</a>-->
+    <a href="/">Главная</a>
+    <div class="dropdown">
+        <button class="dropbtn">Проекты
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/prjlist/" class="mm1" style="padding:10px;">Дорожная карта</a>
+            <a href="/tab_j/" class="mm2" style="padding:10px;">Все проекты</a>
+        <a href="/project_form/" class="mm3" style="padding:10px;">Добавить новый проект</a>
+                 <a href="/prjlist/" class="mm4" style="padding:10px;">Редактировать карточку проекта</a>
+        </div>
+
+    </div>
+        <div class="dropdown">
+        <button class="dropbtn">Сотрудники
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/people/" class="mm5" style="padding:10px;">Все сотрудники</a>
+           
+     <a href="/person_form/" class="mm6" style="padding:10px;">Добавить нового сотрудника</a>
+                 <a href="/people/" class="mm7"  style="padding:10px;">Редактировать карточку сотрудника</a>
+        </div>
+    </div>
+
+
+    <div class="dropdown">
+        <button class="dropbtn">Ресурсы
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/max/" class="mm8"  style="padding:10px;">Максимальная доступность ресурсов</a>
+            <a href="/rest/" class="mm9" style="padding:10px;">Остаточная доступность ресурсов</a>
+            <a href="/tab_r/" class="mm10" style="padding:10px;">Все ресурсные пулы </a>
+             <a href="/role_form/" class="m11" style="padding:10px;">Добавить роль</a>
+             <a href="/roles/" class="mm12" style="padding:10px;">Изменить роль</a>
+        </div>
+
+    </div>
+    <div class="dropdown" >
+        <button class="dropbtn" >Балансы
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/b/1/" class="mm13" style="padding:10px;">За месяц</a>
+            <a href="/b/3/" style="padding:10px;">За 3 месяца</a>
+            <a href="/b/6/" style="padding:10px;">За 6 месяцев</a>
+            <a href="/b/12/" style="padding:10px;">За 12 месяцев</a>
+        </div>
+
+    </div>
+
+</div>
+<br>
+<div style="margin-left:50px">
+<table><tr><td>
+  <h5>Остаточная доступность ресурсов</h5>
+<br>
+<table  class="display compact" style="width:100%;">
+  <thead ><tr>
+
+    <th>Ресурс</th>
+      <th>Сотрудник</th>
+
+        
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>июн</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>июл</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>авг</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>сен</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>окт</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>ноя</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>дек</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>янв</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>фев</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>мар</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>апр</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>май</th>
+
+
+</tr></thead><tbody>
+        
+      
+        
+        <tr class="odd">
+
+        <td>
+        Аналитик
+      </td>
+          
+      
+        
+        <td style="text-align:left;background-color:" class="odd">
+        Завьялов К. М.
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        40
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        20
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        20
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        20
+      </td>
+          
+      
+    </tr>
+    
+      
+        
+        <tr class="even">
+
+        <td>
+        Аналитик
+      </td>
+          
+      
+        
+        <td style="text-align:left;background-color:" class="even">
+        Трифонов Н П
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        40
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        40
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        60
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        40
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        40
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        40
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        40
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+    </tr>
+    
+      
+        
+        <tr class="odd">
+
+        <td>
+        Программист
+      </td>
+          
+      
+        
+        <td style="text-align:left;background-color:" class="odd">
+        Завьялов К. М.
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        100
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+    </tr>
+    
+      
+        
+        <tr class="even">
+
+        <td>
+        Программист
+      </td>
+          
+      
+        
+        <td style="text-align:left;background-color:" class="even">
+        Иванов И А
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        90
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        90
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        80
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+    </tr>
+    
+      
+        
+        <tr class="odd">
+
+        <td>
+        Секретарь
+      </td>
+          
+      
+        
+        <td style="text-align:left;background-color:" class="odd">
+        Иванов И А
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        100
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        100
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+    </tr>
+    
+      
+        
+        <tr class="odd">
+
+        <td>
+        Тестировщик
+      </td>
+          
+      
+        
+        <td style="text-align:left;background-color:" class="odd">
+        Иванов И А
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        20
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -20
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -20
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+    </tr>
+    
+      
+        
+        <tr class="even">
+
+        <td>
+        Тестировщик
+      </td>
+          
+      
+        
+        <td style="text-align:left;background-color:" class="even">
+        Петров П П
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        100
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        100
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        100
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:yellow" class="">
+        0
+      </td>
+          
+      
+    </tr>
+    
+      
+        
+        <tr class="odd">
+
+        <td>
+        ТимЛид
+      </td>
+          
+      
+        
+        <td style="text-align:left;background-color:" class="odd">
+        Трифонов Н П
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        90
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:pink" class="">
+        -10
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+        
+        <td style="text-align:;background-color:" class="">
+        50
+      </td>
+          
+      
+    </tr>
+    
+
+        </table>
+</td></tr></table></div>
+<script>
+$('.display').DataTable({
+                  paging: false,
+                  info:false,
+              "searching": true,
+              "ordering":true,
+                  scrollCollapse: true,
+                  language: {
+            search: '&nbsp;&nbsp;&nbsp;Поиск: ',
+
+
+
+                 "decimal":        ",",
+                "emptyTable":     "нет данных",
+                "info":           "Показать с _START_ до _END_ - _TOTAL_ записей",
+            "infoEmpty":      "Показать от 0 до 0 из 0 записей",
+            "infoFiltered":   "(выбрано из _MAX_ всех записей)",
+            "infoPostFix":    "",
+            "thousands":      "тысяч",
+            "lengthMenu":     "показать _MENU_ пунктов",
+            "loadingRecords": "Загружаем...",
+            "processing":     "",
+
+            "zeroRecords":    "Ничего не найдено",
+            "paginate": {
+                "first":      "первый",
+                "last":       "следующий",
+                "next":       "последний",
+                "previous":   "предыдущий"
+            },
+            "aria": {
+                "sortAscending":  ": сортируем-возрастает",
+                "sortDescending": ": сортируем-убывает"
+            }
+          }
+     });
+
+    </script>
+
+<!--  </main>-->
+  <script crossorigin="anonymous" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+  $(document).ready(function () {
+      $('.display').DataTable({
+
+         "lengthChange": false,
+ "searching": false,
+          paging: false,
+          info:false,
+          ordering:false,
+          language: {
+    search: 'Поиск: ',
+
+
+
+    "decimal":        ",",
+    "emptyTable":     "нет данных",
+    "info":           "Показать с _START_ до _END_ - _TOTAL_ записей",
+    "infoEmpty":      "Показать от 0 до 0 из 0 записей",
+    "infoFiltered":   "(выбрано из _MAX_ всех записей)",
+    "infoPostFix":    "",
+    "thousands":      "тысяч",
+    "lengthMenu":     "показать _MENU_ пунктов",
+    "loadingRecords": "Загружаем...",
+    "processing":     "",
+
+    "zeroRecords":    "Ничего не найдено",
+    "paginate": {
+        "first":      "первый",
+        "last":       "следующий",
+        "next":       "последний",
+        "previous":   "предыдущий"
+    },
+    "aria": {
+        "sortAscending":  ": сортируем-возрастает",
+        "sortDescending": ": сортируем-убывает"
+    }
+  }      });
+  });
+
+</script>
+
+</body>
+
+</html>
