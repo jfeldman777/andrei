@@ -17,7 +17,7 @@ class Paint:
 
     def next_row(self,cell):
         self.DELTA_GREY = 0-self.DELTA_GREY
-        print(self.DELTA_GREY)
+        print(999,self.DELTA_GREY)
         self.COL = 0
         self.ROW += 1
         self.cell = cell

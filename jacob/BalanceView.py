@@ -81,7 +81,7 @@ class BalanceView(View):
         delta = None
 
 
-        self.paint1.next_row(None)
+        #self.paint1.next_row(None)
         self.paint2.next_row(None)
         delta = delta_role_project_12(role, project, self.n)
         if self.mod == 0:
@@ -189,7 +189,9 @@ class BalanceView(View):
             self.paint1.next_row(None)
             self.w1.append([-1] + self.paint1.plus_color_balance(zv) ) #####################
             delta = ["Дельта"] + delta
+
         self.paint1.next_row(None)
+        print(888)
         self.w1.append([-1] + self.paint1.plus_color_balance(delta) ) ############################
 
         return
