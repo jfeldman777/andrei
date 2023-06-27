@@ -153,30 +153,32 @@ def table_resources(request:object)->object:
 
 
 def people(request):
-    paint = Paint()
+
     context = {}
     profiles = UserProfile.objects.filter(virtual=False).order_by("fio")
     nx = len(Role.objects.all())
     data2 = []
     npLmax = 2
+    i=0
     for profile in profiles:
-        paint.next_row(None)
+        i=1-i
         try:
             grade1 = Grade.objects.filter(person=profile,role=profile.role).first().mygrade
         except:
             grade1 = '0'
         profile_data = {"fio": profile.fio, "role": profile.role,
                         "grade":grade1,
-                        "color":paint.rgb_back_left(),
+                        "class":"even" if i == 0 else "odd",
                         "res": [], "id": profile.id}
         pL = profile.res.all()
+
         for role in pL:
             if role != profile.role:
                 grade = Grade.objects.filter(person=profile,role=role).first()
                 grade_value = grade.mygrade if grade else '0'
 
                 profile_data["res"].append({"role": str(role), "grade": grade_value,
-                                            "color": paint.rgb_back_right(),
+
                                             "id":role.id})
 
 
