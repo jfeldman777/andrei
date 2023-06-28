@@ -85,7 +85,8 @@ td {
     }
 
 table, td {
-    border:1px solid black;
+ white-space: nowrap;
+
     padding:5px;
 }
 
