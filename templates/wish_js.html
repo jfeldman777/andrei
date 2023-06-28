@@ -39,15 +39,15 @@
 
     $('td.wish').click(function () {
         var currentTitle = $(this).attr('title');
-        var w = prompt('Напишите ваши пожелания!', currentTitle);
+        var w = prompt('Напишите ваши пожелания!', currentTitle).trim();
         $(this).attr('title', w);
 
 var cell = $(this).html();
-if (cell.indexOf('!') < 0) {
+if (cell.indexOf('!') < 0 && w.length > 0) {
     $(this).html(cell+'!');
+} else if (cell.indexOf('!') ==cell.length-1 && w.length == 0) {
+     $(this).html(cell.substr(0,cell.length-2));
 }
-
-
 
         var project = $(this).attr('project');
         var role = $(this).attr('role');
