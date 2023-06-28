@@ -1,5 +1,5 @@
 from django.urls import path
-from . import vvv
+from . import vvv, export
 from . import save_forms
 from . import  view_forms
 from .BalanceView import BalanceView
@@ -36,6 +36,8 @@ urlpatterns = [
 
     
     
+    path("export_prj/", export.prj),
+
     path("max/", vvv.available_all),
     path("max_r/<int:r>/", vvv.available_role),
 
