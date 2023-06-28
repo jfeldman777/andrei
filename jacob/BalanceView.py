@@ -220,10 +220,15 @@ class BalanceView(View):
         delta = delta_role_project_12(role, project, self.n)
         dem_rj = needs_role_project_12(0,role, project,self.n)
 
-        self.get_1(role,project,delta,dem_rj)
-        self.get_2(role,project,wish,delta,dem_rj)
-        self.get_3(role,project,wish,delta)
-        self.get_4(role,project)
+
+        if self.mod < 2:
+            self.get_1(role,project,delta,dem_rj)
+        if self.mod < 3:
+            self.get_2(role,project,wish,delta,dem_rj)
+        if self.mod != 2:
+            self.get_3(role,project,wish,delta)
+        if self.mod < 2:
+            self.get_4(role, project)
         return
 
 
