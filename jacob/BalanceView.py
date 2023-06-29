@@ -67,11 +67,15 @@ class BalanceView(View):
 
 
         if coord == 0:
+            moon12['project_name0']="Проект: "
+            moon12['role_name0']=""
             moon12['project_name']=project.title
-            moon12['role_name']="все ресурсы"
+            moon12['role_name']=""
         else:
+            moon12['role_name0']="Ресурс: "
+            moon12['project_name0']=""
             moon12['role_name']=role.title
-            moon12['project_name']="все проекты"
+            moon12['project_name']=""
 
         if self.mod < 2:
             return render(request, "balance_4.html", moon12)
