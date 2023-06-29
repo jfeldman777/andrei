@@ -8,7 +8,7 @@ from .db import task_person_role_project_12, real_and_virtual_people, real_peopl
 from .utils import *
 from datetime import date
 from .models import UserProfile, Grade, Wish,Project
-from .utils import date0, inc
+from .utils import date0, inc, timespan_len
 from .view_forms import role_form
 from django.urls import resolve
 from .paint import Paint
@@ -380,10 +380,8 @@ def table_timeline_exp(request:object,n:int=12)->object:  # все проект�
     projects = Project.objects.all().order_by("general", "start_date")
     data = []
     for p in projects:
-
         data.append(project_timeline_line_exp(p))
-
-    return 
+    return data
 
 import babel.dates
 from datetime import date
@@ -422,7 +420,7 @@ def project_timeline_line(p,paint,n=12):
     L+= mon_bool_color(dmin, dmax, p.start_date, p.end_date,Paint.MY_BLUE,paint.rgb_back_right())
     return L
 
-def project_timeline_line_exp(p,paint,n=12):
+def project_timeline_line_exp(p,n=12):
 
     dmin = date.today()
     dmin = dmin.replace(day=15)
@@ -431,13 +429,13 @@ def project_timeline_line_exp(p,paint,n=12):
     L+=[p.general.fio, p.title, ]
 
     formatted_date1 = babel.dates.format_date(p.start_date, "d MMM YY", locale='ru')
-    L+=[formatted_date1],
+    L+=[formatted_date1]
            
 
     formatted_date2 = babel.dates.format_date(p.end_date, "d MMM YY", locale='ru')
-    L+= formatted_date2
+    L+= [formatted_date2]
 
     L+= [timespan_len(p.start_date, p.end_date)]
 
-    L+= mon_bool_color(dmin, dmax, p.start_date, p.end_date,Paint.MY_BLUE,paint.rgb_back_right())
+    L+= mon_bool_exp(dmin, dmax, p.start_date, p.end_date)
     return L

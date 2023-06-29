@@ -3,8 +3,8 @@ from django.http import HttpResponse
 
 from .BalanceView import BalanceView
 from .models import Project  # replace with your model
-from .utils import timespan_len
-from .vvv import moon_exp
+from .utils import timespan_len, date0, inc
+from .vvv import moon_exp, table_timeline_exp
 
 
 def star_date(date1,date2,d):
@@ -12,7 +12,7 @@ def star_date(date1,date2,d):
         return '*'
     return '-'
 
-def star_date_12(datet1,date2,d,n):
+def star_date_12(date1,date2,d,n):
     res = []
     d0 = date0()
     for i in range(n):
@@ -29,6 +29,29 @@ def date_difference(row):
 def data2page(data):
     return  pd.DataFrame(data[1:], columns=data[0])
 
+def prj2(request):
+    data = table_timeline_exp(request)
+    moon = moon_exp()
+    data1 = ['Название проекта','Начало','Окончание','Руководитель','Длительность (мес.)']+moon
+    print(data1)
+    print(data)
+    df = pd.DataFrame(data, columns=data1)
+
+    
+    # Создайте HttpResponse с файлом Excel
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+
+    # Укажите имя файла
+    response['Content-Disposition'] = f"attachment; filename=Doroznaya_karta.xlsx"
+
+    # Запишите DataFrame в файл Excel
+    df.to_excel(response, index=False, engine='openpyxl')
+
+
+    return response
+    
+
+
 def prj(request):
     queryset = Project.objects.all().values('title', 'start_date', 'end_date', 'general__fio')
 
@@ -44,11 +67,6 @@ def prj(request):
     # Применить функцию date_difference к каждой строке DataFrame (т.е., ко всем записям проекта)
     df['date_difference'] = df.apply(date_difference, axis=1)
     
-    # heads = moon_exp()
-    # for i in range(12):
-    #     df[heads[i]]=df.apply(,axis=1)
-    
-
     # Переименовать поля
     df = df.rename(columns={
         'title': 'Название проекта',
