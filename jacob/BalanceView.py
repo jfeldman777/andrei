@@ -84,17 +84,20 @@ class BalanceView(View):
         moon12['res_or_prj'] = "Ресурс" if coord == 0 else "Проект"
         moon12['prj_bool'] = self.coord == 0
 
-
-        if coord == 0:
-            moon12['project_name0']="Проект: "
-            moon12['role_name0']=""
-            moon12['project_name']=project.title
-            moon12['role_name']=""
+        if self.mod > 1:
+            if coord == 0:
+                moon12['project_name0']="Проект: "
+                moon12['project_name']=project.title
+            else:
+                moon12['role_name0']="Ресурс: "
+                moon12['role_name']=role.title
         else:
-            moon12['role_name0']="Ресурс: "
-            moon12['project_name0']=""
-            moon12['role_name']=role.title
-            moon12['project_name']=""
+            if coord == 0:
+                moon12['project_name']=project.title
+                moon12['role_name']="все ресурсы"
+            else:
+                moon12['role_name']=role.title
+                moon12['project_name']=" все проекты"
 
         if self.mod < 2:
             return render(request, "balance_4.html", moon12)
@@ -241,7 +244,7 @@ class BalanceView(View):
                 c_w3 = [p3]+task_person_role_project_12(person, role, project, self.n)
                 self.w3.append(c_w3)
         return
- 
+
     def get_4(self,role,project):
         people_rr = real_people(role)
         pp2 = project.title if self.coord == 1 else role.title
