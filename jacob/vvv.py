@@ -215,6 +215,15 @@ def moon(n:int=12)->List[object]:
          d = inc(d)
     return  { "ym": ym}
 
+def moon_exp(n:int=12)->List[object]:
+    L = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек',]
+    ym = []
+    d = date0()
+    for i in range(n):
+         ym.append(f"{L[d.month-1]}_{str(d.year)[2:]}")
+         d = inc(d)
+    return  ym
+
 def moon4(n: int = 12) -> List[object]:
         ym = []
         d = date0()
@@ -359,11 +368,22 @@ def table_timeline(request:object,n:int=12)->object:  # все проекты (�
     for p in projects:
         i = 1-i
         paint.next_row(None)
+        
         data.append([{"class":"even" if i==0 else "odd"
                       }]+project_timeline_line(p,paint))
     moon12["matrix"] = data
     return render(request, "prjlist.html", moon12)
 
+
+def table_timeline_exp(request:object,n:int=12)->object:  # все проекты (портфель)
+    moon12 = moon()
+    projects = Project.objects.all().order_by("general", "start_date")
+    data = []
+    for p in projects:
+
+        data.append(project_timeline_line_exp(p))
+
+    return 
 
 import babel.dates
 from datetime import date
@@ -402,3 +422,22 @@ def project_timeline_line(p,paint,n=12):
     L+= mon_bool_color(dmin, dmax, p.start_date, p.end_date,Paint.MY_BLUE,paint.rgb_back_right())
     return L
 
+def project_timeline_line_exp(p,paint,n=12):
+
+    dmin = date.today()
+    dmin = dmin.replace(day=15)
+    dmax = inc_n(dmin, n-1)
+    L = []
+    L+=[p.general.fio, p.title, ]
+
+    formatted_date1 = babel.dates.format_date(p.start_date, "d MMM YY", locale='ru')
+    L+=[formatted_date1],
+           
+
+    formatted_date2 = babel.dates.format_date(p.end_date, "d MMM YY", locale='ru')
+    L+= formatted_date2
+
+    L+= [timespan_len(p.start_date, p.end_date)]
+
+    L+= mon_bool_color(dmin, dmax, p.start_date, p.end_date,Paint.MY_BLUE,paint.rgb_back_right())
+    return L

@@ -4,8 +4,24 @@ from django.http import HttpResponse
 from .BalanceView import BalanceView
 from .models import Project  # replace with your model
 from .utils import timespan_len
+from .vvv import moon_exp
 
 
+def star_date(date1,date2,d):
+    if  date1 <= d <=date2:
+        return '*'
+    return '-'
+
+def star_date_12(datet1,date2,d,n):
+    res = []
+    d0 = date0()
+    for i in range(n):
+        star = star_date(date1,date2,d)
+        res.append(star)        
+        d0= inc(d0)
+    return res 
+    
+    
 def date_difference(row):
     m = timespan_len(row['start_date'], row['end_date'])
     return m
@@ -23,9 +39,15 @@ def prj(request):
     # Убедитесь, что поля start_date и end_date имеют формат datetime
     df['start_date'] = pd.to_datetime(df['start_date'])
     df['end_date'] = pd.to_datetime(df['end_date'])
+    
 
     # Применить функцию date_difference к каждой строке DataFrame (т.е., ко всем записям проекта)
     df['date_difference'] = df.apply(date_difference, axis=1)
+    
+    # heads = moon_exp()
+    # for i in range(12):
+    #     df[heads[i]]=df.apply(,axis=1)
+    
 
     # Переименовать поля
     df = df.rename(columns={
@@ -75,9 +97,9 @@ def export_plan(request):
         df3 = data2page(ex3)
 
         # Запишите DataFrame в разные листы
-        df1.to_excel(writer, index=False, sheet_name='баланс>')
-        df2.to_excel(writer, index=False, sheet_name='Потребность')
-        df3.to_excel(writer, index=False, sheet_name='Загрузки')
+        # df1.to_excel(writer, index=False, sheet_name='баланс>')
+        # df2.to_excel(writer, index=False, sheet_name='Потребность')
+        # df3.to_excel(writer, index=False, sheet_name='Загрузки')
 
 
     # В результате у вас будет Excel-файл с двумя вкладками: Sheet1 и Sheet2

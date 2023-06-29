@@ -82,7 +82,17 @@ def inc_n(d:date, n:int)->date:
 def timespan_len(d1:date, d2:date)->int:
     return (d2.year - d1.year) * 12 + d2.month - d1.month + 1
 
-
+def mon_bool_star(dmin:date, dmax:date, dstart:date, dend:date)->List[str]:
+    L = []
+    d = dmin.replace(day=15)
+    d2 = dmax.replace(day=15)
+    d3 = dstart.replace(day=15)
+    d4 = dend.replace(day=15)
+    while d <= d2:
+        b = d3 <= d <= d4
+        star = '*' if b else '-'
+        L.append(star)
+        d = inc(d)
 '''
 12 значений Истина-ложь для накладыванияна тайм-лайн проекта
 Истина внутри сроков, Ложь - вне сроков
