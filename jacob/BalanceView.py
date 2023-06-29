@@ -43,8 +43,11 @@ class BalanceView(View):
             role = Role.objects.get(id=id)
             for project in projects:
                 self.get_0exp(project, role)
-        pass
+                
+        return
 
+    
+    
     def get(self, request,id,coord=0, mod=0,n=12):
         self.init(id,coord, mod,n)
         moon12 = moon()
@@ -108,7 +111,10 @@ class BalanceView(View):
 
         
     def get_1(self,role,project,delta,dem_rj):
-
+        if self.coord == 1:
+            p1 = project.title
+        else:
+            p1 = role.title
         if self.mod == 0:
             zo = ["АУТСОРС"] + outsrc(role, project, self.n)
             zv = ["ВАКАНСИЯ"] + vacancia(role, project, self.n)
@@ -129,41 +135,39 @@ class BalanceView(View):
         self.w1.append([-1] + self.paint1.plus_color_balance(delta, self.mod == 0))  ############################
 
         return
-
+############################################################
     def get_1exp(self,role,project,delta,dem_rj):
-        if self.coord == 1:
-            p1 = project.title
-        else:
-            p1 = role.title
+        p1 = [project.title ,      role.title]
 
         if self.mod == 0:
             zo = ["АУТСОРС"] + outsrc(role, project, self.n)
             zv = ["ВАКАНСИЯ"] + vacancia(role, project, self.n)
             supp = ["Поставка"] + task_role_project_12(role, project, self.n)
-            self.w1.append([p1] + self.paint1.plus_color_balance(
-                ["Потребность"] + dem_rj))  ##########################################77777
-            self.paint1.next_row(None)
-            self.w1.append([-1] + self.paint1.plus_color_balance(supp))  ###############--
-            self.paint1.next_row(None)
-            self.w1.append([-1] + self.paint1.plus_color_balance(zo))  ################
-            self.paint1.next_row(None)
-            self.w1.append([-1] + self.paint1.plus_color_balance(zv))  #####################
+            self.w1.append(p1 + ["Потребность"] + dem_rj)  ##########################################77777
+
+            self.w1.append(p1 + supp)  ###############--
+ 
+            self.w1.append(p1 + zo)  ################
+
+            self.w1.append(p1 + zv)  #####################
             delta = ["Дельта"] + delta
 
-        self.paint1.next_row(None)
-        self.w1.append([-1] + self.paint1.plus_color_balance(delta, self.mod == 0))  ############################
+        self.w1.append(p1 + delta)  ############################
 
         return
+    
+    
     def get_2exp(self,role,project,wish,delta,dem_rj):
-        pp2 = project.title if self.coord == 1 else role.title
+        p1 = [project.title ,      role.title]
 
         if self.mod != 3:
             d = date0()
             rest = rest_role_12(role, self.n)
-            wish_sign = ' !' if wish != '' else ''
-            self.w2.append([pp2 + wish_sign]+dem_rj)
+            self.w2.append(p1+dem_rj)
 
         return
+    
+    
     def get_2(self,role,project,wish,delta,dem_rj):
         self.paint2.next_row(None)
 
@@ -196,6 +200,8 @@ class BalanceView(View):
                              }] + a_w2)
 
         return
+    
+    
     def get_3(self,role,project,wish,delta):
         p3 = project.title if self.coord == 1 else role.title
         people_rv = real_and_virtual_people(role)
@@ -237,11 +243,11 @@ class BalanceView(View):
 
 
     def get_3exp(self,role,project,wish,delta):
-        p3 = project.title if self.coord == 1 else role.title
+        p1 = [project.title ,      role.title]
         people_rv = real_and_virtual_people(role)
         if self.mod != 2:
             for person in people_rv:
-                c_w3 = [p3]+task_person_role_project_12(person, role, project, self.n)
+                c_w3 = p1+task_person_role_project_12(person, role, project, self.n)
                 self.w3.append(c_w3)
         return
 
@@ -298,6 +304,25 @@ class BalanceView(View):
             self.get_4(role, project)
         return
 
+    def get_0exp(self, project, role):
+        try:
+            wish = Wish.objects.get(project=project, role=role).mywish
+        except:
+            wish = ''
+
+
+        delta = delta_role_project_12(role, project, self.n)
+        dem_rj = needs_role_project_12(0,role, project,self.n)
+
+
+        if self.mod < 2:
+            self.get_1exp(role,project,delta,dem_rj)
+        if self.mod < 3:
+            self.get_2exp(role,project,wish,delta,dem_rj)
+        if self.mod != 2:
+            self.get_3exp(role,project,wish,delta)
+
+        return
 
 
 def add_grade(person,role):
