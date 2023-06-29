@@ -16,21 +16,40 @@ class BalanceView(View):
         self.w2 = []
         self.w3 = []
         self.w4 = []
-        self.paint1 = Paint()
-        self.paint2 = Paint()
+
         self.flag = True
         return
 
-    def export(self):
-        pass
-
-    def get(self, request,id,coord=0, mod=0,n=12):
+    def init(self,id,coord=0, mod=0,n=12):
         self.n = n
         self.mod = mod
         self.coord = coord
         self.id = id
 
+        return
+    
+    
+    def export(self,request,id,coord=0, mod=0,n=12):
+        self.init(id,coord, mod,n)
+        if coord == 0:
+            project = Project.objects.get(id=id)
+            roles = Role.objects.all().order_by('title')
+            for role in roles:
+                self.get_0exp(project, role)
+
+
+        else:
+            projects = Project.objects.all().order_by('title')
+            role = Role.objects.get(id=id)
+            for project in projects:
+                self.get_0exp(project, role)
+        pass
+
+    def get(self, request,id,coord=0, mod=0,n=12):
+        self.init(id,coord, mod,n)
         moon12 = moon()
+        self.paint1 = Paint()
+        self.paint2 = Paint()
 
         if coord == 0:
             project = Project.objects.get(id=id)
@@ -84,19 +103,13 @@ class BalanceView(View):
         else:
             return render(request, "balance_1_needs.html", moon12)
 
-
+        
     def get_1(self,role,project,delta,dem_rj):
+
         if self.mod == 0:
             zo = ["АУТСОРС"] + outsrc(role, project, self.n)
             zv = ["ВАКАНСИЯ"] + vacancia(role, project, self.n)
             supp = ["Поставка"] + task_role_project_12(role, project, self.n)
-
-        if self.coord == 1:
-            p1 = project.title
-        else:
-            p1 = role.title
-
-        if self.mod == 0:
             self.paint1.reset()
             self.paint1.next_row(None)
             self.w1.append([p1] + self.paint1.plus_color_balance(
@@ -114,6 +127,40 @@ class BalanceView(View):
 
         return
 
+    def get_1exp(self,role,project,delta,dem_rj):
+        if self.coord == 1:
+            p1 = project.title
+        else:
+            p1 = role.title
+
+        if self.mod == 0:
+            zo = ["АУТСОРС"] + outsrc(role, project, self.n)
+            zv = ["ВАКАНСИЯ"] + vacancia(role, project, self.n)
+            supp = ["Поставка"] + task_role_project_12(role, project, self.n)
+            self.w1.append([p1] + self.paint1.plus_color_balance(
+                ["Потребность"] + dem_rj))  ##########################################77777
+            self.paint1.next_row(None)
+            self.w1.append([-1] + self.paint1.plus_color_balance(supp))  ###############--
+            self.paint1.next_row(None)
+            self.w1.append([-1] + self.paint1.plus_color_balance(zo))  ################
+            self.paint1.next_row(None)
+            self.w1.append([-1] + self.paint1.plus_color_balance(zv))  #####################
+            delta = ["Дельта"] + delta
+
+        self.paint1.next_row(None)
+        self.w1.append([-1] + self.paint1.plus_color_balance(delta, self.mod == 0))  ############################
+
+        return
+    def get_2exp(self,role,project,wish,delta,dem_rj):
+        pp2 = project.title if self.coord == 1 else role.title
+
+        if self.mod != 3:
+            d = date0()
+            rest = rest_role_12(role, self.n)
+            wish_sign = ' !' if wish != '' else ''
+            self.w2.append([pp2 + wish_sign]+dem_rj)
+
+        return
     def get_2(self,role,project,wish,delta,dem_rj):
         self.paint2.next_row(None)
 
@@ -184,6 +231,17 @@ class BalanceView(View):
                     p3 = -1
                 self.w3.append(c_w3)
         return
+
+
+    def get_3exp(self,role,project,wish,delta):
+        p3 = project.title if self.coord == 1 else role.title
+        people_rv = real_and_virtual_people(role)
+        if self.mod != 2:
+            for person in people_rv:
+                c_w3 = [p3]+task_person_role_project_12(person, role, project, self.n)
+                self.w3.append(c_w3)
+        return
+ 
     def get_4(self,role,project):
         people_rr = real_people(role)
         pp2 = project.title if self.coord == 1 else role.title
@@ -210,7 +268,6 @@ class BalanceView(View):
                 p4 = -1
 
         return
-
 
     def get_0(self, project, role):
         zo = None
