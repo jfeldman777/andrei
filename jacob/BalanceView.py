@@ -21,6 +21,9 @@ class BalanceView(View):
         self.flag = True
         return
 
+    def export(self):
+        pass
+
     def get(self, request,id,coord=0, mod=0,n=12):
         self.n = n
         self.mod = mod

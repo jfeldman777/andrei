@@ -1,5 +1,7 @@
 import pandas as pd
 from django.http import HttpResponse
+
+from .BalanceView import BalanceView
 from .models import Project  # replace with your model
 from .utils import timespan_len
 
@@ -8,6 +10,8 @@ def date_difference(row):
     m = timespan_len(row['start_date'], row['end_date'])
     return m
 
+def data2page(data):
+    return  pd.DataFrame(data[1:], columns=data[0])
 
 def prj(request):
     queryset = Project.objects.all().values('title', 'start_date', 'end_date', 'general__fio')
@@ -44,32 +48,37 @@ def prj(request):
     return response
 
 def export_plan(request):
-
     # Создайте HttpResponse
-    response = HttpResponse(content_type='application/vnd.ms-excel')
+    from django.http import HttpResponse
+    import pandas as pd
+    bv = BalanceView()
 
-    # Укажите имя файла
+    response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=Plan.xlsx'
 
     # Создайте объект ExcelWriter
     with pd.ExcelWriter(response, engine='openpyxl') as writer:
         # Предположим у вас есть два QuerySet
-        queryset1 = Project.objects.all().values('title', 'start_date', 'end_date', 'general__fio')
-        queryset2 = AnotherModel.objects.all().values('field1', 'field2')
-        queryset3 = AnotherModel.objects.all().values('field1', 'field2')
-        queryset4 = AnotherModel.objects.all().values('field1', 'field2')
+        # queryset1 = Project.objects.all().values('title', 'start_date', 'end_date', 'general__fio')
+        # queryset2 = AnotherModel.objects.all().values('field1', 'field2')
+        # queryset3 = AnotherModel.objects.all().values('field1', 'field2')
+        # queryset4 = AnotherModel.objects.all().values('field1', 'field2')
 
-        # Создайте DataFrame из QuerySet
-        df1 = pd.DataFrame(list(queryset1))
-        df2 = pd.DataFrame(list(queryset2))
-        df3 = pd.DataFrame(list(queryset3))
-        df4 = pd.DataFrame(list(queryset4))
+        # # Создайте DataFrame из QuerySet
+        # df1 = pd.DataFrame(list(queryset1))
+        # df2 = pd.DataFrame(list(queryset2))
+        # df3 = pd.DataFrame(list(queryset3))
+        # df4 = pd.DataFrame(list(queryset4))
+
+
+        ex3 = bv.export_3()
+        df3 = data2page(ex3)
 
         # Запишите DataFrame в разные листы
-        df1.to_excel(writer, index=False, sheet_name='Sheet1')
-        df2.to_excel(writer, index=False, sheet_name='Sheet2')
-        df3.to_excel(writer, index=False, sheet_name='Sheet3')
-        df4.to_excel(writer, index=False, sheet_name='Sheet4')
+        df1.to_excel(writer, index=False, sheet_name='баланс>')
+        df2.to_excel(writer, index=False, sheet_name='Потребность')
+        df3.to_excel(writer, index=False, sheet_name='Загрузки')
+
 
     # В результате у вас будет Excel-файл с двумя вкладками: Sheet1 и Sheet2
     import pandas as pd
@@ -96,3 +105,29 @@ def export_plan(request):
 
     # В результате у вас будет файл Excel, в котором каждый словарь представлен одной строкой,
     # а ключи словаря становятся именами столбцов.
+    import pandas as pd
+    from django.http import HttpResponse
+
+    # Предположим, у вас есть список списков следующего вида:
+    data = [
+        ['column1', 'column2', 'column3'],  # имена столбцов
+        ['value1', 'value2', 'value3'],  # значения первой строки
+        ['value4', 'value5', 'value6'],  # значения второй строки
+        # и т.д.
+    ]
+
+    # Создайте DataFrame из списка списков, используя первый список как имена столбцов
+    df = pd.DataFrame(data[1:], columns=data[0])
+
+    # Создайте HttpResponse с файлом Excel
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+
+    # Укажите имя файла
+    response['Content-Disposition'] = 'attachment; filename=Export.xlsx'
+
+    # Запишите DataFrame в файл Excel
+    df.to_excel(response, index=False, engine='openpyxl')
+
+    # В итоге у вас будет файл Excel, где каждый список представлен одной строкой,
+    # а элементы первого списка используются в качестве имен столбцов.
+
