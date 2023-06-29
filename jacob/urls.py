@@ -37,7 +37,7 @@ urlpatterns = [
     
     
     path("export_prj/", export.prj),
-    path("export_plan/<int:id>/<int:coord>/<int:mod>/", export.plan),
+    # path("export_plan/<int:id>/<int:coord>/<int:mod>/", export.plan),
 
     path("max/", vvv.available_all),
     path("max_r/<int:r>/", vvv.available_role),
