@@ -107,8 +107,8 @@ def time_available(person: object, role: object, d: date) -> int:
         return 99999
     if person.role == role:
         t = 100
-    elif role in person.res:
-        t = 0
+    else:
+        t=0
     task = Less.objects.filter(person=person, role=role, start_date__lte=d).order_by(
         "-start_date"
     )

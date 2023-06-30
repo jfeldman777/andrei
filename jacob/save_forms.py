@@ -27,6 +27,7 @@ def save_max(request):
                         person = UserProfile.objects.get(id=p)
 
                         msg=str(create_or_update_res_max(person, role, d, v))
+                        print(msg)
                     except:
                         pass
         else:

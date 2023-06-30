@@ -33,29 +33,33 @@ def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:
         n = 1
 
     if n < 0:
-        from django.db import transaction
-        with transaction.atomic():
-
-            e = Less.objects.filter(person=person, role=role, start_date__gte=d).delete()
-            print(e)
+        # from django.db import transaction
+        # with transaction.atomic():
+            try:
+                e = Less.objects.filter(person=person, role=role, start_date__gte=d).delete()
+            except:
+                pass
             f = Less.objects.create(person=person, role=role, start_date=d, load=v)
-            print(f)
-            return [e,f]
+            return 1
 
     else:
-        from django.db import transaction
-        with transaction.atomic():
+        # from django.db import transaction
+        # with transaction.atomic():
             d1 = inc_n(d,n)
             v1 = time_available(person,role,d)
-            a = Less.objects.filter(person=person, role=role, start_date__range=(d, d1)).delete()
-            print(a)
-
-            b = Less.objects.create(person=person, role=role, start_date=d, load=v)
-            print(b)
-
-            c = Less.objects.create(person=person, role=role, start_date=d1, load=v1 )
-            print(c)
-            return [a,b,c]
+            try:
+                a = Less.objects.filter(person=person, role=role, start_date__range=(d, d1)).delete()
+            except:
+                msg=1
+            try:
+                b = Less.objects.create(person=person, role=role, start_date=d, load=v)
+            except:
+                msg=2
+            try:
+                c = Less.objects.create(person=person, role=role, start_date=d1, load=v1 )
+            except:
+                msg=3
+            return msg
 
 def create_or_update_task(p:object, r:object, j:object, dm:date, svn:str)->None:  # Загрузка
     d2 = j.end_date
