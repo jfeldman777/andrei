@@ -39,7 +39,7 @@ def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:
     else:
         d1 = inc_n(d,n)
         v1 = time_available(person,role,d)
-
+        print(v,v1,d,d1)
         Less.objects.filter(person=person, role=role, start_date__range=(d, d1)).delete()
 
         Less.objects.create(person=person, role=role, start_date=d, load=v)
