@@ -20,7 +20,6 @@ def create_or_update_wish(role:Role, project:Project, txt:str)->None:  # Дос�
 
 
 def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:  # Доступность
-
     d = datetime.strptime(m, "%Y-%m-%d").date()
     if '-' in svn:
         sv,sn = svn.split('-')
@@ -36,24 +35,20 @@ def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:
     if n < 0:
         Less.objects.filter(person=person, role=role, start_date__gte=d).delete()
         Less.objects.create(person=person, role=role, start_date=d, load=v)
-
+        print(99)
     else:
         d1 = inc_n(d,n)
         v1 = time_available(person,role,d)
-        print(v,v1,d,d1,role,person)
-        log(f"v={v}  \n")
-        log(f"v1={v1}    \n")
-        log(f"d={d}     \n")
-        log(f"d1={d1}")
-        log(f"person={person} \n")
-        log(f"role={role}      \n")
+        print(77,v,v1,d,m,role,person)
+
 
         Less.objects.filter(person=person, role=role, start_date__range=(d, d1)).delete()
+        print(44)
 
         Less.objects.create(person=person, role=role, start_date=d, load=v)
+        print(48)
         Less.objects.create(person=person, role=role, start_date=d1, load=v1 )
-
-
+        print(55)
 
 
 def create_or_update_task(p:object, r:object, j:object, dm:date, svn:str)->None:  # Загрузка
