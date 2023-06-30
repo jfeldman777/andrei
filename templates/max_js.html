@@ -1,0 +1,77 @@
+<script>
+    // Добавьте этот код перед вашим AJAX-запросом
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            let cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    let csrftoken = getCookie('csrftoken');
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    // Теперь у вас есть CSRF-токен, и вы можете сделать ваш AJAX-запрос
+
+
+</script>
+
+<script>
+
+
+
+
+ $('td.good').click(function () {
+        var currentTitle = $(this).attr('title');
+        var w = prompt('Напишите ваши пожелания!', currentTitle).trim();
+        $(this).attr('title', w);
+
+var cell = $(this).html();
+if (cell.indexOf('!') < 0 && w.length > 0) {
+    $(this).html(cell+'!');
+} else if (cell.indexOf('!') ==cell.length-1 && w.length == 0) {
+     $(this).html(cell.substr(0,cell.length-2));
+}
+
+
+
+        var date = $(this).attr('date');
+        var person = $(this).attr('person');
+        var role = $(this).attr('role');
+        var val =
+
+        $.ajax({
+            type: "POST",
+            url: "/save_max/",
+
+            data: {
+                'max': w,
+                'project': project,
+                'role': role
+            },
+            success: function(response) {
+                alert("ok!")
+                console.log(response);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Обработка ошибок при выполнении запроса
+                console.log(textStatus, errorThrown);
+            }
+        });
+    });
+</script>
+

@@ -7,6 +7,7 @@ from .models import Role, Project, UserProfile
 
 
 def save_max(request):
+    msg=""
     html = ""
     id = 1
     r = 1
@@ -25,14 +26,14 @@ def save_max(request):
                         role = Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
 
-                        create_or_update_res_max(person, role, d, v)
+                        msg=str(create_or_update_res_max(person, role, d, v))
                     except:
                         pass
         else:
             print(form.errors)
     if html == "":
         return redirect(f"/max_r/{p}/{r}/{j}/") #available_role(request, p, r, j)
-    return redirect("/max/")#"available_all(request)  # s
+    return redirect(f"/max/")#"available_all(request)  # s
 
 
 

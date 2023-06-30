@@ -233,7 +233,7 @@ def moon4(n: int = 12) -> List[object]:
         return {"ym": ym}
 
     ##################################################################
-def available(roles,n=12):
+def available(roles,msg='',n=12):
     my = UserProfile.objects.all()
     arr = [0] * 100
     for p in my:
@@ -273,6 +273,7 @@ def available(roles,n=12):
             dif14.append([{"class":"odd" if i == 1 else "even"},px] + dif2)
 
     moon12["dif14"] = dif14  ########################################
+    moon12["res"] = msg  ########################################
     return moon12
 
 '''

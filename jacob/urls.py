@@ -40,6 +40,8 @@ urlpatterns = [
     path("export_plan/<int:id>/<int:coord>/<int:mod>/", export.export_plan),
 
     path("max/", vvv.available_all),
+    # path("max/<str:msg>/", vvv.available_all),
+
     path("max_r/<int:r>/", vvv.available_role),
 
     path("rest/", vvv.rest_all),
