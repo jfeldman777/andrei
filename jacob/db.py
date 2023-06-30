@@ -95,8 +95,14 @@ def task_person_role_12(person:object, role:object,n:int=12)->List[int]:
     return res
 
 def time_available_in_mon(p:int, r:int, y:int, m:int)->int:
-    d = date(y, m, 15) 
+    d = date(y, m, 15)
+    return time_available_in_date(p,r,d)
+
+
+def time_available_in_date(p: int, r: int, d: date) -> int:
     person, role, project = get_prj_triplet(p, r, -1)
+    return time_available(person, role, d)
+def time_available(person: object, role: object, d: date) -> int:
     if is_virtual(person):
         return 99999
     if person.role == role:

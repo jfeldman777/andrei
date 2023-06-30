@@ -1,7 +1,9 @@
 from datetime import date
 
+from .db import time_available_in_date, time_available
 from .models import Load, Task, Less, Wish, Role, Project
-from .utils import inc,timespan_len
+from .utils import inc, timespan_len, inc_n
+
 
 def create_or_update_wish(role:Role, project:Project, txt:str)->None:  # Доступность
     try:
@@ -21,26 +23,28 @@ def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:
     d = datetime.strptime(m, "%Y-%m-%d").date()
     if '-' in svn:
         sv,sn = svn.split('-')
-    #     v = int(sv)
-    #     try:
-    #         n = int(sn)
-    #     except:
-    #         n = 12
-    #
-    # else:
-    v = int(svn)
-    n = 1
-    for i in range(n):
+        v = int(sv)
         try:
-            instance = Less.objects.get(person=person, role=role, start_date=d)
+            n = int(sn)
         except:
-            instance = None
-        if instance:
-            instance.load = v
-            instance.save()
-        else:
-            instance = Less.objects.create(person=person, role=role, start_date=d, load=v)
-        d = inc(d)
+            n = -1
+    else:
+        v = int(svn)
+        n = 1
+
+    if n < 0:
+        Less.objects.filter(person=person, role=role, start_date__gte=d).delete()
+        Less.objects.create(person=person, role=role, start_date=d, load=v)
+
+    else:
+        d1 = inc_n(d,n)
+        v1 = time_available(person,role,d)
+
+        Less.objects.filter(person=person, role=role, start_date__range=(d, d1)).delete()
+
+        Less.objects.create(person=person, role=role, start_date=d, load=v)
+        Less.objects.create(person=person, role=role, start_date=d1, load=v1 )
+
 
 
 
