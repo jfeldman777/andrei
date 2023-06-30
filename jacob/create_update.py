@@ -21,15 +21,15 @@ def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:
     d = datetime.strptime(m, "%Y-%m-%d").date()
     if '-' in svn:
         sv,sn = svn.split('-')
-        v = int(sv)
-        try:
-            n = int(sn)
-        except:
-            n = 12
-
-    else:
-        v = int(svn)
-        n = 1
+    #     v = int(sv)
+    #     try:
+    #         n = int(sn)
+    #     except:
+    #         n = 12
+    #
+    # else:
+    v = int(svn)
+    n = 1
     for i in range(n):
         try:
             instance = Less.objects.get(person=person, role=role, start_date=d)

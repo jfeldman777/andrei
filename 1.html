@@ -1,0 +1,1599 @@
+
+<!DOCTYPE html>
+
+
+
+<html>
+<head>
+  <title>Инструмент ресурсного планирования</title>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" rel="stylesheet">
+  <link rel="icon" href="/static/favicon.png" type="image/png">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="/static/style.css"> -->
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
+ <script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
+  <script src=" https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"></script>
+<style>
+    .bar {
+
+        width:80%;
+        overflow: hidden;
+        background-color:  white;
+        z-index: 12;
+        padding: 4px;
+    }
+
+    .navbar {
+        position:sticky;
+        top:0;
+        left:0;
+        width: 100%;
+        overflow: hidden;
+        background-color: rgba(0, 0, 255, 1);
+        z-index: 10;
+        display: flex;
+        justify-content: flex-end; 
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        
+    }
+
+    .navbar .site-name{
+        color:white;
+        font-weight: bold;
+        position:absolute;
+        top:8px;
+        left:12px; 
+     display: flex;
+     justify-content: normal;
+     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    }
+
+    .navbar a {
+
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 0px 40px;
+        text-decoration: none;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: 100;
+    }
+
+    .dropdown {
+        float: left;
+        padding: 0 40px;
+        overflow: hidden;
+
+
+    }
+
+    .dropdown    .dropbtn {
+        font-weight: 100;
+        overflow: hidden;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 0px 0px;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+        margin: 0;
+        background-color:  rgba(0, 0, 255, 1);
+        box-shadow: none;
+       
+    }
+
+    .navbar a:hover,
+    .dropdown:hover  {
+        background-color:  rgba(0, 0, 255, 1);
+        shape-outside: content-box;
+      
+    }
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        top: 30px;
+        right: inherit;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 1);
+        z-index: 15;
+        
+    }
+
+
+
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 0px 0px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    td tr th {
+        text-align:center;
+
+    }
+</style>
+
+</head>
+
+<body>
+
+<!--  <main class="container mt-5">-->
+
+    
+
+
+
+
+
+
+<div class="navbar">
+        <div class="site-name">
+    Инструмент ресурсного планирования</div>
+<!--<a href=# id="save">Сохранить</a>-->
+    <a href="/">Главная</a>
+    <div class="dropdown">
+        <button class="dropbtn">Проекты
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/prjlist/" class="mm1" style="padding:10px;">Дорожная карта</a>
+            <a href="/tab_j/" class="mm2" style="padding:10px;">Все проекты</a>
+        <a href="/project_form/" class="mm3" style="padding:10px;">Добавить новый проект</a>
+                 <a href="/prjlist/" class="mm4" style="padding:10px;">Редактировать карточку проекта</a>
+        </div>
+
+    </div>
+        <div class="dropdown">
+        <button class="dropbtn">Сотрудники
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/people/" class="mm5" style="padding:10px;">Все сотрудники</a>
+           
+     <a href="/person_form/" class="mm6" style="padding:10px;">Добавить нового сотрудника</a>
+                 <a href="/people/" class="mm7"  style="padding:10px;">Редактировать карточку сотрудника</a>
+        </div>
+    </div>
+
+
+    <div class="dropdown">
+        <button class="dropbtn">Ресурсы
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/max/" class="mm8"  style="padding:10px;">Максимальная доступность ресурсов</a>
+            <a href="/rest/" class="mm9" style="padding:10px;">Остаточная доступность ресурсов</a>
+            <a href="/tab_r/" class="mm10" style="padding:10px;">Все ресурсные пулы </a>
+             <a href="/role_form/" class="mm11" style="padding:10px;">Добавить роль</a>
+             <a href="/roles/" class="mm12" style="padding:10px;">Изменить роль</a>
+        </div>
+
+    </div>
+    <div class="dropdown" >
+        <button class="dropbtn" >Планирование
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/b/1/" class="mm13" style="padding:10px;">За месяц</a>
+            <a href="/b/3/" style="padding:10px;">За 3 месяца</a>
+            <a href="/b/6/" style="padding:10px;">За 6 месяцев</a>
+            <a href="/b/12/" style="padding:10px;">За 12 месяцев</a>
+        </div>
+
+    </div>
+
+</div>
+<br>
+<div style="margin-left:50px">
+<table  width="80%"><tr><td>
+  <h5>    Максимальная доступность ресурсов</h5>
+<table  class=" display compact hover nowrap" width="100%">
+  <thead>
+    <tr>
+      <th style="text-align:left;">Ресурс </th>
+        <th style="text-align:left;  ">Сотрудник</th>
+        
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>июн</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>июл</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>авг</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>сен</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>окт</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>ноя</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">23<br>дек</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>янв</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>фев</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>мар</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>апр</th>
+
+<th  style="text-align:center;
+    color:black;
+  background-color:white;
+border-left:none,
+border-right:none;
+
+border-bottom: 1px solid grey;
+
+
+
+">24<br>май</th>
+
+
+</tr></thead><tbody>
+        
+    
+
+        <tr class="even">
+
+      
+
+
+      <td style="background-color:;text-align:;"
+          class="" action="/save_max/" fname="f10" key="">
+          Секретарь
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:left;"
+          class="" action="/save_max/" fname="f10" key="">
+          Иванов И А
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2023-6-15">
+          100
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2023-7-15">
+          100
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2023-8-15">
+          10
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2023-9-15">
+          10
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2023-10-15">
+          10
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2023-11-15">
+          10
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2023-12-15">
+          10
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2024-1-15">
+          10
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2024-2-15">
+          10
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2024-3-15">
+          10
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2024-4-15">
+          10
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.5.0.2024-5-15">
+          10
+        
+      </td>
+           
+      
+    </tr>
+    
+    
+
+        <tr class="even">
+
+      
+
+
+      <td style="background-color:;text-align:;"
+          class="" action="/save_max/" fname="f10" key="">
+          Программист
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:left;"
+          class="" action="/save_max/" fname="f10" key="">
+          Завьялов К. М.
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2023-6-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2023-7-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2023-8-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2023-9-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2023-10-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2023-11-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2023-12-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2024-1-15">
+          80
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2024-2-15">
+          80
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2024-3-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2024-4-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.1.0.2024-5-15">
+          80
+        
+      </td>
+           
+      
+    </tr>
+    
+    
+
+        <tr class="even">
+
+      
+
+
+      <td style="background-color:;text-align:;"
+          class="" action="/save_max/" fname="f10" key="">
+          Программист
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:left;"
+          class="" action="/save_max/" fname="f10" key="">
+          Иванов И А
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2023-6-15">
+          10
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2023-7-15">
+          90
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2023-8-15">
+          90
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2023-9-15">
+          90
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2023-10-15">
+          90
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2023-11-15">
+          100
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2023-12-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2024-1-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2024-2-15">
+          80
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2024-3-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2024-4-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.1.0.2024-5-15">
+          50
+        
+      </td>
+           
+      
+    </tr>
+    
+    
+
+        <tr class="even">
+
+      
+
+
+      <td style="background-color:;text-align:;"
+          class="" action="/save_max/" fname="f10" key="">
+          Тестировщик
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:left;"
+          class="" action="/save_max/" fname="f10" key="">
+          Иванов И А
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2023-6-15">
+          20
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2023-7-15">
+          0
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2023-8-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2023-9-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2023-10-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2023-11-15">
+          0
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2023-12-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2024-1-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2024-2-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2024-3-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2024-4-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="4.4.0.2024-5-15">
+          0
+        
+      </td>
+           
+      
+    </tr>
+    
+    
+
+        <tr class="even">
+
+      
+
+
+      <td style="background-color:;text-align:;"
+          class="" action="/save_max/" fname="f10" key="">
+          Тестировщик
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:left;"
+          class="" action="/save_max/" fname="f10" key="">
+          Петров П П
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2023-6-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2023-7-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2023-8-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2023-9-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2023-10-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2023-11-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2023-12-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2024-1-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2024-2-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2024-3-15">
+          100
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2024-4-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="5.4.0.2024-5-15">
+          0
+        
+      </td>
+           
+      
+    </tr>
+    
+    
+
+        <tr class="even">
+
+      
+
+
+      <td style="background-color:;text-align:;"
+          class="" action="/save_max/" fname="f10" key="">
+          ТимЛид
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:left;"
+          class="" action="/save_max/" fname="f10" key="">
+          Трифонов Н П
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2023-6-15">
+          90
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2023-7-15">
+          90
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2023-8-15">
+          90
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2023-9-15">
+          50
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2023-10-15">
+          50
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2023-11-15">
+          50
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2023-12-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2024-1-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2024-2-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2024-3-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2024-4-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.3.0.2024-5-15">
+          50
+        
+      </td>
+           
+      
+    </tr>
+    
+    
+
+        <tr class="even">
+
+      
+
+
+      <td style="background-color:;text-align:;"
+          class="" action="/save_max/" fname="f10" key="">
+          Аналитик
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:left;"
+          class="" action="/save_max/" fname="f10" key="">
+          Завьялов К. М.
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2023-6-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2023-7-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2023-8-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2023-9-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2023-10-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:yellow;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2023-11-15">
+          0
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2023-12-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2024-1-15">
+          50
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2024-2-15">
+          40
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2024-3-15">
+          20
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2024-4-15">
+          20
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="7.2.0.2024-5-15">
+          20
+        
+      </td>
+           
+      
+    </tr>
+    
+    
+
+        <tr class="even">
+
+      
+
+
+      <td style="background-color:;text-align:;"
+          class="" action="/save_max/" fname="f10" key="">
+          Аналитик
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:left;"
+          class="" action="/save_max/" fname="f10" key="">
+          Трифонов Н П
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2023-6-15">
+          40
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2023-7-15">
+          40
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2023-8-15">
+          60
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2023-9-15">
+          100
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2023-10-15">
+          100
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2023-11-15">
+          100
+        
+        <img src="/static/fire2.png" alt="Icon" width=16>
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2023-12-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2024-1-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2024-2-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2024-3-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2024-4-15">
+          50
+        
+      </td>
+           
+      
+
+
+      <td style="background-color:;text-align:center;"
+          class="good" action="/save_max/" fname="f10" key="6.2.0.2024-5-15">
+          50
+        
+      </td>
+           
+      
+    </tr>
+    
+</table>
+
+    </td></tr></table></div>
+        <script>
+$('.display').DataTable({
+                  info:false,
+              "searching": true,
+              "ordering":true,
+
+                      scrollY: '70vh',
+    scrollCollapse: true,
+    paging: false,
+
+
+
+                  language: {
+            search: '&nbsp;&nbsp;&nbsp;Поиск: ',
+
+
+
+                 "decimal":        ",",
+                "emptyTable":     "нет данных",
+                "info":           "Показать с _START_ до _END_ - _TOTAL_ записей",
+            "infoEmpty":      "Показать от 0 до 0 из 0 записей",
+            "infoFiltered":   "(выбрано из _MAX_ всех записей)",
+            "infoPostFix":    "",
+            "thousands":      "тысяч",
+            "lengthMenu":     "показать _MENU_ пунктов",
+            "loadingRecords": "Загружаем...",
+            "processing":     "",
+
+            "zeroRecords":    "Ничего не найдено",
+            "paginate": {
+                "first":      "первый",
+                "last":       "следующий",
+                "next":       "последний",
+                "previous":   "предыдущий"
+            },
+            "aria": {
+                "sortAscending":  ": сортируем-возрастает",
+                "sortDescending": ": сортируем-убывает"
+            }
+          }
+     });
+
+    </script>
+<form id="f10" method="POST" action="/save_max/">
+          <input type="hidden" name="csrfmiddlewaretoken" value="vTwP35uL7hgNGpYjk0psYTi9fcbGE0UZ9lXreXhYawNk6dI17TdfQI9bQ5vVATSf">
+          <input type=hidden name="html" value='max'>
+        </form>
+
+<script>
+  var f1;
+  var element;
+  var a;
+
+  $('td.good').click(function () {
+    var p = $(this).attr("key");
+    a = $(this).attr("action");
+    f1 = $(this).attr("fname");
+
+    var originalValue = $(this).text();
+    var x = $.trim(originalValue);
+    if (x == '0') x = '';
+
+    var ID = new Date().getTime();
+    $(this).html('<input type="text" id=' + ID + ' size="1" maxlength="5" value="' + x + '">');
+
+    element = document.getElementById(ID);
+    element.focus();
+
+    $(this).on('keypress', '#' + ID, function (event) {
+      if (event.which === 13) { // 13 соответствует клавише Enter
+        element.blur();
+        $('.btn.btn-primary').prop('disabled', false);
+      }
+    });
+
+    $(this).on('focusout', '#' + ID, function () {
+      var newValue = $(this).val();
+      $(this).parent().text(newValue + '@');
+
+      var form = document.getElementById(f1);
+      form.action = a;
+
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = p;
+      input.value = newValue;
+
+      form.appendChild(input);
+    });
+  });
+
+  // Обработчик события click для кнопки вне обработчика события focusout
+
+
+$(window).on('load', function() {
+    $('label').before('<button id=999  type="submit" disabled="true" class="btn btn-primary"> Сохранить </button>');
+$('#999').click(function() {
+    var form = document.getElementById('f10');
+    form.submit();
+  });
+});
+
+</script>
+
+
+
+<!--  </main>-->
+  <script crossorigin="anonymous" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>
