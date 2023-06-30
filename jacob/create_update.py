@@ -1,6 +1,7 @@
 from datetime import date
 
 from .db import time_available_in_date, time_available
+from .log import log
 from .models import Load, Task, Less, Wish, Role, Project
 from .utils import inc, timespan_len, inc_n
 
@@ -39,7 +40,14 @@ def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:
     else:
         d1 = inc_n(d,n)
         v1 = time_available(person,role,d)
-        print(v,v1,d,d1)
+        print(v,v1,d,d1,role,person)
+        log(f"v={v}")
+        log(f"v1={v1}")
+        log(f"d={d}")
+        log(f"d1={d1}")
+        log(f"person={person}")
+        log(f"role={role}")
+
         Less.objects.filter(person=person, role=role, start_date__range=(d, d1)).delete()
 
         Less.objects.create(person=person, role=role, start_date=d, load=v)
