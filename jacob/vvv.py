@@ -287,6 +287,7 @@ def available_role(request:object, r:int, n:int=12)->object:
     roles = [role]
 
     moon12 = available(roles,  n)
+    moon12["res"]=": "+role.title
     return render(request, "max.html", moon12)
 
 
@@ -332,7 +333,7 @@ def rest_role(request:object, r:int,n:int=12)->object:
 
     people_rr = real_people(role)
     moon12["dif14"] = rest(role, people_rr, n)
-
+    moon12["res"]=": "+role.title
     return render(request, "rest.html", moon12)
 
 
