@@ -129,7 +129,7 @@ class BalanceView(View):
         else:
 
             self.paint1.next_row(None)
-            self.w1.append([p1] + self.paint1.plus_color_balance(delta, self.mod == 0))  ################
+            self.w1.append([{"val":p1,"color":self.paint1.rgb_back_left()}] + self.paint1.plus_color_balance(delta, self.mod == 0))  ################
         return
 ############################################################
     def get_1exp(self,role,project,delta,dem_rj):

@@ -82,7 +82,7 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
             <tr>
               {% for t in dem %}              {% if forloop.first %}
                  {% if is_delta  %}
-                  <td>{{t}}</td>
+                 <td style="background-color:{{t.color}};">{{t.val}}</td>
                 {% else %}
 
                           {% if t|negative %}
