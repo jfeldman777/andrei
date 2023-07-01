@@ -87,7 +87,7 @@ class BalanceView(View):
         moon12['res_or_prj'] = "Ресурс" if coord == 0 else "Проект"
         moon12['prj_bool'] = self.coord == 0
 
-        if self.mod > 1:
+        if False:
             if coord == 0:
                 moon12['project_name0']="Проект: "
                 moon12['project_name']=project.title
