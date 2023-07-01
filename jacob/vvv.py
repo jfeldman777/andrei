@@ -1,6 +1,6 @@
 from typing import List
 
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 
 from .db import delta_role_project_12, needs_role_project_12, person_more_100_12, task_role_project_12
 from .db import get_prj_triplet, rest_of_time_pr_12, time_available_person_role_12
@@ -17,13 +17,13 @@ from .paint import Paint
 отсюда можно запускать тесты
 '''
 def atest(request:object)->object:
-    return render(request, "a00.html")
+    roles = Role.objects.all()
+    moon12 = available(roles, n=12)
+    moon12["res"]="все ресурсы"
+    return render(request, "a00.html",moon12)
 
 def atest1(request:object)->object:
     return render(request, "a001.html")
-# def atest2(request:object)->object:
-#     return role_form(request,id=None, file_name="a002.html")
-
 '''
 домашняя страница
 '''
@@ -119,12 +119,9 @@ def table_projects(request:object)->object:
     projects = Project.objects.all().order_by("general")
     data = []
     for i in range(len(projects)):
-        # paint.next_row(None)
         p = projects[i]
         data.append({"j": p.id, "project": p.title, "name": p.general.fio,
             "class":"odd" if (i % 2>0) else "even"})
-             # "color2":paint.rgb_back_right(),
-             # "color1":paint.rgb_back_left()
              # })
 
 
@@ -140,11 +137,8 @@ def table_resources(request:object)->object:
     data = []
     roles = Role.objects.all().order_by("general")
     for i in range(len(roles)):
-        # paint.next_row(None)
         p = roles[i]
         data.append({"title": p.title, "r": p.id,
-                      # "color2": paint.rgb_back_right(),
-                      # "color1": paint.rgb_back_left(),
                      "class": "odd" if (i % 2>0) else "even",
                       "name":UserProfile.objects.get(user=p.general).fio})
 
@@ -299,7 +293,8 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
     roles = Role.objects.all()
     moon12 = available(roles, n=12)
     moon12["res"]="все ресурсы"
-    return render(request, "max.html", moon12)
+    #return render(request, "max.html", moon12)
+    return render(request, "a00.html", moon12)
 
 
 '''

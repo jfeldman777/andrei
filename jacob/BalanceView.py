@@ -87,20 +87,13 @@ class BalanceView(View):
         moon12['res_or_prj'] = "Ресурс" if coord == 0 else "Проект"
         moon12['prj_bool'] = self.coord == 0
 
-        if False:
-            if coord == 0:
-                moon12['project_name0']="Проект: "
-                moon12['project_name']=project.title
-            else:
-                moon12['role_name0']="Ресурс: "
-                moon12['role_name']=role.title
+
+        if coord == 0:
+            moon12['project_name']=project.title
+            moon12['role_name']="все ресурсы"
         else:
-            if coord == 0:
-                moon12['project_name']=project.title
-                moon12['role_name']="все ресурсы"
-            else:
-                moon12['role_name']=role.title
-                moon12['project_name']=" все проекты"
+            moon12['role_name']=role.title
+            moon12['project_name']=" все проекты"
 
         if self.mod < 2:
             return render(request, "balance_4.html", moon12)
@@ -131,9 +124,12 @@ class BalanceView(View):
             self.w1.append([-1] + self.paint1.plus_color_balance(zv))  #####################
             delta = ["Дельта"] + delta
 
-        self.paint1.next_row(None)
-        self.w1.append([-1] + self.paint1.plus_color_balance(delta, self.mod == 0))  ############################
+            self.paint1.next_row(None)
+            self.w1.append([-1] + self.paint1.plus_color_balance(delta, self.mod == 0))  ############################
+        else:
 
+            self.paint1.next_row(None)
+            self.w1.append([p1] + self.paint1.plus_color_balance(delta, self.mod == 0))  ################
         return
 ############################################################
     def get_1exp(self,role,project,delta,dem_rj):

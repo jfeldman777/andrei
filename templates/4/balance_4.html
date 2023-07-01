@@ -49,12 +49,12 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
 " width=100%>
           <thead>
 
-            <tr>
+            <tr>   <th colspan=13>
                 {% if is_delta %}
-              <th colspan=12>
+
                   Балансы (<a href="/balance/{{id}}/{{coord}}/0" style="color:white;">подробнее</a>)
                   {% else %}
-              <th colspan=13>
+
                   Балансы (<a href="/balance/{{id}}/{{coord}}/1" style="color:white;">дельта</a>)
 
                   {% endif %}
@@ -62,7 +62,13 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
 
             </tr>
             <tr>
-                {% if is_delta  %}{% else %}
+                {% if is_delta  %}
+                               <th style="background:white;
+      border-bottom: 1px solid grey;
+               color:black;">
+               {{res_or_prj}}
+               </th>
+                {% else %}
                <th style="background:white;
       border-bottom: 1px solid grey;
                color:black;">
@@ -74,13 +80,19 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
             <tbody>
                 {% for dem in w1 %}
             <tr>
-              {% for t in dem %}
-              {% if forloop.first %}
-              {% if t|negative %}{% else %}
-              <td colspan=13>{{t}}</td>
-            </tr>
-            <tr>
+              {% for t in dem %}              {% if forloop.first %}
+                 {% if is_delta  %}
+                  <td>{{t}}</td>
+                {% else %}
+
+                          {% if t|negative %}
+                            {% else %}
+                          <td colspan=13>{{t}}</td>
+                        </tr>
+                        <tr>
+                            {% endif %}
               {% endif %}
+
               {% else %}
               <td style="background-color:{{t.color}};">
 
