@@ -288,7 +288,7 @@ def available_role(request:object, r:int, n:int=12)->object:
     roles = [role]
 
     moon12 = available(roles,  n)
-    moon12["res"]=": "+role.title
+    moon12["res"]=role.title
     return render(request, "max.html", moon12)
 
 
@@ -298,12 +298,12 @@ def available_role(request:object, r:int, n:int=12)->object:
 def available_all(request:object,n:int=12)->object:  # Максимальная доступнасть по всем ресурсам
     roles = Role.objects.all()
     moon12 = available(roles, n=12)
-
+    moon12["res"]="Все ресурсы"
     return render(request, "max.html", moon12)
 
 
 '''
-показать остаток ресурса по всем персонам и ролям
+показать остаток ресурса по вreсем персонам и ролям
 '''
 def rest_all(request:object,n:int=12)->object:  # Остаточная доступость по всем ресурсам
     moon12 = moon()
@@ -315,7 +315,7 @@ def rest_all(request:object,n:int=12)->object:  # Остаточная дост�
         dif14+=dif
 
     moon12["dif14"] = dif14
-
+    moon12["res"]="Все ресурсы"
     return render(request, "rest.html", moon12)
 
 
@@ -334,7 +334,7 @@ def rest_role(request:object, r:int,n:int=12)->object:
 
     people_rr = real_people(role)
     moon12["dif14"] = rest(role, people_rr, n)
-    moon12["res"]=": "+role.title
+    moon12["res"]=role.title
     return render(request, "rest.html", moon12)
 
 
