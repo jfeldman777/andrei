@@ -298,7 +298,7 @@ def available_role(request:object, r:int, n:int=12)->object:
 def available_all(request:object,n:int=12)->object:  # Максимальная доступнасть по всем ресурсам
     roles = Role.objects.all()
     moon12 = available(roles, n=12)
-    moon12["res"]="Все ресурсы"
+    moon12["res"]="все ресурсы"
     return render(request, "max.html", moon12)
 
 
@@ -315,7 +315,7 @@ def rest_all(request:object,n:int=12)->object:  # Остаточная дост�
         dif14+=dif
 
     moon12["dif14"] = dif14
-    moon12["res"]="Все ресурсы"
+    moon12["res"]="все ресурсы"
     return render(request, "rest.html", moon12)
 
 
