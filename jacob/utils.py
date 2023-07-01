@@ -131,10 +131,10 @@ def mon_bool_color(dmin:date, dmax:date, dstart:date, dend:date,color1,color2)->
 '''
 def n2txt(n:int)->str:
     if n == 1:
-        return "за 1 месяц"
+        return "на 1 месяц"
     if n == 3:
-        return "за 3 месяца"
-    return f"за {n} месяцев"
+        return "на 3 месяца"
+    return f"на {n} месяцев"
 
 
 '''
