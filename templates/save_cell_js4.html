@@ -21,9 +21,8 @@
     $(this).on('keypress', '#' + ID, function (event) {
       if (event.which === 13) { // 13 соответствует клавише Enter
         element.blur();
-        {% if user.is_authenticated %}
+
         $('.btn.btn-primary').prop('disabled', false);
-        {% endif %}
       }
     });
 

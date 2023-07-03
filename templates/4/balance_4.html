@@ -32,13 +32,9 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
                 - Ресурс:
                 <span style="color:blue;"> {{role_name}}
 
-            </span>
-                {% if user.is_authenticated %}
-                <button class="btn btn-primary"
+            </span><button class="btn btn-primary"
                            style="  position: absolute;    right: 45px;top:2px;"
-                           id=999 >Экспорт</button>
-        {% endif %}
-            </h5>
+                           id=999 >Экспорт</button>  </h5>
         </td>
     </tr>
 
@@ -129,13 +125,13 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
           <th style="background:white;
         border-bottom: 1px solid grey;
           color:black;">
-{% if user.is_authenticated %}
+
                 <form id="f20" method="POST">
                   {% csrf_token %}
+
     <input type=hidden name="html" value='/balance/{{id}}/{{coord}}/{{mod}}/'>
 <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
-              {% endif %}
 
               </th>
 
@@ -176,13 +172,12 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
             <tr style="background-color:white;border:none;border-color:white;">
          <th style="background-color:white;
              border-bottom: 1px solid grey;
-             color:black;">{% if user.is_authenticated %}
+             color:black;">
                 <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='/balance/{{id}}/{{coord}}/{{mod}}/'>
    <button   type="submit"  class="btn btn-primary"> Сохранить </button>
-                </form>{% endif %}
-
+                </form>
                 {% include 'moon.html' %}</tr></thead><tbody>
                 {% for tt in w3 %}
             <tr>

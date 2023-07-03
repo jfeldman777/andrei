@@ -3,6 +3,8 @@
 {% block content %}
 {% include 'scroll.html' %}
 {% load static %}
+{% if user.is_authenticated %}
+
 {% include 'menu2.html' %}
 <br>
     <h5 style="margin-left:50px;">Главная страница</h5>
@@ -102,4 +104,16 @@
             </td></tr>
             </table>
 
+
+{% else %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+<div style="width:30%;
+            margin-left: 100px;margin-top: 40px">
+
+    <h5><a href="/members/login/">Вход</a></h5>
+
+</div>
+{% endif %}
 {% endblock %}
