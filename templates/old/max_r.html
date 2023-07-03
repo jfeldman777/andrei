@@ -22,6 +22,7 @@
     </tr>
     <tr>
       <th rowspan=2>
+          {% if user.is_authenticated %}
         <form id="f10" method="POST">
           {% csrf_token %}
           <input type=hidden name="html" value=''>
@@ -29,6 +30,7 @@
           position:absolute;top:80px;right:385px;"></div>
 <button   type="submit"  class="button3 btn btn-primary"> Сохранить </button>
         </form>
+          {%endif%}
       </th>
     </tr>
     {% include 'moon.html' %}</tr></thead><tbody>

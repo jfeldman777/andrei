@@ -10,16 +10,14 @@
 <div style="width:30%;
             margin-left: 100px;margin-top: 40px">
 
-    <h5>{{title}}</h5>
+    <h5>Login</h5>
 
 
 
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
-    {% if user.is_authenticated %}
-  <button type="submit" class="btn btn-primary">{{button}}</button>
-    {% endif %}
+  <button type="submit" class="btn btn-primary">Login</button>
 </form>
 </div>
 

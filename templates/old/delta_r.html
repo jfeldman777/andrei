@@ -129,12 +129,13 @@
             <tr>
               <th style="background:white;
               border-bottom: 1px solid grey;
-              color:black;">    <form id="f10" method="POST">
+              color:black;"> {% if user.is_authenticated %}
+                  <form id="f10" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='delta_r'>
     <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
-
+{%endif%}
                 {% include 'moon.html' %}</tr></thead><tbody>
           </thead>
           <tbody>

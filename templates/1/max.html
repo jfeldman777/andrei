@@ -35,10 +35,11 @@
 
     </td></tr></table></div>
         {% include 'dat.html' %}
-<form id="f10" method="POST" action="/save_max/">
+{% if user.is_authenticated %}
+<form id="f10" method="POST">
           {% csrf_token %}
           <input type=hidden name="html" value='{{ret}}'>
         </form>
-
+{% endif %}
 {% include 'save_cell_js4.html' %}
 {% endblock %}

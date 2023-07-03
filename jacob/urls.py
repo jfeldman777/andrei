@@ -58,4 +58,5 @@ urlpatterns = [
     path("test1/", vvv.atest1, name="test1"),
     path("test/", vvv.atest, name="test"),
     path("", vvv.home, name="home"),
+    path("accounts/profile/", vvv.home, name="home"),
 ]

@@ -74,11 +74,12 @@
             </tbody>
         </table>
       </div>
+      {% if user.is_authenticated %}
       <form id="f20" method="POST">
         {% csrf_token %}
         <input type=hidden name="html" value='balance_jr'>
-
       </form>
+      {% endifif  %}
     </td>
   </tr>
   <tr style="text-align:center;height: 80vh; ">

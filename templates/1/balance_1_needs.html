@@ -44,14 +44,12 @@
 
     </td></tr></table></div>
         {% include 'dat.html' %}
+{% if user.is_authenticated %}
   <form  method="POST" id="f10">
             {% csrf_token %}
-
       <input type=hidden name="html" value='/balance/{{id}}/{{coord}}/{{mod}}/'>
-
-
           </form>
-
+{% endif %}
 {% include 'save_cell_js4.html' %}
 
  {% include 'wish_js.html' %}

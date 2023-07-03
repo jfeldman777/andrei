@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "jacob",
+    "members",
     "bootstrap4",
     "jacob.templatetags",
     "crispy_forms",

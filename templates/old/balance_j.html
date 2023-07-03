@@ -95,14 +95,13 @@ border-bottom: 1px solid grey;
           <th style="background:white;
         border-bottom: 1px solid grey;
           color:black;">
-
+{% if user.is_authenticated %}
                 <form id="f20" method="POST">
                   {% csrf_token %}
                   <input type=hidden name="html" value='balance_j'>
-
 <button   type="submit"  class="btn btn-primary"> Сохранить </button>
                 </form>
-
+{% endif %}
               </th>
 
 
