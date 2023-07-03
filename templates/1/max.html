@@ -37,7 +37,7 @@
         {% include 'dat.html' %}
 <form id="f10" method="POST" action="/save_max/">
           {% csrf_token %}
-          <input type=hidden name="html" value='max'>
+          <input type=hidden name="html" value='{{ret}}'>
         </form>
 
 {% include 'save_cell_js4.html' %}

@@ -6,8 +6,11 @@ from .models import Project  # replace with your model
 from .utils import timespan_len, date0, inc
 from .vvv import moon_exp, table_timeline_exp
 
-def data_cols():
-    return ['Проект','Ресурс']+moon_exp()
+def data_cols(mod=1):
+    if mod==1:
+        return ['Проект','Ресурс']+moon_exp()
+    else:
+        return ['Проект', 'Ресурс','Источник'] + moon_exp()
 
 def star_date(date1,date2,d):
     if  date1 <= d <=date2:
@@ -92,12 +95,13 @@ def prj(request):
 def export_plan(request,id,coord,mod):
     bv = BalanceView()    
     bv.export(request,id,coord, mod)
+    data01 = data_cols(mod)
     data0 = data_cols()
     data1 = bv.w1
     data2 = bv.w2
     data3 = bv.w3
     
-    df1 = pd.DataFrame(data1, columns=data0)
+    df1 = pd.DataFrame(data1, columns=data01)
     df2 = pd.DataFrame(data2, columns=data0)
     df3 = pd.DataFrame(data3, columns=data0)
     

@@ -25,15 +25,14 @@ def save_max(request):
                     try:
                         role = Role.objects.get(id=r)
                         person = UserProfile.objects.get(id=p)
+                        create_or_update_res_max(person, role, d, v)
 
-                        msg=str(create_or_update_res_max(person, role, d, v))
-                        print(msg)
                     except:
-                        pass
+                        print("bad",person,role,d,v)
         else:
             print(form.errors)
-    if html == "":
-        return redirect(f"/max_r/{p}/{r}/{j}/") #available_role(request, p, r, j)
+    if html != "max":
+        return redirect(f"/max_r/{r}/") #available_role(request, p, r, j)
     return redirect(f"/max/")#"available_all(request)  # s
 
 

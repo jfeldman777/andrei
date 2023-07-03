@@ -293,6 +293,7 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
     roles = Role.objects.all()
     moon12 = available(roles, n=12)
     moon12["res"]="все ресурсы"
+    moon12["ret"]="max"
     #return render(request, "max.html", moon12)
     return render(request, "a00.html", moon12)
 
