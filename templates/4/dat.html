@@ -40,9 +40,9 @@ $('.display').DataTable({
           }
      });
 
-
+var Flag = true;
  $('label>input').on('keydown', function (event) {
-    if (event.which === 8) {
+    if (event.which === 8 && Flag) { Flag = false;
         location.reload();
     }
 });
