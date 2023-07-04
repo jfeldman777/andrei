@@ -3,10 +3,11 @@
 {% block content %}
 {% load static %}
 {% include 'menu2.html' %}
+
 <br>
 <div style="margin-left:50px">
 <table  width="80%"><tr><td>
-    <h5>    Максимальная доступность / Ресурс:   <span style="color:blue">
+    <h5>Максимальная доступность / Ресурс:   <span style="color:blue">
         {{res}}</span></h5>
 <table  class=" display compact hover nowrap order-column " width="100%">
   <thead>
@@ -20,7 +21,7 @@
         <tr class="{{t.class}}">
 {% else %}
 
-      <td style="background-color:{{t.color}};text-align:{{t.align}};"
+      <td style=";background-color:{{t.color}};text-align:{{t.align}};"
           class="{{t.class}}" action="/save_max/" fname="f10" key="{{t.link}}" >
           {{t.val}}
         {% if t.fire %}
