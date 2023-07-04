@@ -3,7 +3,14 @@
 {% block content %}
 {% load static %}
 {% include 'menu2.html' %}
+<style>
+.div1 {
+  width: 80%;
 
+  border: 1px solid blue;
+}
+</style><!--  height: 600px;-->
+<div class="div1">
 <br>
 <div style="margin-left:50px">
 <table  style="width:80% !important;"><tr><td>
@@ -12,8 +19,8 @@
 <table  class=" display compact hover nowrap order-column " width="100%">
   <thead>
     <tr>
-      <th style="text-align:left;border-bottom: 1px solid grey;">Ресурс </th>
-        <th style="text-align:left; border-bottom: 1px solid grey; ">Сотрудник</th>
+      <th style="text-align:left;border-bottom: 1px solid grey;width:5% !important;">Ресурс </th>
+        <th style="text-align:left; border-bottom: 1px solid grey; 5% !important;">Сотрудник</th>
         {% include 'moon.html' %}</tr></thead><tbody>
         {% for tt in dif14 %}
     {% for t in tt %}
@@ -42,5 +49,6 @@
           <input type=hidden name="html" value='{{ret}}'>
         </form>
 {% endif %}
+    </div>
 {% include 'save_cell_js4.html' %}
 {% endblock %}
