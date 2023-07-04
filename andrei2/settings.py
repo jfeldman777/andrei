@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = ["andrei2.herokuapp.com", "andrei.herokuapp.com",
-                 "https://pmlogix-847d27334089.herokuapp.com/",
+                 "pmlogix-847d27334089.herokuapp.com/",
                  "andrei3-3336cc517a01.herokuapp.com",
                  "127.0.0.1", "testserver", "localhost"]
 #
