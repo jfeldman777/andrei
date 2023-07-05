@@ -1,5 +1,5 @@
 from django.urls import path
-from . import vvv, export
+from . import vvv, export, gisto
 from . import save_forms
 from . import  view_forms
 from .BalanceView import BalanceView
@@ -40,7 +40,8 @@ urlpatterns = [
     path("export_plan/<int:id>/<int:coord>/<int:mod>/", export.export_plan),
 
     path("max/", vvv.available_all),
-    # path("max/<str:msg>/", vvv.available_all),
+    path("gisto/", gisto.view1),
+
 
     path("max_r/<int:r>/", vvv.available_role),
 

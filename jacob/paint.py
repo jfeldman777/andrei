@@ -6,6 +6,7 @@ class Paint:
     MY_PINK = "pink"
     MY_GREY = "rgb(211,211,211)"
     MY_BLUE = "lightblue"
+    MY_ORANGE = "orange"
     MY_PURPLE =  "#B266FF"
     ENTRY_MAP_CUT = 20
 
@@ -90,7 +91,7 @@ class Paint:
             if delta < 0:
                 return self.MY_PINK
             elif delta > 0:
-                return self.MY_BLUE
+                return self.MY_ORANGE
 
 
         return '' if is_1 else self.rgb_back()

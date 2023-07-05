@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Histogram</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart"></canvas>
+    <script>
+    // Get the data from Django context
+    const data = {{ data|safe }};
+
+    // Histogram data processing
+    let histogramData = Array.from({length: Math.max(...data) + 1}).fill(0);
+    data.forEach((val) => histogramData[val] += 1);
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: histogramData.map((_, idx) => idx),
+            datasets: [{
+                label: '# of Votes',
+                data: histogramData,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+</body>
+</html>
