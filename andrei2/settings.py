@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["andrei2.herokuapp.com", "andrei.herokuapp.com",
                  "pmlogicx.pro",
-                 "pmlogicx-8647b7577ce8.herokuapp.com",
+"pmlogix-7aab066f32c1.herokuapp.com",
                  "127.0.0.1", "testserver", "localhost"]
 #
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

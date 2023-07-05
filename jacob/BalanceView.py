@@ -10,6 +10,15 @@ from .models import Project,Role,Wish,Grade
 from .paint import Paint
 from .utils import date0, inc, up
 from  .vvv import moon, outsrc, vacancia
+
+def my_red(here,more):
+    if here > 0 and more < 0:
+        return "red"
+    return ""
+def minus(here, more):
+    if here == 0 and more <= 0:
+        return '-'
+    return here
 class BalanceView(View):
     def __init__(self):
         self.w1 = []
@@ -196,7 +205,8 @@ class BalanceView(View):
                              }] + a_w2)
 
         return
-    
+
+
     
     def get_3(self,role,project,wish,delta):
         p3 = project.title if self.coord == 1 else role.title
@@ -220,8 +230,9 @@ class BalanceView(View):
                     b_w3[i] = {
                         "link": f"{person.id}.{role.id}.{project.id}.{d.year}-{d.month}-15",
                         "up": up(max(-delta[i], 0), diff[i], wish),
-                        "val": a_w3[i],
+                        "val": minus(a_w3[i],diff[i]),
                         "color": paint3.color_tasks(isOut, isPurple, False),
+                        "tcolor":my_red(a_w3[i],diff[i]),
                         "class": "  good",
                         "align": "center"
                     }
