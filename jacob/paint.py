@@ -80,20 +80,18 @@ class Paint:
             return self.MY_YELLOW
         return '' if is_1 else self.rgb_back_right()
 
-    def color_tasks(self,isOut,isPink,is_1=True):
+    def color_tasks(self,isOut,delta,is_1=True):
         if isOut:
-            if isPink > 0:
+            if delta > 0:
                 return self.MY_PURPLE
             else:
                 return self.MY_GREY
         else:
-            if isPink:
+            if delta < 0:
                 return self.MY_PINK
-            try:
-                if self.cell > 0:
-                    return self.MY_BLUE
-            except:
-                pass
+            elif delta > 0:
+                return self.MY_BLUE
+
 
         return '' if is_1 else self.rgb_back()
 

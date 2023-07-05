@@ -226,12 +226,11 @@ class BalanceView(View):
                 for i in range(self.n):
                     paint3.next_cell(a_w3[i])
                     isOut = d < project.start_date.replace(day=15) or d > project.end_date.replace(day=15)
-                    isPurple = delta[i] < 0
                     b_w3[i] = {
                         "link": f"{person.id}.{role.id}.{project.id}.{d.year}-{d.month}-15",
                         "up": up(max(-delta[i], 0), diff[i], wish),
                         "val": minus(a_w3[i],diff[i]),
-                        "color": paint3.color_tasks(isOut, isPurple, False),
+                        "color": paint3.color_tasks(isOut,  delta[i] , False),
                         "tcolor":my_red(a_w3[i],diff[i]),
                         "class": "  good",
                         "align": "center"
