@@ -31,7 +31,7 @@ def create_user_and_profile(request:object)->any:
     else:
         form = UserAndProfileForm()
 
-    return render(request, 'form.html', {'form': form,"button":button,"title":"Сотрудник"})
+    return render(request, 'form.html', {'form': form,"button":button,"title":"Добавить нового сотрудника"})
 
 
 '''
@@ -59,13 +59,16 @@ def grade_form(request, pid, rid):
         initial_data = {'person': person, 'role': role,'mygrade':grade}  # Use instances here for form initialization
         form = GradeForm(initial=initial_data)
 
-    return render(request, "form.html", {"form": form, "title":"Грейд", "button":"Сохранить"})
+    return render(request, "form.html", {"form": form, "title":"Редактировать грейд", "button":"Сохранить"})
 
 def role_form(request, id=None, file_name="form.html"):
     button = "Создать"
+    title = "Добавить роль"
     instance = None
     if id:
-        button = "Сохранить"
+
+        button = "Изменить"
+        title = "Изменить роль"
         instance = get_object_or_404(Role, id=id)
 
     if request.method == "POST":
@@ -76,7 +79,8 @@ def role_form(request, id=None, file_name="form.html"):
 
     else:
         form = RoleForm(instance=instance)
-    return render(request, file_name, {"form": form,"title":"Роль","button":button})
+        context =  {"form": form,"title":title,"button":button}
+    return render(request, file_name,context)
 
 '''
 форма для изменение или создания проекта (если номер не указан)
@@ -84,9 +88,11 @@ def role_form(request, id=None, file_name="form.html"):
 
 def project_form(request, id=None):
     button = "Создать"
+    title = "Добавить новый проект"
     instance = None
     if id:
-        button = "Сохранить"
+        button = "Изменить"
+        title = "Редактировать карточку проекта"
         instance = get_object_or_404(Project, id=id)
 
     if request.method == "POST":
@@ -105,7 +111,7 @@ def project_form(request, id=None):
 
         form = ProjectForm(instance=instance)
 
-    return render(request, "form.html", {"form": form,"title":"Проект","button":button})
+    return render(request, "form.html", {"form": form,"title": title,"button":button})
 
 
 '''
@@ -113,9 +119,12 @@ def project_form(request, id=None):
 '''
 def person_form(request:object, id:int)->any:
     button = "Создать"
+    title = "Добавить нового сотрудника"
+
     instance = None
     if id:
-        button = "Сохранить"
+        button = "Изменить"
+        title = "Редактировать карточку сотрудника"
         instance = get_object_or_404(UserProfile, id=id)
 
     if request.method == "POST":
@@ -130,7 +139,9 @@ def person_form(request:object, id:int)->any:
             return redirect("people")
     else:
         form = User2Form(instance=instance)
-    return render(request, "form.html",  {"form": form,"title":"Изменить","button":button})
+    return render(request, "form.html",  {"form": form,
+                                          "title":title,
+                                          "button":button})
 
 
 #########################
