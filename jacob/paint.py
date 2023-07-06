@@ -9,6 +9,7 @@ class Paint:
     MY_ORANGE = "orange"
     MY_PURPLE =  "#B266FF"
     ENTRY_MAP_CUT = 20
+    MY_GREEN = "green"
 
 
     def __init__(self)->None:
@@ -81,16 +82,16 @@ class Paint:
             return self.MY_YELLOW
         return '' if is_1 else self.rgb_back_right()
 
-    def color_tasks(self,isOut,delta,is_1=True):
+    def color_workload(self, isOut, delta_res, delta_needs,is_1=True):
         if isOut:
-            if delta > 0:
+            if delta_needs < 0:
                 return self.MY_PURPLE
             else:
                 return self.MY_GREY
         else:
-            if delta < 0:
+            if delta_needs < 0:
                 return self.MY_PINK
-            elif delta > 0:
+            elif delta_needs > 0:
                 return self.MY_ORANGE
             elif self.cell > 0:
                 return self.MY_BLUE

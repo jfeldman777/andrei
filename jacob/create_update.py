@@ -63,7 +63,7 @@ def create_or_update_res_max(person:object, role:object, m:date, svn:str)->None:
             print(msg)
             return
 
-def create_or_update_task(p:object, r:object, j:object, dm:date, svn:str)->None:  # Загрузка
+def create_or_update_workload(p:object, r:object, j:object, dm:date, svn:str)->None:  # Загрузка
     d2 = j.end_date
     d = datetime.strptime(dm, "%Y-%m-%d").date()
     if '-' in svn:

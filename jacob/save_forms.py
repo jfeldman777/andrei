@@ -1,7 +1,7 @@
 from django.forms import Form
 from django.shortcuts import redirect
 
-from .create_update import create_or_update_needs, create_or_update_task, create_or_update_res_max, \
+from .create_update import create_or_update_needs, create_or_update_workload, create_or_update_res_max, \
     create_or_update_wish
 from .models import Role, Project, UserProfile
 
@@ -58,7 +58,7 @@ def save_task(request):
                         person = UserProfile.objects.get(id=p)
 
                         print(898,v)
-                        create_or_update_task(
+                        create_or_update_workload(
                             person, role, project, d, v
                         )  ##################################
                     except:

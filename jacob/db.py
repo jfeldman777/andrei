@@ -68,20 +68,20 @@ def rest_role_12(r,n):
     return res
 
 def rest_of_time_pr_12(p, r,n=12):
-    a = task_person_role_12(p, r,n)
+    a = workload_person_role_12(p, r, n)
     b = time_available_person_role_12(p, r,n)
     c = [b[i]-a[i] for i in range(n)]
 
     return c
 
 def rest_and_color_12(p, r,color,is_1,n=12):
-    a = task_person_role_12(p, r,n)
+    a = workload_person_role_12(p, r, n)
     b = time_available_person_role_12(p, r,n)
     c = [b[i]-a[i] for i in range(n)]
     d = [{"val":c[i],"align":"center","color":color(c[i],is_1)} for i in range(n)]
     return d
 
-def task_person_role_12(person:object, role:object,n:int=12)->List[int]:
+def workload_person_role_12(person:object, role:object, n:int=12)->List[int]:
     d = date0()
     res = [0] * n
     for i in range(n):
@@ -121,7 +121,7 @@ def time_available(person: object, role: object, d: date) -> int:
 
 
 
-def task_person_role_project_12(p:object, r:object, j:object,n:int=12)->List[int]:
+def workload_person_role_project_12(p:object, r:object, j:object, n:int=12)->List[int]:
     d = date0()
     res = [0] * n
     for i in range(n):
@@ -134,7 +134,7 @@ def task_person_role_project_12(p:object, r:object, j:object,n:int=12)->List[int
     return res
 
 
-def task_role_project_including_virtuals_12(r, j,n=12):
+def workload_role_project_including_virtuals_12(r, j, n=12):
     d = date0()
     res = [0] * n
     for i in range(n):
@@ -148,7 +148,7 @@ def task_role_project_including_virtuals_12(r, j,n=12):
     return res
 
 
-def task_role_project_12(r, j,n=12):
+def workload_role_project_12(r, j, n=12):
     d = date0()
     res = [0] * n
     for i in range(n):
@@ -216,7 +216,7 @@ def needs_rj_color_12(p:object,r:object, j:object,n:int=12,paint=None)->List[int
 '''
 def delta_role_project_12(r:object, j:object,n:int=12)->List[int]:
     a = needs_role_project_12(-1,r, j,n)
-    b = task_role_project_including_virtuals_12(r, j,n)
+    b = workload_role_project_including_virtuals_12(r, j, n)
     c = [b[i]-a[i] for i in range(n)]
     return c
 

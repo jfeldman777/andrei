@@ -1,0 +1,42 @@
+{% extends 'base3.html' %}
+{% load custom_filters %}
+{% block content %}
+{% load static %}
+{% include 'menu2.html' %}
+<br>
+<div style="margin-left:50px">
+<table  style="width:80% !important;"><tr><td>
+    <h5>Максимальная доступность / Ресурс:   <span style="color:blue">
+        {{res}}</span></h5>
+<table  class=" display compact hover nowrap order-column " width="100%">
+  <thead>
+    <tr>
+      <th style="text-align:left;border-bottom: 1px solid grey;width:5% !important;"> Сотрудник</th>
+        <th style="text-align:center; border-bottom: 1px solid grey; 5% !important;">Доступность</th>
+        <th style="text-align:center; border-bottom: 1px solid grey; 5% !important;">Загрузка</th>
+        <th style="text-align:center; border-bottom: 1px solid grey; 5% !important;
+
+">Дельта</th></tr></thead>
+        <tbody>
+        {% for t in w %}
+        <tr>
+      <td style="text-align:left;">
+          {{t.fio}}
+      </td>
+            <td style="text-align:center;">
+          {{t.avl}}
+      </td>
+            <td style="text-align:center;">
+          {{t.twl}}
+      </td>
+            <td style="background-color:{{t.color}};text-align:center;">
+          {{t.delta}}
+      </td>
+    </tr>
+    {% endfor %}
+</table>
+
+    </td></tr></table></div>
+        {% include 'dat.html' %}
+{% include 'export_js_rep1.html' %}
+{% endblock %}

@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
 
-from .db import get_prj_triplet, task_role_project_12, delta_role_project_12, needs_role_project_12, \
-    real_people, real_and_virtual_people, rest_of_time_pr_12, task_person_role_project_12, rest_and_color_12, \
+from .db import get_prj_triplet, workload_role_project_12, delta_role_project_12, needs_role_project_12, \
+    real_people, real_and_virtual_people, rest_of_time_pr_12, workload_person_role_project_12, rest_and_color_12, \
     rest_role_12
 from .models import Project,Role,Wish,Grade
 
@@ -120,7 +120,7 @@ class BalanceView(View):
         if self.mod == 0:
             zo = ["АУТСОРС"] + outsrc(role, project, self.n)
             zv = ["ВАКАНСИЯ"] + vacancia(role, project, self.n)
-            supp = ["Поставка"] + task_role_project_12(role, project, self.n)
+            supp = ["Поставка"] + workload_role_project_12(role, project, self.n)
             self.paint1.reset()
             self.paint1.next_row(None)
             self.w1.append([p1] + self.paint1.plus_color_balance(
@@ -147,7 +147,7 @@ class BalanceView(View):
         if self.mod == 0:
             zo = ["АУТСОРС"] + outsrc(role, project, self.n)
             zv = ["ВАКАНСИЯ"] + vacancia(role, project, self.n)
-            supp = ["Поставка"] + task_role_project_12(role, project, self.n)
+            supp = ["Поставка"] + workload_role_project_12(role, project, self.n)
             self.w1.append(p1 + ["Потребность"] + dem_rj)  ##########################################77777
 
             self.w1.append(p1 + supp)  ###############--
@@ -220,7 +220,7 @@ class BalanceView(View):
 
                 diff = rest_of_time_pr_12(person, role, self.n)
                 b_w3 = [0] * self.n
-                a_w3 = task_person_role_project_12(person, role, project, self.n)
+                a_w3 = workload_person_role_project_12(person, role, project, self.n)
 
                 d = date0()
                 for i in range(self.n):
@@ -230,7 +230,7 @@ class BalanceView(View):
                         "link": f"{person.id}.{role.id}.{project.id}.{d.year}-{d.month}-15",
                         "up": up(max(-delta[i], 0), diff[i], wish),
                         "val": minus(a_w3[i],diff[i]),
-                        "color": paint3.color_tasks(isOut,  delta[i] , False),
+                        "color": paint3.color_workload(isOut, diff[i],delta[i],False),
                         "tcolor":my_red(a_w3[i],diff[i]),
                         "class": "  good",
                         "align": "center"
@@ -253,7 +253,7 @@ class BalanceView(View):
         people_rv = real_and_virtual_people(role)
         if self.mod != 2:
             for person in people_rv:
-                c_w3 = p1+[person.fio]+task_person_role_project_12(person, role, project, self.n)
+                c_w3 = p1 + [person.fio] + workload_person_role_project_12(person, role, project, self.n)
                 self.w3.append(c_w3)
         return
 

@@ -118,3 +118,5 @@ def export_plan(request,id,coord,mod):
 
     return response
 
+def export_report(request,mod,r,y,m):
+    pass

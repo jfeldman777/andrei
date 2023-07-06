@@ -2,9 +2,9 @@ from typing import List
 
 from django.shortcuts import redirect, get_object_or_404, render
 
-from .db import delta_role_project_12, needs_role_project_12, person_more_100_12, task_role_project_12
+from .db import delta_role_project_12, needs_role_project_12, person_more_100_12, workload_role_project_12
 from .db import get_prj_triplet, rest_of_time_pr_12, time_available_person_role_12
-from .db import task_person_role_project_12, real_and_virtual_people, real_people, rest_and_color_12
+from .db import workload_person_role_project_12, real_and_virtual_people, real_people, rest_and_color_12
 from .utils import *
 from datetime import date
 from .models import UserProfile, Grade, Wish,Project
@@ -37,7 +37,7 @@ def home(request):
 def vacancia(role:object, project:object,n:int=12)->List[int]:
     person = None
     person = UserProfile.objects.filter(fio="ВАКАНСИЯ")[0]  ##АУТСОРС
-    return task_person_role_project_12(person, role, project,n)
+    return workload_person_role_project_12(person, role, project, n)
 
 '''
 Объект Аутсорс - загрузка на год
@@ -48,9 +48,7 @@ def outsrc(role:object, project:object,n:int=12)->List[int]:
         person = UserProfile.objects.filter(fio="АУТСОРС")[0]
     except:
         pass
-    return task_person_role_project_12(person, role, project,n)
-
-
+    return workload_person_role_project_12(person, role, project, n)
 
 
 def delta_on_span(r, j, n):

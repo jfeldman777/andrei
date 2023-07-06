@@ -1,5 +1,5 @@
 from django.urls import path
-from . import vvv, export, gisto
+from . import vvv, export, gisto, reports
 from . import save_forms
 from . import  view_forms
 from .BalanceView import BalanceView
@@ -47,7 +47,11 @@ urlpatterns = [
 
     path("rest/", vvv.rest_all),
     path("rest_r/<int:r>/", vvv.rest_role),
- 
+    path("t/<int:r>/<int:y>/<int:m>/", reports.report_by_prm),
+    path("tj/<int:r>/<int:y>/<int:m>/", reports.report_by_prjm),
+
+    #path("export_rep/<int:mod>/<int:r>/<int:y>/<int:m>/", reports.export_report),
+
     
     path("prjlist/", vvv.table_timeline, name="prjlist"),
     path("tab_j/", vvv.table_projects, name="atj"),

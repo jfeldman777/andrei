@@ -5,7 +5,7 @@
 $(window).on('load', function() {
     $('label').before('<button id=a999  type="submit" class="btn btn-primary">Экспорт</button>');
 $('#a999').click(function() {
-      window.location.href='/export_prj/';
+      window.location.href='/export_rep/{{mod}}/{{r}}/{{y}}/{{m}}';
   });
 });
 
