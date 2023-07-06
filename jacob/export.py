@@ -95,15 +95,17 @@ def prj(request):
 def export_plan(request,id,coord,mod):
     bv = BalanceView()    
     bv.export(request,id,coord, mod)
+
     data01 = data_cols(mod)
     data0 = data_cols()
+    data03 = data_cols(0)
     data1 = bv.w1
     data2 = bv.w2
     data3 = bv.w3
     
     df1 = pd.DataFrame(data1, columns=data01)
     df2 = pd.DataFrame(data2, columns=data0)
-    df3 = pd.DataFrame(data3, columns=data0)
+    df3 = pd.DataFrame(data3, columns=data03)
     
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=Plan.xlsx'

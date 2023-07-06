@@ -253,7 +253,7 @@ class BalanceView(View):
         people_rv = real_and_virtual_people(role)
         if self.mod != 2:
             for person in people_rv:
-                c_w3 = p1+task_person_role_project_12(person, role, project, self.n)
+                c_w3 = p1+[person.fio]+task_person_role_project_12(person, role, project, self.n)
                 self.w3.append(c_w3)
         return
 
