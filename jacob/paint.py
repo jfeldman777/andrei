@@ -92,6 +92,8 @@ class Paint:
                 return self.MY_PINK
             elif delta > 0:
                 return self.MY_ORANGE
+            elif self.cell > 0:
+                return self.MY_BLUE
 
 
         return '' if is_1 else self.rgb_back()

@@ -226,7 +226,7 @@ class BalanceView(View):
                 for i in range(self.n):
                     paint3.next_cell(a_w3[i])
                     isOut = d < project.start_date.replace(day=15) or d > project.end_date.replace(day=15)
-                    b_w3[i] = {
+                    b_w3[i] = {"workload":True,
                         "link": f"{person.id}.{role.id}.{project.id}.{d.year}-{d.month}-15",
                         "up": up(max(-delta[i], 0), diff[i], wish),
                         "val": minus(a_w3[i],diff[i]),
