@@ -6,8 +6,8 @@ class Paint:
     MY_PINK = "pink"
     MY_GREY = "rgb(211,211,211)"
     MY_BLUE = "lightblue"
-    MY_ORANGE = "orange"
-    MY_PURPLE =  "#B266FF"
+    MY_ORANGE = "rgb(255,194,97)" #"orange"
+    MY_PURPLE =  "rgb(213,179,245)" #"#B266FF"
     ENTRY_MAP_CUT = 20
     MY_GREEN = "green"
 
