@@ -4,8 +4,10 @@ from django.shortcuts import redirect
 from .create_update import create_or_update_needs, create_or_update_workload, create_or_update_res_max, \
     create_or_update_wish
 from .models import Role, Project, UserProfile
+from .timing import timing_decorator
 
 
+@timing_decorator
 def save_max(request):
     msg=""
     html = ""
@@ -36,7 +38,7 @@ def save_max(request):
     return redirect(f"/max/")#"available_all(request)  # s
 
 
-
+@timing_decorator
 def save_task(request):
     print(787)
     p = 0
@@ -68,7 +70,7 @@ def save_task(request):
 
     return redirect(html)
 
-
+@timing_decorator
 def save_needs(request):
     p = 0
     j = 0
@@ -94,7 +96,7 @@ def save_needs(request):
     return redirect(html)
 
 
-
+@timing_decorator
 def save_wish(request):
     html=''
     j = 0

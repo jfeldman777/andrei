@@ -8,6 +8,7 @@ from .db import get_prj_triplet, workload_role_project_12, delta_role_project_12
 from .models import Project,Role,Wish,Grade
 
 from .paint import Paint
+from .timing import timing_decorator
 from .utils import date0, inc, up
 from  .vvv import moon, outsrc, vacancia
 
@@ -55,8 +56,7 @@ class BalanceView(View):
                 
         return
 
-    
-    
+    @timing_decorator
     def get(self, request,id,coord=0, mod=0,n=12):
         self.init(id,coord, mod,n)
         moon12 = moon()
@@ -111,7 +111,7 @@ class BalanceView(View):
         else:
             return render(request, "balance_1_needs.html", moon12)
 
-        
+    @timing_decorator
     def get_1(self,role,project,delta,dem_rj):
         if self.coord == 1:
             p1 = project.title
@@ -160,8 +160,8 @@ class BalanceView(View):
         self.w1.append(p1 + delta)  ############################
 
         return
-    
-    
+
+    @timing_decorator
     def get_2exp(self,role,project,wish,delta,dem_rj):
         p1 = [project.title ,      role.title]
 
@@ -171,8 +171,8 @@ class BalanceView(View):
             self.w2.append(p1+dem_rj)
 
         return
-    
-    
+
+    @timing_decorator
     def get_2(self,role,project,wish,delta,dem_rj):
         self.paint2.next_row(None)
 
@@ -206,8 +206,7 @@ class BalanceView(View):
 
         return
 
-
-    
+    @timing_decorator
     def get_3(self,role,project,wish,delta):
         p3 = project.title if self.coord == 1 else role.title
         people_rv = real_and_virtual_people(role)
@@ -257,6 +256,7 @@ class BalanceView(View):
                 self.w3.append(c_w3)
         return
 
+    @timing_decorator
     def get_4(self,role,project):
         people_rr = real_people(role)
         pp2 = project.title if self.coord == 1 else role.title
@@ -284,6 +284,7 @@ class BalanceView(View):
 
         return
 
+    @timing_decorator
     def get_0(self, project, role):
         zo = None
         zv = None
