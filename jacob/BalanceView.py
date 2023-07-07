@@ -230,7 +230,7 @@ class BalanceView(View):
                         "link": f"{person.id}.{role.id}.{project.id}.{d.year}-{d.month}-15",
                         "up": up(max(-delta[i], 0), diff[i], wish),
                         "val": minus(a_w3[i],diff[i]),
-                        "color": paint3.color_workload(isOut, diff[i],delta[i],False),
+                        "color": paint3.color_workload(isOut, delta[i],False),
                         "tcolor":my_red(a_w3[i],diff[i]),
                         "class": "  good",
                         "align": "center"

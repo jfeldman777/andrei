@@ -90,7 +90,7 @@ def mon_bool_exp(dmin:date, dmax:date, dstart:date, dend:date)->List[str]:
     d4 = dend.replace(day=15)
     while d <= d2:
         b = d3 <= d <= d4
-        star = '*' if b else '-'
+        star = '*' if b else ''
         L.append(star)
         d = inc(d)
         
