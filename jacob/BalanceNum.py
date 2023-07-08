@@ -20,15 +20,10 @@ class BalanceNum(View):
         self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']
         self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']
 
-        self.IdsPerson = list(UserProfile.objects.all().values_list('id', flat=True))
+        self.people = UserProfile.objects.exclude(is_virtual=True).order_by('fio')
+        self.IdsPerson = list(self.people.values_list('id', flat=True))
 
         self.nTime = 12
-
-        user_role_list = list(UserProfile.objects.all().values('id', 'role'))
-        self.user_role_dict = {item['id']: item['role'] for item in user_role_list}
-
-
-
         return
 
     def setAVLprt(self):
@@ -37,15 +32,15 @@ class BalanceNum(View):
         else:
             avls = Less.objects.filter(project=self.id)
         for a in avls:
-            self.AVL[a.person,self.get_role_id(a.role)][time_n(a.start_date)-1]=a.load
+            self.AVLprt[a.person,self.get_role_id(a.role)][time_n(a.start_date)-1]=a.load
         for p in IdsPerson:
             for r in IdsRole:
                 for t in range(nTime):
-                    if self.AVL[p,r][t]==0:
+                    if self.AVLprt[p,r][t]==0:
                         if t == 0 and self.user_role_dict[p]==r:
-                            self.AVL[p,r,t]==100
+                            self.AVLprt[p,r,t]==100
                         else:
-                            self.AVL[p, r][t] == self.AVL[p,r][t-1]
+                            self.AVLprt[p, r][t] == self.AVLprt[p,r][t-1]
         return
 
     def setNEEDSrjt(self):
@@ -55,53 +50,55 @@ class BalanceNum(View):
             needs = Load.objects.filter(project=self.id)
 
         for a in needs:
-            self.NEEDS[a.role,a.project][time_n(a.month)-1]=a.load
+            self.NEEDSrjt[a.role,a.project][time_n(a.month)-1]=a.load
 
         return
 
-    def setWORK(self):
+    def setWORKprjt(self):
         if coord == 1:
             works = Task.objects.filter(role=self.id)
         else:
             works = Task.objects.filter(project=self.id)
         for a in works:
-            self.WORK[a.person,a.role][time_n(a.month)-1]=a.load
+            self.WORKprjt[a.person,a.role,a.project][time_n(a.month)-1]=a.load
 
-    def set_R_W_rest(self):
+    def set_R_W_prt(self):
+        self.R_W_prt = self.AVLprt.copy()
         for p in IdsPerson:
             for r in IdsRole:
                 for t in range(nTime):
                     for j in IdsProject:
-                        self.R_W_rest[p,r][t] -= self.WORK[p,r,j][t]
+                        self.R_W_prt[p,r][t] -= self.WORKprjt[p,r,j][t]
         return
 
-    def set_N_W_balance(self):
-        for p in IdsPerson:
-            for r in IdsRole:
+    def set_N_W_rjt(self):
+        self.N_W_rjt = self.NEEDSrjt.copy()
+            for r in self.IdsRole:
                 for t in range(nTime):
-                    for j in IdsProject:
-                        self.N_W_balance[p, r][ t] -= self.WORK[p, r, j][ t]
+                    for j in self.IdsProject:
+                        for p in self.IdsPerdon
+                            self.N_W_rjt[r,j][ t] -= self.WORKprjt[p, r, j][ t]
 
     def set_PRJtime(self):
-        for j in IdsProject:
-            d1 = self.prj_start_dict[j]
-            d2 = self.prj_end_dict[j]
+        for project in selfProjects:
+            d1 = project.start_date
+            d2 = project.end_date
             for t in range(nTime):
                 self.PRJTime = (time_n(d1) <= t) and (time_n(d2) >= t)
 
         return
 
-    def get_role_id(self,role_id):
-        if nRole == 1:
-            return 0
-        else:
-            return role_id
-
-    def get_prj_id(self,prj_id):
-        if nProject == 1:
-            return 0
-        else:
-            return prj_id
+    # def get_role_id(self,role_id):
+    #     if nRole == 1:
+    #         return 0
+    #     else:
+    #         return role_id
+    #
+    # def get_prj_id(self,prj_id):
+    #     if nProject == 1:
+    #         return 0
+    #     else:
+    #         return prj_id
 
     def init(self,id,coord=0, mod=0,n=12):
         self.n = n
@@ -111,24 +108,22 @@ class BalanceNum(View):
 
         if coord == 0:
             self.nProject = 1
-            self.IdsProject = [id]
-            self.IdsRole = list(Role.objects.all().values_list('id', flat=True))
-            prj_start_list = [Project.objects.get(id=id).values('start_date')]
-            self.prj_start_dict = {item['id']: item['start_date'] for item in prj_start_list}
+            self.IdsProject = [self.id]
+            self.projects = [Project.objects.get(id = self.id)]
 
-            prj_end_list = [Project.objects.all().values('end_date')]
-            self.prj_end_dict = {item['id']: item['end_date'] for item in prj_end_list}
+            self.roles = Role.objects.all().order_by('title')
+            self.IdsRole = list(self.roles.values_list('id', flat=True))
+
+
 
         else:
             self.nRole = 1
-            self.IdsProject = list(Project.objects.all().values_list('id', flat=True))
-            self.IdsRole = [id]
+            self.IdsRole = [self.id]
+            self.roles = [Role.objects.get(id=self.id)]
 
-            prj_start_list = list(Project.objects.all().values('id', 'start_date'))
-            self.prj_start_dict = {item['id']: item['start_date'] for item in prj_start_list}
+            self.projects = Project.objects.all().order_by('title')
+            self.IdsProject = list(self.projects.values_list('id', flat=True))
 
-            prj_end_list = list(Project.objects.all().values('id', 'end_date'))
-            self.prj_end_dict = {item['id']: item['end_date'] for item in prj_end_list}
 
         self.AVL = np.zeros((nPerson,nRole),dtype=np.array((nTime),dtype=int))
         self.NEEDS = np.zeros((nRole,nProject),dtype=np.array((nTime),dtype=int))
@@ -149,10 +144,21 @@ class BalanceNum(View):
         return
 
     def get1(self):
+
+
         pass
     def get2(self):
+        if self.coord == 0:
+            for role in IdsRole:
+                self.w2.append([role]+self.NEEDSrjt[role,self.id])
+        else:
+            for project in self.IdsProject:
+                self.w2.append([project]+self.NEEDSrjt[self.id,project])
+
         pass
     def get3(self):
+
         pass
     def get4(self):
+
         pass
