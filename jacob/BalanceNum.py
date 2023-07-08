@@ -54,15 +54,19 @@ class BalanceNum(View):
             r = a.role
             t = time_n(a.start_date)   #-1
             self.AVLprt[p.id,r.id,t]=a.load
-        for p in self.IdsPerson:
-            for r in self.IdsRole:
-                for t in range(self.nTime):
-                    print(p,r,t)
-                    if self.AVLprt[p,r,t]==0:
-                        if t == 0 and self.people_dict[p]==r:
-                            self.AVLprt[p,r,t]==100
-                        else:
-                            self.AVLprt[p, r,t] == self.AVLprt[p,r,t-1]
+        try:
+            for p in self.IdsPerson:
+                for r in self.IdsRole:
+                    for t in range(self.nTime):
+                        print(p,r,t)
+                        if self.AVLprt[p,r,t]==0:
+                            if t == 0 and self.people_dict[p]==r:
+                                self.AVLprt[p,r,t]==100
+                            else:
+                                self.AVLprt[p, r,t] == self.AVLprt[p,r,t-1]
+        except:
+            print(p,r,t)
+
         return
 
     def setNEEDSrjt(self):
@@ -72,8 +76,17 @@ class BalanceNum(View):
             needs = Load.objects.filter(project=self.id)
 
         for a in needs:
-            self.NEEDSrjt[a.role,a.project][time_n(a.month)-1]=a.load
-
+            try:
+                r = a.role
+                j = a.project
+                t = time_n(a.month)
+                print(r,j,t)
+                try:
+                    self.NEEDSrjt[r,j,t]=a.load
+                except:
+                    print(r,j,t)
+            except:
+                print(a)
         return
 
     def setWORKprjt(self):
@@ -82,24 +95,33 @@ class BalanceNum(View):
         else:
             works = Task.objects.filter(project=self.id)
         for a in works:
-            self.WORKprjt[a.person,a.role,a.project][time_n(a.month)-1]=a.load
+            try:
+                self.WORKprjt[a.person,a.role,a.project][time_n(a.month)]=a.load
+            except:
+                print(101)
 
     def set_R_W_prt(self):
         self.R_W_prt = self.AVLprt.copy()
-        for p in IdsPerson:
-            for r in IdsRole:
-                for t in range(nTime):
-                    for j in IdsProject:
-                        self.R_W_prt[p,r][t] -= self.WORKprjt[p,r,j][t]
+        for p in self.IdsPerson:
+            for r in self.IdsRole:
+                for t in range(self.nTime):
+                    for j in self.IdsProject:
+                        try:
+                            self.R_W_prt[p,r,t] -= self.WORKprjt[p,r,j,t]
+                        except:
+                            pass
         return
 
     def set_N_W_rjt(self):
             self.N_W_rjt = self.NEEDSrjt.copy()
             for r in self.IdsRole:
-                for t in range(nTime):
+                for t in range(self.nTime):
                     for j in self.IdsProject:
-                        for p in self.IdsPerdon:
-                            self.N_W_rjt[r,j][ t] -= self.WORKprjt[p, r, j][ t]
+                        for p in self.IdsPerson:
+                            try:
+                                self.N_W_rjt[r,j, t] -= self.WORKprjt[p, r, j, t]
+                            except:
+                                pass
 
     def set_PRJtime(self):
         for project in selfProjects:
