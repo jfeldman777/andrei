@@ -41,9 +41,12 @@ class BalanceNum(View):
             return 0
         else:
             return prj_id
+
     def get(self,request,id,coord,mod):
         self.init(id,coord,mod)
+        self.get2()
         return render(request,'nb.html',{'w':self.w2})
+
     def setAVLprt(self):
         if self.coord == 1:
             avls = Less.objects.filter(role=self.id)
@@ -124,10 +127,10 @@ class BalanceNum(View):
                                 pass
 
     def set_PRJtime(self):
-        for project in selfProjects:
+        for project in self.projects:
             d1 = project.start_date
             d2 = project.end_date
-            for t in range(nTime):
+            for t in range(self.nTime):
                 self.PRJTime = (time_n(d1) <= t) and (time_n(d2) >= t)
 
         return
@@ -182,11 +185,20 @@ class BalanceNum(View):
         pass
     def get2(self):
         if self.coord == 0:
-            for role in IdsRole:
-                self.w2.append([role]+self.NEEDSrjt[role,self.id])
+            for role in self.IdsRole:
+                try:
+                    sliced_array = self.NEEDSrjt[role, 0, :]
+                    wx = [self.roles[role].title] + sliced_array.tolist()
+                    self.w2.append(wx)
+                except:
+                    pass
         else:
             for project in self.IdsProject:
-                self.w2.append([project]+self.NEEDSrjt[self.id,project])
+                try:
+                    wx = [project]+self.NEEDSrjt[0,project,:].toList()
+                    self.w2.append(wx)
+                except:
+                    pass
 
         pass
     def get3(self):
