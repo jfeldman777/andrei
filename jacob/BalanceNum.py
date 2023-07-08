@@ -13,14 +13,13 @@ class BalanceNum(View):
         self.w3 = []
         self.w4 = []
 
-        self.flag = True
+        self.OUTSRC = UserProfile.objects.get(fio='АУТСОРС')
+        self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
 
         self.nProject = Project.objects.all().aggregate(Max('id'))['id__max']
         self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']
         self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']
 
-        self.IdsProject = list(Project.objects.all().values_list('id', flat=True))
-        self.IdsRole = list(Role.objects.all().values_list('id', flat=True))
         self.IdsPerson = list(UserProfile.objects.all().values_list('id', flat=True))
 
         self.nTime = 12
@@ -28,46 +27,52 @@ class BalanceNum(View):
         user_role_list = list(UserProfile.objects.all().values('id', 'role'))
         self.user_role_dict = {item['id']: item['role'] for item in user_role_list}
 
-        prj_start_list = list(Project.objects.all().values('id', 'start_date'))
-        self.prj_start_dict = {item['id']: item['start_date'] for item in prj_start_list}
 
-        prj_end_list = list(Project.objects.all().values('id', 'end_date'))
-        self.prj_end_dict = {item['id']: item['end_date'] for item in prj_end_list}
 
         return
 
     def setAVLprt(self):
-        avls = Less.objects.all()
+        if coord == 1:
+            avls = Less.objects.filter(role=self.id)
+        else:
+            avls = Less.objects.filter(project=self.id)
         for a in avls:
-            self.AVL[a.person,self.get_role_id(a.role),time_n(a.start_date)-1]=a.load
+            self.AVL[a.person,self.get_role_id(a.role)][time_n(a.start_date)-1]=a.load
         for p in IdsPerson:
             for r in IdsRole:
                 for t in range(nTime):
-                    if self.AVL[p,r,t]==0:
+                    if self.AVL[p,r][t]==0:
                         if t == 0 and self.user_role_dict[p]==r:
                             self.AVL[p,r,t]==100
                         else:
-                            self.AVL[p, r, t] == self.AVL[p,r,t-1]
+                            self.AVL[p, r][t] == self.AVL[p,r][t-1]
         return
 
     def setNEEDSrjt(self):
-        needs = Load.objects.all()
+        if coord == 1:
+            needs = Load.objects.filter(role=self.id)
+        else:
+            needs = Load.objects.filter(project=self.id)
+
         for a in needs:
-            self.NEEDS[a.role,a.project,time_n(a.month)-1]=a.load
+            self.NEEDS[a.role,a.project][time_n(a.month)-1]=a.load
 
         return
 
     def setWORK(self):
-        works = Task.objects.all()
+        if coord == 1:
+            works = Task.objects.filter(role=self.id)
+        else:
+            works = Task.objects.filter(project=self.id)
         for a in works:
-            self.WORK[a.person,a.role,time_n(a.month)-1]=a.load
+            self.WORK[a.person,a.role][time_n(a.month)-1]=a.load
 
     def set_R_W_rest(self):
         for p in IdsPerson:
             for r in IdsRole:
                 for t in range(nTime):
                     for j in IdsProject:
-                        self.R_W_rest[p,r,t] -= self.WORK[p,r,j,t]
+                        self.R_W_rest[p,r][t] -= self.WORK[p,r,j][t]
         return
 
     def set_N_W_balance(self):
@@ -75,7 +80,7 @@ class BalanceNum(View):
             for r in IdsRole:
                 for t in range(nTime):
                     for j in IdsProject:
-                        self.N_W_balance[p, r, t] -= self.WORK[p, r, j, t]
+                        self.N_W_balance[p, r][ t] -= self.WORK[p, r, j][ t]
 
     def set_PRJtime(self):
         for j in IdsProject:
@@ -106,12 +111,28 @@ class BalanceNum(View):
 
         if coord == 0:
             self.nProject = 1
+            self.IdsProject = [id]
+            self.IdsRole = list(Role.objects.all().values_list('id', flat=True))
+            prj_start_list = [Project.objects.get(id=id).values('start_date')]
+            self.prj_start_dict = {item['id']: item['start_date'] for item in prj_start_list}
+
+            prj_end_list = [Project.objects.all().values('end_date')]
+            self.prj_end_dict = {item['id']: item['end_date'] for item in prj_end_list}
+
         else:
             self.nRole = 1
+            self.IdsProject = list(Project.objects.all().values_list('id', flat=True))
+            self.IdsRole = [id]
 
-        self.AVL = np.zeros((nPerson,nRole,nTime),dtype=int)
-        self.NEEDS = np.zeros((nRole,nProject,nTime),dtype=int)
-        self.WORK = np.zeros((nPerson,nRole,nProject,nTime),dtype=int)
+            prj_start_list = list(Project.objects.all().values('id', 'start_date'))
+            self.prj_start_dict = {item['id']: item['start_date'] for item in prj_start_list}
+
+            prj_end_list = list(Project.objects.all().values('id', 'end_date'))
+            self.prj_end_dict = {item['id']: item['end_date'] for item in prj_end_list}
+
+        self.AVL = np.zeros((nPerson,nRole),dtype=np.array((nTime),dtype=int))
+        self.NEEDS = np.zeros((nRole,nProject),dtype=np.array((nTime),dtype=int))
+        self.WORK = np.zeros((nPerson,nRole,nProject),dtype=np.array((nTime),dtype=int))
 
         self.setAVLprt()
         self.NEEDS()
@@ -126,3 +147,12 @@ class BalanceNum(View):
         self.set_PRJtime()
 
         return
+
+    def get1(self):
+        pass
+    def get2(self):
+        pass
+    def get3(self):
+        pass
+    def get4(self):
+        pass
