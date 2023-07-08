@@ -3,6 +3,7 @@ from . import vvv, export, gisto, reports
 from . import save_forms
 from . import  view_forms
 from .BalanceView import BalanceView
+from .BalanceNum import BalanceNum
 
 
 urlpatterns = [
@@ -10,6 +11,7 @@ urlpatterns = [
     path("project_form/", view_forms.project_form, name="project_form"),
 
     path("balance/<int:id>/<int:coord>/<int:mod>/", BalanceView.as_view()),
+    path("nb/<int:id>/<int:coord>/<int:mod>/", BalanceNum.as_view()),
 
 
 

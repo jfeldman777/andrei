@@ -1,0 +1,17 @@
+{% extends 'base3.html' %}
+{% load custom_filters %}
+{% block content %}
+{% load static %}
+{% include 'menu2.html' %}
+<table>
+    {% for tt in w %}
+    <tr>
+        {% for t in tt %}
+        <td>
+            {{t}}
+        </td>
+        {% ensfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

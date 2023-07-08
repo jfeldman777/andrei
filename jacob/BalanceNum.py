@@ -1,10 +1,11 @@
 from django.views import View
 import numpy as np
-from .export import time_difference
+from .utils import timespan_len,date0
+from .models import UserProfile,Project,Role,Less,Load,Task
 from django.db.models import Max
 
 def time_n(d):
-    return time_difference(d,date0())
+    return timespan_len(d,date0())
 
 class BalanceNum(View):
     def __init__(self):
@@ -20,19 +21,34 @@ class BalanceNum(View):
         self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']
         self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']
 
-        self.people = UserProfile.objects.exclude(is_virtual=True).order_by('fio')
+        self.people = UserProfile.objects.exclude(virtual=True).order_by('fio')
         self.IdsPerson = list(self.people.values_list('id', flat=True))
 
         self.nTime = 12
         return
+    def get_role_id(self,role_id):
+        if self.nRole == 1:
+            return 0
+        else:
+            return role_id
 
+    def get_prj_id(self,prj_id):
+        if self.nProject == 1:
+            return 0
+        else:
+            return prj_id
+    def get(self,request,id,coord,mod):
+        self.init(id,coord,mod)
+        return render(request,'nb.html',{'w':self.w2})
     def setAVLprt(self):
-        if coord == 1:
+        if self.coord == 1:
             avls = Less.objects.filter(role=self.id)
         else:
-            avls = Less.objects.filter(project=self.id)
+            avls = Less.objects.all()
         for a in avls:
-            self.AVLprt[a.person,self.get_role_id(a.role)][time_n(a.start_date)-1]=a.load
+            p = a.person
+            r = a.role
+            self.AVLprt[p,r,time_n(a.start_date)-1]=a.load
         for p in IdsPerson:
             for r in IdsRole:
                 for t in range(nTime):
@@ -40,11 +56,11 @@ class BalanceNum(View):
                         if t == 0 and self.user_role_dict[p]==r:
                             self.AVLprt[p,r,t]==100
                         else:
-                            self.AVLprt[p, r][t] == self.AVLprt[p,r][t-1]
+                            self.AVLprt[p, r,t] == self.AVLprt[p,r,t-1]
         return
 
     def setNEEDSrjt(self):
-        if coord == 1:
+        if self.coord == 1:
             needs = Load.objects.filter(role=self.id)
         else:
             needs = Load.objects.filter(project=self.id)
@@ -55,7 +71,7 @@ class BalanceNum(View):
         return
 
     def setWORKprjt(self):
-        if coord == 1:
+        if self.coord == 1:
             works = Task.objects.filter(role=self.id)
         else:
             works = Task.objects.filter(project=self.id)
@@ -72,11 +88,11 @@ class BalanceNum(View):
         return
 
     def set_N_W_rjt(self):
-        self.N_W_rjt = self.NEEDSrjt.copy()
+            self.N_W_rjt = self.NEEDSrjt.copy()
             for r in self.IdsRole:
                 for t in range(nTime):
                     for j in self.IdsProject:
-                        for p in self.IdsPerdon
+                        for p in self.IdsPerdon:
                             self.N_W_rjt[r,j][ t] -= self.WORKprjt[p, r, j][ t]
 
     def set_PRJtime(self):
@@ -88,17 +104,6 @@ class BalanceNum(View):
 
         return
 
-    # def get_role_id(self,role_id):
-    #     if nRole == 1:
-    #         return 0
-    #     else:
-    #         return role_id
-    #
-    # def get_prj_id(self,prj_id):
-    #     if nProject == 1:
-    #         return 0
-    #     else:
-    #         return prj_id
 
     def init(self,id,coord=0, mod=0,n=12):
         self.n = n
@@ -125,20 +130,20 @@ class BalanceNum(View):
             self.IdsProject = list(self.projects.values_list('id', flat=True))
 
 
-        self.AVL = np.zeros((nPerson,nRole),dtype=np.array((nTime),dtype=int))
-        self.NEEDS = np.zeros((nRole,nProject),dtype=np.array((nTime),dtype=int))
-        self.WORK = np.zeros((nPerson,nRole,nProject),dtype=np.array((nTime),dtype=int))
+        self.AVLprt = np.zeros((self.nPerson,self.nRole,self.nTime),dtype=int)
+        self.NEEDSrjt = np.zeros((self.nRole,self.nProject,self.nTime),dtype=int)
+        self.WORKprjt = np.zeros((self.nPerson,self.nRole,self.nProject,self.nTime),dtype=int)
 
         self.setAVLprt()
-        self.NEEDS()
-        self.WORK()
+        self.setNEEDSrjt()
+        self.setWORKprjt()
 
-        self.R_W_rest = self.AVL.copy()
-        self.N_W_balance = self.NEEDS.copy()
-        self.PRJtime = np.zeros((nProject,nTime),dtype=bool)
+        self.R_W_prt = self.AVLprt.copy()
+        self.N_W_rjt = self.NEEDSrjt.copy()
+        self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
 
-        self.set_R_W_rest()
-        self.set_N_W_balance()
+        self.set_R_W_prt()
+        self.set_N_W_rjt()
         self.set_PRJtime()
 
         return
