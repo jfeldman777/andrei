@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views import View
 import numpy as np
 from .utils import timespan_len,date0
@@ -17,12 +18,15 @@ class BalanceNum(View):
         self.OUTSRC = UserProfile.objects.get(fio='АУТСОРС')
         self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
 
-        self.nProject = Project.objects.all().aggregate(Max('id'))['id__max']
-        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']
-        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']
+        self.nProject = Project.objects.all().aggregate(Max('id'))['id__max']+1
+        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']+1
+        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']+1
 
         self.people = UserProfile.objects.exclude(virtual=True).order_by('fio')
         self.IdsPerson = list(self.people.values_list('id', flat=True))
+
+        people_list = list(self.people.values('id', 'role'))
+        self.people_dict = {item['id']: item['role'] for item in people_list}
 
         self.nTime = 12
         return
@@ -48,12 +52,14 @@ class BalanceNum(View):
         for a in avls:
             p = a.person
             r = a.role
-            self.AVLprt[p,r,time_n(a.start_date)-1]=a.load
-        for p in IdsPerson:
-            for r in IdsRole:
-                for t in range(nTime):
-                    if self.AVLprt[p,r][t]==0:
-                        if t == 0 and self.user_role_dict[p]==r:
+            t = time_n(a.start_date)   #-1
+            self.AVLprt[p.id,r.id,t]=a.load
+        for p in self.IdsPerson:
+            for r in self.IdsRole:
+                for t in range(self.nTime):
+                    print(p,r,t)
+                    if self.AVLprt[p,r,t]==0:
+                        if t == 0 and self.people_dict[p]==r:
                             self.AVLprt[p,r,t]==100
                         else:
                             self.AVLprt[p, r,t] == self.AVLprt[p,r,t-1]
