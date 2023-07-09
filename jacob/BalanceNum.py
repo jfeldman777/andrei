@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views import View
 import numpy as np
+
+from .paint import Paint
 from .utils import timespan_len, date0, up, inc_n
 from .models import UserProfile, Project, Role, Less, Load, Task, Wish
 from django.db.models import Max
@@ -17,6 +19,12 @@ class BalanceNum(View):
         self.w2 = []
         self.w3 = []
         self.w4 = []
+
+        self.paint1 = Paint()
+        self.paint2 = Paint()
+        self.paint3 = Paint()
+        self.paint4 = Paint()
+
 
         self.OUTSRC = UserProfile.objects.get(fio='АУТСОРС')
         self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
@@ -261,10 +269,6 @@ class BalanceNum(View):
         } for t in range(self.nTime)]
 
         return w2right
-
-
-
-
 
     def get3(self):
         if self.coord == 0:
