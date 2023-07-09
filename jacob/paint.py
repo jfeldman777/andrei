@@ -1,4 +1,4 @@
-from andrei2.jacob.utils import inc_n, date0
+from .utils import inc_n, date0
 
 
 class Paint:

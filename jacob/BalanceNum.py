@@ -69,7 +69,7 @@ class BalanceNum(View):
             'w3':self.w3,
             'w4':self.w4,
                    }
-        return render(request,'nb.html',context)
+        return render(request,'balance_4.html',context)
 
     def setAVLprt(self):
         if self.coord == 1:
@@ -337,3 +337,14 @@ class BalanceNum(View):
                     except:
                         pass
         pass
+
+    def get4left(self,person,role):
+        res = [{"color": self.paint4.rgb_back_left(), "align": "left",
+         "val": add_grade(person, role)}]
+        return res
+
+    def get4right(self,person,role,is_1=False):
+        c = self.R_W_prt(person, role)
+        res = [{"val": c[t], "align": "center",
+                "color": Paint.color(c[t], is_1)} for t in range(self.nTime)]
+        return res
