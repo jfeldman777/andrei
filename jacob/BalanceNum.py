@@ -209,19 +209,25 @@ class BalanceNum(View):
 
     def get2(self):
         if self.coord == 0:
+            k=0
             for r in self.roles:
-                    try:
-                        wx = [r.title] + self.NEEDSrjt[r.id, self.id, :].tolist()
-                        self.w2.append(wx)
-                    except:
-                        pass
+                k = 1-k
+                try:
+                    j = self.projects[0]
+                    wx = self.get2left(r,j) + self.get2right(r,j,k)
+                    self.w2.append(wx)
+                except:
+                    pass
         else:
+            k=0
             for j in self.projects:
-                    try:
-                        wx = [j.title]+self.NEEDSrjt[self.id,j.id,:].toList()
-                        self.w2.append(wx)
-                    except:
-                        pass
+                k = 1-k
+                try:
+                    r = self.roles[0]
+                    wx = self.get2left(r,j) + self.get2right(r,j,k)
+                    self.w2.append(wx)
+                except:
+                    pass
 
         pass
     def get_wish_sign(self,role,project):
@@ -239,7 +245,7 @@ class BalanceNum(View):
                          }
         return wx
 
-    #from .utils import date0
+
     def d2s(n):
         d = inc_n(date0(),n)
         s = f"{d.year}-{d.month}-15"
