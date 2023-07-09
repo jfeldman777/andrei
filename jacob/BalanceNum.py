@@ -8,6 +8,8 @@ from .utils import timespan_len, date0, up, inc_n
 from .models import UserProfile, Project, Role, Less, Load, Task, Wish
 from django.db.models import Max
 from .timing import timing_decorator
+from .vvv import moon
+
 
 def time_n(d):
     res = timespan_len(date0(),d)
@@ -56,20 +58,20 @@ class BalanceNum(View):
         return val
 
 
-    #@timing_decorator
+    @timing_decorator
     def get(self,request,id,coord,mod):
+        moon12 = moon()
         self.init(id,coord,mod)
         self.get2()
         self.get1()
         self.get3()
         self.get4()
-        context = {
-            'w1':self.w1,
-            'w2':self.w2,
-            'w3':self.w3,
-            'w4':self.w4,
-                   }
-        return render(request,'balance_4.html',context)
+        moon12['w1'] = self.w1
+        moon12['w2'] = self.w2
+        moon12['w3'] = self.w3
+        moon12['w4'] = self.w4
+
+        return render(request,'balance_4.html',moon12)
 
     def setAVLprt(self):
         if self.coord == 1:
@@ -373,18 +375,22 @@ class BalanceNum(View):
     def get4(self):
         if self.coord == 0:
             for r in self.roles:
+                title = r.title
                 for p in self.people:
                         try:
-                            wx = [r.title,p.fio] + self.R_W_prt[p.id,r.id, :].tolist()
+                            wx = [title,p.fio] + self.R_W_prt[p.id,r.id, :].tolist()
                             self.w4.append(wx)
+                            title = -1
                         except:
                             pass
         else:
             for j in self.projects:
+                title = j.title
                 for p in self.people:
                     try:
-                        wx = [j.title,p.fio]+self.R_W_prt[p.id,self.id,:].toList()
+                        wx = [title,p.fio]+self.R_W_prt[p.id,self.id,:].toList()
                         self.w4.append(wx)
+                        title = -1
                     except:
                         pass
         pass
