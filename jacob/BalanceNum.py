@@ -20,7 +20,7 @@ class BalanceNum(View):
         self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
 
         self.nProject = Project.objects.all().aggregate(Max('id'))['id__max']+1
-        self.IdsProject = [-1]*self.nProject
+        # self.IdsProject = [-1]*self.nProject
 
 
         self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']+1
@@ -29,12 +29,16 @@ class BalanceNum(View):
 
         self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']+1
         self.people = UserProfile.objects.exclude(virtual=True).order_by('fio')
-        self.IdsPerson = [-1]*self.nPerson
-        for p in self.people:
-            self.IdsPerson[p.id] = p.id
 
         people_list = list(self.people.values('id', 'role'))
         self.people_dict = {item['id']: item['role'] for item in people_list}
+
+        self.people = list(self.people) + [self.OUTSRC,self.VACANCY]
+        # self.IdsPerson = [-1]*self.nPerson
+        # for p in self.people:
+        #     self.IdsPerson[p.id] = p.id
+
+
 
         self.nTime = 12
         return
@@ -48,9 +52,9 @@ class BalanceNum(View):
         context['nProject']=self.nProject
         context['nPerson']=self.nPerson
 
-        context['IdsRole']=self.IdsRole
-        context['IdsProject']=self.IdsProject
-        context['IdsPerson']=self.IdsPerson
+        # context['IdsRole']=self.IdsRole
+        # context['IdsProject']=self.IdsProject
+        # context['IdsPerson']=self.IdsPerson
 
         context['roles']=self.roles
         context['projects']=self.projects
@@ -117,38 +121,38 @@ class BalanceNum(View):
             except:
                 print(101)
 
-    def set_R_W_prt(self):
-        self.R_W_prt = self.AVLprt.copy()
-        for p in self.IdsPerson:
-            for r in self.IdsRole:
-                for t in range(self.nTime):
-                    for j in self.IdsProject:
-                        try:
-                            self.R_W_prt[p,r,t] -= self.WORKprjt[p,r,j,t]
-                        except:
-                            pass
-        return
-
-    def set_N_W_rjt(self):
-            self.N_W_rjt = self.NEEDSrjt.copy()
-            for r in self.IdsRole:
-                for t in range(self.nTime):
-                    for j in self.IdsProject:
-                        for p in self.IdsPerson:
-                            try:
-                                self.N_W_rjt[r,j, t] -= self.WORKprjt[p, r, j, t]
-                            except:
-                                pass
-
-    def set_PRJtime(self):
-        for project in self.projects:
-            d1 = project.start_date
-            d2 = project.end_date
-            for t in range(self.nTime):
-                self.PRJTime = (time_n(d1) <= t) and (time_n(d2) >= t)
-
-        return
-
+    # def set_R_W_prt(self):
+    #     self.R_W_prt = self.AVLprt.copy()
+    #     for p in self.IdsPerson:
+    #         for r in self.IdsRole:
+    #             for t in range(self.nTime):
+    #                 for j in self.IdsProject:
+    #                     try:
+    #                         self.R_W_prt[p,r,t] -= self.WORKprjt[p,r,j,t]
+    #                     except:
+    #                         pass
+    #     return
+    #
+    # def set_N_W_rjt(self):
+    #         self.N_W_rjt = self.NEEDSrjt.copy()
+    #         for r in self.IdsRole:
+    #             for t in range(self.nTime):
+    #                 for j in self.IdsProject:
+    #                     for p in self.IdsPerson:
+    #                         try:
+    #                             self.N_W_rjt[r,j, t] -= self.WORKprjt[p, r, j, t]
+    #                         except:
+    #                             pass
+    #
+    # def set_PRJtime(self):
+    #     for project in self.projects:
+    #         d1 = project.start_date
+    #         d2 = project.end_date
+    #         for t in range(self.nTime):
+    #             self.PRJTime = (time_n(d1) <= t) and (time_n(d2) >= t)
+    #
+    #     return
+    #
 
     def init(self,id,coord=0, mod=0,n=12):
         self.n = n
@@ -157,7 +161,7 @@ class BalanceNum(View):
         self.id = id
 
         if coord == 0:
-            self.IdsProject[id] = id
+            # self.IdsProject[id] = id
             self.projects = [Project.objects.get(id = self.id)]
 
             self.roles = Role.objects.all().order_by('title')
@@ -167,12 +171,12 @@ class BalanceNum(View):
 
 
         else:
-            self.IdsRole[id] = id
+            # self.IdsRole[id] = id
             self.roles = [Role.objects.get(id=self.id)]
 
             self.projects = Project.objects.all().order_by('title')
-            for r in self.roles:
-                self.IdsRole[r.id] = r.id
+            # for r in self.roles:
+            #     self.IdsRole[r.id] = r.id
 
 
         self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
@@ -184,13 +188,13 @@ class BalanceNum(View):
         self.NEEDSrjt = np.zeros((self.nRole+1,self.nProject+1,self.nTime),dtype=int)
         self.setNEEDSrjt()
 
-        self.R_W_prt = self.AVLprt.copy()
-        self.N_W_rjt = self.NEEDSrjt.copy()
-        self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
-
-        self.set_R_W_prt()
-        self.set_N_W_rjt()
-        self.set_PRJtime()
+        # self.R_W_prt = self.AVLprt.copy()
+        # self.N_W_rjt = self.NEEDSrjt.copy()
+        # self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
+        #
+        # self.set_R_W_prt()
+        # self.set_N_W_rjt()
+        # self.set_PRJtime()
 
         return
 
