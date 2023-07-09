@@ -62,6 +62,7 @@ class BalanceNum(View):
         context['needs']=self.R_W_prt
         context['avl']=self.AVLprt
         context['avls']=self.avls
+        context['work']=self.WORKprjt
         return render(request,'nb.html',context)
 
     def setAVLprt(self):
@@ -119,7 +120,7 @@ class BalanceNum(View):
             works = Task.objects.filter(project=self.id)
         for a in works:
             try:
-                self.WORKprjt[a.person,a.role,a.project,time_n(a.month)]=a.load
+                self.WORKprjt[a.person.id,a.role.id,a.project.id,time_n(a.month)]=a.load
             except:
                 print(101)
 
@@ -165,21 +166,10 @@ class BalanceNum(View):
         if coord == 0:
             # self.IdsProject[id] = id
             self.projects = [Project.objects.get(id = self.id)]
-
             self.roles = Role.objects.all().order_by('title')
-            for r in self.roles:
-               self.IdsRole[r.id] = r.id
-
-
-
         else:
-            # self.IdsRole[id] = id
             self.roles = [Role.objects.get(id=self.id)]
-
             self.projects = Project.objects.all().order_by('title')
-            # for r in self.roles:
-            #     self.IdsRole[r.id] = r.id
-
 
         self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
         self.setAVLprt()
@@ -244,7 +234,7 @@ class BalanceNum(View):
             for r in self.roles:
                 for p in self.people:
                         try:
-                            wx = [r.title,p.fio] + self.R_W_prt[p.id,r.id, self.id, :].tolist()
+                            wx = [r.title,p.fio] + self.R_W_prt[p.id,r.id, :].tolist()
                             self.w4.append(wx)
                         except:
                             pass
@@ -252,7 +242,7 @@ class BalanceNum(View):
             for j in self.projects:
                 for p in self.people:
                     try:
-                        wx = [j.title,p.fio]+self.R_W_prt[p.id,self.id,j.id,:].toList()
+                        wx = [j.title,p.fio]+self.R_W_prt[p.id,self.id,:].toList()
                         self.w4.append(wx)
                     except:
                         pass
