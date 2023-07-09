@@ -230,7 +230,7 @@ class BalanceNum(View):
 
     #from .utils import date0
     def d2s(n):
-        d = inc_n(data0(),n)
+        d = inc_n(date0(),n)
         s = f"{d.year}-{d.month}-15"
         return s
 
@@ -242,7 +242,7 @@ class BalanceNum(View):
             "class": " good",
             "up": up(max(-self.N_W_rjt[t], 0), self.R_W_prt[t], self.get_wish(role,project)),
         } for t in range(self.nTime)]
-        
+
         return w2right
 
 
