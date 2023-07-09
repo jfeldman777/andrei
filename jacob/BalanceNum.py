@@ -142,6 +142,10 @@ class BalanceNum(View):
                             pass
         return
 
+    def set_R_W_rt(self):
+        self.R_W_rt = np.sum(self.R_W_prt, axis=0)
+
+
     def set_N_W_rjt(self):
             self.N_W_rjt = self.NEEDSrjt.copy()
             for r in self.roles:
@@ -191,6 +195,8 @@ class BalanceNum(View):
         self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
 
         self.set_R_W_prt()
+        self.set_R_W_rt()
+
         self.set_N_W_rjt()
         self.set_PRJtime()
 
@@ -204,10 +210,12 @@ class BalanceNum(View):
                         self.w1.append(wx)
                     except:
                         pass
+                    title=-1
         else:
-            for p in self.projects:
+
+            for j in self.projects:
                     try:
-                        wx = [p.title]+self.N_W_rjt[self.id,p.id,:].toList()
+                        wx = [j.title]+self.N_W_rjt[self.id,j.id,:].toList()
                         self.w1.append(wx)
                     except:
                         pass
@@ -218,22 +226,26 @@ class BalanceNum(View):
 
     def get2(self):
         if self.coord == 0:
+
             k=0
             for r in self.roles:
                 k = 1-k
+                self.paint2.next_row()
                 try:
                     j = self.projects[0]
-                    wx = self.get2left(r,j) + self.get2right(r,j,k)
-                    self.w2.append(wx)
+                    wx1 = self.get2left(r,j,k)
+                    wx2 = self.get2right(r,j)
+                    self.w2.append([wx1] + wx2)
                 except:
                     pass
         else:
             k=0
             for j in self.projects:
                 k = 1-k
+                self.paint2.next_row()
                 try:
                     r = self.roles[0]
-                    wx = self.get2left(r,j) + self.get2right(r,j,k)
+                    wx = [self.get2left(r,j,k)] + self.get2right(r,j)
                     self.w2.append(wx)
                 except:
                     pass
@@ -244,30 +256,56 @@ class BalanceNum(View):
         ws = ' !' if wish != '' else ''
         return ws
 
-    def get2left(self,role,project,first,k):
+    def get2left(self,role,project,k):
+        title = project.title if self.coord == 1 else role.title
+        wsh = self.get_wish_sign(role,project)
         wx = {"class": "even" if k == 0 else "odd",
                          "up": self.get_wish(role,project),
                          "color": self.paint2.rgb_back_left(),
-                         "val": first + self.get_wish_sign(role,project),
-
-                         "project": project.id, "role": role.id, "class": "wish",
+                         "val": title + wsh,
+                         "project": project.id,
+                         "role": role.id,
+                         "class": "wish",
                          }
         return wx
 
 
-    def d2s(n):
-        d = inc_n(date0(),n)
+    def d2s(self,n):
+        d0 = date0()
+        d = inc_n(d0,n)
         s = f"{d.year}-{d.month}-15"
         return s
 
     def get2right(self,role,project):
+
+        res = []
+
+        for t in range(self.nTime):
+           ds = self.d2s(t)
+           self.paint2.next_cell(self.NEEDSrjt[role.id,project.id,t])
+           res.append(
+               {  "link": f"0.{role.id}.{project.id}.{ds}",
+                    "val": self.NEEDSrjt[role.id,project.id,t],
+                    "color": self.paint2.color_needs_n(project.start_date, project.end_date, t),
+                    "class": " good",
+                    "up": up(
+                        max(-self.N_W_rjt[role.id,project.id,t], 0),
+                             self.R_W_rt[role.id,t],
+                             self.get_wish(role,project)
+                    ),
+                })
+        return res
+
+    def get2right1(self,role,project):
+
         w2right = [
         {  "link": f"0.{role.id}.{project.id}.{self.d2s(t)}",
             "val": self.NEEDSrjt[role.id,project.id,t],
             "color": self.paint2.color_needs_n(project.start_date, project.end_date, t),
             "class": " good",
             "up": up(max(-self.N_W_rjt[t], 0), self.R_W_prt[t], self.get_wish(role,project)),
-        } for t in range(self.nTime)]
+        }
+            for t in range(self.nTime)]
 
         return w2right
 
@@ -318,7 +356,8 @@ class BalanceNum(View):
                     except:
                         pass
 
-        pass
+        return
+
     def get4(self):
         if self.coord == 0:
             for r in self.roles:
