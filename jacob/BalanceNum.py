@@ -4,6 +4,7 @@ import numpy as np
 from .utils import timespan_len,date0
 from .models import UserProfile,Project,Role,Less,Load,Task
 from django.db.models import Max
+from .timing import timing_decorator
 
 def time_n(d):
     res = timespan_len(date0(),d)
@@ -34,35 +35,33 @@ class BalanceNum(View):
         self.people_dict = {item['id']: item['role'] for item in people_list}
 
         self.people = list(self.people) + [self.OUTSRC,self.VACANCY]
-        # self.IdsPerson = [-1]*self.nPerson
-        # for p in self.people:
-        #     self.IdsPerson[p.id] = p.id
-
-
 
         self.nTime = 12
         return
 
-
+    #@timing_decorator
     def get(self,request,id,coord,mod):
         self.init(id,coord,mod)
+        self.get2()
         self.get3()
-        context = {'w':self.w3}
-        context['nRole']=self.nRole
-        context['nProject']=self.nProject
-        context['nPerson']=self.nPerson
+        self.get4()
+        context = {'w':self.w4}
+        # context['nRole']=self.nRole
+        # context['nProject']=self.nProject
+        # context['nPerson']=self.nPerson
 
         # context['IdsRole']=self.IdsRole
         # context['IdsProject']=self.IdsProject
         # context['IdsPerson']=self.IdsPerson
-
-        context['roles']=self.roles
-        context['projects']=self.projects
-        context['people']=self.people
-
-        context['needs_ar']=self.NEEDSrjt
-        context['needs']=self.needs
-
+        #
+        # context['roles']=self.roles
+        # context['projects']=self.projects
+        # context['people']=self.people
+        #
+        # context['needs_ar']=self.NEEDSrjt
+        context['needs']=self.R_W_prt
+        context['avl']=self.AVLprt
+        context['avls']=self.avls
         return render(request,'nb.html',context)
 
     def setAVLprt(self):
@@ -70,20 +69,23 @@ class BalanceNum(View):
             avls = Less.objects.filter(role=self.id)
         else:
             avls = Less.objects.all()
+        self.avls=avls
         for a in avls:
             p = a.person
             r = a.role
             t = time_n(a.start_date)   #-1
             self.AVLprt[p.id,r.id,t]=a.load
+            print(p.id,r.id,t,a.load,999)
+
         try:
-            for p in self.IdsPerson:
-                for r in self.IdsRole:
+            for p in self.people:
+                for r in self.roles:
                     for t in range(self.nTime):
-                        if self.AVLprt[p,r,t]==0:
+                        if self.AVLprt[p.id,r.id,t]==0:
                             if t == 0 and self.people_dict[p]==r:
-                                self.AVLprt[p,r,t]==100
+                                self.AVLprt[p.id,r.id,t]==100
                             else:
-                                self.AVLprt[p, r,t] == self.AVLprt[p,r,t-1]
+                                self.AVLprt[p.id, r.id,t] == self.AVLprt[p.id,r.id,t-1]
         except:
             print(p,r,t)
 
@@ -121,38 +123,38 @@ class BalanceNum(View):
             except:
                 print(101)
 
-    # def set_R_W_prt(self):
-    #     self.R_W_prt = self.AVLprt.copy()
-    #     for p in self.IdsPerson:
-    #         for r in self.IdsRole:
-    #             for t in range(self.nTime):
-    #                 for j in self.IdsProject:
-    #                     try:
-    #                         self.R_W_prt[p,r,t] -= self.WORKprjt[p,r,j,t]
-    #                     except:
-    #                         pass
-    #     return
-    #
-    # def set_N_W_rjt(self):
-    #         self.N_W_rjt = self.NEEDSrjt.copy()
-    #         for r in self.IdsRole:
-    #             for t in range(self.nTime):
-    #                 for j in self.IdsProject:
-    #                     for p in self.IdsPerson:
-    #                         try:
-    #                             self.N_W_rjt[r,j, t] -= self.WORKprjt[p, r, j, t]
-    #                         except:
-    #                             pass
-    #
-    # def set_PRJtime(self):
-    #     for project in self.projects:
-    #         d1 = project.start_date
-    #         d2 = project.end_date
-    #         for t in range(self.nTime):
-    #             self.PRJTime = (time_n(d1) <= t) and (time_n(d2) >= t)
-    #
-    #     return
-    #
+    def set_R_W_prt(self):
+        self.R_W_prt = self.AVLprt.copy()
+        for p in self.people:
+            for r in self.roles:
+                for t in range(self.nTime):
+                    for j in self.projects:
+                        try:
+                            self.R_W_prt[p.id,r.id,t] -= self.WORKprjt[p.id,r.id,j.id,t]
+                        except:
+                            pass
+        return
+
+    def set_N_W_rjt(self):
+            self.N_W_rjt = self.NEEDSrjt.copy()
+            for r in self.roles:
+                for t in range(self.nTime):
+                    for j in self.projects:
+                        for p in self.people:
+                            try:
+                                self.N_W_rjt[r.id,j.id, t] -= self.WORKprjt[p.id, r.id, j.id, t]
+                            except:
+                                pass
+
+    def set_PRJtime(self):
+        for project in self.projects:
+            d1 = project.start_date
+            d2 = project.end_date
+            for t in range(self.nTime):
+                self.PRJTime = (time_n(d1) <= t) and (time_n(d2) >= t)
+
+        return
+
 
     def init(self,id,coord=0, mod=0,n=12):
         self.n = n
@@ -188,13 +190,13 @@ class BalanceNum(View):
         self.NEEDSrjt = np.zeros((self.nRole+1,self.nProject+1,self.nTime),dtype=int)
         self.setNEEDSrjt()
 
-        # self.R_W_prt = self.AVLprt.copy()
-        # self.N_W_rjt = self.NEEDSrjt.copy()
-        # self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
-        #
-        # self.set_R_W_prt()
-        # self.set_N_W_rjt()
-        # self.set_PRJtime()
+        self.R_W_prt = self.AVLprt.copy()
+        self.N_W_rjt = self.NEEDSrjt.copy()
+        self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
+
+        self.set_R_W_prt()
+        self.set_N_W_rjt()
+        self.set_PRJtime()
 
         return
 
@@ -238,5 +240,20 @@ class BalanceNum(View):
 
         pass
     def get4(self):
-
+        if self.coord == 0:
+            for r in self.roles:
+                for p in self.people:
+                        try:
+                            wx = [r.title,p.fio] + self.R_W_prt[p.id,r.id, self.id, :].tolist()
+                            self.w4.append(wx)
+                        except:
+                            pass
+        else:
+            for j in self.projects:
+                for p in self.people:
+                    try:
+                        wx = [j.title,p.fio]+self.R_W_prt[p.id,self.id,j.id,:].toList()
+                        self.w4.append(wx)
+                    except:
+                        pass
         pass
