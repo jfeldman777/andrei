@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 import numpy as np
-from .utils import timespan_len,date0
+from .utils import timespan_len, date0, up, inc_n
 from .models import UserProfile, Project, Role, Less, Load, Task, Wish
 from django.db.models import Max
 from .timing import timing_decorator
@@ -9,6 +9,7 @@ from .timing import timing_decorator
 def time_n(d):
     res = timespan_len(date0(),d)
     return res
+
 
 class BalanceNum(View):
     def __init__(self):
@@ -35,6 +36,15 @@ class BalanceNum(View):
         for w in self.wish:
             self.my_wish[f"{w.role}.{w.project}"]=w.mywish
         return
+
+    def get_wish(self,role,project):
+        key = f"{role}.{project}"
+        val = ""
+        try:
+            val = self.my_wish[key]
+        except:
+            pass
+        return val
 
 
     #@timing_decorator
@@ -206,14 +216,39 @@ class BalanceNum(View):
                     except:
                         pass
         else:
-            for p in self.projects:
+            for j in self.projects:
                     try:
-                        wx = [p.title]+self.NEEDSrjt[self.id,p.id,:].toList()
+                        wx = [j.title]+self.NEEDSrjt[self.id,j.id,:].toList()
                         self.w2.append(wx)
                     except:
                         pass
 
         pass
+
+    def get2left(self,p,r):
+        pass
+
+    #from .utils import date0
+    def d2s(n):
+        d = inc_n(data0(),n)
+        s = f"{d.year}-{d.month}-15"
+        return s
+
+    def get2right(self,role,project):
+        w2right = [
+        {  "link": f"0.{role.id}.{project.id}.{self.d2s(t)}",
+            "val": self.NEEDSrjt[role.id,project.id,t],
+            "color": self.paint2.color_needs_n(project.start_date, project.end_date, t),
+            "class": " good",
+            "up": up(max(-self.N_W_rjt[t], 0), self.R_W_prt[t], self.get_wish(role,project)),
+        } for t in range(self.nTime)]
+        
+        return w2right
+
+
+
+
+
     def get3(self):
         if self.coord == 0:
             for r in self.roles:

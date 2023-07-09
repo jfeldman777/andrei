@@ -1,3 +1,6 @@
+from andrei2.jacob.utils import inc_n, date0
+
+
 class Paint:
     BASIC_GREY = 250
     DELTA_GREY = 5
@@ -102,6 +105,18 @@ class Paint:
 
     def color_needs(self,d1,d2,d):
         d15 = d.replace(day=15)
+        d1_15 = d1.replace(day=15)
+        d2_15 = d2.replace(day=15)
+        if isinstance(self.cell, int):
+            if d15 < d1_15 or d15 > d2_15:
+                return self.MY_GREY
+            else:
+                if self.cell > 0:
+                    return self.MY_BLUE
+        return self.rgb_back_right()
+
+    def color_needs_n(self,d1,d2,n):
+        d15 = inc_n(date0(),n)
         d1_15 = d1.replace(day=15)
         d2_15 = d2.replace(day=15)
         if isinstance(self.cell, int):
