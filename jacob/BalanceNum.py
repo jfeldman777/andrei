@@ -342,25 +342,29 @@ class BalanceNum(View):
         if self.coord == 0:
             j = self.projects[0]
             for r in self.roles:
+                title = r.title
                 k = 0
                 self.paint3.next_row()
                 for p in self.people:
                         k = 1-k
                         try:
-                            wx = self.get3left(p,r,j,r.title,k) + self.get3right(p,r,j)
+                            wx = self.get3left(p,r,j,title,k) + self.get3right(p,r,j)
                             self.w3.append(wx)
+                            title = -1
                         except:
                             pass
         else:
             r = self.roles[0]
             for j in self.projects:
+                title = j.title
                 k = 0
                 self.paint3.next_row()
                 for p in self.people:
                     k = 1-k
                     try:
-                        wx = self.get3left(p, r, j, r.title, k) + self.get3right(p, r, j)
+                        wx = self.get3left(p, r, j, title, k) + self.get3right(p, r, j)
                         self.w3.append(wx)
+                        title = -1
                     except:
                         pass
 
