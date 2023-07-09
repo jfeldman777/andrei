@@ -224,9 +224,20 @@ class BalanceNum(View):
                         pass
 
         pass
+    def get_wish_sign(self,role,project):
+        wish = self.get_wish(role,project)
+        ws = ' !' if wish != '' else ''
+        return ws
 
-    def get2left(self,p,r):
-        pass
+    def get2left(self,role,project,first,k):
+        wx = {"class": "even" if k == 0 else "odd",
+                         "up": self.get_wish(role,project),
+                         "color": self.paint2.rgb_back_left(),
+                         "val": first + self.get_wish_sign(role,project),
+
+                         "project": project.id, "role": role.id, "class": "wish",
+                         }
+        return wx
 
     #from .utils import date0
     def d2s(n):
