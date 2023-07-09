@@ -310,20 +310,26 @@ class BalanceNum(View):
         return w2right
 
     def get3right(self,person,role,project):
-        wish = self.get_wish(role, project)
-
-        w3right = [
+        res = []
+        for t in range(self.nTime):
+            cell = self.WORKprjt[person.id,role.id,project.id,t]
+            self.paint3.next_cell(cell)
+            res.append(
             {"workload": True,
          "link": f"{person.id}.{role.id}.{project.id}.{self.d2s(t)}",
-         "up": up(max(-self.N_W_rjt[t], 0), self.R_W_prt[t], self.get_wish(role,project)),
-         "val": minus(self.WORKprjt[person,role,project,t], self.R_W_prt(person,role,t)),
-         "color": self.paint3.color_workload(self.PRJtime(project,t), self.N_W_rjt[t], False),
-         "tcolor": my_red(self.WORKprjt[person,role,project,t], self.R_W_prt(person,role,t)),
+         "up": up(max(-self.N_W_rjt[role.id,project.id,t], 0),
+                  self.R_W_prt[person.id,role.id,t], self.get_wish(role,project)),
+         "val": minus(self.WORKprjt[person.id,role.id,project.id,t],
+                      self.R_W_prt[person.id,role.id,t]),
+         "color": self.paint3.color_workload(self.PRJtime[project.id,t],
+                                             self.N_W_rjt[role.id,project.id,t], False),
+         "tcolor": my_red(cell,
+                          self.R_W_prt[person.id,role.id,t]),
          "class": "  good",
          "align": "center"
-         } for t in range(self.nTime)]
+         })
 
-        return w3right
+        return res
 
     def get3left(self,person,role,project,title,k):
         res =  [{"val": title, 'class': "even" if k == 0 else "odd",
@@ -337,6 +343,7 @@ class BalanceNum(View):
             j = self.projects[0]
             for r in self.roles:
                 k = 0
+                self.paint3.next_row()
                 for p in self.people:
                         k = 1-k
                         try:
@@ -348,6 +355,7 @@ class BalanceNum(View):
             r = self.roles[0]
             for j in self.projects:
                 k = 0
+                self.paint3.next_row()
                 for p in self.people:
                     k = 1-k
                     try:
