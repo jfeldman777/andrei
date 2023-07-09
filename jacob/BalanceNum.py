@@ -42,8 +42,8 @@ class BalanceNum(View):
 
     def get(self,request,id,coord,mod):
         self.init(id,coord,mod)
-        self.get2()
-        context = {'w':self.w2}
+        self.get3()
+        context = {'w':self.w3}
         context['nRole']=self.nRole
         context['nProject']=self.nProject
         context['nPerson']=self.nPerson
@@ -174,36 +174,34 @@ class BalanceNum(View):
             for r in self.roles:
                 self.IdsRole[r.id] = r.id
 
-        #
-        # self.AVLprt = np.zeros((self.nPerson,self.nRole,self.nTime),dtype=int)
-        # self.setAVLprt()
-        #
-        # self.WORKprjt = np.zeros((self.nPerson,self.nRole,self.nProject,self.nTime),dtype=int)
-        # self.setWORKprjt()
+
+        self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
+        self.setAVLprt()
+
+        self.WORKprjt = np.zeros((self.nPerson+1,self.nRole+1,self.nProject+1,self.nTime),dtype=int)
+        self.setWORKprjt()
 
         self.NEEDSrjt = np.zeros((self.nRole+1,self.nProject+1,self.nTime),dtype=int)
         self.setNEEDSrjt()
 
-        # self.R_W_prt = self.AVLprt.copy()
-        # self.N_W_rjt = self.NEEDSrjt.copy()
-        # self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
-        #
-        # self.set_R_W_prt()
-        # self.set_N_W_rjt()
+        self.R_W_prt = self.AVLprt.copy()
+        self.N_W_rjt = self.NEEDSrjt.copy()
+        self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
+
+        self.set_R_W_prt()
+        self.set_N_W_rjt()
         self.set_PRJtime()
 
         return
 
     def get1(self):
-
-
         pass
+
     def get2(self):
         if self.coord == 0:
             for r in self.roles:
                     try:
-                        sliced_array = self.NEEDSrjt[r.id, self.id, :]
-                        wx = [r.title] + sliced_array.tolist()
+                        wx = [r.title] + self.NEEDSrjt[r.id, self.id, :].tolist()
                         self.w2.append(wx)
                     except:
                         pass
@@ -217,6 +215,22 @@ class BalanceNum(View):
 
         pass
     def get3(self):
+        if self.coord == 0:
+            for r in self.roles:
+                for p in self.people:
+                        try:
+                            wx = [r.title,p.fio] + self.WORKprjt[p.id,r.id, self.id, :].tolist()
+                            self.w3.append(wx)
+                        except:
+                            pass
+        else:
+            for j in self.projects:
+                for p in self.people:
+                    try:
+                        wx = [j.title,p.fio]+self.WORKprjt[p.id,self.id,j.id,:].toList()
+                        self.w3.append(wx)
+                    except:
+                        pass
 
         pass
     def get4(self):
