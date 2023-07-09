@@ -6,7 +6,8 @@ from .models import UserProfile,Project,Role,Less,Load,Task
 from django.db.models import Max
 
 def time_n(d):
-    return timespan_len(d,date0())
+    res = timespan_len(date0(),d)
+    return res
 
 class BalanceNum(View):
     def __init__(self):
@@ -19,33 +20,46 @@ class BalanceNum(View):
         self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
 
         self.nProject = Project.objects.all().aggregate(Max('id'))['id__max']+1
-        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']+1
-        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']+1
+        self.IdsProject = [-1]*self.nProject
 
+
+        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']+1
+        self.IdsRole = [-1]*self.nRole
+
+
+        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']+1
         self.people = UserProfile.objects.exclude(virtual=True).order_by('fio')
-        self.IdsPerson = list(self.people.values_list('id', flat=True))
+        self.IdsPerson = [-1]*self.nPerson
+        for p in self.people:
+            self.IdsPerson[p.id] = p.id
 
         people_list = list(self.people.values('id', 'role'))
         self.people_dict = {item['id']: item['role'] for item in people_list}
 
         self.nTime = 12
         return
-    def get_role_id(self,role_id):
-        if self.nRole == 1:
-            return 0
-        else:
-            return role_id
 
-    def get_prj_id(self,prj_id):
-        if self.nProject == 1:
-            return 0
-        else:
-            return prj_id
 
     def get(self,request,id,coord,mod):
         self.init(id,coord,mod)
         self.get2()
-        return render(request,'nb.html',{'w':self.w2})
+        context = {'w':self.w2}
+        context['nRole']=self.nRole
+        context['nProject']=self.nProject
+        context['nPerson']=self.nPerson
+
+        context['IdsRole']=self.IdsRole
+        context['IdsProject']=self.IdsProject
+        context['IdsPerson']=self.IdsPerson
+
+        context['roles']=self.roles
+        context['projects']=self.projects
+        context['people']=self.people
+
+        context['needs_ar']=self.NEEDSrjt
+        context['needs']=self.needs
+
+        return render(request,'nb.html',context)
 
     def setAVLprt(self):
         if self.coord == 1:
@@ -61,7 +75,6 @@ class BalanceNum(View):
             for p in self.IdsPerson:
                 for r in self.IdsRole:
                     for t in range(self.nTime):
-                        print(p,r,t)
                         if self.AVLprt[p,r,t]==0:
                             if t == 0 and self.people_dict[p]==r:
                                 self.AVLprt[p,r,t]==100
@@ -78,16 +91,17 @@ class BalanceNum(View):
         else:
             needs = Load.objects.filter(project=self.id)
 
+        self.needs = needs
         for a in needs:
             try:
-                r = a.role
-                j = a.project
+                r = a.role.id
+                j = a.project.id
                 t = time_n(a.month)
-                print(r,j,t)
                 try:
                     self.NEEDSrjt[r,j,t]=a.load
+                    print(r, j,t,a.load)
                 except:
-                    print(r,j,t)
+                    print(r,j)
             except:
                 print(a)
         return
@@ -99,7 +113,7 @@ class BalanceNum(View):
             works = Task.objects.filter(project=self.id)
         for a in works:
             try:
-                self.WORKprjt[a.person,a.role,a.project][time_n(a.month)]=a.load
+                self.WORKprjt[a.person,a.role,a.project,time_n(a.month)]=a.load
             except:
                 print(101)
 
@@ -143,38 +157,39 @@ class BalanceNum(View):
         self.id = id
 
         if coord == 0:
-            self.nProject = 1
-            self.IdsProject = [self.id]
+            self.IdsProject[id] = id
             self.projects = [Project.objects.get(id = self.id)]
 
             self.roles = Role.objects.all().order_by('title')
-            self.IdsRole = list(self.roles.values_list('id', flat=True))
+            for r in self.roles:
+               self.IdsRole[r.id] = r.id
 
 
 
         else:
-            self.nRole = 1
-            self.IdsRole = [self.id]
+            self.IdsRole[id] = id
             self.roles = [Role.objects.get(id=self.id)]
 
             self.projects = Project.objects.all().order_by('title')
-            self.IdsProject = list(self.projects.values_list('id', flat=True))
+            for r in self.roles:
+                self.IdsRole[r.id] = r.id
 
+        #
+        # self.AVLprt = np.zeros((self.nPerson,self.nRole,self.nTime),dtype=int)
+        # self.setAVLprt()
+        #
+        # self.WORKprjt = np.zeros((self.nPerson,self.nRole,self.nProject,self.nTime),dtype=int)
+        # self.setWORKprjt()
 
-        self.AVLprt = np.zeros((self.nPerson,self.nRole,self.nTime),dtype=int)
-        self.NEEDSrjt = np.zeros((self.nRole,self.nProject,self.nTime),dtype=int)
-        self.WORKprjt = np.zeros((self.nPerson,self.nRole,self.nProject,self.nTime),dtype=int)
-
-        self.setAVLprt()
+        self.NEEDSrjt = np.zeros((self.nRole+1,self.nProject+1,self.nTime),dtype=int)
         self.setNEEDSrjt()
-        self.setWORKprjt()
 
-        self.R_W_prt = self.AVLprt.copy()
-        self.N_W_rjt = self.NEEDSrjt.copy()
-        self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
-
-        self.set_R_W_prt()
-        self.set_N_W_rjt()
+        # self.R_W_prt = self.AVLprt.copy()
+        # self.N_W_rjt = self.NEEDSrjt.copy()
+        # self.PRJtime = np.zeros((self.nProject,self.nTime),dtype=bool)
+        #
+        # self.set_R_W_prt()
+        # self.set_N_W_rjt()
         self.set_PRJtime()
 
         return
@@ -185,20 +200,20 @@ class BalanceNum(View):
         pass
     def get2(self):
         if self.coord == 0:
-            for role in self.IdsRole:
-                try:
-                    sliced_array = self.NEEDSrjt[role, 0, :]
-                    wx = [self.roles[role].title] + sliced_array.tolist()
-                    self.w2.append(wx)
-                except:
-                    pass
+            for r in self.roles:
+                    try:
+                        sliced_array = self.NEEDSrjt[r.id, self.id, :]
+                        wx = [r.title] + sliced_array.tolist()
+                        self.w2.append(wx)
+                    except:
+                        pass
         else:
-            for project in self.IdsProject:
-                try:
-                    wx = [project]+self.NEEDSrjt[0,project,:].toList()
-                    self.w2.append(wx)
-                except:
-                    pass
+            for p in self.projects:
+                    try:
+                        wx = [p.title]+self.NEEDSrjt[self.id,p.id,:].toList()
+                        self.w2.append(wx)
+                    except:
+                        pass
 
         pass
     def get3(self):
