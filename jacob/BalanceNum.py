@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 import numpy as np
 
+from .BalanceView import minus, my_red, add_grade
 from .paint import Paint
 from .utils import timespan_len, date0, up, inc_n
 from .models import UserProfile, Project, Role, Less, Load, Task, Wish
@@ -270,20 +271,49 @@ class BalanceNum(View):
 
         return w2right
 
+    def get3right(self,person,role,project):
+        wish = self.get_wish(role, project)
+
+        w3right = [
+            {"workload": True,
+         "link": f"{person.id}.{role.id}.{project.id}.{self.d2s(t)}",
+         "up": up(max(-self.N_W_rjt[t], 0), self.R_W_prt[t], self.get_wish(role,project)),
+         "val": minus(self.WORKprjt[person,role,project,t], self.R_W_prt(person,role,t)),
+         "color": self.paint3.color_workload(self.PRJtime(project,t), self.N_W_rjt[t], False),
+         "tcolor": my_red(self.WORKprjt[person,role,project,t], self.R_W_prt(person,role,t)),
+         "class": "  good",
+         "align": "center"
+         } for t in range(self.nTime)]
+
+        return w3right
+
+    def get3left(self,person,role,project,title,k):
+        res =  [{"val": title, 'class': "even" if k == 0 else "odd",
+
+          }, {"align": "left", "color": "" if self.mod == 3 else self.paint3.rgb_back_left(),
+              "val": add_grade(person, role)}]
+        return res
+
     def get3(self):
         if self.coord == 0:
+            j = self.projects[0]
             for r in self.roles:
+                k = 0
                 for p in self.people:
+                        k = 1-k
                         try:
-                            wx = [r.title,p.fio] + self.WORKprjt[p.id,r.id, self.id, :].tolist()
+                            wx = self.get3left(p,r,j,r.title,k) + self.get3right(p,r,j)
                             self.w3.append(wx)
                         except:
                             pass
         else:
+            r = self.roles[0]
             for j in self.projects:
+                k = 0
                 for p in self.people:
+                    k = 1-k
                     try:
-                        wx = [j.title,p.fio]+self.WORKprjt[p.id,self.id,j.id,:].toList()
+                        wx = self.get3left(p, r, j, r.title, k) + self.get3right(p, r, j)
                         self.w3.append(wx)
                     except:
                         pass
