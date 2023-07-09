@@ -24,7 +24,7 @@ class Paint:
         self.DELTA_GREY = 5
         return
 
-    def next_row(self,cell):
+    def next_row(self,cell=None):
         self.DELTA_GREY = 0-self.DELTA_GREY
         # print(999,self.DELTA_GREY)
         self.COL = 0

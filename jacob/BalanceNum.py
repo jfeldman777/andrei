@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 import numpy as np
 from .utils import timespan_len,date0
-from .models import UserProfile,Project,Role,Less,Load,Task
+from .models import UserProfile, Project, Role, Less, Load, Task, Wish
 from django.db.models import Max
 from .timing import timing_decorator
 
@@ -21,48 +21,35 @@ class BalanceNum(View):
         self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
 
         self.nProject = Project.objects.all().aggregate(Max('id'))['id__max']+1
-        # self.IdsProject = [-1]*self.nProject
-
-
         self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']+1
-        self.IdsRole = [-1]*self.nRole
-
-
         self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']+1
         self.people = UserProfile.objects.exclude(virtual=True).order_by('fio')
 
         people_list = list(self.people.values('id', 'role'))
         self.people_dict = {item['id']: item['role'] for item in people_list}
-
         self.people = list(self.people) + [self.OUTSRC,self.VACANCY]
-
         self.nTime = 12
+
+        self.wish = Wish.objects.all()
+        self.my_wish = dict()
+        for w in self.wish:
+            self.my_wish[f"{w.role}.{w.project}"]=w.mywish
         return
+
 
     #@timing_decorator
     def get(self,request,id,coord,mod):
         self.init(id,coord,mod)
         self.get2()
+        self.get1()
         self.get3()
         self.get4()
-        context = {'w':self.w4}
-        # context['nRole']=self.nRole
-        # context['nProject']=self.nProject
-        # context['nPerson']=self.nPerson
-
-        # context['IdsRole']=self.IdsRole
-        # context['IdsProject']=self.IdsProject
-        # context['IdsPerson']=self.IdsPerson
-        #
-        # context['roles']=self.roles
-        # context['projects']=self.projects
-        # context['people']=self.people
-        #
-        # context['needs_ar']=self.NEEDSrjt
-        context['needs']=self.R_W_prt
-        context['avl']=self.AVLprt
-        context['avls']=self.avls
-        context['work']=self.WORKprjt
+        context = {
+            'w1':self.w1,
+            'w2':self.w2,
+            'w3':self.w3,
+            'w4':self.w4,
+                   }
         return render(request,'nb.html',context)
 
     def setAVLprt(self):
@@ -191,6 +178,23 @@ class BalanceNum(View):
         return
 
     def get1(self):
+        if self.coord == 0:
+            for r in self.roles:
+                    try:
+                        wx = [r.title] + self.N_W_rjt [r.id, self.id, :].tolist()
+                        self.w1.append(wx)
+                    except:
+                        pass
+        else:
+            for p in self.projects:
+                    try:
+                        wx = [p.title]+self.N_W_rjt[self.id,p.id,:].toList()
+                        self.w1.append(wx)
+                    except:
+                        pass
+
+
+
         pass
 
     def get2(self):
