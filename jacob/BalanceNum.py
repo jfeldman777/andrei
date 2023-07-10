@@ -389,25 +389,30 @@ class BalanceNum(View):
 
     def get4(self):
         if self.coord == 0:
+
             for r in self.roles:
                 title = r.title
+                k = 0
                 for p in self.people:
+                        k = 1 - k
+                        self.paint4.next_row()
                         try:
-                            wx = [title,p.fio] + self.R_W_prt[p.id,r.id, :].tolist()
+                            wx = [title]+self.get4left(p,r)+self.get4right(p,r)
                             self.w4.append(wx)
                             title = -1
                         except:
                             pass
         else:
-            for j in self.projects:
-                title = j.title
-                for p in self.people:
-                    try:
-                        wx = [title,p.fio]+self.R_W_prt[p.id,self.id,:].toList()
-                        self.w4.append(wx)
-                        title = -1
-                    except:
-                        pass
+                    r = self.roles[0]
+                    k = 0
+                    for p in self.people:
+                        k = 1 - k
+                        self.paint4.next_row()
+                        try:
+                            wx = self.get4left(p,r)+self.get4right(p,r)
+                            self.w4.append(wx)
+                        except:
+                            pass
         pass
 
     def get4left(self,person,role):
@@ -416,7 +421,12 @@ class BalanceNum(View):
         return res
 
     def get4right(self,person,role,is_1=False):
-        c = self.R_W_prt(person, role)
-        res = [{"val": c[t], "align": "center",
-                "color": Paint.color(c[t], is_1)} for t in range(self.nTime)]
+        c = self.R_W_prt[person.id, role.id]
+        res = []
+        for t in range(self.nTime):
+            self.paint4.next_cell(c[t])
+            res.append({"val": c[t],
+                        "align": "center",
+                "color": self.paint4.color_rest(c[t], is_1)})
+
         return res
