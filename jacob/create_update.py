@@ -113,14 +113,13 @@ def create_or_update_needs(person:object, role:object, project:object, dm:str, s
         v = int(svn)
         n = 1
     m = datetime.strptime(dm, "%Y-%m-%d").date()
-    print(m)
-    print(n)
+
     for i in range(n):
         try:
             instance = Load.objects.get(project=project, role=role, month=m)
         except:
             instance = None
-            print(project,role,m)
+            print(project,role,m,5687)
 
         if instance:
             try:

@@ -4,7 +4,7 @@ import numpy as np
 
 from .BalanceView import minus, my_red, add_grade
 from .paint import Paint
-from .utils import timespan_len, date0, up, inc_n
+from .utils import  date0, up, inc_n
 from .models import UserProfile, Project, Role, Less, Load, Task, Wish
 from django.db.models import Max
 from .timing import timing_decorator
@@ -41,6 +41,8 @@ class BalanceNum(View):
         self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']+1
         self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']+1
         self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
+        
+        print(899,self.people)
 
         self.people_rv = self.people + [self.OUTSRC,self.VACANCY]
         self.nTime = 12
@@ -61,7 +63,7 @@ class BalanceNum(View):
         return val
 
 
-    #@timing_decorator
+    @timing_decorator
     def get(self,request,id,coord,mod):
         moon12 = moon()
         self.init(id,coord,mod)
@@ -106,23 +108,31 @@ class BalanceNum(View):
         for a in avls:
             p = a.person
             r = a.role
-            t = time_n(a.start_date)   #-1
-            self.AVLprt[p.id,r.id,t]=a.load
-            print(p.id,r.id,t,a.load,999)
+            if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)):
+                    t = time_n(a.start_date)   #-1
+                    self.AVLprt[p.id,r.id,t]=a.load
 
         try:
-            for p in self.people:
+            print(self.people,self.roles)
+            for p in self.people:                
                 for r in self.roles:
-                    for t in range(self.nTime):
-                        if self.AVLprt[p.id,r.id,t]==0:
-                            print(p.id,r.id)
-                            if t == 0 and p.role.id == r.id:
+                    try:
+                        st = set(p.res.values_list('id', flat=True))
+                    except :
+                        st = []
+                    try:
+                        if r.id == p.role.id or r.id in st:
+                            for t in range(self.nTime):
+                                if self.AVLprt[p.id,r.id,t]==0:
+                                    if t == 0 and p.role.id == r.id:
+                                        self.AVLprt[p.id,r.id,t]=100
+                                    else:
+                                        self.AVLprt[p.id, r.id,t] = self.AVLprt[p.id,r.id,t-1]
+                    except:
+                        pass
 
-                                self.AVLprt[p.id,r.id,t]=100
-                            else:
-                                self.AVLprt[p.id, r.id,t] = self.AVLprt[p.id,r.id,t-1]
         except:
-            print(p,r,t)
+            print(p,r,t,900)
 
         return
 
@@ -142,9 +152,9 @@ class BalanceNum(View):
                     try:
                         self.NEEDSrjt[r,j,t]=a.load
                     except:
-                        print(r,j)
+                        print(r,j,800)
             except:
-                print(a)
+                print(a,700)
         return
 
     def setWORKprjt(self):
@@ -420,6 +430,7 @@ class BalanceNum(View):
                 for p in self.people:
                     try:
                         if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)) :
+                            print(676,p,r)
                             k = 1 - k
                             self.paint4.next_row()
                             try:
