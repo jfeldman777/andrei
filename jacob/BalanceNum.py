@@ -70,7 +70,20 @@ class BalanceNum(View):
         moon12['w2'] = self.w2
         moon12['w3'] = self.w3
         moon12['w4'] = self.w4
+        moon12['is_delta'] = self.mod == 1
+        moon12['mod'] = self.mod
+        moon12['coord'] = self.coord
+        moon12['pp'] = self.title
+        moon12['res_or_prj'] = "Ресурс" if coord == 0 else "Проект"
+        moon12['prj_bool'] = self.coord == 0
 
+
+        if coord == 0:
+            moon12['project_name']=self.title
+            moon12['role_name']="все ресурсы"
+        else:
+            moon12['role_name']=self.title
+            moon12['project_name']=" все проекты"
         return render(request,'balance_4.html',moon12)
 
     def setAVLprt(self):
@@ -182,6 +195,8 @@ class BalanceNum(View):
         else:
             self.roles = [Role.objects.get(id=self.id)]
             self.projects = Project.objects.all().order_by('title')
+
+        self.title = self.projects[0].title if coord == 0 else self.roles[0].title
 
         self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
         self.setAVLprt()
