@@ -42,8 +42,6 @@ class BalanceNum(View):
         self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']+1
         self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
         
-        print(899,self.people)
-
         self.people_rv = self.people + [self.OUTSRC,self.VACANCY]
         self.nTime = 12
 
@@ -174,7 +172,11 @@ class BalanceNum(View):
             works = Task.objects.filter(project=self.id)
         for a in works:
             try:
-                self.WORKprjt[a.person.id,a.role.id,a.project.id,time_n(a.month)]=a.load
+                if a.person in self.people:
+                    self.WORKprjtReal[a.person.id,a.role.id,a.project.id,time_n(a.month)]=a.load
+                if a.person in self.people_rv
+                    self.WORKprjt[a.person.id,a.role.id,a.project.id,time_n(a.month)]=a.load
+                
             except:
                 print(101)
 
@@ -234,6 +236,8 @@ class BalanceNum(View):
         self.setAVLprt()
 
         self.WORKprjt = np.zeros((self.nPerson+1,self.nRole+1,self.nProject+1,self.nTime),dtype=int)
+        self.WORKprjtReal = np.zeros((self.nPerson+1,self.nRole+1,self.nProject+1,self.nTime),dtype=int)
+        
         self.setWORKprjt()
 
         self.NEEDSrjt = np.zeros((self.nRole+1,self.nProject+1,self.nTime),dtype=int)
@@ -323,7 +327,7 @@ class BalanceNum(View):
         return
     
     def get1right1(self,r,j):
-        return []
+        return self.get2right(r,j)
     
     def get1right2(self,r,j):
         return []
@@ -333,6 +337,9 @@ class BalanceNum(View):
     
     def get1right4(self,r,j):
         return []
+    
+    def get1right5(self,r,j):
+        return  self.get1right(r,j)
     
     
     def get1delta(self):
