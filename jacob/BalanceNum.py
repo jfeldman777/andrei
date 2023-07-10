@@ -40,11 +40,9 @@ class BalanceNum(View):
         self.nProject = Project.objects.all().aggregate(Max('id'))['id__max']+1
         self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']+1
         self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']+1
-        self.people = UserProfile.objects.exclude(virtual=True).order_by('fio')
+        self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
 
-        people_list = list(self.people.values('id', 'role'))
-        self.people_dict = {item['id']: item['role'] for item in people_list}
-        self.people = list(self.people) + [self.OUTSRC,self.VACANCY]
+        self.people_rv = self.people + [self.OUTSRC,self.VACANCY]
         self.nTime = 12
 
         self.wish = Wish.objects.all()
@@ -117,10 +115,12 @@ class BalanceNum(View):
                 for r in self.roles:
                     for t in range(self.nTime):
                         if self.AVLprt[p.id,r.id,t]==0:
-                            if t == 0 and self.people_dict[p]==r:
-                                self.AVLprt[p.id,r.id,t]==100
+                            print(p.id,r.id)
+                            if t == 0 and p.role.id == r.id:
+
+                                self.AVLprt[p.id,r.id,t]=100
                             else:
-                                self.AVLprt[p.id, r.id,t] == self.AVLprt[p.id,r.id,t-1]
+                                self.AVLprt[p.id, r.id,t] = self.AVLprt[p.id,r.id,t-1]
         except:
             print(p,r,t)
 
@@ -179,7 +179,7 @@ class BalanceNum(View):
             for r in self.roles:
                 for t in range(self.nTime):
                     for j in self.projects:
-                        for p in self.people:
+                        for p in self.people_rv:
                             try:
                                 self.N_W_rjt[r.id,j.id, t] -= self.WORKprjt[p.id, r.id, j.id, t]
                             except:
@@ -378,57 +378,73 @@ class BalanceNum(View):
                 title = r.title
                 k = 0
                 self.paint3.next_row()
-                for p in self.people:
-                        k = 1-k
-                        try:
-                            wx = self.get3left(p,r,j,title,k) + self.get3right(p,r,j)
-                            self.w3.append(wx)
-                            title = -1
-                        except:
-                            pass
+                for p in self.people_rv:
+                    try:
+                        if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)) \
+                                or p.fio in ['ВАКАНСИЯ','АУТСОРС']:
+                            k = 1-k
+                            try:
+                                wx = self.get3left(p,r,j,title,k) + self.get3right(p,r,j)
+                                self.w3.append(wx)
+                                title = -1
+                            except:
+                                pass
+                    except:
+                        pass
         else:
             r = self.roles[0]
             for j in self.projects:
                 title = j.title
                 k = 0
                 self.paint3.next_row()
-                for p in self.people:
-                    k = 1-k
+                for p in self.people_rv:
                     try:
-                        wx = self.get3left(p, r, j, title, k) + self.get3right(p, r, j)
-                        self.w3.append(wx)
-                        title = -1
+                        if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True))  or \
+                                p.fio in ['ВАКАНСИЯ','АУТСОРС']:
+                            k = 1 - k
+                            try:
+                                wx = self.get3left(p, r, j, title, k) + self.get3right(p, r, j)
+                                self.w3.append(wx)
+                                title = -1
+                            except:
+                                pass
                     except:
                         pass
-
         return
 
     def get4(self):
         if self.coord == 0:
-
             for r in self.roles:
                 title = r.title
                 k = 0
                 for p in self.people:
-                        k = 1 - k
-                        self.paint4.next_row()
-                        try:
-                            wx = [title]+self.get4left(p,r)+self.get4right(p,r)
-                            self.w4.append(wx)
-                            title = -1
-                        except:
-                            pass
+                    try:
+                        if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)) :
+                            k = 1 - k
+                            self.paint4.next_row()
+                            try:
+                                wx = [title]+self.get4left(p,r)+self.get4right(p,r)
+                                self.w4.append(wx)
+                                title = -1
+                            except:
+                                pass
+                    except:
+                        pass
         else:
-                    r = self.roles[0]
-                    k = 0
-                    for p in self.people:
-                        k = 1 - k
-                        self.paint4.next_row()
-                        try:
-                            wx = self.get4left(p,r)+self.get4right(p,r)
-                            self.w4.append(wx)
-                        except:
-                            pass
+                r = self.roles[0]
+                k = 0
+                for p in self.people:
+                    try:
+                        if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)):
+                            k = 1 - k
+                            self.paint4.next_row()
+                            try:
+                                wx = self.get4left(p,r)+self.get4right(p,r)
+                                self.w4.append(wx)
+                            except:
+                                pass
+                    except:
+                        pass
         pass
 
     def get4left(self,person,role):
