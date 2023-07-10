@@ -256,14 +256,14 @@ class BalanceNum(View):
     
     def get1leftDelta(self,title):
         self.paint4.next_row()
-        res = [{"val":title,"color":self.paint1.rgb_back_right()}]
+        res = [{"val":title,"color":self.paint1.rgb_back_left()}]
         return res
 
     def get1left(self,title,n):
         self.paint4.next_row()
         title0 = self.get0title(n)
-        res = [{"val":title0,"color":self.paint1.rgb_back_left()},
-            {"val":title,"color":self.paint1.rgb_back_right()}]
+        res = [title,
+            {"val":title0,"color":self.paint1.rgb_back_right()}]
         return res
 
     def get0title(self,n):
@@ -292,8 +292,43 @@ class BalanceNum(View):
             )
         return res
 
-    
-    
+    def get1right2(self,r,j):
+        res = []
+        res2 = np.sum(self.WORKprjtReal, axis=0)[r.id,j.id,:]
+        for t in range(self.nTime):
+            self.paint1.next_cell(res2[t])
+            res.append(
+                {
+                    'val':res2[t],
+                        'color':self.paint1.color_balance_new()
+                }
+
+            )
+        return res
+
+    def get1right34(self, r, j, id):
+        res1 = self.WORKprjt[id, r.id, j.id, :]
+        res = []
+        for t in range(self.nTime):
+            self.paint1.next_cell(res1[t])
+            res.append(
+                {
+                    'val': res1[t],
+                    'color': self.paint1.color_balance_new()
+                }
+
+            )
+        return res
+
+
+    def get1right4(self, r, j):
+        id = self.VACANCY.id
+        return self.get1right34(r, j, id)
+
+    def get1right3(self, r, j):
+        id = self.OUTSRC.id
+        return self.get1right34(r, j, id)
+
     def get1(self):
         if self.coord == 0:
             j = self.projects[0]
@@ -302,16 +337,17 @@ class BalanceNum(View):
                 self.paint1.next_row()
                 
                 try:
-                        wx1 = [self.get1left(title,1)] + self.get1right1(r,j)
+                        wx1 = self.get1left(title,1) + self.get1right1(r,j)
                         self.w1.append(wx1)
-                        wx2 = [self.get1left(title,2)] + self.get1right2(r,j)
+                        wx2 = self.get1left(-1,2) + self.get1right2(r,j)
                         self.w1.append(wx2)
-                        wx3 = [self.get1left(title,3)] + self.get1right3(r,j)
+                        wx3 = self.get1left(-1,3) + self.get1right3(r,j)
                         self.w1.append(wx3)
-                        wx4 = [self.get1left(title,4)] + self.get1right4(r,j)
+                        wx4 = self.get1left(-1,4) + self.get1right4(r,j)
                         self.w1.append(wx4)
-                        wx5 = [self.get1left(title,5)] + self.get1right(r,j)
+                        wx5 = self.get1left(-1,5) + self.get1right(r,j)
                         self.w1.append(wx5)
+
                 except:
                         pass
 
@@ -322,7 +358,7 @@ class BalanceNum(View):
                     self.paint1.next_row()
                     
                     try:
-                        wx = [self.get1left(title)] + self.get1right(r,j)
+                        wx = self.get1left(title) + self.get1right(r,j)
                         self.w1.append(wx)
                     except:
                         pass
@@ -332,18 +368,7 @@ class BalanceNum(View):
     def get1right1(self,r,j):
         return self.get2right(r,j)
     
-    def get1right2(self,r,j):
-        res = np.sum(self.WORKprjtReal, axis=0)
-        return res
-    
-    def get1right3(self,r,j):
-        id = self.OUTSRC.id
-        return self.WORKprjt[id,r.id,j.id,:].toList()
-    
-    def get1right4(self,r,j):
-        id = self.VACANCY.id
-        return self.WORKprjt[id,r.id,j.id,:].toList()
-    
+
     def get1right5(self,r,j):
         return  self.get1right(r,j)
     
@@ -355,7 +380,7 @@ class BalanceNum(View):
                 title = r.title
                 self.paint1.next_row()
                 try:
-                        wx = [self.get1leftDelta(title)] + self.get1right(r,j)
+                        wx = self.get1leftDelta(title) + self.get1right(r,j)
                         self.w1.append(wx)
                 except:
                         pass
@@ -366,7 +391,7 @@ class BalanceNum(View):
                     title = j.title
                     self.paint1.next_row()
                     try:
-                        wx = [self.get1left(title)] + self.get1right(r,j)
+                        wx = self.get1left(title) + self.get1right(r,j)
                         self.w1.append(wx)
                     except:
                         pass
