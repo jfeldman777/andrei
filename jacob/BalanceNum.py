@@ -11,10 +11,15 @@ from .timing import timing_decorator
 from .vvv import moon
 
 
-def time_n(d):
-    res = timespan_len(date0(),d)
-    return res
 
+
+def timespan_dif(d1, d2):
+    dx = (d2.year - d1.year) * 12 + d2.month - d1.month
+    return dx
+
+def time_n(d):
+    res = timespan_dif(date0(),d)
+    return res
 
 class BalanceNum(View):
     def __init__(self):
@@ -58,7 +63,7 @@ class BalanceNum(View):
         return val
 
 
-    @timing_decorator
+    #@timing_decorator
     def get(self,request,id,coord,mod):
         moon12 = moon()
         self.init(id,coord,mod)
@@ -72,6 +77,7 @@ class BalanceNum(View):
         moon12['w4'] = self.w4
         moon12['is_delta'] = self.mod == 1
         moon12['mod'] = self.mod
+        moon12['id'] = self.id
         moon12['coord'] = self.coord
         moon12['pp'] = self.title
         moon12['res_or_prj'] = "Ресурс" if coord == 0 else "Проект"
@@ -84,7 +90,14 @@ class BalanceNum(View):
         else:
             moon12['role_name']=self.title
             moon12['project_name']=" все проекты"
-        return render(request,'balance_4.html',moon12)
+
+        if self.mod < 2:
+            return render(request, "balance_4.html", moon12)
+        elif self.mod == 3:
+            return render(request, "balance_2_workload.html", moon12)
+        else:
+            return render(request, "balance_1_needs.html", moon12)
+
 
     def setAVLprt(self):
         if self.coord == 1:
@@ -125,11 +138,11 @@ class BalanceNum(View):
                 r = a.role.id
                 j = a.project.id
                 t = time_n(a.month)
-                try:
-                    self.NEEDSrjt[r,j,t]=a.load
-                    print(r, j,t,a.load)
-                except:
-                    print(r,j)
+                if t >= 0:
+                    try:
+                        self.NEEDSrjt[r,j,t]=a.load
+                    except:
+                        print(r,j)
             except:
                 print(a)
         return
@@ -189,7 +202,6 @@ class BalanceNum(View):
         self.id = id
 
         if coord == 0:
-            # self.IdsProject[id] = id
             self.projects = [Project.objects.get(id = self.id)]
             self.roles = Role.objects.all().order_by('title')
         else:
@@ -219,31 +231,50 @@ class BalanceNum(View):
 
         return
 
+    def get1left(self,title):
+        self.paint4.next_row()
+        res = {"val":title,"color":self.paint1.rgb_back_left()}
+        return res
+
+    def get1right(self,role,project):
+        res = []
+        for t in range(self.nTime):
+            self.paint1.next_cell(int(-self.N_W_rjt[role.id,project.id,t]))
+            res.append(
+                {
+                    'val':-self.N_W_rjt[role.id,project.id,t],
+                        'color':self.paint1.color_balance_new()
+                }
+
+            )
+        return res
+
     def get1(self):
         if self.coord == 0:
+            j = self.projects[0]
             for r in self.roles:
-                    try:
-                        wx = [r.title] + self.N_W_rjt [r.id, self.id, :].tolist()
+                title = r.title
+                self.paint1.next_row()
+                try:
+                        wx = [self.get1left(title)] + self.get1right(r,j)
                         self.w1.append(wx)
-                    except:
+                except:
                         pass
-                    title=-1
+
         else:
-
+            r = self.roles[0]
             for j in self.projects:
+                    title = j.title
+                    self.paint1.next_row()
                     try:
-                        wx = [j.title]+self.N_W_rjt[self.id,j.id,:].toList()
+                        wx = [self.get1left(title)] + self.get1right(r,j)
                         self.w1.append(wx)
                     except:
                         pass
-
-
-
-        pass
+        return
 
     def get2(self):
         if self.coord == 0:
-
             k=0
             for r in self.roles:
                 k = 1-k
@@ -294,12 +325,10 @@ class BalanceNum(View):
         return s
 
     def get2right(self,role,project):
-
         res = []
-
         for t in range(self.nTime):
            ds = self.d2s(t)
-           self.paint2.next_cell(self.NEEDSrjt[role.id,project.id,t])
+           self.paint2.next_cell(int(self.NEEDSrjt[role.id,project.id,t]))
            res.append(
                {  "link": f"0.{role.id}.{project.id}.{ds}",
                     "val": self.NEEDSrjt[role.id,project.id,t],
@@ -312,19 +341,6 @@ class BalanceNum(View):
                     ),
                 })
         return res
-
-    def get2right1(self,role,project):
-
-        w2right = [
-        {  "link": f"0.{role.id}.{project.id}.{self.d2s(t)}",
-            "val": self.NEEDSrjt[role.id,project.id,t],
-            "color": self.paint2.color_needs_n(project.start_date, project.end_date, t),
-            "class": " good",
-            "up": up(max(-self.N_W_rjt[t], 0), self.R_W_prt[t], self.get_wish(role,project)),
-        }
-            for t in range(self.nTime)]
-
-        return w2right
 
     def get3right(self,person,role,project):
         res = []
@@ -339,7 +355,7 @@ class BalanceNum(View):
          "val": minus(self.WORKprjt[person.id,role.id,project.id,t],
                       self.R_W_prt[person.id,role.id,t]),
          "color": self.paint3.color_workload(self.PRJtime[project.id,t],
-                                             self.N_W_rjt[role.id,project.id,t], False),
+                                             -self.N_W_rjt[role.id,project.id,t], False),
          "tcolor": my_red(cell,
                           self.R_W_prt[person.id,role.id,t]),
          "class": "  good",
