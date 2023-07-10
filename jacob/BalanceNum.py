@@ -67,10 +67,20 @@ class BalanceNum(View):
     def get(self,request,id,coord,mod):
         moon12 = moon()
         self.init(id,coord,mod)
-        self.get2()
-        self.get1()
-        self.get3()
-        self.get4()
+        if mod < 3:
+            self.get2()
+        
+        if mod == 0:
+            self.get1()
+            
+        elif mod==1:
+            self.get1delta()
+            
+        if mod != 2: 
+            self.get3()
+        if mod < 2:
+            self.get4()
+            
         moon12['w1'] = self.w1
         moon12['w2'] = self.w2
         moon12['w3'] = self.w3
@@ -240,11 +250,27 @@ class BalanceNum(View):
         self.set_PRJtime()
 
         return
-
-    def get1left(self,title):
+    
+    def get1of5(self,title,n):
         self.paint4.next_row()
-        res = {"val":title,"color":self.paint1.rgb_back_left()}
+        title0 = self.get0title(n)
+        res = 
+            [{"val":title0,"color":self.paint1.rgb_back_left()},
+            {"val":title,"color":self.paint1.rgb_back_right()}]
         return res
+
+    def get0title(self,n):
+        if n == 1:
+            return 'Потребность'
+        if n == 2:
+            return 'Поставка'
+        if n == 3:
+            return 'АУТСОРС'
+        if n == 4:
+            return 'ВАКАНСИЯ'
+        if n == 5:
+            return 'Дельта'
+        return "error"
 
     def get1right(self,role,project):
         res = []
@@ -259,14 +285,64 @@ class BalanceNum(View):
             )
         return res
 
+    
+    
     def get1(self):
         if self.coord == 0:
             j = self.projects[0]
             for r in self.roles:
                 title = r.title
                 self.paint1.next_row()
+                
                 try:
+                        wx = [self.get1left(title,1)] + self.get1right1(r,j)
+                        self.w1.append(wx)
+                        wx = [self.get1left(title,2)] + self.get1right2(r,j)
+                        self.w1.append(wx)
+                        wx = [self.get1left(title,3)] + self.get1right3(r,j)
+                        self.w1.append(wx)
+                        wx = [self.get1left(title,4)] + self.get1right4(r,j)
+                        self.w1.append(wx)
+                        wx = [self.get1left(title,5)] + self.get1right(r,j)
+                        self.w1.append(wx)
+                except:
+                        pass
+
+        else:
+            r = self.roles[0]
+            for j in self.projects:                
+                    title = j.title
+                    self.paint1.next_row()
+                    
+                    try:
                         wx = [self.get1left(title)] + self.get1right(r,j)
+                        self.w1.append(wx)
+                    except:
+                        pass
+                    
+        return
+    
+    def get1right1(self,r,j):
+        return []
+    
+    def get1right2(self,r,j):
+        return []
+    
+    def get1right3(self,r,j):
+        return []
+    
+    def get1right4(self,r,j):
+        return []
+    
+    
+    def get1delta(self):
+        if self.coord == 0:
+            j = self.projects[0]
+            for r in self.roles:
+                title = r.title
+                self.paint1.next_row()
+                try:
+                        wx = [self.get1leftDelta(title)] + self.get1right(r,j)
                         self.w1.append(wx)
                 except:
                         pass
@@ -277,7 +353,7 @@ class BalanceNum(View):
                     title = j.title
                     self.paint1.next_row()
                     try:
-                        wx = [self.get1left(title)] + self.get1right(r,j)
+                        wx = [self.get1leftDelta(title)] + self.get1right(r,j)
                         self.w1.append(wx)
                     except:
                         pass
