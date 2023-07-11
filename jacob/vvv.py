@@ -70,7 +70,7 @@ def needs_on_span(r:object, j:object, n:int)->int:
 '''
 вход в балансы за х месяцев
 '''
-
+@timing_decorator
 def balance_map(request:object, n:int)->object:
     projects = Project.objects.all()
     roles = Role.objects.all()
@@ -112,7 +112,7 @@ def balance_map(request:object, n:int)->object:
 Все проекты в одной таблице
 
 '''
-
+@timing_decorator
 def table_projects(request:object)->object:
     # paint = Paint()
     projects = Project.objects.all().order_by("general")
@@ -130,6 +130,7 @@ def table_projects(request:object)->object:
 '''
 Все ресурсы в одной таблице
 '''
+@timing_decorator
 def table_resources(request:object)->object:
     # paint = Paint()
     context = {}
@@ -144,9 +145,8 @@ def table_resources(request:object)->object:
     context["data2"] = data
     return render(request, "tab_r.html", context)
 
-
+@timing_decorator
 def people(request):
-
     context = {}
     profiles = UserProfile.objects.filter(virtual=False).order_by("fio")
     nx = len(Role.objects.all())
@@ -177,10 +177,9 @@ def people(request):
 
         data2.append(profile_data)
     context["data2"] = data2
-
-
-
     return render(request, "people.html", context)
+
+@timing_decorator
 def roles(request:object)->object:
 
     context = {}
@@ -273,6 +272,7 @@ def available(roles,msg='',n=12):
 '''
 доступность максимальная - персональная - один вид ресурса
 '''
+@timing_decorator
 def available_role(request:object, r:int, n:int=12)->object:
     try:
         role = Role.objects.filter(id=r)[0]
@@ -289,6 +289,7 @@ def available_role(request:object, r:int, n:int=12)->object:
 '''
 показать максимальную доступность по всем персонам и ролям
 '''
+@timing_decorator
 def available_all(request:object,n:int=12)->object:  # Максимальная доступнасть по всем ресурсам
     roles = Role.objects.all()
     moon12 = available(roles, n=12)
@@ -321,7 +322,7 @@ def rest_all(request:object,n:int=12)->object:  # Остаточная дост�
 '''
 
 
-
+@timing_decorator
 def rest_role(request:object, r:int,n:int=12)->object:
     moon12 = moon()
     try:
@@ -357,7 +358,7 @@ def rest(role,people_rr, n = 12):
 '''
 портфель проектов
 '''
-
+@timing_decorator
 def table_timeline(request:object,n:int=12)->object:  # все проекты (портфель)
     moon12 = moon()
     paint = Paint()

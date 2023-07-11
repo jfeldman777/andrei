@@ -120,7 +120,8 @@ class BalanceNum(View):
             r = a.role
             if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)):
                     t = time_n(a.start_date)   #-1
-                    self.AVLprt[p.id,r.id,t]=a.load
+                    if t in range(12):
+                        self.AVLprt[p.id,r.id,t]=a.load
 
         try:
             for p in self.people:                

@@ -3,7 +3,7 @@ from django.shortcuts import redirect, get_object_or_404, render
 
 from .forms import UserAndProfileForm, RoleForm, User2Form, KeysForm, ProjectForm, GradeForm
 from .models import UserProfile, Role, Project, Grade
-
+from .timing import timing_decorator
 
 def create_user_and_profile(request:object)->any:
     button = "Создать"
