@@ -5,6 +5,11 @@ from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth.models import User
 
 
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
+
+
 class LoadForm(forms.Form):
     role = forms.IntegerField(widget=forms.HiddenInput())
     project = forms.IntegerField(widget=forms.HiddenInput())
