@@ -311,6 +311,10 @@ def max_avl(request:object)->object:  # Максимальная доступн�
 '''
 @timing_decorator
 def rest_all(request:object,n:int=12)->object:  # Остаточная доступость по всем ресурсам
+    return redirect(request,"/balance/0/0/6/")
+    
+    
+def rest_all2(request:object,n:int=12)->object:  # Остаточная доступость по всем ресурсам
     moon12 = moon()
     dif14 = []
     roles = Role.objects.all().order_by('title')

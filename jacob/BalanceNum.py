@@ -41,11 +41,96 @@ class BalanceNum(View):
         return val
 
 
+    def get_rest(self,request):
+        self.init_rest(request)
+        w = []
+        moon12 = moon()
+        paint = Paint()
+        i = 0
+        for role in self.roles:
+            w = self.get_rest0(paint,role,w)
+
+        moon12["dif14"] = w  ########################################
+        moon12["res"] = 'все ресурсы'  ########################################
+        return render(request, "max.html", moon12)
+
+        
+        
+    def get_rest0(self,paint,role,w):
+            i = 0
+            for person in self.people:
+                try:
+                    try:
+                        st = set(person.res.values_list('id', flat=True))
+                    except:
+                        st = []
+                    if role.id == person.role.id or role.id in st:
+                        paint.next_row(person.fio)
+                        i = 1 - i
+
+                        wx = [{"class": "odd" if i == 1 else "even","align": "left",
+                               "color":paint.rgb_back_left(),
+                               "val": role.title, "r": role.id},
+                              {"val": person.fio, "align": "left"}
+                              ]
+
+                        for t in range(self.nTime):
+                            val = self.R_W_prt[person.id,role.id,t]
+                            cell = {"val":val,
+                                    "align":"center",
+                                    "color":paint.color_rest(val,True)}
+                            wx.append(cell)
+
+                        w.append(wx)
+                except:
+                    pass
+            return w
+    
+    def init_rest(self,request):
+        self.OUTSRC = UserProfile.objects.get(fio='АУТСОРС')
+        self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
+        self.nProject = Project.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
+        self.people_rv = self.people + [self.OUTSRC, self.VACANCY]
+        self.nTime = 12
+        self.projects = Project.objects.all().order_by('title')
+
+        self.mod = 6
+        self.coord = 0
+        self.id = id
+
+        self.roles = Role.objects.all().order_by('title')
+
+        self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
+        self.setAVLprt()
+
+        self.WORKprjt = np.zeros((self.nPerson+1,self.nRole+1,self.nProject+1,self.nTime),dtype=int)
+        self.WORKprjtReal = np.zeros((self.nPerson+1,self.nRole+1,self.nProject+1,self.nTime),dtype=int)
+        
+        self.setWORKprjt()
+
+        self.R_W_prt = self.AVLprt.copy()
+
+        self.set_R_W_prt()
+        self.set_R_W_rt()
+        pass
+
+    def get_rest_r(self,request,id):
+        pass
+
     @timing_decorator
     def get(self,request,id,coord,mod):
+        self.coord = coord
+        self.id = id
+        self.mod = mod
+        if mod == 6:
+            return self.get_rest(request)
+        if mod == 7:
+            return self.get_rest_r(request,id)
         if mod==5:
             return self.get_max_r(request,id)
-
         if mod == 4:
             return self.get_max(request,id,coord,mod)
 
@@ -171,10 +256,13 @@ class BalanceNum(View):
         return
 
     def setWORKprjt(self):
-        if self.coord == 1:
-            works = Task.objects.filter(role=self.id)
-        else:
-            works = Task.objects.filter(project=self.id)
+        try:
+            if self.coord == 1:
+                works = Task.objects.filter(role=self.id)
+            elif self.coord == 0:
+                works = Task.objects.filter(project=self.id)
+        except:
+            works=[]
         for a in works:
             try:
                 if a.person in self.people:
@@ -289,7 +377,6 @@ class BalanceNum(View):
         self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
         self.roles = Role.objects.all().order_by('title')
         self.nTime = 12
-
         self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
         self.setAVLprt()
         return
@@ -301,15 +388,9 @@ class BalanceNum(View):
     def init_max_r(self,id):
         self.coord=1
         self.id=id
-        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max'] + 1
-        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max'] + 1
-        self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
         self.role = Role.objects.get(id=id)
-        self.roles = Role.objects.all().order_by('title')
-        self.nTime = 12
+        self.init_max()      
 
-        self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
-        self.setAVLprt()
         return
 
     def max_r(self,request,id):
@@ -326,31 +407,52 @@ class BalanceNum(View):
     def get_max0(self,paint,role,w):
         i = 0
         for person in self.people:
-            paint.next_row(person.fio)
-            i = 1 - i
-            d = date0()
-            wx = [{"class": "odd" if i == 1 else "even",
-                   "val": role.title, "r": role.id},
-                  {"val": person.fio, "align": "left"}
-                  ]
+            try:
+                try:
+                    st = set(person.res.values_list('id', flat=True))
+                except:
+                    st = []
+                if role.id == person.role.id or role.id in st:
+                    paint.next_row(person.fio)
+                    i = 1 - i
+                    d = date0()
+                    wx = [{"class": "odd" if i == 1 else "even",
+                           "val": role.title, "r": role.id},
+                          {"val": person.fio, "align": "left"}
+                          ]
 
-            for t in range(self.nTime):
-                sm100 = np.sum(self.AVLprt, axis=1)[person.id, t]
-                val = self.AVLprt[person.id, role.id, t]
-                paint.next_cell(val)
-                cell = {"align": "center",
-                        "link": f"{person.id}.{role.id}.0.{d.year}-{d.month}-15",
-                        "color": paint.color_rest(val),
-                        "val": val,
-                        "fire": sm100 > 100,
-                        "class": "good"
-                        }
-                wx.append(cell)
-                d = inc(d)
+                    for t in range(self.nTime):
+                        sm100 = np.sum(self.AVLprt, axis=1)[person.id, t]
+                        val = self.AVLprt[person.id, role.id, t]
+                        paint.next_cell(val)
+                        cell = {"align": "center",
+                                "link": f"{person.id}.{role.id}.0.{d.year}-{d.month}-15",
+                                "color": paint.color_rest(val),
+                                "val": val,
+                                "fire": sm100 > 100,
+                                "class": "good"
+                                }
+                        wx.append(cell)
+                        d = inc(d)
 
-            w.append(wx)
+                    w.append(wx)
+            except:
+                pass
         return w
 
+    def get_rest(self,request):
+        self.init_rest(request)
+        w = []
+        moon12 = moon()
+        paint = Paint()
+        i = 0
+        for role in self.roles:
+            w = self.get_rest0(paint,role,w)
+
+        moon12["dif14"] = w  ########################################
+        moon12["res"] = 'все ресурсы'  ########################################
+        return render(request, "rest.html", moon12)
+    
     def get_max(self,request,id,coord,mod):
         self.coord = coord
         self.init_max()
