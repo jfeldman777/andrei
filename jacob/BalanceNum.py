@@ -548,7 +548,8 @@ class BalanceNum(View):
                             try:
                                 wx = self.get3left(p, r, j, title, k) + self.get3right(p, r, j)
                                 self.w3.append(wx)
-                                title = -1
+                                if self.mod < 2:
+                                    title = -1
                             except:
                                 pass
                     except:
