@@ -133,10 +133,18 @@ class BalanceNum(View):
                         if r.id == p.role.id or r.id in st:
                             for t in range(self.nTime):
                                 if self.AVLprt[p.id,r.id,t]==0:
-                                    if t == 0 and p.role.id == r.id:
-                                        self.AVLprt[p.id,r.id,t]=100
+                                    if t == 0:
+                                        try:
+                                            level = Less.objects.filter(person=p.id,role=r.id,
+                                                                start_date__le = date0()).order_by('-start_date')[0]
+                                            self.AVLprt[p.id, r.id, t] = level
+                                        except:
+                                            if p.role.id == r.id:
+                                                self.AVLprt[p.id,r.id,t]=100
+
+
                                     else:
-                                        self.AVLprt[p.id, r.id,t] = self.AVLprt[p.id,r.id,t-1]
+                                        self.AVLprt[p.id, r.id, t] = self.AVLprt[p.id, r.id, t - 1]
                     except:
                         pass
 
