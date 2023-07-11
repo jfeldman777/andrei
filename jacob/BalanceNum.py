@@ -402,6 +402,8 @@ class BalanceNum(View):
 
         moon12["dif14"] = w  ########################################
         moon12["res"] = 'все ресурсы'  ########################################
+        moon12["ret"] = f"/balance/{id}/0/5/"  ########################################
+
         return render(request, "max.html", moon12)
 
     def get_max0(self,paint,role,w):
@@ -465,6 +467,8 @@ class BalanceNum(View):
 
         moon12["dif14"] = w  ########################################
         moon12["res"] = 'все ресурсы'  ########################################
+        moon12["ret"] = "/balance/0/0/4/"  ########################################
+
         return render(request, "max.html", moon12)
     
     def get1leftDelta(self,title):

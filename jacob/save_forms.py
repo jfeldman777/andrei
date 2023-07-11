@@ -33,9 +33,8 @@ def save_max(request):
                         print("bad",person,role,d,v)
         else:
             print(form.errors)
-    if html != "max":
-        return redirect(f"/max_r/{r}/") #available_role(request, p, r, j)
-    return redirect(f"/max/")#"available_all(request)  # s
+
+    return redirect(html)#"available_all(request)  # s
 
 
 @timing_decorator
