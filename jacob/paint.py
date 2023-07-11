@@ -68,12 +68,11 @@ class Paint:
         return res
 
     def color_balance_new(self):
-        if  isinstance(self.cell, int):
             if self.cell < 0:
                 return self.MY_PINK
             if self.cell > 0:
                 return self.MY_BLUE
-        return self.rgb_back_right()
+            return self.rgb_back_right()
 
     def color_balance(self,k=0):
         if  isinstance(self.cell, int):
