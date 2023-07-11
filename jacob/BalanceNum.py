@@ -281,7 +281,7 @@ class BalanceNum(View):
         self.paint4.next_row()
         title0 = self.get0title(n)
         res = [title,
-            {"val":title0,"color":self.paint1.rgb_back_right()}]
+            {"val":title0,"color":self.paint1.rgb_back_left()}]
         return res
 
     def get0title(self,n):
@@ -486,7 +486,7 @@ class BalanceNum(View):
                     "color": self.paint2.color_needs_n(project.start_date, project.end_date, t),
                     "class": " good",
                     "up": up(
-                        max(-self.N_W_rjt[role.id,project.id,t], 0),
+                        max(self.N_W_rjt[role.id,project.id,t], 0),
                              self.R_W_rt[role.id,t],
                              self.get_wish(role,project)
                     ),
@@ -501,7 +501,7 @@ class BalanceNum(View):
             res.append(
             {"workload": True,
          "link": f"{person.id}.{role.id}.{project.id}.{self.d2s(t)}",
-         "up": up(max(-self.N_W_rjt[role.id,project.id,t], 0),
+         "up": up(max(self.N_W_rjt[role.id,project.id,t], 0),
                   self.R_W_prt[person.id,role.id,t], self.get_wish(role,project)),
          "val": minus(self.WORKprjt[person.id,role.id,project.id,t],
                       self.R_W_prt[person.id,role.id,t]),
