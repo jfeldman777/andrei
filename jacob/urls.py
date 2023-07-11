@@ -10,7 +10,7 @@ urlpatterns = [
     path("project_form/<int:id>/", view_forms.project_form, name="project_form_with_id"),
     path("project_form/", view_forms.project_form, name="project_form"),
 
-    path("nb/<int:id>/<int:coord>/<int:mod>/", BalanceView.as_view()),
+    path("balance1/<int:id>/<int:coord>/<int:mod>/", BalanceView.as_view()),
     path("balance/<int:id>/<int:coord>/<int:mod>/", BalanceNum.as_view()),
 
 

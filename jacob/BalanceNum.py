@@ -211,7 +211,7 @@ class BalanceNum(View):
             d1 = project.start_date
             d2 = project.end_date
             for t in range(self.nTime):
-                self.PRJTime = (time_n(d1) <= t) and (time_n(d2) >= t)
+                self.PRJtime[project.id,t] = (time_n(d1) > t) or (time_n(d2) < t)
 
         return
 
@@ -489,6 +489,7 @@ class BalanceNum(View):
         return res
 
     def get3left(self,person,role,project,title,k):
+        self.paint3.next_row()
         res =  [{"val": title, 'class': "even" if k == 0 else "odd",
 
           }, {"align": "left", "color": "" if self.mod == 3 else self.paint3.rgb_back_left(),
@@ -510,7 +511,8 @@ class BalanceNum(View):
                             try:
                                 wx = self.get3left(p,r,j,title,k) + self.get3right(p,r,j)
                                 self.w3.append(wx)
-                                title = -1
+                                if self.mod < 2:
+                                    title = -1
                             except:
                                 pass
                     except:
@@ -544,7 +546,6 @@ class BalanceNum(View):
                 for p in self.people:
                     try:
                         if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)) :
-                            print(676,p,r)
                             k = 1 - k
                             self.paint4.next_row()
                             try:
