@@ -364,10 +364,19 @@ class BalanceNum(View):
             for j in self.projects:                
                     title = j.title
                     self.paint1.next_row()
-                    
+
                     try:
-                        wx = self.get1left(title) + self.get1right(r,j)
-                        self.w1.append(wx)
+                        wx1 = self.get1left(title, 1) + self.get1right1(r, j)
+                        self.w1.append(wx1)
+                        wx2 = self.get1left(-1, 2) + self.get1right2(r, j)
+                        self.w1.append(wx2)
+                        wx3 = self.get1left(-1, 3) + self.get1right3(r, j)
+                        self.w1.append(wx3)
+                        wx4 = self.get1left(-1, 4) + self.get1right4(r, j)
+                        self.w1.append(wx4)
+                        wx5 = self.get1left(-1, 5) + self.get1right(r, j)
+                        self.w1.append(wx5)
+
                     except:
                         pass
                     
@@ -399,7 +408,7 @@ class BalanceNum(View):
                     title = j.title
                     self.paint1.next_row()
                     try:
-                        wx = self.get1left(title) + self.get1right(r,j)
+                        wx = self.get1leftDelta(title) + self.get1right(r,j)
                         self.w1.append(wx)
                     except:
                         pass
