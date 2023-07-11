@@ -18,6 +18,9 @@
     {% for t in tt %}
 {% if forloop.first %}
         <tr class="{{t.class}}">
+             <td style=";background-color:{{t.color}};text-align:{{t.align}};" >
+          {{t.val}}
+        </td>
 {% else %}
 
       <td style=";background-color:{{t.color}};text-align:{{t.align}};"

@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from django.template.context_processors import request
 from django.views import View
 import numpy as np
 
 from .BalanceView import minus, my_red, add_grade
 from .paint import Paint
-from .utils import  date0, up, inc_n
+from .utils import date0, up, inc_n, inc
 from .models import UserProfile, Project, Role, Less, Load, Task, Wish
 from django.db.models import Max
 from .timing import timing_decorator
@@ -27,30 +28,7 @@ class BalanceNum(View):
         self.w2 = []
         self.w3 = []
         self.w4 = []
-
-        self.paint1 = Paint()
-        self.paint2 = Paint()
-        self.paint3 = Paint()
-        self.paint4 = Paint()
-
-        self.INF_TIME = 99999
-
-
-        self.OUTSRC = UserProfile.objects.get(fio='АУТСОРС')
-        self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
-
-        self.nProject = Project.objects.all().aggregate(Max('id'))['id__max']+1
-        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max']+1
-        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max']+1
-        self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
-        
-        self.people_rv = self.people + [self.OUTSRC,self.VACANCY]
-        self.nTime = 12
-
-        self.wish = Wish.objects.all()
-        self.my_wish = dict()
-        for w in self.wish:
-            self.my_wish[f"{w.role}.{w.project}"]=w.mywish
+        self.mod = -1
         return
 
     def get_wish(self,role,project):
@@ -65,8 +43,14 @@ class BalanceNum(View):
 
     @timing_decorator
     def get(self,request,id,coord,mod):
-        moon12 = moon()
+        if mod==5:
+            return self.get_max_r(request,id)
+
+        if mod == 4:
+            return self.get_max(request,id,coord,mod)
+
         self.init(id,coord,mod)
+        moon12 = moon()
         if mod < 3:
             self.get2()
         
@@ -155,11 +139,14 @@ class BalanceNum(View):
             print(p,r,t,900)
 
 
-        for p in (self.VACANCY, self.OUTSRC):
-            for r in self.roles:
-                for t in range(self.nTime):
-                    self.AVLprt[p.id, r.id, t] = self.INF_TIME
-
+        if self.mod in (0,1,3):
+            try:
+                for p in (self.VACANCY, self.OUTSRC):
+                    for r in self.roles:
+                        for t in range(self.nTime):
+                            self.AVLprt[p.id, r.id, t] = self.INF_TIME
+            except:
+                pass
         return
 
     def setNEEDSrjt(self):
@@ -236,6 +223,29 @@ class BalanceNum(View):
 
 
     def init(self,id,coord=0, mod=0,n=12):
+        self.paint1 = Paint()
+        self.paint2 = Paint()
+        self.paint3 = Paint()
+        self.paint4 = Paint()
+
+        self.INF_TIME = 99999
+
+        self.OUTSRC = UserProfile.objects.get(fio='АУТСОРС')
+        self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
+
+        self.nProject = Project.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
+
+        self.people_rv = self.people + [self.OUTSRC, self.VACANCY]
+        self.nTime = 12
+
+        self.wish = Wish.objects.all()
+        self.my_wish = dict()
+        for w in self.wish:
+            self.my_wish[f"{w.role}.{w.project}"] = w.mywish
+
         self.n = n
         self.mod = mod
         self.coord = coord
@@ -272,6 +282,88 @@ class BalanceNum(View):
         self.set_PRJtime()
 
         return
+
+    def init_max(self):
+        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
+        self.roles = Role.objects.all().order_by('title')
+        self.nTime = 12
+
+        self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
+        self.setAVLprt()
+        return
+
+    def get_max_r(self,request,id):
+         self.init_max_r(id)
+         return self.max_r(request,id)
+
+    def init_max_r(self,id):
+        self.coord=1
+        self.id=id
+        self.nRole = Role.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.nPerson = UserProfile.objects.all().aggregate(Max('id'))['id__max'] + 1
+        self.people = list(UserProfile.objects.exclude(virtual=True).order_by('fio'))
+        self.role = Role.objects.get(id=id)
+        self.roles = Role.objects.all().order_by('title')
+        self.nTime = 12
+
+        self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
+        self.setAVLprt()
+        return
+
+    def max_r(self,request,id):
+        self.init_max_r(id)
+        w = []
+        moon12 = moon()
+        paint = Paint()
+        w = self.get_max0(paint,self.role,w)
+
+        moon12["dif14"] = w  ########################################
+        moon12["res"] = 'все ресурсы'  ########################################
+        return render(request, "max.html", moon12)
+
+    def get_max0(self,paint,role,w):
+        i = 0
+        for person in self.people:
+            paint.next_row(person.fio)
+            i = 1 - i
+            d = date0()
+            wx = [{"class": "odd" if i == 1 else "even",
+                   "val": role.title, "r": role.id},
+                  {"val": person.fio, "align": "left"}
+                  ]
+
+            for t in range(self.nTime):
+                sm100 = np.sum(self.AVLprt, axis=1)[person.id, t]
+                val = self.AVLprt[person.id, role.id, t]
+                paint.next_cell(val)
+                cell = {"align": "center",
+                        "link": f"{person.id}.{role.id}.0.{d.year}-{d.month}-15",
+                        "color": paint.color_rest(val),
+                        "val": val,
+                        "fire": sm100 > 100,
+                        "class": "good"
+                        }
+                wx.append(cell)
+                d = inc(d)
+
+            w.append(wx)
+        return w
+
+    def get_max(self,request,id,coord,mod):
+        self.coord = coord
+        self.init_max()
+        w = []
+        moon12 = moon()
+        paint = Paint()
+        i = 0
+        for role in self.roles:
+            w = self.get_max0(paint,role,w)
+
+        moon12["dif14"] = w  ########################################
+        moon12["res"] = 'все ресурсы'  ########################################
+        return render(request, "max.html", moon12)
     
     def get1leftDelta(self,title):
         self.paint1.next_row()

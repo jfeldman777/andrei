@@ -274,6 +274,10 @@ def available(roles,msg='',n=12):
 '''
 @timing_decorator
 def available_role(request:object, r:int, n:int=12)->object:
+    return redirect(to=f"/balance/{r}/0/5/")
+
+
+def available_role2(request:object, r:int, n:int=12)->object:
     try:
         role = Role.objects.filter(id=r)[0]
     except:
@@ -296,7 +300,10 @@ def available_all(request:object,n:int=12)->object:  # Максимальная 
     moon12["res"]="все ресурсы"
     moon12["ret"]="max"
     return render(request, "max.html", moon12)
-    # return render(request, "a00.html", moon12)
+
+def max_avl(request:object)->object:  # Максимальная доступнасть по всем ресурсам
+    return redirect(request,"/balance/0/0/4/")
+
 
 
 '''
