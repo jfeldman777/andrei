@@ -273,12 +273,12 @@ class BalanceNum(View):
         return
     
     def get1leftDelta(self,title):
-        self.paint4.next_row()
+        self.paint1.next_row()
         res = [{"val":title,"color":self.paint1.rgb_back_left()}]
         return res
 
     def get1left(self,title,n):
-        self.paint4.next_row()
+        self.paint1.next_row()
         title0 = self.get0title(n)
         res = [title,
             {"val":title0,"color":self.paint1.rgb_back_left()}]
@@ -405,7 +405,7 @@ class BalanceNum(View):
             j = self.projects[0]
             for r in self.roles:
                 title = r.title
-                self.paint1.next_row()
+                #self.paint1.next_row()
                 try:
                         wx = self.get1leftDelta(title) + self.get1right(r,j)
                         self.w1.append(wx)
@@ -416,7 +416,7 @@ class BalanceNum(View):
             r = self.roles[0]
             for j in self.projects:
                     title = j.title
-                    self.paint1.next_row()
+                    #self.paint1.next_row()
                     try:
                         wx = self.get1leftDelta(title) + self.get1right(r,j)
                         self.w1.append(wx)
