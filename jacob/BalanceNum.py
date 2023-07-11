@@ -33,6 +33,8 @@ class BalanceNum(View):
         self.paint3 = Paint()
         self.paint4 = Paint()
 
+        self.INF_TIME = 99999
+
 
         self.OUTSRC = UserProfile.objects.get(fio='АУТСОРС')
         self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
@@ -140,6 +142,12 @@ class BalanceNum(View):
 
         except:
             print(p,r,t,900)
+
+
+        for p in (self.VACANCY, self.OUTSRC):
+            for r in self.roles:
+                for t in range(self.nTime):
+                    self.AVLprt[p.id, r.id, t] = self.INF_TIME
 
         return
 
