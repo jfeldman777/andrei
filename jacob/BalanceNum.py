@@ -135,9 +135,11 @@ class BalanceNum(View):
                                 if self.AVLprt[p.id,r.id,t]==0:
                                     if t == 0:
                                         try:
-                                            level = Less.objects.filter(person=p.id,role=r.id,
-                                                                start_date__le = date0()).order_by('-start_date')[0]
-                                            self.AVLprt[p.id, r.id, t] = level
+                                            ls = Less.objects.filter(person=p.id,role=r.id,
+                                                                start_date__lte = date0()).order_by('-start_date')
+                                            level=list(ls)[0]
+
+                                            self.AVLprt[p.id, r.id, t] = level.load
                                         except:
                                             if p.role.id == r.id:
                                                 self.AVLprt[p.id,r.id,t]=100
