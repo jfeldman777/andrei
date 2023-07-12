@@ -67,7 +67,7 @@ class BalanceNum(View):
     def get_rest0(self,paint,role,w):
             i = 0
             lines = sorted(filter(lambda g: g[2] == role.id and g[0]>=0, self.gpr),
-                           key = lambda v: (int(v[0]),str(v[-1])))
+                           key = lambda v: (int(-v[0]),str(v[-1])))
             for xg,person,xr,xfio in lines:
                 try:
                         paint.next_row(person.fio)
@@ -460,7 +460,7 @@ class BalanceNum(View):
     def get_max0(self,paint,role,w):
         i = 0
         lines = sorted(filter(lambda g: g[2] == role.id and g[0] >= 0, self.gpr),
-                       key=lambda v: (int(v[0]), str(v[-1])))
+                       key=lambda v: (int(-v[0]), str(v[-1])))
         for xg, person, xr, xfio in lines:
             try:
                     paint.next_row(person.fio)
@@ -781,7 +781,7 @@ class BalanceNum(View):
                 k = 0
                 self.paint3.next_row()
                 lines = sorted(filter(lambda g: g[2] == r.id  and g[0]>=0, self.gpr),
-                               key = lambda v: (int(v[0]),str(v[-1])))
+                               key = lambda v: (int(-v[0]),str(v[-1])))
                 lines_rv = lines + [(0,self.OUTSRC,0,'АУТСОРС'),(0,self.VACANCY,0,'ВАКАНСИЯ')]
                 for xg,p,xr,xfio in lines_rv:
                          k = 1 - k
@@ -800,7 +800,7 @@ class BalanceNum(View):
                 k = 0
                 self.paint3.next_row()
                 lines = sorted(filter(lambda g: g[2] == r.id  and g[0]>=0, self.gpr),
-                               key = lambda v: (int(v[0]),str(v[-1])))
+                               key = lambda v: (int(-v[0]),str(v[-1])))
                 lines_rv = lines + [(0,self.OUTSRC,0,'АУТСОРС'),(0,self.VACANCY,0,'ВАКАНСИЯ')]
                 for xg,p,xr,xfio in lines_rv:
                             k = 1 - k
@@ -820,7 +820,7 @@ class BalanceNum(View):
                 title = r.title
                 k = 0
 
-                lines = sorted(filter(lambda g: g[2] == r.id and g[0]>=0, self.gpr),key = lambda v: (int(v[0]),str(v[-1])))
+                lines = sorted(filter(lambda g: g[2] == r.id and g[0]>=0, self.gpr),key = lambda v: (int(-v[0]),str(v[-1])))
 
                 for xg,p,xr,xfio in lines:
 
@@ -838,7 +838,7 @@ class BalanceNum(View):
                 k = 0
 
                 lines = sorted(filter(lambda g: g[2] == r.id  and g[0]>=0, self.gpr),
-                               key = lambda v: (int(v[0]),str(v[-1])))
+                               key = lambda v: (int(-v[0]),str(v[-1])))
 
                 for xg,p,xr,xfio in lines:
                             k = 1 - k
