@@ -122,7 +122,7 @@ def mon_bool_color(dmin:date, dmax:date, dstart:date, dend:date,color1,color2)->
         if b:
             x = {"val":"*","color":color1,"align":"center"}
         else:
-            x = {"val": "-", "color": color2,"align":"center"}
+            x = {"val": " ", "color": color2,"align":"center"}
         L.append(x)
         d = inc(d)
     return L
