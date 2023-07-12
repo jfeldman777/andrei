@@ -82,7 +82,8 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
             <tr>
               {% for t in dem %}              {% if forloop.first %}
                  {% if is_delta  %}
-                 <td style="text-align:left;background-color:{{t.color}};">{{t.val}}</td>
+                 <td style="text-align:left;background-color:{{t.color}};">&nbsp;
+                     {{t.val}}</td>
                 {% else %}
 
                           {% if t|negative %}
@@ -95,11 +96,10 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
               {% endif %}
 
               {% else %}
-              <td style="background-color:{{t.color}};">
+              <td style="background-color:{{t.color}};">&nbsp;
 
 
 
-                {{t.val}}
 
               </td>
               {% endif %}
@@ -147,8 +147,8 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
                  <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}"
                   role="{{t.role}}" title="{{t.up}}"
                   project="{{t.project}}"
-                  style="background-color:{{t.color}};text-align:left;">
-                {{t.val}}
+                  style="background-color:{{t.color}};text-align:left;">&nbsp;
+                {{t.val}}&nbsp;
               </td>
                 {% else %}
 
@@ -156,8 +156,8 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
               <td class="{{t.class}}" action="/save_needs/" fname="f20" key="{{t.link}}"
                   role="{{t.role}}" title="{{t.up}}"
                   project="{{t.project}}"
-                  style="background-color:{{t.color}};">
-                {{t.val}}
+                  style="background-color:{{t.color}};">&nbsp;
+                {{t.val}}&nbsp;
               </td>
                 {% endif %}
               {% endfor %}
@@ -208,10 +208,8 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
               {% else %}
               <td class="{{t.class}}" action="/save_task/"
                   fname="f10" key="{{t.link}}" title="{{t.up}}"
-                style="background-color:{{t.color}};color:{{t.tcolor}}; text-align:{{t.align}};
-
-">
-                {{t.val}}
+                style="background-color:{{t.color}};color:{{t.tcolor}}; text-align:{{t.align}};">&nbsp;
+                {{t.val}}&nbsp;
               </td>
               {% endif %}
               {% endfor %}
@@ -250,13 +248,13 @@ border-bottom: 1px solid grey;
                             {% endif %}
 
                          {% else %}
-                               <td style="background-color:{{t.color}};text-align:left">
-                                     {{t.val}}
+                               <td style="background-color:{{t.color}};text-align:{{t.align}}">&nbsp;
+                                     {{t.val}}&nbsp;
                                </td>
                          {% endif %}
                 {%  else  %}
-                    <td style="background-color:{{t.color}};text-align:{{t.align}}">
-                                     {{t.val}}
+                    <td style="background-color:{{t.color}};text-align:{{t.align}}">&nbsp;
+                                     {{t.val}}&nbsp;
                     </td>
                 {% endif %}
               {% endfor %}
