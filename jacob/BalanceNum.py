@@ -31,6 +31,12 @@ class BalanceNum(View):
         self.mod = -1
         return
 
+    def wish_role_title(self,role,project):
+        return role.title + self.get_wish_sign(role,project)
+
+    def wish_prj_title(self,role,project):
+        return project.title + self.get_wish_sign(role,project)
+
     def get_wish(self,role,project):
         key = f"{role}.{project}"
         val = ""
@@ -188,7 +194,7 @@ class BalanceNum(View):
             p = a.person
             r = a.role
             if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)):
-                    t = time_n(a.start_date)   #-1
+                    t = time_n(a.start_date)
                     if t in range(12):
                         self.AVLprt[p.id,r.id,t]=a.load
 
@@ -427,8 +433,8 @@ class BalanceNum(View):
                         sm100 = np.sum(self.AVLprt, axis=1)[person.id, t]
                         val = self.AVLprt[person.id, role.id, t]
                         paint.next_cell(val)
+                        ds = self.d2s(t)
                         cell = {"align": "center",
-                                "link": f"{person.id}.{role.id}.0.{d.year}-{d.month}-15",
                                 "color": paint.color_rest(val),
                                 "val": val,
                                 "fire": sm100 > 100,
@@ -726,7 +732,7 @@ class BalanceNum(View):
         if self.coord == 0:
             j = self.projects[0]
             for r in self.roles:
-                title = r.title
+                title = self.wish_role_title(r,j)
                 k = 0
                 self.paint3.next_row()
                 for p in self.people_rv:
@@ -746,7 +752,7 @@ class BalanceNum(View):
         else:
             r = self.roles[0]
             for j in self.projects:
-                title = j.title
+                title = self.wish_prj_title(r,j)
                 k = 0
                 self.paint3.next_row()
                 for p in self.people_rv:
