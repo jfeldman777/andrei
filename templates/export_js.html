@@ -3,9 +3,17 @@
 
 
 $(window).on('load', function() {
-    $('label').before('<button id=a999  type="submit" class="btn btn-primary">Экспорт</button>');
-$('#a999').click(function() {
+    $('label')
+    .before('<button id=ex999  type="submit" class="btn btn-primary">Экспорт</button>')
+    .before('&nbsp;&nbsp;&nbsp;')
+    .before('<button id=a999  type="submit" class="btn btn-primary">Добавить</button>')
+    ;
+$('#ex999').click(function() {
       window.location.href='/export_prj/';
+  });
+
+  $('#a999').click(function() {
+      window.location.href='/person_form/';
   });
 });
 
