@@ -1,8 +1,8 @@
-
 <script>
-
-$('#999').click(function() {
-      window.location.href='/export_plan/{{id}}/{{coord}}/{{mod}}/';
+$(window).on('load', function() {
+    $('label').before('<button id=a999  type="submit" class="btn btn-primary">Добавить</button>');
+$('#a999').click(function() {
+      window.location.href='/person_form/';
   });
-
+});
 </script>
