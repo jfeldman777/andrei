@@ -56,7 +56,7 @@ class BalanceView(View):
                 
         return
 
-    @timing_decorator
+   # @timing_decorator
     def get(self, request,id,coord=0, mod=0,n=12):
         self.init(id,coord, mod,n)
         moon12 = moon()

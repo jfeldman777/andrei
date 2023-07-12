@@ -6,7 +6,7 @@ import numpy as np
 from .BalanceView import minus, my_red, add_grade
 from .paint import Paint
 from .utils import date0, up, inc_n, inc
-from .models import UserProfile, Project, Role, Less, Load, Task, Wish
+from .models import UserProfile, Project, Role, Less, Load, Task, Wish, Grade
 from django.db.models import Max
 from .timing import timing_decorator
 from .vvv import moon
@@ -29,6 +29,7 @@ class BalanceNum(View):
         self.w3 = []
         self.w4 = []
         self.mod = -1
+        self.GRADE_MAX = 3
         return
 
     def wish_role_title(self,role,project):
@@ -108,6 +109,7 @@ class BalanceNum(View):
         self.id = id
 
         self.roles = Role.objects.all().order_by('title')
+
 
         self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
         self.setAVLprt()
@@ -317,6 +319,8 @@ class BalanceNum(View):
 
 
     def init(self,id,coord=0, mod=0,n=12):
+        self.gpr = []
+
         self.paint1 = Paint()
         self.paint2 = Paint()
         self.paint3 = Paint()
@@ -375,6 +379,22 @@ class BalanceNum(View):
         self.set_N_W_rjt()
         self.set_PRJtime()
 
+        for r in self.roles:
+            for p in self.people:
+                try:
+                    if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)):
+                        try:
+
+                            g =  int(Grade.objects.get(person=p, role=r).mygrade)
+                        except:
+                            g = 0
+                    else:
+                        g = -1
+                    print ('g=',g)
+                    self.gpr.append([g,p,r.id,p.fio])
+                except:
+                    pass
+        print(self.gpr)
         return
 
     def init_max(self):
@@ -725,6 +745,7 @@ class BalanceNum(View):
         res =  [{"val": title, 'class': "even" if k == 0 else "odd",
 
           }, {"align": "left", "color": "" if self.mod == 3 else self.paint3.rgb_back_left(),
+
               "val": add_grade(person, role)}]
         return res
 
@@ -735,30 +756,29 @@ class BalanceNum(View):
                 title = self.wish_role_title(r,j)
                 k = 0
                 self.paint3.next_row()
-                for p in self.people_rv:
-                    try:
-                        if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)) \
-                                or p.fio in ['ВАКАНСИЯ','АУТСОРС']:
-                            k = 1-k
-                            try:
+                lines = sorted(filter(lambda g: g[2] == r.id  and g[0]>=0, self.gpr),
+                               key = lambda v: (int(v[0]),str(v[-1])))
+                lines_rv = lines + [(0,self.OUTSRC,0,'АУТСОРС'),(0,self.VACANCY,0,'ВАКАНСИЯ')]
+                for xg,p,xr,xfio in lines_rv:
+                         k = 1 - k
+                         try:
                                 wx = self.get3left(p,r,j,title,k) + self.get3right(p,r,j)
                                 self.w3.append(wx)
                                 if self.mod < 2:
                                     title = -1
-                            except:
+                         except:
                                 pass
-                    except:
-                        pass
+
         else:
             r = self.roles[0]
             for j in self.projects:
                 title = self.wish_prj_title(r,j)
                 k = 0
                 self.paint3.next_row()
-                for p in self.people_rv:
-                    try:
-                        if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True))  or \
-                                p.fio in ['ВАКАНСИЯ','АУТСОРС']:
+                lines = sorted(filter(lambda g: g[2] == r.id  and g[0]>=0, self.gpr),
+                               key = lambda v: (int(v[0]),str(v[-1])))
+                lines_rv = lines + [(0,self.OUTSRC,0,'АУТСОРС'),(0,self.VACANCY,0,'ВАКАНСИЯ')]
+                for xg,p,xr,xfio in lines_rv:
                             k = 1 - k
                             try:
                                 wx = self.get3left(p, r, j, title, k) + self.get3right(p, r, j)
@@ -767,8 +787,7 @@ class BalanceNum(View):
                                     title = -1
                             except:
                                 pass
-                    except:
-                        pass
+
         return
 
     def get4(self):
@@ -776,9 +795,11 @@ class BalanceNum(View):
             for r in self.roles:
                 title = r.title
                 k = 0
-                for p in self.people:
-                    try:
-                        if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)) :
+
+                lines = sorted(filter(lambda g: g[2] == r.id and g[0]>=0, self.gpr),key = lambda v: (int(v[0]),str(v[-1])))
+
+                for xg,p,xr,xfio in lines:
+
                             k = 1 - k
                             self.paint4.next_row()
                             try:
@@ -787,14 +808,15 @@ class BalanceNum(View):
                                 title = -1
                             except:
                                 pass
-                    except:
-                        pass
+
         else:
                 r = self.roles[0]
                 k = 0
-                for p in self.people:
-                    try:
-                        if r.id == p.role.id or r.id in set(p.res.values_list('id', flat=True)):
+
+                lines = sorted(filter(lambda g: g[2] == r.id  and g[0]>=0, self.gpr),
+                               key = lambda v: (int(v[0]),str(v[-1])))
+
+                for xg,p,xr,xfio in lines:
                             k = 1 - k
                             self.paint4.next_row()
                             try:
@@ -802,8 +824,7 @@ class BalanceNum(View):
                                 self.w4.append(wx)
                             except:
                                 pass
-                    except:
-                        pass
+
         pass
 
     def get4left(self,person,role):
@@ -821,3 +842,6 @@ class BalanceNum(View):
                 "color": self.paint4.color_rest(c[t], is_1)})
 
         return res
+
+
+
