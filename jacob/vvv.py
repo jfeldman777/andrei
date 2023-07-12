@@ -428,7 +428,7 @@ def project_timeline_line(p,paint,n=12):
           # "color": paint.rgb_back_right(),
           "align":"center"}]
 
-    L+= mon_bool_color(dmin, dmax, p.start_date, p.end_date,Paint.MY_BLUE,paint.rgb_back_right())
+    L+= mon_bool_color(dmin, dmax, p.start_date, p.end_date,Paint.MY_BLUE,'')
     return L
 
 def project_timeline_line_exp(p,n=12):
