@@ -9,7 +9,7 @@ from .timing import timing_decorator
 from .utils import *
 from datetime import date
 from .models import UserProfile, Grade, Wish,Project
-from .utils import date0, inc, timespan_len
+from .utils import date0, inc, timespan_len, inc_n
 from .view_forms import role_form
 from django.urls import resolve
 from .paint import Paint
@@ -335,6 +335,9 @@ def rest_all2(request:object,n:int=12)->object:  # Остаточная дост
 
 @timing_decorator
 def rest_role(request:object, r:int,n:int=12)->object:
+    return redirect(request,f"/balance/{id}/0/7/")
+
+def rest_role2(request:object, r:int,n:int=12)->object:
     moon12 = moon()
     try:
         role = Role.objects.filter(id=r)[0]

@@ -30,6 +30,7 @@ class BalanceNum(View):
         self.w4 = []
         self.mod = -1
         self.GRADE_MAX = 3
+        self.gpr = []
         return
 
     def wish_role_title(self,role,project):
@@ -65,20 +66,19 @@ class BalanceNum(View):
         
     def get_rest0(self,paint,role,w):
             i = 0
-            for person in self.people:
+            lines = sorted(filter(lambda g: g[2] == role.id and g[0]>=0, self.gpr),
+                           key = lambda v: (int(v[0]),str(v[-1])))
+            for xg,person,xr,xfio in lines:
                 try:
-                    try:
-                        st = set(person.res.values_list('id', flat=True))
-                    except:
-                        st = []
-                    if role.id == person.role.id or role.id in st:
                         paint.next_row(person.fio)
                         i = 1 - i
 
                         wx = [{"class": "odd" if i == 1 else "even","align": "left",
                                "color":paint.rgb_back_left(),
                                "val": role.title, "r": role.id},
-                              {"val": person.fio, "align": "left"}
+                              {"val": add_grade(person, role),
+
+                               "align": "left"}
                               ]
 
                         for t in range(self.nTime):
@@ -92,8 +92,17 @@ class BalanceNum(View):
                 except:
                     pass
             return w
-    
+    def init_rest_r(self,request,id):
+        self.roles = Role.objects.filter(id=id)
+        self.init_rest0(request)
+        return
+
     def init_rest(self,request):
+        self.roles = Role.objects.all().order_by('title')
+        self.init_rest0(request)
+        return
+
+    def init_rest0(self,request):
         self.OUTSRC = UserProfile.objects.get(fio='АУТСОРС')
         self.VACANCY = UserProfile.objects.get(fio='ВАКАНСИЯ')
         self.nProject = Project.objects.all().aggregate(Max('id'))['id__max'] + 1
@@ -108,7 +117,7 @@ class BalanceNum(View):
         self.coord = 0
         self.id = id
 
-        self.roles = Role.objects.all().order_by('title')
+
 
 
         self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
@@ -123,10 +132,22 @@ class BalanceNum(View):
 
         self.set_R_W_prt()
         self.set_R_W_rt()
+        self.set_gpr()
         pass
 
     def get_rest_r(self,request,id):
-        pass
+            self.init_rest_r(request,id)
+            w = []
+            moon12 = moon()
+            paint = Paint()
+            i = 0
+            for role in self.roles:
+                w = self.get_rest0(paint, role, w)
+
+            moon12["dif14"] = w  ########################################
+            moon12["res"] = 'все ресурсы'  ########################################
+            return render(request, "rest.html", moon12)
+
 
     @timing_decorator
     def get(self,request,id,coord,mod):
@@ -379,6 +400,11 @@ class BalanceNum(View):
         self.set_N_W_rjt()
         self.set_PRJtime()
 
+        self.set_gpr()
+
+        return
+
+    def set_gpr(self):
         for r in self.roles:
             for p in self.people:
                 try:
@@ -390,11 +416,9 @@ class BalanceNum(View):
                             g = 0
                     else:
                         g = -1
-                    print ('g=',g)
                     self.gpr.append([g,p,r.id,p.fio])
                 except:
                     pass
-        print(self.gpr)
         return
 
     def init_max(self):
@@ -405,6 +429,7 @@ class BalanceNum(View):
         self.nTime = 12
         self.AVLprt = np.zeros((self.nPerson+1,self.nRole+1,self.nTime),dtype=int)
         self.setAVLprt()
+        self.set_gpr()
         return
 
     def get_max_r(self,request,id):
@@ -434,19 +459,18 @@ class BalanceNum(View):
 
     def get_max0(self,paint,role,w):
         i = 0
-        for person in self.people:
+        lines = sorted(filter(lambda g: g[2] == role.id and g[0] >= 0, self.gpr),
+                       key=lambda v: (int(v[0]), str(v[-1])))
+        for xg, person, xr, xfio in lines:
             try:
-                try:
-                    st = set(person.res.values_list('id', flat=True))
-                except:
-                    st = []
-                if role.id == person.role.id or role.id in st:
                     paint.next_row(person.fio)
                     i = 1 - i
                     d = date0()
                     wx = [{"class": "odd" if i == 1 else "even",
                            "val": role.title, "r": role.id},
-                          {"val": person.fio, "align": "left"}
+                          {
+                           "val": add_grade(person, role),
+                           "align": "left"}
                           ]
 
                     for t in range(self.nTime):
