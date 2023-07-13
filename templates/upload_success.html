@@ -1,1 +1,12 @@
-Import is done
+{% extends 'base_form.html' %}
+{% load custom_filters %}
+{% block content %}
+{% include 'scroll.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% include 'menu2.html' %}
+{% for p in protocol %}
+{{p}}<br>
+{% endfor %}
+{% endblock %}

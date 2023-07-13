@@ -442,14 +442,14 @@ def project_timeline_line_exp(p,n=12):
     L = []
     L+=[p.general.fio, p.title, ]
 
-    formatted_date1 = babel.dates.format_date(p.start_date, "d MMM YY", locale='ru')
-    L+=[formatted_date1]
+    # formatted_date1 = babel.dates.format_date(p.start_date, "d MMM YY", locale='ru')
+    # L+=[formatted_date1]
            
 
-    formatted_date2 = babel.dates.format_date(p.end_date, "d MMM YY", locale='ru')
-    L+= [formatted_date2]
+    # formatted_date2 = babel.dates.format_date(p.end_date, "d MMM YY", locale='ru')
+    # L+= [formatted_date2]
 
-    L+= [timespan_len(p.start_date, p.end_date)]
+    L+= [p.start_date,p.end_date,timespan_len(p.start_date, p.end_date)]
 
     L+= mon_bool_exp(dmin, dmax, p.start_date, p.end_date)
     return L

@@ -37,11 +37,14 @@ def data2page(data):
 def prj2(request):
     data = table_timeline_exp(request)
     moon = moon_exp()
-    data1 = ['Название проекта','Начало','Окончание','Руководитель','Длительность (мес.)']+moon
+    data1 = ['Руководитель','Название проекта','Начало','Окончание','Длительность (мес.)']+moon
+    
     print(data1)
     print(data)
     df = pd.DataFrame(data, columns=data1)
 
+    # df['Начало'] = pd.to_datetime(df['Начало'])
+    # df['Окончание'] = pd.to_datetime(df['Окончание'])
     
     # Создайте HttpResponse с файлом Excel
     response = HttpResponse(content_type='application/vnd.ms-excel')

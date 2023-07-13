@@ -5,6 +5,7 @@ from django.shortcuts import render
 from .forms import UploadFileForm
 from .models import Project, UserProfile
 import pandas as pd
+from datetime import datetime
 
 def upload(request,mod):
     if mod == 1:
@@ -43,6 +44,8 @@ def staff_import(request):
     return render(request, 'upload.html', {'form': form,"mod":2,"title":'Импорт сотрудников'})
 
 def prj_import(request):
+    protocol = ['Импорт списка проектов',str(datetime.now())]
+    protocol.append('---------------------------------------')
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -50,21 +53,32 @@ def prj_import(request):
             df = pd.read_excel(file)
 
             for index, row in df.iterrows():
-                title = row['title']
-                start_date = row['start_date']
-                end_date = row['end_date']
-                general_id = row['general']
-                general = UserProfile.objects.get(id=general_id)
+                title = row['Название проекта']
+                start_date = row['Начало']
+                end_date = row['Окончание']
+                fio = row['Руководитель']
+                general = UserProfile.objects.get(fio=fio)
 
-                project = Project(
-                    title=title,
-                    start_date=pd.to_datetime(start_date),
-                    end_date=pd.to_datetime(end_date),
-                    general=general,
-                )
-                project.save()
+                try:
+                    p = Project.objects.filter(title = title)[0]
+                    protocol.append(p) 
+                    protocol.append('---Этот объект уже есть в базе данных')
+                    protocol.append('---------------------------------------')
+                except:
+                    project = Project(
+                        title=title,
+                        start_date=pd.to_datetime(start_date),
+                        end_date=pd.to_datetime(end_date),
+                        general=general,
+                    )
+                    project.save()
+                    protocol.append(project)
+                    protocol.append('---Добавлен проект')
+                    protocol.append('---------------------------------------')
+                    
 
-            return render(request, 'upload_success.html')
+
+            return render(request, 'upload_success.html',{'protocol':protocol})
     else:
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form,"mod":1,"title":'Импорт проектов'})
