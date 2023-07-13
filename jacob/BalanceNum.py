@@ -149,7 +149,7 @@ class BalanceNum(View):
             return render(request, "rest.html", moon12)
 
 
-    @timing_decorator
+    #@timing_decorator
     def get(self,request,id,coord,mod):
         self.coord = coord
         self.id = id
@@ -445,14 +445,14 @@ class BalanceNum(View):
         return
 
     def max_r(self,request,id):
-        self.init_max_r(id)
+    #   self.init_max_r(id)
         w = []
         moon12 = moon()
         paint = Paint()
         w = self.get_max0(paint,self.role,w)
 
         moon12["dif14"] = w  ########################################
-        moon12["res"] = 'все ресурсы'  ########################################
+        moon12["res"] = self.role.title  ########################################
         moon12["ret"] = f"/balance/{id}/0/5/"  ########################################
 
         return render(request, "max.html", moon12)
