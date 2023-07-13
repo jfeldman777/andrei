@@ -14,7 +14,7 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
     overflow: hidden; /* Обрежет содержимое, если оно не помещается в ячейку */
 }
 
-}
+
 
 </style>
 <table class="out" width=100%>
@@ -96,7 +96,7 @@ table.in th:nth-child(n+2):nth-child(-n+13) {
               {% endif %}
 
               {% else %}
-              <td style="background-color:{{t.color}};">&nbsp;
+              <td style="background-color:{{t.color}};text-align:{{t.align}}">&nbsp;
                 {{t.val}}&nbsp;
               </td>
               {% endif %}
