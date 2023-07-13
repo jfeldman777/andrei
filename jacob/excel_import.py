@@ -12,7 +12,35 @@ def upload(request,mod):
     return staff_import(request)
 
 def staff_import(request):
-    pass
+    if request.method == 'POST':
+        protocol = []
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = request.FILES['file']
+            df = pd.read_excel(file)
+
+            for index, row in df.iterrows():
+                fio = row['fio']
+
+                try:
+                    person0 = UserProfile.objects.filter(fio = fio)[0]
+                    protocol.append(f"Это сотрудник уже есть в базе: {fio}")
+                except:
+                    pass
+
+
+                # UserProfile = Project(
+                #     title=title,
+                #     start_date=pd.to_datetime(start_date),
+                #     end_date=pd.to_datetime(end_date),
+                #     general=general,
+                # )
+                # project.save()
+
+            return render(request, 'upload_success.html')
+    else:
+        form = UploadFileForm()
+    return render(request, 'upload.html', {'form': form,"mod":2,"title":'Импорт сотрудников'})
 
 def prj_import(request):
     if request.method == 'POST':
@@ -39,7 +67,7 @@ def prj_import(request):
             return render(request, 'upload_success.html')
     else:
         form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form,"mod":1})
+    return render(request, 'upload.html', {'form': form,"mod":1,"title":'Импорт проектов'})
 
 
 def go_import_prj():
@@ -74,3 +102,10 @@ def go_import_prj():
             # for person_id in people_ids:
             #     person = UserProfile.objects.get(id=int(person_id))
             #     project.people.add(person)
+
+
+def project_import(request):
+    return prj_import(request)
+
+def person_import(request):
+    return staff_import(request)

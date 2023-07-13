@@ -38,8 +38,8 @@ urlpatterns = [
     path("b/<int:n>/", vvv.balance_map, name="balance_map"),
     
 
-    
-    
+    path("import_person/", excel_import.person_import),
+    path("import_prj/", excel_import.project_import),
     path("export_prj/", export.prj2),
     path("export_plan/<int:id>/<int:coord>/<int:mod>/", export.export_plan),
 

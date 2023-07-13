@@ -1,13 +1,14 @@
+from .models import UserProfile
+from .models import Project
 from django import forms
 from django.forms import formset_factory
-from .models import Role, Project,UserProfile,Grade,Wish
+from .models import Role, Project, UserProfile, Grade, Wish
 from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth.models import User
 
 
-
 class UploadFileForm(forms.Form):
-    file = forms.FileField()
+    file = forms.FileField(label="Файл данных для импорта")
 
 
 class LoadForm(forms.Form):
@@ -15,7 +16,8 @@ class LoadForm(forms.Form):
     project = forms.IntegerField(widget=forms.HiddenInput())
     month = forms.CharField(widget=forms.HiddenInput())
     load = forms.FloatField(initial=0)
-    label = forms.CharField(widget=forms.TextInput(attrs={"readonly": "readonly"}))
+    label = forms.CharField(widget=forms.TextInput(
+        attrs={"readonly": "readonly"}))
 
 
 class KeysForm(forms.ModelForm):
@@ -31,6 +33,7 @@ class KeysForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(KeysForm, self).__init__(*args, **kwargs)
         self.fields['password'].initial = User.objects.make_random_password()
+
 
 class EntryForm(forms.Form):
     projects = forms.ModelChoiceField(
@@ -51,9 +54,6 @@ class EntryForm(forms.Form):
         return cleaned_data
 
 
-from django import forms
-from .models import Project
-
 class User2Form(forms.ModelForm):
     res = forms.ModelMultipleChoiceField(
         queryset=Role.objects.all(),
@@ -67,11 +67,8 @@ class User2Form(forms.ModelForm):
         labels = {
             "role": "Ресурсный пул",
             "fio": "Сотрудник",
-         }
+        }
 
-from django import forms
-from django.contrib.auth.models import User
-from .models import UserProfile
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -84,6 +81,8 @@ class UserForm(forms.ModelForm):
             "username": "Логин",
             "fio": "Сотрудник"
         }
+
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -92,6 +91,7 @@ class UserProfileForm(forms.ModelForm):
             "username": "Логин",
             "fio": "Сотрудник"
         }
+
 
 class UserAndProfileForm(forms.ModelForm):
     password = forms.CharField(
@@ -102,29 +102,31 @@ class UserAndProfileForm(forms.ModelForm):
         "username": "Логин",
     }
     fio = forms.CharField(label="Сотрудник (ФИО)")
-    role = forms.ModelChoiceField(queryset=Role.objects.all(),blank=True,required=False,
+    role = forms.ModelChoiceField(queryset=Role.objects.all(), blank=True, required=False,
                                   label="Ресурсный пул"
-    )  # Assuming Role model is defined
+                                  )  # Assuming Role model is defined
 
     res = forms.ModelMultipleChoiceField(queryset=Role.objects.all(),
                                          required=False,
                                          label="Дополнительный ресурсный пул")
 
-
     class Meta:
         model = User
-        fields = ['username', 'password']##, 'email']
+        fields = ['username', 'password']  # , 'email']
         labels = {
             "username": "Логин",
-            #'email':"Электронная почта"
+            # 'email':"Электронная почта"
         }
+
     def __init__(self, *args, **kwargs):
-            super(UserAndProfileForm, self).__init__(*args, **kwargs)
-            self.fields['password'].initial = User.objects.make_random_password()
+        super(UserAndProfileForm, self).__init__(*args, **kwargs)
+        self.fields['password'].initial = User.objects.make_random_password()
+
 
 class GeneralModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
         return obj.userprofile.fio
+
 
 class RoleForm(forms.ModelForm):
 
@@ -132,17 +134,16 @@ class RoleForm(forms.ModelForm):
         label="Название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
     )
 
-    general = GeneralModelChoiceField( label="Руководитель",
-        queryset=User.objects.filter(userprofile__virtual=False).order_by('userprofile__fio'))
+    general = GeneralModelChoiceField(label="Руководитель",
+                                      queryset=User.objects.filter(userprofile__virtual=False).order_by('userprofile__fio'))
 
     class Meta:
         model = Role
         fields = ["id", "title", "general",]
         labels = {
             "general": "Руководитель",
-            "title":"Роль"
+            "title": "Роль"
         }
-
 
 
 class ProjectForm(forms.ModelForm):
@@ -151,8 +152,6 @@ class ProjectForm(forms.ModelForm):
                                  )
     end_date = forms.DateField(label="Окончание",
                                widget=forms.DateInput(attrs={'type': 'date'}, format='%d.%m.%Y'))
-
-
 
     title = forms.CharField(
         label="Название", max_length=30, widget=forms.TextInput(attrs={"size": "30"})
@@ -163,12 +162,14 @@ class ProjectForm(forms.ModelForm):
         label="Руководитель",
         empty_label=None,
     )
+
     class Meta:
         model = Project
         fields = ["id", "title", "general", "start_date", "end_date"]
         labels = {
             "general": "Руководитель",
         }
+
 
 class ImmutableModelChoiceField(forms.ModelChoiceField):
     def widget_attrs(self, widget):
@@ -187,9 +188,9 @@ class ImmutableModelChoiceField(forms.ModelChoiceField):
 
 
 class GradeForm(forms.ModelForm):
-    person = ImmutableModelChoiceField(queryset=UserProfile.objects.all(),required=False,
+    person = ImmutableModelChoiceField(queryset=UserProfile.objects.all(), required=False,
                                        label='Сотрудник')
-    role = ImmutableModelChoiceField(queryset=Role.objects.all(),required=False,
+    role = ImmutableModelChoiceField(queryset=Role.objects.all(), required=False,
                                      label='Роль')
 
     class Meta:
@@ -197,6 +198,6 @@ class GradeForm(forms.ModelForm):
         fields = ['person', 'role', 'mygrade']
         labels = {
             "mygrade": "Грейд",
-            "role":"Роль",
-            "person":"Cотрудник"
+            "role": "Роль",
+            "person": "Cотрудник"
         }

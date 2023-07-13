@@ -1,0 +1,18 @@
+<script>
+$(window).on('load', function() {
+    $('label')
+    .before('<button id=im999  type="submit" class="btn btn-primary">Импорт</button>')
+    .before('&nbsp;&nbsp;&nbsp;')
+    .before('<button id=add999  type="submit" class="btn btn-primary">Добавить</button>')
+    ;
+$('#im999').click(function() {
+      window.location.href='/import_person/';
+  });
+
+
+  $('#add999').click(function() {
+      window.location.href='/person_form/';
+  });
+});
+
+</script>

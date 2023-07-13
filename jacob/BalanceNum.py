@@ -149,7 +149,7 @@ class BalanceNum(View):
             return render(request, "rest.html", moon12)
 
 
-    #@timing_decorator
+    @timing_decorator
     def get(self,request,id,coord,mod):
         self.coord = coord
         self.id = id
